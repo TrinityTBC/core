@@ -1,5 +1,5 @@
 sudo: false
-dist: xenial
+dist: bionic
 
 language: cpp
 compiler:
@@ -8,33 +8,30 @@ compiler:
 git:
   depth: 1
 
+services:
+  - mysql
+
 addons:
-  mariadb: '10.3'
   apt:
     update: true
     sources:
-      - ubuntu-toolchain-r-test
-      - sourceline: 'ppa:rexut/factory'
     packages:
       - libssl-dev
-      - libmariadb-client-lgpl-dev
-      - libreadline6-dev
+      - libmysqlclient-dev
+      - libreadline-dev
       - zlib1g-dev
       - libbz2-dev
-      - libboost1.62-dev
-      - libboost-filesystem1.62-dev
-      - libboost-iostreams1.62-dev
-      - libboost-program-options1.62-dev
-      - libboost-regex1.62-dev
-      - libboost-system1.62-dev
-      - libboost-thread1.62-dev
+      - libboost-dev
+      - libboost-thread-dev
+      - libboost-system-dev
+      - libboost-filesystem-dev
+      - libboost-program-options-dev
+      - libboost-regex-dev
+      - libboost-iostreams-dev
       # For data archive
       - p7zip
-      # For post run debug
-      - gdb
-      
+
 before_install:
-  - apt-cache policy libboost-dev
   - git config user.email "travis@build.bot" && git config user.name "Travis CI"
   - git tag -a -m "Travis build" init
   # To get core dump infos
@@ -64,21 +61,16 @@ script:
   - cd bin
   - make -j 10 -k && make install && make clean
   - cd check_install
-  - mkdir data && cd data
-  - wget https://blob.allumeciga.re/2019_01_22_data.7z
-  - 7zr x 2019_01_22_data.7z -y > /dev/null
-  - rm 2019_01_22_data.7z
   - cd ..
   - ls
   - cd bin
   - ./authserver --version
   - ./worldserver --version
-  - wget https://github.com/ValorenWoW/sunstrider-core/releases/download/2019_01_02/world_2019_01_02.sql.zip
-  - unzip world_2019_01_02.sql.zip
-  - rm world_2019_01_02.sql.zip
+  - wget https://github.com/TrinityTBC/database/raw/master/world_full_2019_01_30.7z
+  - 7zr x world_full_2019_01_30.7z -y > /dev/null
+  - ls
+  - rm world_full_2019_01_30.7z
   - sed -e 's!^DataDir\s*=.*!DataDir = "../data/"!g;' -e 's!^LogsDir\s*=.*!LogsDir = "../logs/"!g;'  -e 's!^Testing.MaxParallel\s*=.*!Testing.MaxParallel = 1000!g;' -e 's!^Logger.scripts.ai\s*=.*!Logger.scripts.ai=6,Console Server!g;' < "../etc/worldserver.conf.dist" > "../etc/worldserver.conf"
   - ulimit -c unlimited -S
   - ./worldserver --tests
   - ls -l
-  - for i in $(find ./ -maxdepth 1 -name 'core*' -print); do gdb worldserver core* -ex "thread apply all bt" -ex "set pagination 0" -batch; done;
-  

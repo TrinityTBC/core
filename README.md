@@ -1,9 +1,6 @@
-# The Sunstrider Core
+# Introduction
 
-[![CircleCI](https://circleci.com/gh/kelno/sunstrider-core/tree/master.svg?style=svg&circle-token=935a3eadba63f221fd0f770768d2347437f4c260)](https://circleci.com/gh/kelno/sunstrider-core/tree/master)
-
-Sunstrider is a WoW 2.4.3 emulator used and developed by the Valoren private server.
-Development started in 2009 from a [trinitycore1](https://bitbucket.org/KPsN/trinitycore-243) fork as the core started being used on WoWMania, a french server, and was then rebranded "Windrunner", where it was continuously developed for about 5 years. You can find the last Windrunner version [here](https://github.com/kelno/windrunner). Starting with our departure from WoWMania the core was renamed Sunstrider.
+TrinityTBC is a WoW 2.4.3 emulator derived from the [Suntrider-legacy core](https://github.com/SunstriderEmu/sunstrider-legacy).
 
 ## Installation
 
@@ -18,7 +15,7 @@ Over the years all majors systems were rewritten using TC as a base. This allows
 When a system has been imported from TC, differences (either improvements or TBC adaptations) with original TC are usually highlighted by comments.
 * Automated testing system  
 Our star feature! Mainly used for spells at the moment.
-* [Continuous integration](https://travis-ci.org/sunstrider/sunstrider-core)  
+* [Continuous integration](https://travis-ci.org/TrinityTBC/core)
 Including tests results!
 * Dynamic spawn system (see [here](https://github.com/TrinityCore/TrinityCore/pull/19056))
 * Scripts and tests can be compiled in dynamic libraries and reloaded on runtime (see [here](https://trinitycore.atlassian.net/wiki/spaces/tc/pages/18874377/Using+the+script+hotswapping+system))
@@ -48,14 +45,12 @@ Most high level instance scripts are decent seeing other BC server ones (but sti
 ## Additional features (non blizzlike)
 
 * [Playerbots](https://github.com/ike3/mangosbot)
-* [Fully reworked stealth mechanics](http://wiki.valoren.org/index.php/Stealth_mechanics)
+* Fully reworked stealth mechanics
 * Transports includes static npcs (ship crew), purely cosmectic. Selling and combat has been disabled for them.
 * Dynamic PvP titles system depending on player rank in arena ladder (Disabled by default)
 * ArenaSpectator (Not tested for a long while, we'll probably just trash it)
-* Duel zone ([wiki](https://github.com/ValorenWoW/sunstrider-core/wiki/Duel-zone-(custom-feature)))
+* Duel zone
 * Pack58 item packs
 
 
 And much more. We've also developed some cool dev tools we'll probably share at a later point.
-
-[Wiki](https://github.com/ValorenWoW/sunstrider-core/wiki) (WIP, import in progress)

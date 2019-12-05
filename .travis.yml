@@ -61,7 +61,6 @@ script:
   - cd bin
   - make -j 10 -k && make install && make clean
   - cd check_install
-  - cd ..
   - ls
   - cd bin
   - ./authserver --version
@@ -72,5 +71,4 @@ script:
   - rm world_full_2019_01_30.7z
   - sed -e 's!^DataDir\s*=.*!DataDir = "../data/"!g;' -e 's!^LogsDir\s*=.*!LogsDir = "../logs/"!g;'  -e 's!^Testing.MaxParallel\s*=.*!Testing.MaxParallel = 1000!g;' -e 's!^Logger.scripts.ai\s*=.*!Logger.scripts.ai=6,Console Server!g;' < "../etc/worldserver.conf.dist" > "../etc/worldserver.conf"
   - ulimit -c unlimited -S
-  - ./worldserver --tests
   - ls -l

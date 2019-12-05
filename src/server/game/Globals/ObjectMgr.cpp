@@ -279,21 +279,21 @@ void ObjectMgr::LoadCreatureTemplates(bool reload /* = false */)
 
     uint32 const expansion = sWorld->GetWowPatch() > WOW_PATCH_240 ? 2 : 1;
     //                                                 
-    QueryResult result = WorldDatabase.PQuery("SELECT entry, difficulty_entry_1, modelid1, modelid2, modelid3, "
+    QueryResult result = WorldDatabase.PQuery("SELECT entry, ANY_VALUE(difficulty_entry_1), ANY_VALUE(modelid1), ANY_VALUE(modelid2), ANY_VALUE(modelid3), "
                                              //   5
-                                             "modelid4, name, subname, IconName, gossip_menu_id, ct.minlevel, ct.maxlevel, exp, faction, npcflag, speed_walk, speed_run, "
+                                             "ANY_VALUE(modelid4), ANY_VALUE(name), ANY_VALUE(subname), ANY_VALUE(IconName), ANY_VALUE(gossip_menu_id), ANY_VALUE(ct.minlevel), ANY_VALUE(ct.maxlevel), ANY_VALUE(exp), ANY_VALUE(faction), ANY_VALUE(npcflag), ANY_VALUE(speed_walk), ANY_VALUE(speed_run), "
                                              //
-                                             "scale, `rank`, dmgschool, BaseAttackTime, RangeAttackTime, BaseVariance, RangeVariance, unit_class, unit_flags, unit_flags2, dynamicflags, family,"
+                                             "ANY_VALUE(scale), ANY_VALUE(`rank`), ANY_VALUE(dmgschool), ANY_VALUE(BaseAttackTime), ANY_VALUE(RangeAttackTime), ANY_VALUE(BaseVariance), ANY_VALUE(RangeVariance), ANY_VALUE(unit_class), ANY_VALUE(unit_flags), ANY_VALUE(unit_flags2), ANY_VALUE(dynamicflags), ANY_VALUE(family),"
                                              //   
-                                             "type,"
+                                             "ANY_VALUE(type),"
                                              //  
-                                             "type_flags, lootid, pickpocketloot, skinloot, resistance1, resistance2, resistance3, resistance4, resistance5, resistance6, spell1, "
+                                             "ANY_VALUE(type_flags), ANY_VALUE(lootid), ANY_VALUE(pickpocketloot), ANY_VALUE(skinloot), ANY_VALUE(resistance1), ANY_VALUE(resistance2), ANY_VALUE(resistance3), ANY_VALUE(resistance4), ANY_VALUE(resistance5), ANY_VALUE(resistance6), ANY_VALUE(spell1), "
                                              //
-                                             "spell2, spell3, spell4, spell5, spell6, spell7, spell8, PetSpellDataId, mingold, maxgold, AIName, MovementType, "
+                                             "ANY_VALUE(spell2), ANY_VALUE(spell3), ANY_VALUE(spell4), ANY_VALUE(spell5), ANY_VALUE(spell6), ANY_VALUE(spell7), ANY_VALUE(spell8), ANY_VALUE(PetSpellDataId), ANY_VALUE(mingold), ANY_VALUE(maxgold), ANY_VALUE(AIName), ANY_VALUE(MovementType), "
                                              //           
-                                             "HealthModifier, ManaModifier, ArmorModifier, DamageModifier, ExperienceModifier, RacialLeader, RegenHealth, "
+                                             "ANY_VALUE(HealthModifier), ANY_VALUE(ManaModifier), ANY_VALUE(ArmorModifier), ANY_VALUE(DamageModifier), ANY_VALUE(ExperienceModifier), ANY_VALUE(RacialLeader), ANY_VALUE(RegenHealth), "
                                              //   
-                                             "mechanic_immune_mask, spell_school_immune_mask, flags_extra, ScriptName, ctm.Ground, ctm.Swim, ctm.Flight, ctm.Rooted, df.Flags1, df.Flags2, df.Flags3, df.Flags4, df.Flags5, patch "
+                                             "ANY_VALUE(mechanic_immune_mask), ANY_VALUE(spell_school_immune_mask), ANY_VALUE(flags_extra), ANY_VALUE(ScriptName), ANY_VALUE(ctm.Ground), ANY_VALUE(ctm.Swim), ANY_VALUE(ctm.Flight), ANY_VALUE(ctm.Rooted), ANY_VALUE(df.Flags1), ANY_VALUE(df.Flags2), ANY_VALUE(df.Flags3), ANY_VALUE(df.Flags4), ANY_VALUE(df.Flags5), ANY_VALUE(patch) "
                                              //   
                                              "FROM creature_template ct "
                                              "LEFT JOIN creature_template_movement ctm ON ct.entry = ctm.CreatureId "
@@ -1082,7 +1082,7 @@ void ObjectMgr::LoadCreatureModelInfo()
 
     uint32 oldMSTime = GetMSTime();
 
-    QueryResult result = WorldDatabase.PQuery("SELECT modelid, bounding_radius, combat_reach, gender, modelid_other_gender, MAX(patch) FROM creature_model_info WHERE patch <= %u GROUP BY modelid",  sWorld->GetWowPatch());
+    QueryResult result = WorldDatabase.PQuery("SELECT modelid, ANY_VALUE(bounding_radius), ANY_VALUE(combat_reach), ANY_VALUE(gender), ANY_VALUE(modelid_other_gender), MAX(patch) FROM creature_model_info WHERE patch <= %u GROUP BY modelid",  sWorld->GetWowPatch());
 
     if (!result)
     {
@@ -6612,7 +6612,7 @@ void ObjectMgr::LoadPointsOfInterest()
     uint32 count = 0;
 
     //                                                0       1          2        3     4        5        6
-    QueryResult result = WorldDatabase.PQuery("SELECT ID, PositionX, PositionY, Icon, Flags, Importance, Name, MAX(patch) FROM points_of_interest WHERE patch <= %u GROUP BY ID", sWorld->GetWowPatch());
+    QueryResult result = WorldDatabase.PQuery("SELECT ID, ANY_VALUE(PositionX), ANY_VALUE(PositionY), ANY_VALUE(Icon), ANY_VALUE(Flags), ANY_VALUE(Importance), ANY_VALUE(Name), MAX(patch) FROM points_of_interest WHERE patch <= %u GROUP BY ID", sWorld->GetWowPatch());
 
     if (!result)
     {

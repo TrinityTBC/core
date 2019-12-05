@@ -53,7 +53,7 @@ Generator command line args
                                     this command will build the map regardless of --skip* option settings
                                     if you do not specify a map number, builds all maps that pass the filters specified by --skip* options
 									
---quick             []              Sunstrider option: No additional extraction steps. This will produce mmaps equivalent to TrinityCore ones. Will accelerate the extraction a bit but will drop some minor improvements.
+--quick             []              TrinityTBC option: No additional extraction steps. This will produce mmaps equivalent to TrinityCore ones. Will accelerate the extraction a bit but will drop some minor improvements.
 
 
 examples:

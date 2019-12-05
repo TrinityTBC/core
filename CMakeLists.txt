@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.11)
 set(CMAKE_DISABLE_SOURCE_CHANGES ON)
 set(CMAKE_DISABLE_IN_SOURCE_BUILD ON) 
 
-project(Sunstrider)
+project(TrinityTBC)
 
 if (POLICY CMP0074)
   cmake_policy(SET CMP0074 OLD) # New cmake 1.12 policy, keep the old behavior for now 

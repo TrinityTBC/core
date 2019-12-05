@@ -63,8 +63,8 @@ namespace fs = boost::filesystem;
 
 #ifdef WIN32
 #include "ServiceWin32.h"
-char serviceName[] = "Sunstriderd";
-char serviceLongName[] = "Sunstrider service";
+char serviceName[] = "TrinityTBCd";
+char serviceLongName[] = "TrinityTBC service";
 char serviceDescription[] = "WoW 2.4.3 Server Emulator service";
 /*
  * -1 - not in service mode
@@ -139,7 +139,7 @@ void handle_segv()
 }
 
 
-/// Launch the Sunstrider server
+/// Launch the TrinityTBC server
 extern int main(int argc, char **argv)
 {
 #if defined(__has_feature)

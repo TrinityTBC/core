@@ -1,3 +1,8 @@
+-- MySQL dump 10.13  Distrib 5.7.28, for Linux (x86_64)
+--
+-- Host: 127.0.0.1    Database: logs
+-- ------------------------------------------------------
+-- Server version	5.7.23
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -25,6 +30,15 @@ CREATE TABLE `account_ip` (
   PRIMARY KEY (`id`,`time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `account_ip`
+--
+
+LOCK TABLES `account_ip` WRITE;
+/*!40000 ALTER TABLE `account_ip` DISABLE KEYS */;
+/*!40000 ALTER TABLE `account_ip` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `arena_match`
@@ -101,6 +115,15 @@ CREATE TABLE `arena_match` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `arena_match`
+--
+
+LOCK TABLES `arena_match` WRITE;
+/*!40000 ALTER TABLE `arena_match` DISABLE KEYS */;
+/*!40000 ALTER TABLE `arena_match` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `arena_season_stats`
 --
 
@@ -115,6 +138,15 @@ CREATE TABLE `arena_season_stats` (
   PRIMARY KEY (`teamid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `arena_season_stats`
+--
+
+LOCK TABLES `arena_season_stats` WRITE;
+/*!40000 ALTER TABLE `arena_season_stats` DISABLE KEYS */;
+/*!40000 ALTER TABLE `arena_season_stats` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `arena_team_event`
@@ -137,6 +169,15 @@ CREATE TABLE `arena_team_event` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `arena_team_event`
+--
+
+LOCK TABLES `arena_team_event` WRITE;
+/*!40000 ALTER TABLE `arena_team_event` DISABLE KEYS */;
+/*!40000 ALTER TABLE `arena_team_event` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `bg_stats`
 --
 
@@ -154,6 +195,15 @@ CREATE TABLE `bg_stats` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bg_stats`
+--
+
+LOCK TABLES `bg_stats` WRITE;
+/*!40000 ALTER TABLE `bg_stats` DISABLE KEYS */;
+/*!40000 ALTER TABLE `bg_stats` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `boss_down`
@@ -178,6 +228,15 @@ CREATE TABLE `boss_down` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `boss_down`
+--
+
+LOCK TABLES `boss_down` WRITE;
+/*!40000 ALTER TABLE `boss_down` DISABLE KEYS */;
+/*!40000 ALTER TABLE `boss_down` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `char_auction_create`
 --
 
@@ -197,6 +256,15 @@ CREATE TABLE `char_auction_create` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `char_auction_create`
+--
+
+LOCK TABLES `char_auction_create` WRITE;
+/*!40000 ALTER TABLE `char_auction_create` DISABLE KEYS */;
+/*!40000 ALTER TABLE `char_auction_create` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `char_auction_won`
@@ -219,6 +287,15 @@ CREATE TABLE `char_auction_won` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `char_auction_won`
+--
+
+LOCK TABLES `char_auction_won` WRITE;
+/*!40000 ALTER TABLE `char_auction_won` DISABLE KEYS */;
+/*!40000 ALTER TABLE `char_auction_won` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `char_chat`
@@ -244,6 +321,15 @@ CREATE TABLE `char_chat` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `char_chat`
+--
+
+LOCK TABLES `char_chat` WRITE;
+/*!40000 ALTER TABLE `char_chat` DISABLE KEYS */;
+/*!40000 ALTER TABLE `char_chat` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `char_delete`
 --
 
@@ -261,6 +347,15 @@ CREATE TABLE `char_delete` (
   KEY `idx_acct` (`account`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `char_delete`
+--
+
+LOCK TABLES `char_delete` WRITE;
+/*!40000 ALTER TABLE `char_delete` DISABLE KEYS */;
+/*!40000 ALTER TABLE `char_delete` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `char_enchant`
@@ -286,6 +381,15 @@ CREATE TABLE `char_enchant` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `char_enchant`
+--
+
+LOCK TABLES `char_enchant` WRITE;
+/*!40000 ALTER TABLE `char_enchant` DISABLE KEYS */;
+/*!40000 ALTER TABLE `char_enchant` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `char_guild_money_deposit`
 --
 
@@ -306,6 +410,15 @@ CREATE TABLE `char_guild_money_deposit` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `char_guild_money_deposit`
+--
+
+LOCK TABLES `char_guild_money_deposit` WRITE;
+/*!40000 ALTER TABLE `char_guild_money_deposit` DISABLE KEYS */;
+/*!40000 ALTER TABLE `char_guild_money_deposit` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `char_item_delete`
 --
 
@@ -324,6 +437,15 @@ CREATE TABLE `char_item_delete` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=448 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `char_item_delete`
+--
+
+LOCK TABLES `char_item_delete` WRITE;
+/*!40000 ALTER TABLE `char_item_delete` DISABLE KEYS */;
+/*!40000 ALTER TABLE `char_item_delete` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `char_item_guild_bank`
@@ -349,6 +471,15 @@ CREATE TABLE `char_item_guild_bank` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `char_item_guild_bank`
+--
+
+LOCK TABLES `char_item_guild_bank` WRITE;
+/*!40000 ALTER TABLE `char_item_guild_bank` DISABLE KEYS */;
+/*!40000 ALTER TABLE `char_item_guild_bank` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `char_item_vendor`
 --
 
@@ -371,6 +502,15 @@ CREATE TABLE `char_item_vendor` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `char_item_vendor`
+--
+
+LOCK TABLES `char_item_vendor` WRITE;
+/*!40000 ALTER TABLE `char_item_vendor` DISABLE KEYS */;
+/*!40000 ALTER TABLE `char_item_vendor` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `char_rename`
 --
 
@@ -390,6 +530,15 @@ CREATE TABLE `char_rename` (
   KEY `idx_char_rename_guid` (`guid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `char_rename`
+--
+
+LOCK TABLES `char_rename` WRITE;
+/*!40000 ALTER TABLE `char_rename` DISABLE KEYS */;
+/*!40000 ALTER TABLE `char_rename` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `char_trade`
@@ -415,6 +564,15 @@ CREATE TABLE `char_trade` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `char_trade`
+--
+
+LOCK TABLES `char_trade` WRITE;
+/*!40000 ALTER TABLE `char_trade` DISABLE KEYS */;
+/*!40000 ALTER TABLE `char_trade` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `char_trade_items`
 --
 
@@ -433,6 +591,15 @@ CREATE TABLE `char_trade_items` (
   CONSTRAINT `char_trade_items_ibfk_1` FOREIGN KEY (`trade_id`) REFERENCES `char_trade` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `char_trade_items`
+--
+
+LOCK TABLES `char_trade_items` WRITE;
+/*!40000 ALTER TABLE `char_trade_items` DISABLE KEYS */;
+/*!40000 ALTER TABLE `char_trade_items` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `gm_command`
@@ -467,6 +634,15 @@ CREATE TABLE `gm_command` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `gm_command`
+--
+
+LOCK TABLES `gm_command` WRITE;
+/*!40000 ALTER TABLE `gm_command` DISABLE KEYS */;
+/*!40000 ALTER TABLE `gm_command` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `gm_sanction`
 --
 
@@ -490,6 +666,15 @@ CREATE TABLE `gm_sanction` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `gm_sanction`
+--
+
+LOCK TABLES `gm_sanction` WRITE;
+/*!40000 ALTER TABLE `gm_sanction` DISABLE KEYS */;
+/*!40000 ALTER TABLE `gm_sanction` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `gm_sanction_remove`
 --
 
@@ -509,6 +694,15 @@ CREATE TABLE `gm_sanction_remove` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `gm_sanction_remove`
+--
+
+LOCK TABLES `gm_sanction_remove` WRITE;
+/*!40000 ALTER TABLE `gm_sanction_remove` DISABLE KEYS */;
+/*!40000 ALTER TABLE `gm_sanction_remove` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `mail`
@@ -535,6 +729,15 @@ CREATE TABLE `mail` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `mail`
+--
+
+LOCK TABLES `mail` WRITE;
+/*!40000 ALTER TABLE `mail` DISABLE KEYS */;
+/*!40000 ALTER TABLE `mail` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `mail_items`
 --
 
@@ -553,6 +756,15 @@ CREATE TABLE `mail_items` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `mail_items`
+--
+
+LOCK TABLES `mail_items` WRITE;
+/*!40000 ALTER TABLE `mail_items` DISABLE KEYS */;
+/*!40000 ALTER TABLE `mail_items` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `mon_classes`
 --
 
@@ -567,6 +779,15 @@ CREATE TABLE `mon_classes` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=3645712 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `mon_classes`
+--
+
+LOCK TABLES `mon_classes` WRITE;
+/*!40000 ALTER TABLE `mon_classes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `mon_classes` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `mon_maps`
@@ -585,6 +806,15 @@ CREATE TABLE `mon_maps` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `mon_maps`
+--
+
+LOCK TABLES `mon_maps` WRITE;
+/*!40000 ALTER TABLE `mon_maps` DISABLE KEYS */;
+/*!40000 ALTER TABLE `mon_maps` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `mon_players`
 --
 
@@ -599,6 +829,15 @@ CREATE TABLE `mon_players` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=405080 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `mon_players`
+--
+
+LOCK TABLES `mon_players` WRITE;
+/*!40000 ALTER TABLE `mon_players` DISABLE KEYS */;
+/*!40000 ALTER TABLE `mon_players` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `mon_races`
@@ -617,6 +856,15 @@ CREATE TABLE `mon_races` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `mon_races`
+--
+
+LOCK TABLES `mon_races` WRITE;
+/*!40000 ALTER TABLE `mon_races` DISABLE KEYS */;
+/*!40000 ALTER TABLE `mon_races` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `mon_timediff`
 --
 
@@ -630,6 +878,15 @@ CREATE TABLE `mon_timediff` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=404596 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `mon_timediff`
+--
+
+LOCK TABLES `mon_timediff` WRITE;
+/*!40000 ALTER TABLE `mon_timediff` DISABLE KEYS */;
+/*!40000 ALTER TABLE `mon_timediff` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `phishing`
@@ -649,6 +906,65 @@ CREATE TABLE `phishing` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `phishing`
+--
+
+LOCK TABLES `phishing` WRITE;
+/*!40000 ALTER TABLE `phishing` DISABLE KEYS */;
+/*!40000 ALTER TABLE `phishing` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `updates`
+--
+
+DROP TABLE IF EXISTS `updates`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `updates` (
+  `name` varchar(200) NOT NULL COMMENT 'filename with extension of the update.',
+  `hash` char(40) DEFAULT '' COMMENT 'sha1 hash of the sql file.',
+  `state` enum('RELEASED','ARCHIVED') NOT NULL DEFAULT 'RELEASED' COMMENT 'defines if an update is released or archived.',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'timestamp when the query was applied.',
+  `speed` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'time the query takes to apply in ms.',
+  PRIMARY KEY (`name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='List of all applied updates in this database.';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `updates`
+--
+
+LOCK TABLES `updates` WRITE;
+/*!40000 ALTER TABLE `updates` DISABLE KEYS */;
+/*!40000 ALTER TABLE `updates` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `updates_include`
+--
+
+DROP TABLE IF EXISTS `updates_include`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `updates_include` (
+  `path` varchar(200) NOT NULL COMMENT 'directory to include. $ means relative to the source directory.',
+  `state` enum('RELEASED','ARCHIVED') NOT NULL DEFAULT 'RELEASED' COMMENT 'defines if the directory contains released or archived updates.',
+  PRIMARY KEY (`path`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='List of directories where we want to include sql updates.';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `updates_include`
+--
+
+LOCK TABLES `updates_include` WRITE;
+/*!40000 ALTER TABLE `updates_include` DISABLE KEYS */;
+INSERT INTO `updates_include` VALUES ('$/sql/updates/logs','RELEASED'),('$/sql/custom/logs','RELEASED'),('$/sql/old/2.4.3/logs','ARCHIVED');
+/*!40000 ALTER TABLE `updates_include` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `warden_fails`
 --
 
@@ -666,32 +982,14 @@ CREATE TABLE `warden_fails` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `warden_fails`
+--
 
-DROP TABLE IF EXISTS `updates_include`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `updates_include` (
-  `path` varchar(200) NOT NULL COMMENT 'directory to include. $ means relative to the source directory.',
-  `state` enum('RELEASED','ARCHIVED') NOT NULL DEFAULT 'RELEASED' COMMENT 'defines if the directory contains released or archived updates.',
-  PRIMARY KEY (`path`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='List of directories where we want to include sql updates.';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
-INSERT INTO `updates_include` VALUES ('$/sql/updates/logs','RELEASED'),('$/sql/custom/logs','RELEASED'),('$/sql/old/2.4.3/logs','ARCHIVED');
-
-DROP TABLE IF EXISTS `updates`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `updates` (
-  `name` varchar(200) NOT NULL COMMENT 'filename with extension of the update.',
-  `hash` char(40) DEFAULT '' COMMENT 'sha1 hash of the sql file.',
-  `state` enum('RELEASED','ARCHIVED') NOT NULL DEFAULT 'RELEASED' COMMENT 'defines if an update is released or archived.',
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'timestamp when the query was applied.',
-  `speed` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'time the query takes to apply in ms.',
-  PRIMARY KEY (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='List of all applied updates in this database.';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
+LOCK TABLES `warden_fails` WRITE;
+/*!40000 ALTER TABLE `warden_fails` DISABLE KEYS */;
+/*!40000 ALTER TABLE `warden_fails` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -701,3 +999,5 @@ CREATE TABLE `updates` (
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2019-12-05 11:19:35

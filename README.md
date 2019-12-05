@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/TrinityTBC/core.svg?branch=master)](https://travis-ci.org/TrinityTBC/core)
+
 # Introduction
 
 TrinityTBC is a WoW 2.4.3 emulator derived from the [Suntrider-legacy core](https://github.com/SunstriderEmu/sunstrider-legacy).

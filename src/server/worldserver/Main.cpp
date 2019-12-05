@@ -324,6 +324,7 @@ extern int main(int argc, char **argv)
 
             ///- Clean database before leaving
             ClearOnlineAccounts();
+            StopDB();
         });
 
         // Launch CliRunnable thread

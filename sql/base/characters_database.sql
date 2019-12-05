@@ -1,3 +1,8 @@
+-- MySQL dump 10.13  Distrib 5.7.28, for Linux (x86_64)
+--
+-- Host: 127.0.0.1    Database: characters
+-- ------------------------------------------------------
+-- Server version	5.7.23
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -32,6 +37,15 @@ CREATE TABLE `account_tutorial` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `account_tutorial`
+--
+
+LOCK TABLES `account_tutorial` WRITE;
+/*!40000 ALTER TABLE `account_tutorial` DISABLE KEYS */;
+/*!40000 ALTER TABLE `account_tutorial` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `addons`
 --
 
@@ -45,6 +59,15 @@ CREATE TABLE `addons` (
   PRIMARY KEY (`name`,`gamebuild`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Addons';
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `addons`
+--
+
+LOCK TABLES `addons` WRITE;
+/*!40000 ALTER TABLE `addons` DISABLE KEYS */;
+/*!40000 ALTER TABLE `addons` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `ai_playerbot_guild_names`
@@ -61,6 +84,15 @@ CREATE TABLE `ai_playerbot_guild_names` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=MyISAM AUTO_INCREMENT=642 DEFAULT CHARSET=utf8 COMMENT='PlayerbotAI guild names';
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ai_playerbot_guild_names`
+--
+
+LOCK TABLES `ai_playerbot_guild_names` WRITE;
+/*!40000 ALTER TABLE `ai_playerbot_guild_names` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ai_playerbot_guild_names` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `ai_playerbot_guild_tasks`
@@ -86,6 +118,15 @@ CREATE TABLE `ai_playerbot_guild_tasks` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `ai_playerbot_guild_tasks`
+--
+
+LOCK TABLES `ai_playerbot_guild_tasks` WRITE;
+/*!40000 ALTER TABLE `ai_playerbot_guild_tasks` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ai_playerbot_guild_tasks` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `ai_playerbot_names`
 --
 
@@ -106,6 +147,15 @@ CREATE TABLE `ai_playerbot_names` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=MyISAM AUTO_INCREMENT=100001 DEFAULT CHARSET=utf8 COMMENT='PlayerbotAI AutoBot names';
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ai_playerbot_names`
+--
+
+LOCK TABLES `ai_playerbot_names` WRITE;
+/*!40000 ALTER TABLE `ai_playerbot_names` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ai_playerbot_names` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `ai_playerbot_random_bots`
@@ -131,6 +181,15 @@ CREATE TABLE `ai_playerbot_random_bots` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `ai_playerbot_random_bots`
+--
+
+LOCK TABLES `ai_playerbot_random_bots` WRITE;
+/*!40000 ALTER TABLE `ai_playerbot_random_bots` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ai_playerbot_random_bots` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `ai_playerbot_speech`
 --
 
@@ -147,6 +206,15 @@ CREATE TABLE `ai_playerbot_speech` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `ai_playerbot_speech`
+--
+
+LOCK TABLES `ai_playerbot_speech` WRITE;
+/*!40000 ALTER TABLE `ai_playerbot_speech` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ai_playerbot_speech` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `ai_playerbot_speech_probability`
 --
 
@@ -160,6 +228,15 @@ CREATE TABLE `ai_playerbot_speech_probability` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ai_playerbot_speech_probability`
+--
+
+LOCK TABLES `ai_playerbot_speech_probability` WRITE;
+/*!40000 ALTER TABLE `ai_playerbot_speech_probability` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ai_playerbot_speech_probability` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `arena_team`
@@ -183,6 +260,15 @@ CREATE TABLE `arena_team` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `arena_team`
+--
+
+LOCK TABLES `arena_team` WRITE;
+/*!40000 ALTER TABLE `arena_team` DISABLE KEYS */;
+/*!40000 ALTER TABLE `arena_team` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `arena_team_member`
 --
 
@@ -200,6 +286,15 @@ CREATE TABLE `arena_team_member` (
   PRIMARY KEY (`arenateamid`,`guid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `arena_team_member`
+--
+
+LOCK TABLES `arena_team_member` WRITE;
+/*!40000 ALTER TABLE `arena_team_member` DISABLE KEYS */;
+/*!40000 ALTER TABLE `arena_team_member` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `arena_team_stats`
@@ -220,6 +315,15 @@ CREATE TABLE `arena_team_stats` (
   PRIMARY KEY (`arenateamid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `arena_team_stats`
+--
+
+LOCK TABLES `arena_team_stats` WRITE;
+/*!40000 ALTER TABLE `arena_team_stats` DISABLE KEYS */;
+/*!40000 ALTER TABLE `arena_team_stats` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `auctionhouse`
@@ -245,6 +349,15 @@ CREATE TABLE `auctionhouse` (
   UNIQUE KEY `item_guid` (`itemguid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auctionhouse`
+--
+
+LOCK TABLES `auctionhouse` WRITE;
+/*!40000 ALTER TABLE `auctionhouse` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auctionhouse` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `auctionhousebot`
@@ -300,6 +413,15 @@ CREATE TABLE `auctionhousebot` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `auctionhousebot`
+--
+
+LOCK TABLES `auctionhousebot` WRITE;
+/*!40000 ALTER TABLE `auctionhousebot` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auctionhousebot` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `banned_addons`
 --
 
@@ -317,6 +439,15 @@ CREATE TABLE `banned_addons` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `banned_addons`
+--
+
+LOCK TABLES `banned_addons` WRITE;
+/*!40000 ALTER TABLE `banned_addons` DISABLE KEYS */;
+/*!40000 ALTER TABLE `banned_addons` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `bugreport`
 --
 
@@ -330,6 +461,15 @@ CREATE TABLE `bugreport` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='Debug System';
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bugreport`
+--
+
+LOCK TABLES `bugreport` WRITE;
+/*!40000 ALTER TABLE `bugreport` DISABLE KEYS */;
+/*!40000 ALTER TABLE `bugreport` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `channel_ban`
@@ -349,6 +489,15 @@ CREATE TABLE `channel_ban` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `channel_ban`
+--
+
+LOCK TABLES `channel_ban` WRITE;
+/*!40000 ALTER TABLE `channel_ban` DISABLE KEYS */;
+/*!40000 ALTER TABLE `channel_ban` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `character_action`
 --
 
@@ -364,6 +513,15 @@ CREATE TABLE `character_action` (
   PRIMARY KEY (`guid`,`button`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='Player System';
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `character_action`
+--
+
+LOCK TABLES `character_action` WRITE;
+/*!40000 ALTER TABLE `character_action` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_action` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `character_aura`
@@ -387,6 +545,15 @@ CREATE TABLE `character_aura` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `character_aura`
+--
+
+LOCK TABLES `character_aura` WRITE;
+/*!40000 ALTER TABLE `character_aura` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_aura` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `character_banned`
 --
 
@@ -403,6 +570,19 @@ CREATE TABLE `character_banned` (
   PRIMARY KEY (`guid`,`bandate`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Ban List';
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `character_banned`
+--
+
+LOCK TABLES `character_banned` WRITE;
+/*!40000 ALTER TABLE `character_banned` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_banned` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `character_battleground_data`
+--
 
 DROP TABLE IF EXISTS `character_battleground_data`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -421,6 +601,16 @@ CREATE TABLE `character_battleground_data` (
   `mountSpell` mediumint(8) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`guid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Player System';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `character_battleground_data`
+--
+
+LOCK TABLES `character_battleground_data` WRITE;
+/*!40000 ALTER TABLE `character_battleground_data` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_battleground_data` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `character_bgcoord`
@@ -443,6 +633,15 @@ CREATE TABLE `character_bgcoord` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `character_bgcoord`
+--
+
+LOCK TABLES `character_bgcoord` WRITE;
+/*!40000 ALTER TABLE `character_bgcoord` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_bgcoord` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `character_custom_xp`
 --
 
@@ -455,6 +654,15 @@ CREATE TABLE `character_custom_xp` (
   PRIMARY KEY (`guid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `character_custom_xp`
+--
+
+LOCK TABLES `character_custom_xp` WRITE;
+/*!40000 ALTER TABLE `character_custom_xp` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_custom_xp` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `character_declinedname`
@@ -475,6 +683,15 @@ CREATE TABLE `character_declinedname` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `character_declinedname`
+--
+
+LOCK TABLES `character_declinedname` WRITE;
+/*!40000 ALTER TABLE `character_declinedname` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_declinedname` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `character_gifts`
 --
 
@@ -490,6 +707,15 @@ CREATE TABLE `character_gifts` (
   KEY `idx_guid` (`guid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `character_gifts`
+--
+
+LOCK TABLES `character_gifts` WRITE;
+/*!40000 ALTER TABLE `character_gifts` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_gifts` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `character_homebind`
@@ -510,6 +736,15 @@ CREATE TABLE `character_homebind` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `character_homebind`
+--
+
+LOCK TABLES `character_homebind` WRITE;
+/*!40000 ALTER TABLE `character_homebind` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_homebind` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `character_instance`
 --
 
@@ -524,6 +759,15 @@ CREATE TABLE `character_instance` (
   KEY `instance` (`instance`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `character_instance`
+--
+
+LOCK TABLES `character_instance` WRITE;
+/*!40000 ALTER TABLE `character_instance` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_instance` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `character_inventory`
@@ -542,6 +786,15 @@ CREATE TABLE `character_inventory` (
   KEY `idx_guid` (`guid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='Player System';
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `character_inventory`
+--
+
+LOCK TABLES `character_inventory` WRITE;
+/*!40000 ALTER TABLE `character_inventory` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_inventory` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `character_pet`
@@ -580,6 +833,15 @@ CREATE TABLE `character_pet` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `character_pet`
+--
+
+LOCK TABLES `character_pet` WRITE;
+/*!40000 ALTER TABLE `character_pet` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_pet` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `character_pet_declinedname`
 --
 
@@ -598,6 +860,15 @@ CREATE TABLE `character_pet_declinedname` (
   KEY `owner_key` (`owner`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `character_pet_declinedname`
+--
+
+LOCK TABLES `character_pet_declinedname` WRITE;
+/*!40000 ALTER TABLE `character_pet_declinedname` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_pet_declinedname` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `character_queststatus`
@@ -626,6 +897,15 @@ CREATE TABLE `character_queststatus` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `character_queststatus`
+--
+
+LOCK TABLES `character_queststatus` WRITE;
+/*!40000 ALTER TABLE `character_queststatus` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_queststatus` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `character_queststatus_daily`
 --
 
@@ -640,6 +920,15 @@ CREATE TABLE `character_queststatus_daily` (
   KEY `idx_guid` (`guid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='Player System';
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `character_queststatus_daily`
+--
+
+LOCK TABLES `character_queststatus_daily` WRITE;
+/*!40000 ALTER TABLE `character_queststatus_daily` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_queststatus_daily` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `character_reputation`
@@ -658,6 +947,15 @@ CREATE TABLE `character_reputation` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `character_reputation`
+--
+
+LOCK TABLES `character_reputation` WRITE;
+/*!40000 ALTER TABLE `character_reputation` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_reputation` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `character_skills`
 --
 
@@ -672,6 +970,15 @@ CREATE TABLE `character_skills` (
   PRIMARY KEY (`guid`,`skill`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='Player System';
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `character_skills`
+--
+
+LOCK TABLES `character_skills` WRITE;
+/*!40000 ALTER TABLE `character_skills` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_skills` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `character_social`
@@ -694,6 +1001,15 @@ CREATE TABLE `character_social` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `character_social`
+--
+
+LOCK TABLES `character_social` WRITE;
+/*!40000 ALTER TABLE `character_social` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_social` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `character_spell`
 --
 
@@ -709,6 +1025,15 @@ CREATE TABLE `character_spell` (
   PRIMARY KEY (`guid`,`spell`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='Player System';
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `character_spell`
+--
+
+LOCK TABLES `character_spell` WRITE;
+/*!40000 ALTER TABLE `character_spell` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_spell` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `character_spell_cooldown`
@@ -727,6 +1052,15 @@ CREATE TABLE `character_spell_cooldown` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `character_spell_cooldown`
+--
+
+LOCK TABLES `character_spell_cooldown` WRITE;
+/*!40000 ALTER TABLE `character_spell_cooldown` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_spell_cooldown` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `character_ticket`
 --
 
@@ -741,6 +1075,15 @@ CREATE TABLE `character_ticket` (
   PRIMARY KEY (`ticket_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='Player System';
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `character_ticket`
+--
+
+LOCK TABLES `character_ticket` WRITE;
+/*!40000 ALTER TABLE `character_ticket` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_ticket` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `characters`
@@ -826,6 +1169,15 @@ CREATE TABLE `characters` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `characters`
+--
+
+LOCK TABLES `characters` WRITE;
+/*!40000 ALTER TABLE `characters` DISABLE KEYS */;
+/*!40000 ALTER TABLE `characters` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `completed_quests`
 --
 
@@ -838,6 +1190,15 @@ CREATE TABLE `completed_quests` (
   PRIMARY KEY (`guid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `completed_quests`
+--
+
+LOCK TABLES `completed_quests` WRITE;
+/*!40000 ALTER TABLE `completed_quests` DISABLE KEYS */;
+/*!40000 ALTER TABLE `completed_quests` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `corpse`
@@ -866,6 +1227,15 @@ CREATE TABLE `corpse` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `corpse`
+--
+
+LOCK TABLES `corpse` WRITE;
+/*!40000 ALTER TABLE `corpse` DISABLE KEYS */;
+/*!40000 ALTER TABLE `corpse` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `creature_respawn`
 --
 
@@ -883,6 +1253,15 @@ CREATE TABLE `creature_respawn` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `creature_respawn`
+--
+
+LOCK TABLES `creature_respawn` WRITE;
+/*!40000 ALTER TABLE `creature_respawn` DISABLE KEYS */;
+/*!40000 ALTER TABLE `creature_respawn` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `game_event_condition_save`
 --
 
@@ -896,6 +1275,15 @@ CREATE TABLE `game_event_condition_save` (
   PRIMARY KEY (`event_id`,`condition_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `game_event_condition_save`
+--
+
+LOCK TABLES `game_event_condition_save` WRITE;
+/*!40000 ALTER TABLE `game_event_condition_save` DISABLE KEYS */;
+/*!40000 ALTER TABLE `game_event_condition_save` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `game_event_save`
@@ -913,6 +1301,15 @@ CREATE TABLE `game_event_save` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `game_event_save`
+--
+
+LOCK TABLES `game_event_save` WRITE;
+/*!40000 ALTER TABLE `game_event_save` DISABLE KEYS */;
+/*!40000 ALTER TABLE `game_event_save` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `gameobject_respawn`
 --
 
@@ -928,6 +1325,15 @@ CREATE TABLE `gameobject_respawn` (
   KEY `idx_instance` (`instanceId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Grid Loading System';
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `gameobject_respawn`
+--
+
+LOCK TABLES `gameobject_respawn` WRITE;
+/*!40000 ALTER TABLE `gameobject_respawn` DISABLE KEYS */;
+/*!40000 ALTER TABLE `gameobject_respawn` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `gm_tickets`
@@ -954,6 +1360,15 @@ CREATE TABLE `gm_tickets` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `gm_tickets`
+--
+
+LOCK TABLES `gm_tickets` WRITE;
+/*!40000 ALTER TABLE `gm_tickets` DISABLE KEYS */;
+/*!40000 ALTER TABLE `gm_tickets` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `group_instance`
 --
 
@@ -970,6 +1385,15 @@ CREATE TABLE `group_instance` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `group_instance`
+--
+
+LOCK TABLES `group_instance` WRITE;
+/*!40000 ALTER TABLE `group_instance` DISABLE KEYS */;
+/*!40000 ALTER TABLE `group_instance` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `group_member`
 --
 
@@ -984,6 +1408,15 @@ CREATE TABLE `group_member` (
   PRIMARY KEY (`leaderGuid`,`memberGuid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Groups';
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `group_member`
+--
+
+LOCK TABLES `group_member` WRITE;
+/*!40000 ALTER TABLE `group_member` DISABLE KEYS */;
+/*!40000 ALTER TABLE `group_member` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `groups`
@@ -1014,6 +1447,15 @@ CREATE TABLE `groups` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `groups`
+--
+
+LOCK TABLES `groups` WRITE;
+/*!40000 ALTER TABLE `groups` DISABLE KEYS */;
+/*!40000 ALTER TABLE `groups` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `guild`
 --
 
@@ -1042,6 +1484,15 @@ CREATE TABLE `guild` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `guild`
+--
+
+LOCK TABLES `guild` WRITE;
+/*!40000 ALTER TABLE `guild` DISABLE KEYS */;
+/*!40000 ALTER TABLE `guild` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `guild_bank_eventlog`
 --
 
@@ -1064,6 +1515,15 @@ CREATE TABLE `guild_bank_eventlog` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `guild_bank_eventlog`
+--
+
+LOCK TABLES `guild_bank_eventlog` WRITE;
+/*!40000 ALTER TABLE `guild_bank_eventlog` DISABLE KEYS */;
+/*!40000 ALTER TABLE `guild_bank_eventlog` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `guild_bank_item`
 --
 
@@ -1080,6 +1540,15 @@ CREATE TABLE `guild_bank_item` (
   KEY `guildid_key` (`guildid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `guild_bank_item`
+--
+
+LOCK TABLES `guild_bank_item` WRITE;
+/*!40000 ALTER TABLE `guild_bank_item` DISABLE KEYS */;
+/*!40000 ALTER TABLE `guild_bank_item` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `guild_bank_right`
@@ -1100,6 +1569,15 @@ CREATE TABLE `guild_bank_right` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `guild_bank_right`
+--
+
+LOCK TABLES `guild_bank_right` WRITE;
+/*!40000 ALTER TABLE `guild_bank_right` DISABLE KEYS */;
+/*!40000 ALTER TABLE `guild_bank_right` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `guild_bank_tab`
 --
 
@@ -1116,6 +1594,15 @@ CREATE TABLE `guild_bank_tab` (
   KEY `guildid_key` (`guildid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `guild_bank_tab`
+--
+
+LOCK TABLES `guild_bank_tab` WRITE;
+/*!40000 ALTER TABLE `guild_bank_tab` DISABLE KEYS */;
+/*!40000 ALTER TABLE `guild_bank_tab` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `guild_eventlog`
@@ -1136,6 +1623,15 @@ CREATE TABLE `guild_eventlog` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Guild Eventlog';
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `guild_eventlog`
+--
+
+LOCK TABLES `guild_eventlog` WRITE;
+/*!40000 ALTER TABLE `guild_eventlog` DISABLE KEYS */;
+/*!40000 ALTER TABLE `guild_eventlog` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `guild_member`
@@ -1172,6 +1668,15 @@ CREATE TABLE `guild_member` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `guild_member`
+--
+
+LOCK TABLES `guild_member` WRITE;
+/*!40000 ALTER TABLE `guild_member` DISABLE KEYS */;
+/*!40000 ALTER TABLE `guild_member` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `guild_rank`
 --
 
@@ -1187,6 +1692,15 @@ CREATE TABLE `guild_rank` (
   PRIMARY KEY (`guildid`,`rid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='Guild System';
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `guild_rank`
+--
+
+LOCK TABLES `guild_rank` WRITE;
+/*!40000 ALTER TABLE `guild_rank` DISABLE KEYS */;
+/*!40000 ALTER TABLE `guild_rank` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `guild_recruitment`
@@ -1215,6 +1729,15 @@ CREATE TABLE `guild_recruitment` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `guild_recruitment`
+--
+
+LOCK TABLES `guild_recruitment` WRITE;
+/*!40000 ALTER TABLE `guild_recruitment` DISABLE KEYS */;
+/*!40000 ALTER TABLE `guild_recruitment` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `guild_screenshot`
 --
 
@@ -1231,6 +1754,15 @@ CREATE TABLE `guild_screenshot` (
   CONSTRAINT `guild_screen` FOREIGN KEY (`guildid`) REFERENCES `guild` (`guildid`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `guild_screenshot`
+--
+
+LOCK TABLES `guild_screenshot` WRITE;
+/*!40000 ALTER TABLE `guild_screenshot` DISABLE KEYS */;
+/*!40000 ALTER TABLE `guild_screenshot` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `head_hunter`
@@ -1250,6 +1782,15 @@ CREATE TABLE `head_hunter` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `head_hunter`
+--
+
+LOCK TABLES `head_hunter` WRITE;
+/*!40000 ALTER TABLE `head_hunter` DISABLE KEYS */;
+/*!40000 ALTER TABLE `head_hunter` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `instance`
@@ -1273,6 +1814,15 @@ CREATE TABLE `instance` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `instance`
+--
+
+LOCK TABLES `instance` WRITE;
+/*!40000 ALTER TABLE `instance` DISABLE KEYS */;
+/*!40000 ALTER TABLE `instance` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `instance_reset`
 --
 
@@ -1287,6 +1837,15 @@ CREATE TABLE `instance_reset` (
   KEY `difficulty` (`difficulty`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `instance_reset`
+--
+
+LOCK TABLES `instance_reset` WRITE;
+/*!40000 ALTER TABLE `instance_reset` DISABLE KEYS */;
+/*!40000 ALTER TABLE `instance_reset` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `item_instance`
@@ -1352,6 +1911,15 @@ CREATE TABLE `item_instance` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `item_instance`
+--
+
+LOCK TABLES `item_instance` WRITE;
+/*!40000 ALTER TABLE `item_instance` DISABLE KEYS */;
+/*!40000 ALTER TABLE `item_instance` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `item_text`
 --
 
@@ -1364,6 +1932,15 @@ CREATE TABLE `item_text` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Item System';
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `item_text`
+--
+
+LOCK TABLES `item_text` WRITE;
+/*!40000 ALTER TABLE `item_text` DISABLE KEYS */;
+/*!40000 ALTER TABLE `item_text` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `lottery`
@@ -1380,6 +1957,15 @@ CREATE TABLE `lottery` (
   PRIMARY KEY (`accountid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `lottery`
+--
+
+LOCK TABLES `lottery` WRITE;
+/*!40000 ALTER TABLE `lottery` DISABLE KEYS */;
+/*!40000 ALTER TABLE `lottery` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `mail`
@@ -1409,6 +1995,15 @@ CREATE TABLE `mail` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `mail`
+--
+
+LOCK TABLES `mail` WRITE;
+/*!40000 ALTER TABLE `mail` DISABLE KEYS */;
+/*!40000 ALTER TABLE `mail` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `mail_items`
 --
 
@@ -1424,6 +2019,15 @@ CREATE TABLE `mail_items` (
   KEY `idx_receiver` (`receiver`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `mail_items`
+--
+
+LOCK TABLES `mail_items` WRITE;
+/*!40000 ALTER TABLE `mail_items` DISABLE KEYS */;
+/*!40000 ALTER TABLE `mail_items` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `pet_aura`
@@ -1447,6 +2051,15 @@ CREATE TABLE `pet_aura` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `pet_aura`
+--
+
+LOCK TABLES `pet_aura` WRITE;
+/*!40000 ALTER TABLE `pet_aura` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pet_aura` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `pet_spell`
 --
 
@@ -1463,6 +2076,15 @@ CREATE TABLE `pet_spell` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `pet_spell`
+--
+
+LOCK TABLES `pet_spell` WRITE;
+/*!40000 ALTER TABLE `pet_spell` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pet_spell` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `pet_spell_cooldown`
 --
 
@@ -1476,6 +2098,15 @@ CREATE TABLE `pet_spell_cooldown` (
   PRIMARY KEY (`guid`,`spell`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pet_spell_cooldown`
+--
+
+LOCK TABLES `pet_spell_cooldown` WRITE;
+/*!40000 ALTER TABLE `pet_spell_cooldown` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pet_spell_cooldown` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `petition`
@@ -1495,6 +2126,15 @@ CREATE TABLE `petition` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `petition`
+--
+
+LOCK TABLES `petition` WRITE;
+/*!40000 ALTER TABLE `petition` DISABLE KEYS */;
+/*!40000 ALTER TABLE `petition` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `petition_sign`
 --
 
@@ -1512,6 +2152,15 @@ CREATE TABLE `petition_sign` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `petition_sign`
+--
+
+LOCK TABLES `petition_sign` WRITE;
+/*!40000 ALTER TABLE `petition_sign` DISABLE KEYS */;
+/*!40000 ALTER TABLE `petition_sign` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `pvprewards`
 --
 
@@ -1526,6 +2175,15 @@ CREATE TABLE `pvprewards` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pvprewards`
+--
+
+LOCK TABLES `pvprewards` WRITE;
+/*!40000 ALTER TABLE `pvprewards` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pvprewards` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `recups`
@@ -1560,6 +2218,15 @@ CREATE TABLE `recups` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `recups`
+--
+
+LOCK TABLES `recups` WRITE;
+/*!40000 ALTER TABLE `recups` DISABLE KEYS */;
+/*!40000 ALTER TABLE `recups` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `saved_variables`
 --
 
@@ -1576,6 +2243,15 @@ CREATE TABLE `saved_variables` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `saved_variables`
+--
+
+LOCK TABLES `saved_variables` WRITE;
+/*!40000 ALTER TABLE `saved_variables` DISABLE KEYS */;
+/*!40000 ALTER TABLE `saved_variables` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `temp_equipcache`
 --
 
@@ -1588,18 +2264,18 @@ CREATE TABLE `temp_equipcache` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-DROP TABLE IF EXISTS `updates_include`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `updates_include` (
-  `path` varchar(200) NOT NULL COMMENT 'directory to include. $ means relative to the source directory.',
-  `state` enum('RELEASED','ARCHIVED') NOT NULL DEFAULT 'RELEASED' COMMENT 'defines if the directory contains released or archived updates.',
-  PRIMARY KEY (`path`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='List of directories where we want to include sql updates.';
-/*!40101 SET character_set_client = @saved_cs_client */;
+--
+-- Dumping data for table `temp_equipcache`
+--
 
-INSERT INTO `updates_include` VALUES ('$/sql/updates/characters','RELEASED'),('$/sql/custom/characters','RELEASED'),('$/sql/old/2.4.3/characters','ARCHIVED');
+LOCK TABLES `temp_equipcache` WRITE;
+/*!40000 ALTER TABLE `temp_equipcache` DISABLE KEYS */;
+/*!40000 ALTER TABLE `temp_equipcache` ENABLE KEYS */;
+UNLOCK TABLES;
 
+--
+-- Table structure for table `updates`
+--
 
 DROP TABLE IF EXISTS `updates`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -1614,7 +2290,38 @@ CREATE TABLE `updates` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='List of all applied updates in this database.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `updates`
+--
 
+LOCK TABLES `updates` WRITE;
+/*!40000 ALTER TABLE `updates` DISABLE KEYS */;
+/*!40000 ALTER TABLE `updates` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `updates_include`
+--
+
+DROP TABLE IF EXISTS `updates_include`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `updates_include` (
+  `path` varchar(200) NOT NULL COMMENT 'directory to include. $ means relative to the source directory.',
+  `state` enum('RELEASED','ARCHIVED') NOT NULL DEFAULT 'RELEASED' COMMENT 'defines if the directory contains released or archived updates.',
+  PRIMARY KEY (`path`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='List of directories where we want to include sql updates.';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `updates_include`
+--
+
+LOCK TABLES `updates_include` WRITE;
+/*!40000 ALTER TABLE `updates_include` DISABLE KEYS */;
+INSERT INTO `updates_include` VALUES ('$/sql/updates/characters','RELEASED'),('$/sql/custom/characters','RELEASED'),('$/sql/old/2.4.3/characters','ARCHIVED');
+/*!40000 ALTER TABLE `updates_include` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -1625,4 +2332,4 @@ CREATE TABLE `updates` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-03-22 17:10:40
+-- Dump completed on 2019-12-05 11:19:48

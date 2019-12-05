@@ -1,8 +1,8 @@
--- MySQL dump 10.15  Distrib 10.0.28-MariaDB, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.28, for Linux (x86_64)
 --
--- Host: localhost    Database: localhost
+-- Host: 127.0.0.1    Database: auth
 -- ------------------------------------------------------
--- Server version	10.0.28-MariaDB-0+deb8u1
+-- Server version	5.7.23
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -38,7 +38,7 @@ CREATE TABLE `account` (
   `failed_logins` int(10) unsigned NOT NULL DEFAULT '0',
   `locked` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `lock_country` varchar(2) NOT NULL DEFAULT '00',
-  `last_login` timestamp NULL,
+  `last_login` timestamp NULL DEFAULT NULL,
   `online` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `expansion` tinyint(3) unsigned NOT NULL DEFAULT '2',
   `mutetime` bigint(20) NOT NULL DEFAULT '0',
@@ -62,9 +62,15 @@ CREATE TABLE `account` (
 ) ENGINE=InnoDB AUTO_INCREMENT=98 DEFAULT CHARSET=utf8 COMMENT='Account System';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Data for the table `account` */		
-  		  
- insert  into `account`(`id`,`username`,`password`,`sessionkey`,`v`,`s`,`token_key`,`email`,`reg_mail`,`joindate`,`last_ip`,`last_attempt_ip`,`failed_logins`,`locked`,`lock_country`,`last_login`,`online`,`expansion`,`mutetime`,`mutereason`,`muteby`,`locale`,`os`,`recruiter`,`newMailTS`,`newMail`,`rank`,`staff_id`,`vp`,`dp`,`isactive`,`activation`) values (1,'TEST','3D0D99423E31FCC67A6745EC89D70D700344BC76','4F655C922864A4315B5A32CB9FFA3DD87EA85BC04284A841D9734C7753F1443FFD15643822D38028','1B66E60BD064AFA4B1BD4280021C985DF37C78AB2F42F35DD8B68681F2177DD4','A071BC67E9EA79DC8799206CED92B31C7D443F534C2911FB8D1E428F283BDE8D','','','','2014-07-26 22:23:54','109.222.215.54','109.222.215.54',0,0,'00','2015-03-28 18:22:15',0,2,0,'','',0,'Win',0,0,NULL,0,NULL,NULL,NULL,1,NULL),(2,'TEST2','4EBB48A1FCFA0F4B846B039CE23D2F1412B80E90','D655E031A351F5170CED4CDE4854597601B39D45A7C8BED41C410FA8F68942A00C5D06796AED01CE','78EA465B778040B59E9DD3ECA23A0E5B6DC1A659D6C442047EA87A2C9C79C722','9C657403085563C29BB337D2CF6C29A60B3F6B9BE681CB46577A74AA2892FDFF','','','','2014-07-26 22:24:08','92.140.162.107','92.140.162.107',0,0,'00','2015-03-26 16:18:15',0,2,0,'','',2,'Win',0,0,NULL,0,NULL,NULL,NULL,1,NULL),(3,'TEST3','bf0f312a51ed09706a0476f44e7f2fc6b3131fc3','C6C947494E312B1488D0A5BCFFB2A5D66D65D5AC592DAB52B7BAA7CFFDA8374042852628A842ABF6','5385DEEE2AF09AED94BA246B5A66B15D2DB2CCB14558C523D4FF2EEAF33949E4','A54F0AA02C6CE4A27F9F78E17E29EF450678EC278AED5D2ADC07D9DA65994561','','lol','lal','2014-09-10 23:32:20','86.73.238.81','86.73.238.81',0,0,'00','2015-03-26 16:11:25',0,2,0,'','',2,'Win',0,0,NULL,0,NULL,NULL,NULL,1,NULL),(4,'TEST4','8495ed33b86da3c2b9e2131d272749e997adf110','1B86B5A57EA4A0403F05EF3A0B48849E7A7EBDFDAC66762FC199D60B770EA8170F474BBCD682678C','8312AC78F3A3C992B08CAF1E21983D9EA4E7993C5C46F820A5BB07D51C4E8AAD','C33773F4C29288DCB1B7692AEAA1ACCD2EDC9D9A3E02EBB2EA3509AFCC3E35FB','','lol','lal','2014-09-10 23:38:50','109.89.168.63','109.89.168.63',0,0,'00','2015-03-28 18:22:17',0,2,0,'','',0,'Win',0,0,NULL,0,NULL,NULL,NULL,1,NULL),(5,'TEST5','6ca6d8465d6f8c59df6e46e87944c0c4abb96988','5264D3B16031BE32985008A9282EA34E4BA2935A7FB7464895C64548DDD6456EBDAD1F0548B7B386','14D6D7846B3DA559ED2A1791791F0FFFCF33F8E4BDBF88E65E128D3824601856','976484A3F7DB6D524A10895178334BDAD3BFE0B809B656ECB6FAD1D809C1C977','','lol','lal','2014-09-10 23:38:58','109.89.168.63','109.89.168.63',0,0,'00','2015-01-25 14:04:12',0,2,0,'','',0,'Win',0,0,NULL,0,NULL,NULL,NULL,1,NULL);
+--
+-- Dumping data for table `account`
+--
+
+LOCK TABLES `account` WRITE;
+/*!40000 ALTER TABLE `account` DISABLE KEYS */;
+INSERT INTO `account` VALUES (1,'TEST','3D0D99423E31FCC67A6745EC89D70D700344BC76','4F655C922864A4315B5A32CB9FFA3DD87EA85BC04284A841D9734C7753F1443FFD15643822D38028','1B66E60BD064AFA4B1BD4280021C985DF37C78AB2F42F35DD8B68681F2177DD4','A071BC67E9EA79DC8799206CED92B31C7D443F534C2911FB8D1E428F283BDE8D','','','','2014-07-26 22:23:54','109.222.215.54','109.222.215.54',0,0,'00','2015-03-28 18:22:15',0,2,0,'','',0,'Win',NULL,0,0,NULL,0,NULL,NULL,NULL,1,NULL,NULL),(2,'TEST2','4EBB48A1FCFA0F4B846B039CE23D2F1412B80E90','D655E031A351F5170CED4CDE4854597601B39D45A7C8BED41C410FA8F68942A00C5D06796AED01CE','78EA465B778040B59E9DD3ECA23A0E5B6DC1A659D6C442047EA87A2C9C79C722','9C657403085563C29BB337D2CF6C29A60B3F6B9BE681CB46577A74AA2892FDFF','','','','2014-07-26 22:24:08','92.140.162.107','92.140.162.107',0,0,'00','2015-03-26 16:18:15',0,2,0,'','',2,'Win',NULL,0,0,NULL,0,NULL,NULL,NULL,1,NULL,NULL),(3,'TEST3','bf0f312a51ed09706a0476f44e7f2fc6b3131fc3','C6C947494E312B1488D0A5BCFFB2A5D66D65D5AC592DAB52B7BAA7CFFDA8374042852628A842ABF6','5385DEEE2AF09AED94BA246B5A66B15D2DB2CCB14558C523D4FF2EEAF33949E4','A54F0AA02C6CE4A27F9F78E17E29EF450678EC278AED5D2ADC07D9DA65994561','','lol','lal','2014-09-10 23:32:20','86.73.238.81','86.73.238.81',0,0,'00','2015-03-26 16:11:25',0,2,0,'','',2,'Win',NULL,0,0,NULL,0,NULL,NULL,NULL,1,NULL,NULL),(4,'TEST4','8495ed33b86da3c2b9e2131d272749e997adf110','1B86B5A57EA4A0403F05EF3A0B48849E7A7EBDFDAC66762FC199D60B770EA8170F474BBCD682678C','8312AC78F3A3C992B08CAF1E21983D9EA4E7993C5C46F820A5BB07D51C4E8AAD','C33773F4C29288DCB1B7692AEAA1ACCD2EDC9D9A3E02EBB2EA3509AFCC3E35FB','','lol','lal','2014-09-10 23:38:50','109.89.168.63','109.89.168.63',0,0,'00','2015-03-28 18:22:17',0,2,0,'','',0,'Win',NULL,0,0,NULL,0,NULL,NULL,NULL,1,NULL,NULL),(5,'TEST5','6ca6d8465d6f8c59df6e46e87944c0c4abb96988','5264D3B16031BE32985008A9282EA34E4BA2935A7FB7464895C64548DDD6456EBDAD1F0548B7B386','14D6D7846B3DA559ED2A1791791F0FFFCF33F8E4BDBF88E65E128D3824601856','976484A3F7DB6D524A10895178334BDAD3BFE0B809B656ECB6FAD1D809C1C977','','lol','lal','2014-09-10 23:38:58','109.89.168.63','109.89.168.63',0,0,'00','2015-01-25 14:04:12',0,2,0,'','',0,'Win',NULL,0,0,NULL,0,NULL,NULL,NULL,1,NULL,NULL);
+/*!40000 ALTER TABLE `account` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `account_access`
@@ -81,14 +87,15 @@ CREATE TABLE `account_access` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `account_access`
+--
 
-
-insert  into `account_access`(`id`,`gmlevel`,`RealmID`) values 
-(1,5,-1),
-(2,5,-1),
-(3,5,-1),
-(4,5,-1),
-(5,5,-1);
+LOCK TABLES `account_access` WRITE;
+/*!40000 ALTER TABLE `account_access` DISABLE KEYS */;
+INSERT INTO `account_access` VALUES (1,5,-1),(2,5,-1),(3,5,-1),(4,5,-1),(5,5,-1);
+/*!40000 ALTER TABLE `account_access` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `account_banned`
@@ -109,6 +116,15 @@ CREATE TABLE `account_banned` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `account_banned`
+--
+
+LOCK TABLES `account_banned` WRITE;
+/*!40000 ALTER TABLE `account_banned` DISABLE KEYS */;
+/*!40000 ALTER TABLE `account_banned` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `autobroadcast`
 --
 
@@ -123,6 +139,15 @@ CREATE TABLE `autobroadcast` (
   PRIMARY KEY (`id`,`realmid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `autobroadcast`
+--
+
+LOCK TABLES `autobroadcast` WRITE;
+/*!40000 ALTER TABLE `autobroadcast` DISABLE KEYS */;
+/*!40000 ALTER TABLE `autobroadcast` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `creature_respawn`
@@ -142,6 +167,15 @@ CREATE TABLE `creature_respawn` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `creature_respawn`
+--
+
+LOCK TABLES `creature_respawn` WRITE;
+/*!40000 ALTER TABLE `creature_respawn` DISABLE KEYS */;
+/*!40000 ALTER TABLE `creature_respawn` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `gameobject_respawn`
 --
 
@@ -159,6 +193,15 @@ CREATE TABLE `gameobject_respawn` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `gameobject_respawn`
+--
+
+LOCK TABLES `gameobject_respawn` WRITE;
+/*!40000 ALTER TABLE `gameobject_respawn` DISABLE KEYS */;
+/*!40000 ALTER TABLE `gameobject_respawn` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `ip2nation`
 --
 
@@ -171,6 +214,15 @@ CREATE TABLE `ip2nation` (
   KEY `ip` (`ip`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ip2nation`
+--
+
+LOCK TABLES `ip2nation` WRITE;
+/*!40000 ALTER TABLE `ip2nation` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ip2nation` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `ip2nationCountries`
@@ -193,6 +245,15 @@ CREATE TABLE `ip2nationCountries` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `ip2nationCountries`
+--
+
+LOCK TABLES `ip2nationCountries` WRITE;
+/*!40000 ALTER TABLE `ip2nationCountries` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ip2nationCountries` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `ip_banned`
 --
 
@@ -210,6 +271,15 @@ CREATE TABLE `ip_banned` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `ip_banned`
+--
+
+LOCK TABLES `ip_banned` WRITE;
+/*!40000 ALTER TABLE `ip_banned` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ip_banned` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `logs`
 --
 
@@ -224,6 +294,15 @@ CREATE TABLE `logs` (
   `string` text CHARACTER SET latin1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `logs`
+--
+
+LOCK TABLES `logs` WRITE;
+/*!40000 ALTER TABLE `logs` DISABLE KEYS */;
+/*!40000 ALTER TABLE `logs` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `logs_ip_actions`
@@ -247,6 +326,15 @@ CREATE TABLE `logs_ip_actions` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `logs_ip_actions`
+--
+
+LOCK TABLES `logs_ip_actions` WRITE;
+/*!40000 ALTER TABLE `logs_ip_actions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `logs_ip_actions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `rbac_account_permissions`
 --
 
@@ -266,6 +354,15 @@ CREATE TABLE `rbac_account_permissions` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `rbac_account_permissions`
+--
+
+LOCK TABLES `rbac_account_permissions` WRITE;
+/*!40000 ALTER TABLE `rbac_account_permissions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rbac_account_permissions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `rbac_default_permissions`
 --
 
@@ -281,6 +378,15 @@ CREATE TABLE `rbac_default_permissions` (
   CONSTRAINT `fk__rbac_default_permissions__rbac_permissions` FOREIGN KEY (`permissionId`) REFERENCES `rbac_permissions` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Default permission to assign to different account security levels';
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rbac_default_permissions`
+--
+
+LOCK TABLES `rbac_default_permissions` WRITE;
+/*!40000 ALTER TABLE `rbac_default_permissions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rbac_default_permissions` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `rbac_linked_permissions`
@@ -301,6 +407,15 @@ CREATE TABLE `rbac_linked_permissions` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `rbac_linked_permissions`
+--
+
+LOCK TABLES `rbac_linked_permissions` WRITE;
+/*!40000 ALTER TABLE `rbac_linked_permissions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rbac_linked_permissions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `rbac_permissions`
 --
 
@@ -313,6 +428,15 @@ CREATE TABLE `rbac_permissions` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Permission List';
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rbac_permissions`
+--
+
+LOCK TABLES `rbac_permissions` WRITE;
+/*!40000 ALTER TABLE `rbac_permissions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rbac_permissions` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `realmcharacters`
@@ -329,6 +453,15 @@ CREATE TABLE `realmcharacters` (
   KEY `acctid` (`acctid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Realm Character Tracker';
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `realmcharacters`
+--
+
+LOCK TABLES `realmcharacters` WRITE;
+/*!40000 ALTER TABLE `realmcharacters` DISABLE KEYS */;
+/*!40000 ALTER TABLE `realmcharacters` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `realmlist`
@@ -355,9 +488,65 @@ CREATE TABLE `realmlist` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='Realm System';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-/*Data for the table `realmlist` */
+--
+-- Dumping data for table `realmlist`
+--
 
-INSERT INTO `realmlist` VALUES (1,'Sunstrider TBC','127.0.0.1','127.0.0.1','255.255.255.0',8085,1,0,1,0,0,8606);
+LOCK TABLES `realmlist` WRITE;
+/*!40000 ALTER TABLE `realmlist` DISABLE KEYS */;
+INSERT INTO `realmlist` VALUES (1,'TrinityTBC','127.0.0.1','127.0.0.1','255.255.255.0',8085,1,0,1,0,0,8606);
+/*!40000 ALTER TABLE `realmlist` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `updates`
+--
+
+DROP TABLE IF EXISTS `updates`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `updates` (
+  `name` varchar(200) NOT NULL COMMENT 'filename with extension of the update.',
+  `hash` char(40) DEFAULT '' COMMENT 'sha1 hash of the sql file.',
+  `state` enum('RELEASED','ARCHIVED') NOT NULL DEFAULT 'RELEASED' COMMENT 'defines if an update is released or archived.',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'timestamp when the query was applied.',
+  `speed` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'time the query takes to apply in ms.',
+  PRIMARY KEY (`name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='List of all applied updates in this database.';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `updates`
+--
+
+LOCK TABLES `updates` WRITE;
+/*!40000 ALTER TABLE `updates` DISABLE KEYS */;
+/*!40000 ALTER TABLE `updates` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `updates_include`
+--
+
+DROP TABLE IF EXISTS `updates_include`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `updates_include` (
+  `path` varchar(200) NOT NULL COMMENT 'directory to include. $ means relative to the source directory.',
+  `state` enum('RELEASED','ARCHIVED') NOT NULL DEFAULT 'RELEASED' COMMENT 'defines if the directory contains released or archived updates.',
+  PRIMARY KEY (`path`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='List of directories where we want to include sql updates.';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `updates_include`
+--
+
+LOCK TABLES `updates_include` WRITE;
+/*!40000 ALTER TABLE `updates_include` DISABLE KEYS */;
+INSERT INTO `updates_include` VALUES ('$/sql/updates/auth','RELEASED'),('$/sql/custom/auth','RELEASED'),('$/sql/old/2.4.3/auth','ARCHIVED');
+/*!40000 ALTER TABLE `updates_include` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `uptime`
@@ -376,32 +565,14 @@ CREATE TABLE `uptime` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Uptime system';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-DROP TABLE IF EXISTS `updates_include`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `updates_include` (
-  `path` varchar(200) NOT NULL COMMENT 'directory to include. $ means relative to the source directory.',
-  `state` enum('RELEASED','ARCHIVED') NOT NULL DEFAULT 'RELEASED' COMMENT 'defines if the directory contains released or archived updates.',
-  PRIMARY KEY (`path`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='List of directories where we want to include sql updates.';
-/*!40101 SET character_set_client = @saved_cs_client */;
+--
+-- Dumping data for table `uptime`
+--
 
-INSERT INTO `updates_include` VALUES ('$/sql/updates/auth','RELEASED'),('$/sql/custom/auth','RELEASED'),('$/sql/old/2.4.3/auth','ARCHIVED');
-
-DROP TABLE IF EXISTS `updates`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `updates` (
-  `name` varchar(200) NOT NULL COMMENT 'filename with extension of the update.',
-  `hash` char(40) DEFAULT '' COMMENT 'sha1 hash of the sql file.',
-  `state` enum('RELEASED','ARCHIVED') NOT NULL DEFAULT 'RELEASED' COMMENT 'defines if an update is released or archived.',
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'timestamp when the query was applied.',
-  `speed` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'time the query takes to apply in ms.',
-  PRIMARY KEY (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='List of all applied updates in this database.';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
-
+LOCK TABLES `uptime` WRITE;
+/*!40000 ALTER TABLE `uptime` DISABLE KEYS */;
+/*!40000 ALTER TABLE `uptime` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -411,3 +582,5 @@ CREATE TABLE `updates` (
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2019-12-05 11:19:25

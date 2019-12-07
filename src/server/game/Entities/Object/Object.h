@@ -636,6 +636,7 @@ class TC_GAME_API WorldObject : public Object, public WorldLocation
         So when using this, don't forget to set it as false as soon as you don't need it anymore.
         */
         void SetKeepActive(bool isActiveObject);
+        void setActive(bool isActiveObject) { SetKeepActive(isActiveObject); };
         bool IsFarVisible() const { return m_isFarVisible; }
         void SetFarVisible(bool on);
         bool IsVisibilityOverriden() const { return m_visibilityDistanceOverride.is_initialized(); }

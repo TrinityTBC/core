@@ -19,6 +19,7 @@ public:
     void SaveToDB(uint32 mapid, uint8 spawnMask) override { }
 
     Unit* GetSummoner() const;
+    Unit* GetSummonerUnit() const { return GetSummoner(); };
 	Creature* GetSummonerCreatureBase() const;
     ObjectGuid GetSummonerGUID() const { return m_summonerGUID; }
     TempSummonType GetSummonType() const { return m_type; }

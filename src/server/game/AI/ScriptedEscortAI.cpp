@@ -1,4 +1,4 @@
-#include "EscortAI.h"
+#include "ScriptedEscortAI.h"
 #include "MovementGenerator.h"
 #include "ScriptSystem.h"
 
@@ -262,7 +262,7 @@ void EscortAI::AddWaypoint(uint32 id, float x, float y, float z, float orientati
     waypoint.y = y;
     waypoint.z = z;
     waypoint.orientation = orientation;
-    // waypoint.moveType = _running ? WAYPOINT_MOVE_TYPE_RUN : WAYPOINT_MOVE_TYPE_WALK; //sunstrider: this is wrong, _running is defined at start time and we're obviously running this function before thatµ
+    // waypoint.moveType = _running ? WAYPOINT_MOVE_TYPE_RUN : WAYPOINT_MOVE_TYPE_WALK; //sunstrider: this is wrong, _running is defined at start time and we're obviously running this function before that?
     waypoint.moveType = WAYPOINT_MOVE_TYPE_USE_UNIT_MOVEMENT_FLAG;
     waypoint.delay = waitTime;
     waypoint.eventId = 0;

@@ -219,8 +219,6 @@ friend class InstanceMap;
 
         uint32 GetEncounterCount() const { return bosses.size(); }
 
-        static bool InstanceHasScript(WorldObject const* obj, char const* scriptName);
-
         // Only used by areatriggers that inherit from OnlyOnceAreaTriggerScript
         void MarkAreaTriggerDone(uint32 id) { _activatedAreaTriggers.insert(id); }
         void ResetAreaTriggerDone(uint32 id) { _activatedAreaTriggers.erase(id); }

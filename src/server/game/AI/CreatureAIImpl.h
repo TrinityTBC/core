@@ -19,7 +19,7 @@ TC_GAME_API bool InstanceHasScript(WorldObject const* obj, char const* scriptNam
 template <class AI, class T>
 AI* GetInstanceAI(T* obj, char const* scriptName)
 {
-    if (InstanceScript::InstanceHasScript(obj, scriptName))
+    if (InstanceHasScript(obj, scriptName))
         return new AI(obj);
 
     return nullptr;

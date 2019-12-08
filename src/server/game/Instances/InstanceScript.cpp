@@ -7,6 +7,8 @@
 #include "Language.h"
 #include "ScriptMgr.h"
 #include "AreaBoundary.h"
+#include "CreatureAI.h"
+#include "CreatureAIImpl.h"
 
 BossBoundaryData::~BossBoundaryData()
 {
@@ -721,7 +723,7 @@ void InstanceScript::DoStopTimedAchievement(AchievementCriteriaTimedTypes type, 
     }
 }
 
-bool InstanceScript::InstanceHasScript(WorldObject const* obj, char const* scriptName)
+bool InstanceHasScript(WorldObject const* obj, char const* scriptName)
 {
     if (InstanceMap* instance = obj->GetMap()->ToInstanceMap())
         return instance->GetScriptName() == scriptName;

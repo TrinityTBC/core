@@ -942,7 +942,7 @@ Map const* WorldObject::GetBaseMap() const
     return m_currMap->GetParent();
 }
 
-InstanceScript* WorldObject::GetInstanceScript()
+InstanceScript* WorldObject::GetInstanceScript() const
 {
     Map *map = GetMap();
     return map->IsDungeon() ? ((InstanceMap*)map)->GetInstanceScript() : nullptr;

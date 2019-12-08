@@ -478,7 +478,7 @@ class TC_GAME_API WorldObject : public Object, public WorldLocation
         static bool InSamePhase(WorldObject const* a, WorldObject const* b) { return a && a->InSamePhase(b); }
 		virtual void SetPhaseMask(uint32 newPhaseMask, bool update);
 
-        InstanceScript* GetInstanceScript();
+        InstanceScript* GetInstanceScript() const;
 
         std::string const& GetName() const { return m_name; }
         void SetName(const std::string& newname) { m_name=newname; }

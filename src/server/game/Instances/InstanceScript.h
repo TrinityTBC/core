@@ -221,6 +221,11 @@ friend class InstanceMap;
 
         static bool InstanceHasScript(WorldObject const* obj, char const* scriptName);
 
+        // Only used by areatriggers that inherit from OnlyOnceAreaTriggerScript
+        void MarkAreaTriggerDone(uint32 id) { _activatedAreaTriggers.insert(id); }
+        void ResetAreaTriggerDone(uint32 id) { _activatedAreaTriggers.erase(id); }
+        bool IsAreaTriggerDone(uint32 id) const { return _activatedAreaTriggers.find(id) != _activatedAreaTriggers.end(); }
+
     protected:
         void SetHeaders(std::string const& dataHeaders);
         void SetBossNumber(uint32 number) { bosses.resize(number); }
@@ -279,7 +284,7 @@ friend class InstanceMap;
         uint32 completedEncounters; // completed encounter mask, bit indexes are DungeonEncounter.dbc boss numbers, used for packets
 #endif
         std::vector<InstanceSpawnGroupInfo> const* const _instanceSpawnGroups;
-        //NYI std::unordered_set<uint32> _activatedAreaTriggers;
+        std::unordered_set<uint32> _activatedAreaTriggers;
 
 #ifdef TRINITY_API_USE_DYNAMIC_LINKING
         // Strong reference to the associated script module

@@ -215,6 +215,19 @@ public:
     virtual bool OnTrigger(Player* /*player*/, AreaTriggerEntry const* /*trigger*/) { return false; }
 };
 
+class TC_GAME_API OnlyOnceAreaTriggerScript : public AreaTriggerScript
+{
+    using AreaTriggerScript::AreaTriggerScript;
+
+    public:
+        bool OnTrigger(Player* /*player*/, AreaTriggerEntry const* /*trigger*/) final override;
+
+    protected:
+        virtual bool _OnTrigger(Player* /*player*/, AreaTriggerEntry const* /*trigger*/) = 0;
+        void ResetAreaTriggerDone(InstanceScript* /*instance*/, uint32 /*triggerId*/);
+        void ResetAreaTriggerDone(Player const* /*player*/, AreaTriggerEntry const* /*trigger*/);
+};
+
 class TC_GAME_API TestCaseScript : public ScriptObject, public UpdatableScript<TestCase>
 {
 protected:

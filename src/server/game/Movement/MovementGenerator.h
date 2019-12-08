@@ -36,6 +36,8 @@ class MovementGenerator
             BaseUnitState(baseUnitState)
         {}
 
+        MovementGenerator() : Mode(0), Priority(0), Flags(MOVEMENTGENERATOR_FLAG_NONE), BaseUnitState(0) { }
+
         virtual ~MovementGenerator();
 
         // on top first update

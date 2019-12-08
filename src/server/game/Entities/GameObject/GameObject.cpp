@@ -83,6 +83,22 @@ WorldPacket GameObjectTemplate::BuildQueryData(LocaleConstant loc) const
     return queryTemp.Move();
 }
 
+bool QuaternionData::isUnit() const
+{
+    return fabs(x * x + y * y + z * z + w * w - 1.0f) < 1e-5f;
+}
+
+void QuaternionData::toEulerAnglesZYX(float& Z, float& Y, float& X) const
+{
+    G3D::Matrix3(G3D::Quat(x, y, z, w)).toEulerAnglesZYX(Z, Y, X);
+}
+
+QuaternionData QuaternionData::fromEulerAnglesZYX(float Z, float Y, float X)
+{
+    G3D::Quat quat(G3D::Matrix3::fromEulerAnglesZYX(Z, Y, X));
+    return QuaternionData(quat.x, quat.y, quat.z, quat.w);
+}
+
 GameObject::GameObject() : WorldObject(false), MapObject(),
     m_AI(nullptr), 
     m_model(nullptr), 
@@ -324,7 +340,7 @@ void GameObject::RemoveFromWorld()
 }
 
 //spawnId will be generated on save later if needed
-bool GameObject::Create(ObjectGuid::LowType guidlow, uint32 name_id, Map *map, uint32 phaseMask, Position const& pos, G3D::Quat const& rotation, uint32 animprogress, GOState go_state, uint32 ArtKit, bool dynamic, uint32 spawnid)
+bool GameObject::Create(ObjectGuid::LowType guidlow, uint32 name_id, Map *map, uint32 phaseMask, Position const& pos, QuaternionData const& rotation, uint32 animprogress, GOState go_state, uint32 ArtKit, bool dynamic, uint32 spawnid)
 {
     ASSERT(map);
     SetMap(map);
@@ -986,7 +1002,7 @@ void GameObject::SaveToDB(uint32 mapid, uint8 spawnMask)
     // data->guid = guid don't must be update at save
     data.id = GetEntry();
     data.spawnPoint.WorldRelocate(this);
-    data.rotation = G3D::Quat(
+    data.rotation = QuaternionData(
         GetFloatValue(GAMEOBJECT_PARENTROTATION + 0), 
         GetFloatValue(GAMEOBJECT_PARENTROTATION + 1), 
         GetFloatValue(GAMEOBJECT_PARENTROTATION + 2), 
@@ -2310,7 +2326,7 @@ std::string GameObject::GetDebugInfo() const
     return sstr.str();
 }
 
-void GameObject::SetTransportPathRotation(G3D::Quat const& rot)
+void GameObject::SetTransportPathRotation(QuaternionData const& rot)
 {
     SetFloatValue(GAMEOBJECT_PARENTROTATION + 0, rot.x);
     SetFloatValue(GAMEOBJECT_PARENTROTATION + 1, rot.y);

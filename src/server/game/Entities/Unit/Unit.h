@@ -1758,6 +1758,7 @@ class TC_GAME_API Unit : public WorldObject
         uint32 GetTransformSpell() const { return m_transformSpell ;}
         bool IsInDisallowedMountForm() const;
 
+        GameObject* GetGameObject(uint32 spellId) const;
         void AddGameObject(GameObject* gameObj);
         void RemoveGameObject(GameObject* gameObj, bool del);
         void RemoveGameObject(uint32 spellid, bool del);

@@ -427,7 +427,7 @@ MotionTransport* TransportMgr::CreateTransport(uint32 entry, ObjectGuid::LowType
     data.id = trans->GetEntry();
     data.spawnPoint.Relocate(trans->GetFloatValue(GAMEOBJECT_POS_X), trans->GetFloatValue(GAMEOBJECT_POS_Y), trans->GetFloatValue(GAMEOBJECT_POS_Z), trans->GetFloatValue(GAMEOBJECT_FACING));
     data.spawnPoint.m_mapId = trans->GetMapId();
-    data.rotation = G3D::Quat(
+    data.rotation = QuaternionData(
         trans->GetFloatValue(GAMEOBJECT_PARENTROTATION + 0), 
         trans->GetFloatValue(GAMEOBJECT_PARENTROTATION + 1), 
         trans->GetFloatValue(GAMEOBJECT_PARENTROTATION + 2), 

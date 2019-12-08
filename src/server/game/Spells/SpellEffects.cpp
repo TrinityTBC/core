@@ -898,7 +898,7 @@ void Spell::EffectDummy(uint32 i)
                             if (!root->isSpawned())
                                 break;
                             _unitCaster->GetMotionMaster()->MovePoint(0, root->GetPositionX(), root->GetPositionY(), root->GetPositionZ());
-                            _unitCaster->SummonGameObject(187072, root->GetPosition(), G3D::Quat(), (root->GetRespawnTime() - _unitCaster->GetMap()->GetGameTime()));
+                            _unitCaster->SummonGameObject(187072, root->GetPosition(), QuaternionData(), (root->GetRespawnTime() - _unitCaster->GetMap()->GetGameTime()));
                             root->SetLootState(GO_JUST_DEACTIVATED);
                         }
                         else
@@ -1026,7 +1026,7 @@ void Spell::EffectDummy(uint32 i)
 
                     GameObject* pGameObj = new GameObject;
                     if (!pGameObj->Create(creatureTarget->GetMap()->GenerateLowGuid<HighGuid::GameObject>(), 181574, creatureTarget->GetMap(), unitTarget->GetPhaseMask(),
-                        creatureTarget->GetPosition(), G3D::Quat(), 255, GO_STATE_READY))
+                        creatureTarget->GetPosition(), QuaternionData(), 255, GO_STATE_READY))
                     {
                         delete pGameObj;
                         return;
@@ -1232,7 +1232,7 @@ void Spell::EffectDummy(uint32 i)
                     creatureTarget->RemoveCorpse();
                     creatureTarget->SetHealth(0);                   // just for nice GM-mode view
 
-                    GameObject* Crystal_Prison = m_caster->SummonGameObject(179644, creatureTarget->GetPosition(), G3D::Quat(), creatureTarget->GetRespawnTime() - creatureTarget->GetMap()->GetGameTime());
+                    GameObject* Crystal_Prison = m_caster->SummonGameObject(179644, creatureTarget->GetPosition(), QuaternionData(), creatureTarget->GetRespawnTime() - creatureTarget->GetMap()->GetGameTime());
                     WorldPacket data(SMSG_GAMEOBJECT_SPAWN_ANIM_OBSOLETE, 8);
                     data << uint64(Crystal_Prison->GetGUID());
                     m_caster->SendMessageToSet(&data,true);
@@ -4848,7 +4848,7 @@ void Spell::EffectSummonObjectWild(uint32 i)
     Map *map = target->GetMap();
 
     if(!pGameObj->Create(map->GenerateLowGuid<HighGuid::GameObject>(), gameobject_id, map, target->GetPhaseMask(),
-        Position(x, y, z, target->GetOrientation()), G3D::Quat(), 255, GO_STATE_READY))
+        Position(x, y, z, target->GetOrientation()), QuaternionData(), 255, GO_STATE_READY))
     {
         delete pGameObj;
         return;
@@ -4878,7 +4878,7 @@ void Spell::EffectSummonObjectWild(uint32 i)
     {
         auto  linkedGO = new GameObject;
         if(linkedGO->Create(map->GenerateLowGuid<HighGuid::GameObject>(), linkedEntry, map, pGameObj->GetPhaseMask(),
-            Position(x, y, z, target->GetOrientation()), G3D::Quat(), 255, GO_STATE_READY))
+            Position(x, y, z, target->GetOrientation()), QuaternionData(), 255, GO_STATE_READY))
         {
             linkedGO->SetRespawnTime(duration > 0 ? duration/1000 : 0);
             linkedGO->SetSpellId(m_spellInfo->Id);
@@ -5752,7 +5752,7 @@ void Spell::EffectDuel(uint32 i)
         Position(caster->GetPositionX()+(unitTarget->GetPositionX()- caster->GetPositionX())/2 ,
             caster->GetPositionY()+(unitTarget->GetPositionY()- caster->GetPositionY())/2 ,
             caster->GetPositionZ(),
-            caster->GetOrientation()), G3D::Quat(), 0, GO_STATE_READY))
+            caster->GetOrientation()), QuaternionData(), 0, GO_STATE_READY))
     {
         delete pGameObj;
         return;
@@ -6183,7 +6183,7 @@ void Spell::EffectSummonObject(uint32 i)
         _unitCaster->GetClosePoint(x,y,z,DEFAULT_PLAYER_BOUNDING_RADIUS);
 
     Map *map = m_caster->GetMap();
-    if(!pGameObj->Create(map->GenerateLowGuid<HighGuid::GameObject>(), go_id, map, _unitCaster->GetPhaseMask(), Position(x, y, z, _unitCaster->GetOrientation()), G3D::Quat(0, 0, rot2, rot3), 0, GO_STATE_READY))
+    if(!pGameObj->Create(map->GenerateLowGuid<HighGuid::GameObject>(), go_id, map, _unitCaster->GetPhaseMask(), Position(x, y, z, _unitCaster->GetOrientation()), QuaternionData(0, 0, rot2, rot3), 0, GO_STATE_READY))
     {
         delete pGameObj;
         return;
@@ -6850,7 +6850,7 @@ void Spell::EffectTransmitted(uint32 effIndex)
     auto  pGameObj = new GameObject;
 
     Position pos = { fx, fy, fz, _unitCaster->GetOrientation() };
-    G3D::Quat rot = G3D::Matrix3::fromEulerAnglesZYX(_unitCaster->GetOrientation(), 0.f, 0.f);
+    QuaternionData rot = QuaternionData::fromEulerAnglesZYX(_unitCaster->GetOrientation(), 0.f, 0.f);
     if(!pGameObj->Create(cMap->GenerateLowGuid<HighGuid::GameObject>(), name_id, cMap, _unitCaster->GetPhaseMask(),
         pos, rot, 255, GO_STATE_READY))
     {

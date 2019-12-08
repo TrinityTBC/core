@@ -418,6 +418,18 @@ struct GameObjectLocale
     std::vector<std::string> CastBarCaption;
 };
 
+struct TC_GAME_API QuaternionData
+{
+    float x, y, z, w;
+
+    QuaternionData() : x(0.0f), y(0.0f), z(0.0f), w(1.0f) { }
+    QuaternionData(float X, float Y, float Z, float W) : x(X), y(Y), z(Z), w(W) { }
+
+    bool isUnit() const;
+    void toEulerAnglesZYX(float& Z, float& Y, float& X) const;
+    static QuaternionData fromEulerAnglesZYX(float Z, float Y, float X);
+};
+
 // client side GO show states
 enum GOState: uint32
 {
@@ -433,7 +445,7 @@ struct GameObjectData : public SpawnData
 {
     GameObjectData() : SpawnData(SPAWN_TYPE_GAMEOBJECT) { }
     uint32 id; // entry in gameobject_template table
-    G3D::Quat rotation;
+    QuaternionData rotation;
     uint32 animprogress;
     uint32 go_state;
     uint32 ArtKit;
@@ -523,7 +535,7 @@ class TC_GAME_API GameObject : public WorldObject, public GridObject<GameObject>
         void RemoveFromWorld() override;
 		void CleanupsBeforeDelete(bool finalCleanup = true) override;
 
-        virtual bool Create(ObjectGuid::LowType guidlow, uint32 name_id, Map *map, uint32 phaseMask, Position const& pos, G3D::Quat const& rotation, uint32 animprogress, GOState go_state, uint32 ArtKit = 0, bool dynamic = false, uint32 spawnid = 0);
+        virtual bool Create(ObjectGuid::LowType guidlow, uint32 name_id, Map *map, uint32 phaseMask, Position const& pos, QuaternionData const& rotation, uint32 animprogress, GOState go_state, uint32 ArtKit = 0, bool dynamic = false, uint32 spawnid = 0);
         void Update(uint32 diff) override;
         static GameObject* GetGameObject(WorldObject& object, ObjectGuid guid);
         GameObjectTemplate const* GetGOInfo() const;
@@ -541,7 +553,7 @@ class TC_GAME_API GameObject : public WorldObject, public GridObject<GameObject>
 
         uint32 GetSpawnId() const { return m_spawnId; }
 
-        void SetTransportPathRotation(G3D::Quat const& rot);
+        void SetTransportPathRotation(QuaternionData const& rot);
 
         // overwrite WorldObject function for proper name localization
         std::string const& GetNameForLocaleIdx(LocaleConstant locale_idx) const override;

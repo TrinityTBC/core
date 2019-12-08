@@ -1787,7 +1787,7 @@ public:
 
                 entry = std::atoi(tokens[0]);
                 position = Position(std::atof(tokens[1]), std::atof(tokens[2]), std::atof(tokens[3]));
-                rot = G3D::Quat(std::atof(tokens[4]), std::atof(tokens[5]), std::atof(tokens[6]), std::atof(tokens[7]));
+                rot = QuaternionData(std::atof(tokens[4]), std::atof(tokens[5]), std::atof(tokens[6]), std::atof(tokens[7]));
                 spawnTimeSecs = std::atoi(tokens[8]);
                 spawnMask = std::atoi(tokens[9]);
 
@@ -1806,7 +1806,7 @@ public:
         
             uint32 entry;
             Position position;
-            G3D::Quat rot;
+            QuaternionData rot;
             uint32 spawnTimeSecs;
             uint32 spawnMask;
             bool _init = false; //true if successfully initialized

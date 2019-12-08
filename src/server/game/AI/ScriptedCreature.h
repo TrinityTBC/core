@@ -288,19 +288,19 @@ struct TC_GAME_API ScriptedAI : public CreatureAI
     virtual bool CheckEvadeIfOutOfCombatArea() const { return false; }
 
     template <class T>
-    inline T const& DUNGEON_MODE(T const& normal5, T const& heroic10) const
+    inline T const& DUNGEON_MODE(T const& normal5, T const& heroic5) const
     {
         switch (_difficulty)
         {
         case DUNGEON_DIFFICULTY_NORMAL:
             return normal5;
         case DUNGEON_DIFFICULTY_HEROIC:
-            return heroic10;
+            return heroic5;
         default:
             break;
         }
 
-        return heroic10;
+        return heroic5;
     }
 
 private:

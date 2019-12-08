@@ -125,6 +125,31 @@ LOCK TABLES `account_banned` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `account_credits`
+--
+
+DROP TABLE IF EXISTS `account_credits`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `account_credits` (
+  `id` int(11) unsigned NOT NULL DEFAULT '0',
+  `amount` int(11) unsigned NOT NULL DEFAULT '0',
+  `last_update` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `from` varchar(16) NOT NULL DEFAULT 'Boutique',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `account_credits`
+--
+
+LOCK TABLES `account_credits` WRITE;
+/*!40000 ALTER TABLE `account_credits` DISABLE KEYS */;
+/*!40000 ALTER TABLE `account_credits` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `autobroadcast`
 --
 
@@ -521,6 +546,7 @@ CREATE TABLE `updates` (
 
 LOCK TABLES `updates` WRITE;
 /*!40000 ALTER TABLE `updates` DISABLE KEYS */;
+INSERT INTO `updates` VALUES ('auth_2018_11_24_01.sql','57189621964879219C368ABADA76EA8064967086','ARCHIVED','2019-12-08 07:04:07',23),('auth_2018_01_03_01.sql','08AF5DAB45515B681B738DA17FA414C7C7CCA44E','ARCHIVED','2019-12-08 07:04:07',25),('2019_12_08_00_auth.sql','67E0FE77385F3A571864185E3C6D09C9B133A82C','RELEASED','2019-12-08 06:43:58',21);
 /*!40000 ALTER TABLE `updates` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -544,7 +570,7 @@ CREATE TABLE `updates_include` (
 
 LOCK TABLES `updates_include` WRITE;
 /*!40000 ALTER TABLE `updates_include` DISABLE KEYS */;
-INSERT INTO `updates_include` VALUES ('$/sql/updates/auth','RELEASED'),('$/sql/custom/auth','RELEASED'),('$/sql/old/2.4.3/auth','ARCHIVED');
+INSERT INTO `updates_include` VALUES ('$/sql/updates/auth','RELEASED'),('$/sql/custom/auth','RELEASED'),('$/sql/old/auth','ARCHIVED');
 /*!40000 ALTER TABLE `updates_include` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -583,4 +609,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-05 11:19:25
+-- Dump completed on 2019-12-08 15:10:35

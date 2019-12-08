@@ -1,1 +1,0 @@
-UPDATE creature_template SET unit_flags = 0x2000302, flags_extra = 2 WHERE entry IN (24410, 24854);

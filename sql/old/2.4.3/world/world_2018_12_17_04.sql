@@ -1,1 +1,0 @@
-update `creature_template` set `speed_run` = '1.14286' where `entry` = '19712';

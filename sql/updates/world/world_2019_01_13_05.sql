@@ -1,1 +1,0 @@
-ALTER TABLE escort_waypoints RENAME TO script_waypoint;

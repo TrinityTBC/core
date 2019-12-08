@@ -1,1 +1,0 @@
-UPDATE spell_template_override SET effectRadiusIndex1 = 7 WHERE entry = 30625;

@@ -1,2 +1,0 @@
-update `updates_include` set `path` = '$/src/server/scripts/SunScripts/sql/updates' where `path` = '$/src/server/scripts/SunScripts/sql';
-insert into `updates_include` (`path`, `state`) values ('$/src/server/scripts/SunScripts/sql/old', 'ARCHIVED');

@@ -1,1 +1,0 @@
-ALTER TABLE pet_spell MODIFY COLUMN `active` smallint(5) UNSIGNED NOT NULL DEFAULT 0;

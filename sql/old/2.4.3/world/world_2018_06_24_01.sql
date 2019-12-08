@@ -1,1 +1,0 @@
-REPLACE INTO spell_threat (entry, flatMod, pctMod) VALUES (20647, 0, 1.25);

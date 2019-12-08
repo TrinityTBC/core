@@ -1,1 +1,0 @@
-UPDATE spawn_group SET groupId = 3 WHERE spawnId = 59383 AND spawnType = 0;

@@ -1,1 +1,0 @@
-REPLACE INTO command (name, security, help) VALUES ("cheat proc", 1, 'Syntax: .cheat proc [on/off]\r\n 100% proc chance on every spell.');

@@ -41,6 +41,43 @@ LOCK TABLES `account_ip` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `anticheat_movement`
+--
+
+DROP TABLE IF EXISTS `anticheat_movement`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `anticheat_movement` (
+  `time` int(10) unsigned NOT NULL,
+  `player` int(11) unsigned NOT NULL,
+  `account` int(11) unsigned NOT NULL,
+  `reason` varchar(25) NOT NULL,
+  `severity` float NOT NULL,
+  `opcode` varchar(50) NOT NULL,
+  `val1` float DEFAULT NULL,
+  `val2` float DEFAULT NULL,
+  `val3` float DEFAULT NULL,
+  `mapid` smallint(5) unsigned NOT NULL,
+  `posX` float NOT NULL,
+  `posY` float NOT NULL,
+  `posZ` float NOT NULL,
+  `oldPosX` float DEFAULT NULL,
+  `oldPosY` float DEFAULT NULL,
+  `oldPosZ` float DEFAULT NULL,
+  `level` tinyint(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `anticheat_movement`
+--
+
+LOCK TABLES `anticheat_movement` WRITE;
+/*!40000 ALTER TABLE `anticheat_movement` DISABLE KEYS */;
+/*!40000 ALTER TABLE `anticheat_movement` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `arena_match`
 --
 
@@ -487,7 +524,7 @@ DROP TABLE IF EXISTS `char_item_vendor`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `char_item_vendor` (
-  `id` bigint(20) unsigned NOT NULL,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `transaction_type` enum('buy','sell','buyback') NOT NULL,
   `account` int(11) unsigned NOT NULL,
   `guid` int(11) unsigned NOT NULL,
@@ -630,7 +667,7 @@ CREATE TABLE `gm_command` (
   `command` text NOT NULL COMMENT 'base command',
   `IP` varchar(15) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=53505 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -719,7 +756,8 @@ CREATE TABLE `mail` (
   `receiver_guid` int(11) unsigned NOT NULL,
   `subject` longtext NOT NULL,
   `message` longtext NOT NULL,
-  `money` int(11) NOT NULL DEFAULT '0' COMMENT 'can be negative',
+  `money` int(11) unsigned NOT NULL DEFAULT '0',
+  `cod` int(11) unsigned NOT NULL DEFAULT '0',
   `time` int(11) unsigned NOT NULL,
   `IP` varchar(15) NOT NULL DEFAULT '0.0.0.0',
   `gm_involved` tinyint(1) NOT NULL,
@@ -777,7 +815,7 @@ CREATE TABLE `mon_classes` (
   `class` tinyint(3) unsigned NOT NULL,
   `players` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3645712 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -802,7 +840,7 @@ CREATE TABLE `mon_maps` (
   `map` mediumint(8) unsigned NOT NULL,
   `players` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6076186 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -827,7 +865,7 @@ CREATE TABLE `mon_players` (
   `active` int(10) unsigned NOT NULL,
   `queued` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=405080 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -852,7 +890,7 @@ CREATE TABLE `mon_races` (
   `race` tinyint(3) unsigned NOT NULL,
   `players` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4050791 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -937,6 +975,7 @@ CREATE TABLE `updates` (
 
 LOCK TABLES `updates` WRITE;
 /*!40000 ALTER TABLE `updates` DISABLE KEYS */;
+INSERT INTO `updates` VALUES ('logs_2017_12_09_01.sql','083548F877378D5685E21EFE49803A555CA6C84E','ARCHIVED','2019-12-08 05:33:06',39),('logs_2018_01_08_01.sql','02A89C1AF56C423CB10D3F330C11290C6A43D5D4','ARCHIVED','2019-12-08 05:33:06',71),('logs_2018_01_08_02.sql','6D5569494D6F0AF2BD079962B0DC32C8760F26FC','ARCHIVED','2019-12-08 05:33:06',61),('logs_2018_05_18_01.sql','82D96F8F9988683517BCAF7674947EE2EC75E71D','ARCHIVED','2019-12-08 05:33:06',76),('2019_12_08_00_logs.sql','DD9700BC428523EAF8D699D0777692D06B4179D4','RELEASED','2019-12-08 06:43:58',21);
 /*!40000 ALTER TABLE `updates` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -960,7 +999,7 @@ CREATE TABLE `updates_include` (
 
 LOCK TABLES `updates_include` WRITE;
 /*!40000 ALTER TABLE `updates_include` DISABLE KEYS */;
-INSERT INTO `updates_include` VALUES ('$/sql/updates/logs','RELEASED'),('$/sql/custom/logs','RELEASED'),('$/sql/old/2.4.3/logs','ARCHIVED');
+INSERT INTO `updates_include` VALUES ('$/sql/updates/logs','RELEASED'),('$/sql/custom/logs','RELEASED'),('$/sql/old/logs','ARCHIVED');
 /*!40000 ALTER TABLE `updates_include` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1000,4 +1039,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-05 11:19:35
+-- Dump completed on 2019-12-08 15:16:57

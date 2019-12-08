@@ -1,1 +1,0 @@
-REPLACE INTO command (name, security, help) VALUES ("npc formation info", 1, '');

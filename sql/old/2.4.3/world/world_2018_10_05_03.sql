@@ -1,1 +1,0 @@
-REPLACE INTO creature_template_movement VALUES (21976, 1, 0, 1, 0);

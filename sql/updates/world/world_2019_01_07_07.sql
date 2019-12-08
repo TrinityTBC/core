@@ -1,1 +1,0 @@
-UPDATE spell_proc SET ProcFlags = 0x10000 WHERE SpellId = 16164;

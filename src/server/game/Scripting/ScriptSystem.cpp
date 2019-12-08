@@ -22,7 +22,7 @@
 #include "Log.h"
 #include "ObjectMgr.h"
 #include "ScriptMgr.h"
-//#include "SplineChain.h"
+#include "SplineChain.h"
 
 SystemMgr::SystemMgr() = default;
 SystemMgr::~SystemMgr() = default;
@@ -89,16 +89,15 @@ void SystemMgr::LoadScriptWaypoints()
     TC_LOG_INFO("server.loading", ">> Loaded %u Script Waypoint nodes in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
 }
 
-/*TC
 void SystemMgr::LoadScriptSplineChains()
 {
-    uint32 oldMSTime = getMSTime();
+    uint32 oldMSTime = GetMSTime();
 
     m_mSplineChainsMap.clear();
 
-    //                                                     0       1        2             3               4
-    QueryResult resultMeta = WorldDatabase.Query("SELECT entry, chainId, splineId, expectedDuration, msUntilNext FROM script_spline_chain_meta ORDER BY entry asc, chainId asc, splineId asc");
-    //                                                  0       1         2       3   4  5  6
+    //                                                   0      1        2         3                 4            5
+    QueryResult resultMeta = WorldDatabase.Query("SELECT entry, chainId, splineId, expectedDuration, msUntilNext, velocity FROM script_spline_chain_meta ORDER BY entry asc, chainId asc, splineId asc");
+    //                                                 0      1        2         3     4  5  6
     QueryResult resultWP = WorldDatabase.Query("SELECT entry, chainId, splineId, wpId, x, y, z FROM script_spline_chain_waypoints ORDER BY entry asc, chainId asc, splineId asc, wpId asc");
     if (!resultMeta || !resultWP)
     {
@@ -123,7 +122,8 @@ void SystemMgr::LoadScriptSplineChains()
 
             uint32 expectedDuration = fieldsMeta[3].GetUInt32();
             uint32 msUntilNext = fieldsMeta[4].GetUInt32();
-            chain.emplace_back(expectedDuration, msUntilNext);
+            float velocity = fieldsMeta[5].GetFloat();
+            chain.emplace_back(expectedDuration, msUntilNext, velocity);
 
             if (splineId == 0)
                 ++chainCount;
@@ -162,7 +162,6 @@ void SystemMgr::LoadScriptSplineChains()
         TC_LOG_INFO("server.loading", ">> Loaded spline chain data for %u chains, consisting of %u splines with %u waypoints in %u ms", chainCount, splineCount, wpCount, GetMSTimeDiffToNow(oldMSTime));
     }
 }
-*/
 
 WaypointPath const* SystemMgr::GetPath(uint32 creatureEntry) const
 {
@@ -173,7 +172,6 @@ WaypointPath const* SystemMgr::GetPath(uint32 creatureEntry) const
     return &itr->second;
 }
 
-/*TC
 std::vector<SplineChainLink> const* SystemMgr::GetSplineChain(uint32 entry, uint16 chainId) const
 {
     auto it = m_mSplineChainsMap.find({ entry, chainId });
@@ -186,4 +184,3 @@ std::vector<SplineChainLink> const* SystemMgr::GetSplineChain(Creature const* wh
 {
     return GetSplineChain(who->GetEntry(), id);
 }
-*/

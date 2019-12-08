@@ -5,6 +5,7 @@
 #include "G3DPosition.hpp"
 #include "MoveSpline.h"
 #include "MoveSplineInit.h"
+#include "ScriptSystem.h"
 #include <cassert>
 
 #include "ChaseMovementGenerator.h"
@@ -20,6 +21,7 @@
 #include "PointMovementGenerator.h"
 #include "RandomMovementGenerator.h"
 #include "RotateMovementGenerator.h"
+#include "SplineChainMovementGenerator.h"
 #include "WaypointMovementGenerator.h"
 
 inline MovementGenerator* GetIdleMovementGenerator()
@@ -712,6 +714,38 @@ void MotionMaster::MoveKnockbackFrom(float srcX, float srcY, float speedXY, floa
     movement->Priority = MOTION_PRIORITY_HIGHEST;
     Add(movement);
 #endif
+}
+
+void MotionMaster::MoveAlongSplineChain(uint32 pointId, uint16 dbChainId, bool walk)
+{
+    Creature* owner = _owner->ToCreature();
+    if (!owner)
+    {
+        TC_LOG_ERROR("movement.motionmaster", "MotionMaster::MoveAlongSplineChain: '%s', tried to walk along DB spline chain. Ignoring.", _owner->GetGUID().ToString().c_str());
+        return;
+    }
+    std::vector<SplineChainLink> const* chain = sScriptSystemMgr->GetSplineChain(owner, dbChainId);
+    if (!chain)
+    {
+        TC_LOG_ERROR("movement.motionmaster", "MotionMaster::MoveAlongSplineChain: '%s', tried to walk along non-existing spline chain with DB Id: %u.", _owner->GetGUID().ToString().c_str(), dbChainId);
+        return;
+    }
+    MoveAlongSplineChain(pointId, *chain, walk);
+}
+
+void MotionMaster::MoveAlongSplineChain(uint32 pointId, std::vector<SplineChainLink> const& chain, bool walk)
+{
+    Add(new SplineChainMovementGenerator(pointId, chain, walk));
+}
+
+void MotionMaster::ResumeSplineChain(SplineChainResumeInfo const& info)
+{
+    if (info.Empty())
+    {
+        TC_LOG_ERROR("movement.motionmaster", "MotionMaster::ResumeSplineChain: '%s', tried to resume a spline chain from empty info.", _owner->GetGUID().ToString().c_str());
+        return;
+    }
+    Add(new SplineChainMovementGenerator(info));
 }
 
 void MotionMaster::MoveFall(uint32 id /*=0*/)

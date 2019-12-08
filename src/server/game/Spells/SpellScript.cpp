@@ -32,18 +32,20 @@ bool _SpellScript::_Validate(SpellInfo const* entry)
     return true;
 }
 
-bool _SpellScript::ValidateSpellInfo(std::vector<uint32> const& spellIds)
+bool _SpellScript::_ValidateSpellInfo(uint32 const* begin, uint32 const* end)
 {
-    for (uint32 spellId : spellIds)
+    bool allValid = true;
+    while (begin != end)
     {
-        if (!sSpellMgr->GetSpellInfo(spellId))
+        if (!sSpellMgr->GetSpellInfo(*begin))
         {
-            TC_LOG_ERROR("scripts.spells", "_SpellScript::ValidateSpellInfo: Spell %u does not exist.", spellId);
-            return false;
+            TC_LOG_ERROR("scripts.spells", "_SpellScript::ValidateSpellInfo: Spell %u does not exist.", *begin);
+            allValid = false;
         }
-    }
 
-    return true;
+        ++begin;
+    }
+    return allValid;
 }
 
 void _SpellScript::_Register()

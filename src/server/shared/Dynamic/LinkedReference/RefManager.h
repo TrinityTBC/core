@@ -10,6 +10,7 @@ class RefManager : public LinkedListHead
 {
 public:
 	typedef LinkedListHead::Iterator<Reference<TO, FROM>> iterator;
+    typedef LinkedListHead::Iterator<Reference<TO, FROM> const> const_iterator;
 	RefManager() { }
 
 	Reference<TO, FROM>* getFirst() { return static_cast<Reference<TO, FROM>*>(LinkedListHead::getFirst()); }
@@ -18,6 +19,9 @@ public:
 
 	iterator begin() { return iterator(getFirst()); }
 	iterator end() { return iterator(nullptr); }
+
+    const_iterator begin() const { return const_iterator(getFirst()); }
+    const_iterator end() const { return const_iterator(nullptr); }
 
 	virtual ~RefManager()
 	{

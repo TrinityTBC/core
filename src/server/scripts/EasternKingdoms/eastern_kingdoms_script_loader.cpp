@@ -91,10 +91,6 @@ void AddSC_boss_sulfuron();
 void AddSC_boss_majordomo();
 void AddSC_boss_ragnaros();
 void AddSC_instance_molten_core();
-void AddSC_the_scarlet_enclave();            //Scarlet Enclave
-void AddSC_the_scarlet_enclave_c1();
-void AddSC_the_scarlet_enclave_c2();
-void AddSC_the_scarlet_enclave_c5();
 void AddSC_boss_arcanist_doan();             //Scarlet Monastery
 void AddSC_boss_azshir_the_sleepless();
 void AddSC_boss_bloodmage_thalnos();
@@ -269,10 +265,6 @@ void AddEasternKingdomsScripts()
     AddSC_boss_majordomo();
     AddSC_boss_ragnaros();
     AddSC_instance_molten_core();
-    AddSC_the_scarlet_enclave();            //Scarlet Enclave
-    AddSC_the_scarlet_enclave_c1();
-    AddSC_the_scarlet_enclave_c2();
-    AddSC_the_scarlet_enclave_c5();
     AddSC_boss_arcanist_doan();             //Scarlet Monastery
     AddSC_boss_azshir_the_sleepless();
     AddSC_boss_bloodmage_thalnos();

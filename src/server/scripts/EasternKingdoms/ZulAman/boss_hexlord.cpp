@@ -287,7 +287,7 @@ class boss_hexlord_malacrass : public CreatureScript
 
                 SpawnAdds();
 
-                me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID, 46916);
+                me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_DISPLAY, 46916);
                 me->SetByteValue(UNIT_FIELD_BYTES_2, 0, SHEATH_STATE_MELEE);
             }
 
@@ -609,7 +609,7 @@ class boss_alyson_antille : public CreatureScript
                 if (!who)
                     return;
 
-                if (who->isTargetableForAttack())
+                if (who->IsTargetableForAttack())
                 {
                     if (me->Attack(who, false))
                     {
@@ -869,7 +869,7 @@ class boss_slither : public CreatureScript
                 if (!who)
                     return;
 
-                if (who->isTargetableForAttack())
+                if (who->IsTargetableForAttack())
                 {
                     if (me->Attack(who, false))
                     {

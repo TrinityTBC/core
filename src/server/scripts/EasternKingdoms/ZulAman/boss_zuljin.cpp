@@ -198,7 +198,7 @@ class boss_zuljin : public CreatureScript
 
                 Initialize();
 
-                me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID, 33975);
+                me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_DISPLAY, 33975);
                 //me->SetUInt32Value(UNIT_VIRTUAL_ITEM_INFO, 218172674);
                 //me->SetByteValue(UNIT_FIELD_BYTES_2, 0, SHEATH_STATE_MELEE);
             }
@@ -238,11 +238,11 @@ class boss_zuljin : public CreatureScript
                     ScriptedAI::AttackStart(who);
             }
 
-            void DoMeleeAttackIfReady()
+            void DoMeleeAttackIfReady() override
             {
                 if (!me->IsNonMeleeSpellCast(false))
                 {
-                    if (me->isAttackReady() && me->IsWithinMeleeRange(me->GetVictim()))
+                    if (me->IsAttackReady() && me->IsWithinMeleeRange(me->GetVictim()))
                     {
                         if (Phase == 1 && !Overpower_Timer)
                         {
@@ -256,7 +256,7 @@ class boss_zuljin : public CreatureScript
                         }
                         else
                             me->AttackerStateUpdate(me->GetVictim());
-                        me->resetAttackTimer();
+                        me->ResetAttackTimer();
                     }
                 }
             }
@@ -303,7 +303,7 @@ class boss_zuljin : public CreatureScript
                     case 4:
                         DoTeleportTo(CENTER_X, CENTER_Y, CENTER_Z, 100);
                         ResetThreatList();
-                        me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID, 0);
+                        me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_DISPLAY, 0);
                         me->RemoveAurasDueToSpell(Transform[Phase].unaura);
                         DoCast(me, Transform[Phase].spell);
                         Talk(Transform[Phase].text);
@@ -444,9 +444,9 @@ class boss_zuljin : public CreatureScript
                                 if (Claw_Loop_Timer <= diff)
                                 {
                                     Unit* target = me->GetVictim();
-                                    if (!target || !target->isTargetableForAttack())
+                                    if (!target || !target->IsTargetableForAttack())
                                         target = ObjectAccessor::GetUnit(*me, TankGUID);
-                                    if (!target || !target->isTargetableForAttack())
+                                    if (!target || !target->IsTargetableForAttack())
                                         target = SelectTarget(SELECT_TARGET_RANDOM, 0);
                                     if (target)
                                     {
@@ -495,7 +495,7 @@ class boss_zuljin : public CreatureScript
                             else if (!Lynx_Rush_Timer)
                             {
                                 Unit* target = me->GetVictim();
-                                if (!target || !target->isTargetableForAttack())
+                                if (!target || !target->IsTargetableForAttack())
                                 {
                                     target = SelectTarget(SELECT_TARGET_RANDOM, 0);
                                     AttackStart(target);

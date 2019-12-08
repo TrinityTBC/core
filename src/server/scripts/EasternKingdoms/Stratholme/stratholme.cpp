@@ -299,22 +299,22 @@ public:
         {
             switch (emote)
             {
-                case TEXT_EMOTE_DANCE:
+                case TEXTEMOTE_DANCE:
                     EnterEvadeMode();
                     break;
-                case TEXT_EMOTE_RUDE:
+                case TEXTEMOTE_RUDE:
                     if (me->IsWithinDistInMap(player, 5))
                         DoCast(player, SPELL_SLAP, false);
                     else
                         me->HandleEmoteCommand(EMOTE_ONESHOT_RUDE);
                     break;
-                case TEXT_EMOTE_WAVE:
+                case TEXTEMOTE_WAVE:
                     me->HandleEmoteCommand(EMOTE_ONESHOT_WAVE);
                     break;
-                case TEXT_EMOTE_BOW:
+                case TEXTEMOTE_BOW:
                     me->HandleEmoteCommand(EMOTE_ONESHOT_BOW);
                     break;
-                case TEXT_EMOTE_KISS:
+                case TEXTEMOTE_KISS:
                     me->HandleEmoteCommand(EMOTE_ONESHOT_FLEX);
                     break;
             }
@@ -340,7 +340,7 @@ class spell_ysida_saved_credit : public SpellScript
         });
     }
 
-    void HandleScript(SpellEffIndex /*effIndex*/)
+    void HandleScript(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
     {
         if (Player* player = GetHitUnit()->ToPlayer())
         {

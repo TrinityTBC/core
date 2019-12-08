@@ -107,7 +107,7 @@ class boss_jeklik : public CreatureScript
                 events.ScheduleEvent(EVENT_SCREECH, 13s, 0, PHASE_ONE);
                 events.ScheduleEvent(EVENT_SPAWN_BATS, 60s, 0, PHASE_ONE);
 
-                me->SetCanFly(true);
+                me->SetFlying(true);
                 DoCast(me, SPELL_BAT_FORM);
             }
 
@@ -116,7 +116,7 @@ class boss_jeklik : public CreatureScript
                 if (events.IsInPhase(PHASE_ONE) && !HealthAbovePct(50))
                 {
                     me->RemoveAurasDueToSpell(SPELL_BAT_FORM);
-                    me->SetCanFly(false);
+                    me->SetFlying(false);
                     ResetThreatList();
                     events.SetPhase(PHASE_TWO);
                     events.ScheduleEvent(EVENT_SHADOW_WORD_PAIN, 6s, 0, PHASE_TWO);

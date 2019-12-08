@@ -299,14 +299,14 @@ public:
                 Enraged = true;
             } else EnrageTimer -= diff;
 
-            if (me->isAttackReady() && !me->IsNonMeleeSpellCast(false))
+            if (me->IsAttackReady() && !me->IsNonMeleeSpellCast(false))
             {
                 //If we are within range melee the target
                 if (me->IsWithinMeleeRange(me->GetVictim()))
                 {
                     HandleTouchedSpells(me->GetVictim(), SPELL_DARK_TOUCHED);
                     me->AttackerStateUpdate(me->GetVictim());
-                    me->resetAttackTimer();
+                    me->ResetAttackTimer();
                 }
             }
         }

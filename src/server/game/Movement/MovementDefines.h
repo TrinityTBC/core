@@ -123,7 +123,7 @@ enum MovementGeneratorType : uint8
     FOLLOW_MOTION_TYPE              = 14,    // FollowMovementGenerator.h
     ROTATE_MOTION_TYPE              = 15,    // IdleMovementGenerator.h
     EFFECT_MOTION_TYPE              = 16,
-    //TC SPLINE_CHAIN_MOTION_TYPE        = 17,    // SplineChainMovementGenerator.h
+    SPLINE_CHAIN_MOTION_TYPE        = 17,    // SplineChainMovementGenerator.h
     FORMATION_MOTION_TYPE           = 18,    // FormationMovementGenerator.h
 
     MAX_MOTION_TYPE                          // limit

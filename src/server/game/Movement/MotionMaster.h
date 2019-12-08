@@ -23,6 +23,8 @@ class Unit;
 class PathGenerator;
 class Unit;
 struct WaypointPath;
+struct SplineChainLink;
+struct SplineChainResumeInfo;
 class SplineHandler;
 namespace Movement
 {
@@ -154,6 +156,10 @@ class TC_GAME_API MotionMaster
         void MoveCharge(float x, float y, float z, float speed = SPEED_CHARGE, uint32 id = EVENT_CHARGE, bool generatePath = false);
         void MoveCharge(PathGenerator const& path, float speed = SPEED_CHARGE, Unit* target = nullptr);
         void MoveKnockbackFrom(float srcX, float srcY, float speedXY, float speedZ);
+        // Walk along spline chain stored in DB (script_spline_chain_meta and script_spline_chain_waypoints)
+        void MoveAlongSplineChain(uint32 pointId, uint16 dbChainId, bool walk);
+        void MoveAlongSplineChain(uint32 pointId, std::vector<SplineChainLink> const& chain, bool walk);
+        void ResumeSplineChain(SplineChainResumeInfo const& info);
 #ifdef LICH_KING
         void MoveJumpTo(float angle, float speedXY, float speedZ);
         void MoveJump(Position const& pos, float speedXY, float speedZ, uint32 id = EVENT_JUMP, bool hasOrientation = false);

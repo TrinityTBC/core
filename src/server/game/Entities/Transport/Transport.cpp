@@ -114,7 +114,7 @@ bool MotionTransport::CreateMoTrans(ObjectGuid::LowType guidlow, uint32 entry, u
     SetWorldRotation(G3D::Quat());
 #endif
     // sunwell: no PathRotation for MotionTransports
-    SetTransportPathRotation(G3D::Quat(0.0f, 0.0f, 0.0f, 1.0f));
+    SetTransportPathRotation(QuaternionData(0.0f, 0.0f, 0.0f, 1.0f));
 
     m_model = CreateModel();
     return true;
@@ -777,7 +777,7 @@ StaticTransport::~StaticTransport()
     ASSERT(_passengers.empty());
 }
 
-bool StaticTransport::Create(ObjectGuid::LowType guidlow, uint32 name_id, Map* map, uint32 phaseMask, Position const& pos, G3D::Quat const& rotation, uint32 animprogress, GOState go_state, uint32 artKit, bool dynamic, uint32 spawnid)
+bool StaticTransport::Create(ObjectGuid::LowType guidlow, uint32 name_id, Map* map, uint32 phaseMask, Position const& pos, QuaternionData const& rotation, uint32 animprogress, GOState go_state, uint32 artKit, bool dynamic, uint32 spawnid)
 {
     ASSERT(map);
     SetMap(map);

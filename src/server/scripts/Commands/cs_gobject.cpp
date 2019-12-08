@@ -220,7 +220,7 @@ public:
         ObjectGuid::LowType guidLow = map->GenerateLowGuid<HighGuid::GameObject>();
         //use AddGameObjectData instead? Then how do we spawn them in instance?
 
-        if (!pGameObj->Create(guidLow, goI->entry, map, chr->GetPhaseMask(), { x, y, z, o }, G3D::Quat(0, 0, rot2, rot3), 0, GO_STATE_READY))
+        if (!pGameObj->Create(guidLow, goI->entry, map, chr->GetPhaseMask(), { x, y, z, o }, QuaternionData(0, 0, rot2, rot3), 0, GO_STATE_READY))
         {
             delete pGameObj;
             return false;
@@ -544,7 +544,7 @@ public:
 
         uint32 id = atoi(charID);
 
-        chr->SummonGameObject(id, Position(x, y, z, ang), G3D::Quat(0, 0, rot2, rot3), spawntm);
+        chr->SummonGameObject(id, Position(x, y, z, ang), QuaternionData(0, 0, rot2, rot3), spawntm);
 
         return true;
     }

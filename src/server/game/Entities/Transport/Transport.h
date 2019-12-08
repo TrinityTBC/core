@@ -6,6 +6,7 @@
 #include "VehicleDefines.h"
 
 struct CreatureData;
+struct QuaternionData;
 
 class TC_GAME_API Transport : public GameObject, public TransportBase
 {
@@ -106,7 +107,7 @@ public:
     StaticTransport();
     ~StaticTransport() override;
     
-    bool Create(ObjectGuid::LowType guidlow, uint32 name_id, Map* map, uint32 phaseMask, Position const& pos, G3D::Quat const& rotation, uint32 animprogress, GOState go_state, uint32 artKit = 0, bool dynamic = false, uint32 spawnid = 0) override;
+    bool Create(ObjectGuid::LowType guidlow, uint32 name_id, Map* map, uint32 phaseMask, Position const& pos, QuaternionData const& rotation, uint32 animprogress, GOState go_state, uint32 artKit = 0, bool dynamic = false, uint32 spawnid = 0) override;
     void CleanupsBeforeDelete(bool finalCleanup = true) override;
     void BuildUpdate(UpdateDataMapType& data_map, UpdatePlayerSet&) override;
 

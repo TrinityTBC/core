@@ -1492,7 +1492,7 @@ void ObjectMgr::LoadGameObjects()
         data.id             = entry;
         uint32 mapId = fields[2].GetUInt16();
         data.spawnPoint.WorldRelocate(mapId, fields[3].GetFloat(), fields[4].GetFloat(), fields[5].GetFloat(), fields[6].GetFloat());
-        data.rotation       = G3D::Quat(fields[ 7].GetFloat(), fields[ 8].GetFloat(), fields[ 9].GetFloat(), fields[10].GetFloat());
+        data.rotation       = QuaternionData(fields[ 7].GetFloat(), fields[ 8].GetFloat(), fields[ 9].GetFloat(), fields[10].GetFloat());
         data.spawntimesecs  = fields[11].GetInt32();
         data.animprogress   = fields[12].GetUInt8();
         data.go_state       = fields[13].GetUInt8();
@@ -1866,7 +1866,7 @@ ObjectGuid::LowType ObjectMgr::AddGameObjectData(uint32 entry, uint32 mapId, flo
     GameObjectData& data = NewOrExistGameObjectData(guid);
     data.id = entry;
     data.spawnPoint.WorldRelocate(mapId, x, y, z, o);
-    data.rotation = G3D::Quat(rotation0, rotation1, rotation2, rotation3);
+    data.rotation = QuaternionData(rotation0, rotation1, rotation2, rotation3);
     data.spawntimesecs = spawntimedelay;
     data.animprogress = 100;
     data.spawnMask = 1;

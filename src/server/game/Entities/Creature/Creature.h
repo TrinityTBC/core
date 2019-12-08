@@ -926,6 +926,8 @@ class TC_GAME_API Creature : public Unit, public GridObject<Creature>, public Ma
         */
         CanAttackResult CanAggro(Unit const* u, bool force = false) const;
         float GetAggroRange(Unit const* pl) const;
+        bool CanStartAttack(Unit const* u, bool force) const;
+        float GetAttackDistance(Unit const* player) const;
         
         /** The "suspicious look" is a warning whenever a stealth player is about to be detected by a creature*/
         /* return true if the creature can do a suspicious look on target. This does NOT check for detection range, use CanAggro, CanAttack or CanDetectStealthOf results to ensure this distance is correct. */

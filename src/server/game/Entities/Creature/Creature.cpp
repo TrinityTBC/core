@@ -2021,6 +2021,83 @@ float Creature::GetAggroRange(Unit const* pl) const
     return (aggroRadius * aggroRate);
 }
 
+bool Creature::CanStartAttack(Unit const* who, bool force) const
+{
+    if (IsCivilian())
+        return false;
+
+    // This set of checks is should be done only for creatures
+    if ((IsImmuneToNPC() && !who->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PLAYER_CONTROLLED))
+        || (IsImmuneToPC() && who->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PLAYER_CONTROLLED)))
+        return false;
+
+    // Do not attack non-combat pets
+    if (who->GetTypeId() == TYPEID_UNIT && who->GetCreatureType() == CREATURE_TYPE_NON_COMBAT_PET)
+        return false;
+
+    if (!CanFly() && (GetDistanceZ(who) > CREATURE_Z_ATTACK_RANGE))
+        //|| who->IsControlledByPlayer() && who->IsFlying()))
+        // we cannot check flying for other creatures, too much map/vmap calculation
+        /// @todo should switch to range attack
+        return false;
+
+    if (!force)
+    {
+        if (!_IsTargetAcceptable(who))
+            return false;
+
+        if (!force && (IsNeutralToAll() || !IsWithinDistInMap(who, GetAttackDistance(who))))
+            return false;
+    }
+
+    if (!CanCreatureAttack(who, force))
+        return false;
+
+    return IsWithinLOSInMap(who);
+}
+
+float Creature::GetAttackDistance(Unit const* player) const
+{
+    float aggroRate = sWorld->GetRate(RATE_CREATURE_AGGRO);
+    if (aggroRate == 0)
+        return 0.0f;
+
+    // WoW Wiki: the minimum radius seems to be 5 yards, while the maximum range is 45 yards
+    float maxRadius = (45.0f * sWorld->GetRate(RATE_CREATURE_AGGRO));
+    float minRadius = (5.0f * sWorld->GetRate(RATE_CREATURE_AGGRO));
+
+    uint8 expansionMaxLevel = uint8(GetMaxLevelForExpansion(GetCreatureTemplate()->expansion));
+    int32 levelDifference = GetLevel() - player->GetLevel();
+
+    // The aggro radius for creatures with equal level as the player is 20 yards.
+    // The combatreach should not get taken into account for the distance so we drop it from the range (see Supremus as expample)
+    float baseAggroDistance = 20.0f - GetFloatValue(UNIT_FIELD_COMBATREACH);
+
+    // + - 1 yard for each level difference between player and creature
+    float aggroRadius = baseAggroDistance + float(levelDifference);
+
+    // detect range auras
+    if (float(GetLevel() + 5) <= sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL))
+    {
+        aggroRadius += GetTotalAuraModifier(SPELL_AURA_MOD_DETECT_RANGE);
+        aggroRadius += player->GetTotalAuraModifier(SPELL_AURA_MOD_DETECTED_RANGE);
+    }
+
+    // The aggro range of creatures with higher levels than the total player level for the expansion should get the maxlevel treatment
+    // This makes sure that creatures such as bosses wont have a bigger aggro range than the rest of the npc's
+    // The following code is used for blizzlike behaivior such as skippable bosses
+    if (GetLevel() > expansionMaxLevel)
+        aggroRadius = baseAggroDistance + float(expansionMaxLevel - player->GetLevel());
+
+    // Make sure that we wont go over the total range limits
+    if (aggroRadius > maxRadius)
+        aggroRadius = maxRadius;
+    else if (aggroRadius < minRadius)
+        aggroRadius = minRadius;
+
+    return (aggroRadius * aggroRate);
+}
+
 void Creature::SetDeathState(DeathState s)
 {
     Unit::SetDeathState(s);

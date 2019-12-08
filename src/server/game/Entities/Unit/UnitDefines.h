@@ -62,14 +62,12 @@ enum UnitBytes2Offsets : uint8
 };
 
 // byte flags value (UNIT_FIELD_BYTES_1, 3)
-/* OLD
 enum UnitBytes1_Flags : uint8
 {
-    UNIT_BYTE1_FLAG_ALWAYS_STAND    = 0x01,
-    UNIT_BYTE1_FLAG_HOVER           = 0x02,
-    UNIT_BYTE1_FLAG_UNK_3           = 0x04,
-    UNIT_BYTE1_FLAG_ALL             = 0xFF
-};*/
+    UNIT_BYTE1_FLAG_ALWAYS_STAND = 0x01,
+    UNIT_BYTE1_FLAG_UNTRACKABLE  = 0x04,
+    UNIT_BYTE1_FLAG_ALL          = 0xFF
+};
 
 // byte flag value (UNIT_FIELD_BYTES_1, 3) // UNIT_BYTES_1_OFFSET_ANIM_TIER
 enum UnitAnimationTier : uint8

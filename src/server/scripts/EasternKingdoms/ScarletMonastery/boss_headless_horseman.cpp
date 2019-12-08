@@ -21,7 +21,6 @@
 #include "GameObjectAI.h"
 #include "Group.h"
 #include "InstanceScript.h"
-#include "LFGMgr.h"
 #include "Map.h"
 #include "MotionMaster.h"
 #include "ObjectAccessor.h"
@@ -126,8 +125,6 @@ enum HeadlessHorsemanMisc
     POINT_HORSEMAN_6 = 6,
     POINT_HORSEMAN_19 = 19,
     POINT_HORSEMAN_20 = 20,
-
-    LFG_DUNGEONID_THE_HEADLESS_HORSEMAN = 285,
 };
 
 std::vector<Position> const HeadlessHorsemanFlightPoints =
@@ -215,7 +212,7 @@ struct npc_wisp_invis : public ScriptedAI
 
     void MoveInLineOfSight(Unit* who) override
     {
-        if (!who || _creatureType != INVIS_WISP_CREATURE_TYPE_PUMPKIN || !who->isTargetableForAttack())
+        if (!who || _creatureType != INVIS_WISP_CREATURE_TYPE_PUMPKIN || !who->IsTargetableForAttack())
             return;
 
         if (me->IsWithinDist(who, 0.1f, false) && !who->HasAura(SPELL_SQUASH_SOUL))
@@ -491,7 +488,7 @@ struct boss_headless_horseman : public ScriptedAI
             case ACTION_HORSEMAN_EVENT_START:
                 me->SetVisible(false);
                 me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                me->SetCanFly(true);
+                me->SetFlying(true);
                 me->SetWalk(false);
 
                 _id = 0;
@@ -560,7 +557,7 @@ struct boss_headless_horseman : public ScriptedAI
                 _instance->HandleGameObject(ObjectGuid::Empty, false, _instance->GetGameObject(DATA_PUMPKIN_SHRINE));
                 break;
             case POINT_HORSEMAN_19:
-                me->SetCanFly(false);
+                me->SetFlying(false);
                 break;
             case POINT_HORSEMAN_20:
                 _phase = PHASE_BODY_1;
@@ -626,13 +623,6 @@ struct boss_headless_horseman : public ScriptedAI
             wisp->AI()->SetData(DATA_INVIS_WISP_CREATURE_TYPE, INVIS_WISP_CREATURE_TYPE_BLUE);
 
         _instance->SetBossState(DATA_HORSEMAN_EVENT, DONE);
-
-        if (me->GetMap()->HavePlayers())
-        {
-            if (Group* group = me->GetMap()->GetPlayers().begin()->GetSource()->GetGroup())
-                if (group->isLFGGroup())
-                    sLFGMgr->FinishDungeon(group->GetGUID(), LFG_DUNGEONID_THE_HEADLESS_HORSEMAN, me->GetMap());
-        }
     }
 
     void SpellHit(Unit* caster, SpellInfo const* spellInfo) override

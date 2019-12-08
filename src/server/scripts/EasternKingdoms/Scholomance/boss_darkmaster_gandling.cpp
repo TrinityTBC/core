@@ -299,7 +299,7 @@ class spell_shadow_portal_rooms : public SpellScriptLoader
                 return InstanceHasScript(GetCaster(), ScholomanceScriptName);
             }
 
-            void HandleSendEvent(SpellEffIndex effIndex)
+            void HandleSendEvent(SpellEffIndex effIndex, int32& /*dmg*/)
             {
                 // If only one player in threat list fail spell
 

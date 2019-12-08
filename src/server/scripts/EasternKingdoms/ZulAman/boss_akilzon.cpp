@@ -28,7 +28,6 @@ EndScriptData */
 #include "ScriptMgr.h"
 #include "CellImpl.h"
 #include "GridNotifiersImpl.h"
-#include "MiscPackets.h"
 #include "MotionMaster.h"
 #include "ObjectAccessor.h"
 #include "ScriptedCreature.h"
@@ -146,7 +145,7 @@ class boss_akilzon : public CreatureScript
                 if (!map->IsDungeon())
                     return;
 
-                map->SendToPlayers(WorldPackets::Misc::Weather(weather, grade).Write());
+                map->SetZoneWeather(me->GetZoneId(), weather, grade);
             }
 
             void HandleStormSequence(Unit* Cloud) // 1: begin, 2-9: tick, 10: end

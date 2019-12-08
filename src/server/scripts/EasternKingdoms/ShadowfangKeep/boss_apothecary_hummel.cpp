@@ -19,7 +19,6 @@
 #include "GridNotifiersImpl.h"
 #include "Group.h"
 #include "InstanceScript.h"
-#include "LFGMgr.h"
 #include "Map.h"
 #include "MotionMaster.h"
 #include "Player.h"
@@ -176,14 +175,6 @@ class boss_apothecary_hummel : public CreatureScript
                 events.Reset();
                 me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_UNK_29 | UNIT_FLAG_NOT_SELECTABLE);
                 instance->SetBossState(DATA_APOTHECARY_HUMMEL, DONE);
-
-                Map::PlayerList const& players = me->GetMap()->GetPlayers();
-                if (!players.isEmpty())
-                {
-                    if (Group* group = players.begin()->GetSource()->GetGroup())
-                        if (group->isLFGGroup())
-                            sLFGMgr->FinishDungeon(group->GetGUID(), 288, me->GetMap());
-                }
             }
 
             void UpdateAI(uint32 diff) override
@@ -417,7 +408,7 @@ class spell_apothecary_lingering_fumes : public SpellScriptLoader
 
             }
 
-            void HandleScript(SpellEffIndex /*effindex*/)
+            void HandleScript(SpellEffIndex /*effindex*/, int32& /*dmg*/)
             {
                 Unit* caster = GetCaster();
                 caster->CastSpell(GetHitUnit(), SPELL_VALIDATE_AREA, true);
@@ -458,7 +449,7 @@ class spell_apothecary_validate_area : public SpellScriptLoader
             }
 
 
-            void HandleScript(SpellEffIndex /*effindex*/)
+            void HandleScript(SpellEffIndex /*effindex*/, int32& /*dmg*/)
             {
                 GetHitUnit()->CastSpell(GetHitUnit(), SPELL_BUNNY_LOCKDOWN, true);
                 GetCaster()->CastSpell(GetHitUnit(), RAND(SPELL_THROW_COLOGNE, SPELL_THROW_PERFUME), true);
@@ -487,7 +478,7 @@ class spell_apothecary_throw_cologne : public SpellScriptLoader
         {
             PrepareSpellScript(spell_apothecary_throw_cologne_SpellScript);
 
-            void HandleScript(SpellEffIndex /*effindex*/)
+            void HandleScript(SpellEffIndex /*effindex*/, int32& /*dmg*/)
             {
                 GetHitUnit()->CastSpell(GetHitUnit(), SPELL_COLOGNE_SPILL, true);
             }
@@ -514,7 +505,7 @@ class spell_apothecary_throw_perfume : public SpellScriptLoader
         {
             PrepareSpellScript(spell_apothecary_throw_perfume_SpellScript);
 
-            void HandleScript(SpellEffIndex /*effindex*/)
+            void HandleScript(SpellEffIndex /*effindex*/, int32& /*dmg*/)
             {
                 GetHitUnit()->CastSpell(GetHitUnit(), SPELL_PERFUME_SPILL, true);
             }

@@ -166,7 +166,6 @@ struct boss_kalecgos : public BossAI
             return;
 
         _EnterEvadeMode();
-        instance->SendEncounterUnit(ENCOUNTER_FRAME_DISENGAGE, me);
         instance->DoRemoveAurasDueToSpellOnPlayers(SPELL_SPECTRAL_REALM_AURA, true, true);
         summons.DespawnAll();
         DespawnPortals();
@@ -210,7 +209,6 @@ struct boss_kalecgos : public BossAI
 
     void JustEngagedWith(Unit* /*who*/) override
     {
-        instance->SendEncounterUnit(ENCOUNTER_FRAME_ENGAGE, me);
         Talk(SAY_EVIL_AGGRO);
         _JustEngagedWith();
 
@@ -311,14 +309,13 @@ struct boss_kalecgos : public BossAI
                 case EVENT_OUTRO_START:
                     events.Reset();
                     events.SetPhase(PHASE_OUTRO);
-                    me->SetRegenerateHealth(false);
+                    me->setRegeneratingHealth(false);
                     me->SetReactState(REACT_PASSIVE);
                     me->InterruptNonMeleeSpells(true);
                     me->RemoveAllAttackers();
                     me->AttackStop();
                     me->SetFaction(FACTION_FRIENDLY);
                     me->RemoveAllAuras();
-                    instance->SendEncounterUnit(ENCOUNTER_FRAME_DISENGAGE, me);
                     events.ScheduleEvent(EVENT_OUTRO_1, Seconds(3));
                     break;
                 case EVENT_OUTRO_1:
@@ -607,7 +604,7 @@ class spell_kalecgos_tap_check : public SpellScript
         return ValidateSpellInfo({ uint32(spellInfo->Effects[EFFECT_0].CalcValue()) });
     }
 
-    void HandleDummy(SpellEffIndex /*effIndex*/)
+    void HandleDummy(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
     {
         GetHitUnit()->CastSpell(GetCaster(), (uint32)GetSpellInfo()->Effects[EFFECT_0].CalcValue(), true);
     }
@@ -653,7 +650,7 @@ class spell_kalecgos_spectral_blast : public SpellScript
         targets.remove_if(SpectralBlastSelector(GetCaster()));
     }
 
-    void HandleDummy(SpellEffIndex /*effIndex*/)
+    void HandleDummy(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
     {
         Unit* caster = GetCaster();
         Unit* target = GetHitUnit();
@@ -686,7 +683,7 @@ class spell_kalecgos_spectral_realm_trigger : public SpellScript
         });
     }
 
-    void HandleDummy(SpellEffIndex /*effIndex*/)
+    void HandleDummy(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
     {
         Unit* target = GetHitUnit();
         target->CastSpell(target, SPELL_SPECTRAL_REALM_TELEPORT, true);
@@ -726,7 +723,7 @@ class spell_kalecgos_spectral_realm_aura : public AuraScript
 
     void Register() override
     {
-        AfterEffectRemove += AuraEffectRemoveFn(spell_kalecgos_spectral_realm_aura::OnRemove, EFFECT_0, SPELL_AURA_MOD_INVISIBILITY_DETECT, AURA_EFFECT_HANDLE_REAL);
+        AfterEffectRemove += AuraEffectRemoveFn(spell_kalecgos_spectral_realm_aura::OnRemove, EFFECT_0, SPELL_AURA_MOD_INVISIBILITY_DETECTION, AURA_EFFECT_HANDLE_REAL);
     }
 };
 

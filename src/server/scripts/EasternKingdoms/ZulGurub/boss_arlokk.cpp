@@ -112,8 +112,8 @@ class boss_arlokk : public CreatureScript
                     me->ApplyStatPctModifier(UNIT_MOD_DAMAGE_MAINHAND, TOTAL_PCT, DamageDecrease); // hack
                 _Reset();
                 Initialize();
-                me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID + 0, uint32(WEAPON_DAGGER));
-                me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID + 1, uint32(WEAPON_DAGGER));
+                me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_DISPLAY + 0, uint32(WEAPON_DAGGER));
+                me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_DISPLAY + 1, uint32(WEAPON_DAGGER));
                 me->SetWalk(false);
                 me->GetMotionMaster()->MovePoint(0, PosMoveOnSpawn[0]);
             }
@@ -232,8 +232,8 @@ class boss_arlokk : public CreatureScript
                         case EVENT_TRANSFORM:
                         {
                             DoCast(me, SPELL_PANTHER_TRANSFORM); // SPELL_AURA_TRANSFORM
-                            me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID + 0, uint32(EQUIP_UNEQUIP));
-                            me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID + 1, uint32(EQUIP_UNEQUIP));
+                            me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_DISPLAY + 0, uint32(EQUIP_UNEQUIP));
+                            me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_DISPLAY + 1, uint32(EQUIP_UNEQUIP));
                             /*
                             CreatureTemplate const* cinfo = me->GetCreatureTemplate();
                             me->SetBaseWeaponDamage(BASE_ATTACK, MINDAMAGE, (cinfo->mindmg +((cinfo->mindmg/100) * 35)));
@@ -280,8 +280,8 @@ class boss_arlokk : public CreatureScript
                         {
                             me->RemoveAura(SPELL_PANTHER_TRANSFORM); // SPELL_AURA_TRANSFORM
                             DoCast(me, SPELL_VANISH_VISUAL);
-                            me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID + 0, uint32(WEAPON_DAGGER));
-                            me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID + 1, uint32(WEAPON_DAGGER));
+                            me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_DISPLAY + 0, uint32(WEAPON_DAGGER));
+                            me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_DISPLAY + 1, uint32(WEAPON_DAGGER));
                             /*
                             CreatureTemplate const* cinfo = me->GetCreatureTemplate();
                             me->SetBaseWeaponDamage(BASE_ATTACK, MINDAMAGE, (cinfo->mindmg));

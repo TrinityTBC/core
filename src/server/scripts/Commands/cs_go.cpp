@@ -94,7 +94,7 @@ public:
             y = fields[1].GetFloat();
             z = fields[2].GetFloat();
             ort = fields[3].GetFloat();
-            mapid = fields[4].GetUInt32();
+            mapid = fields[4].GetUInt16();
         }
         else {
             uint32 guid = atoi(cId);

@@ -1256,7 +1256,7 @@ void TestCase::Celebrate()
         Position celebrateLocation;
         celebrateLocation.MoveInFront(player->GetPosition(), 10.0f);
 
-        if (GameObject* gob = player->SummonGameObject(urand(180860, 180865), celebrateLocation, G3D::Quat(0, 0, 0, 0), 0))
+        if (GameObject* gob = player->SummonGameObject(urand(180860, 180865), celebrateLocation, QuaternionData(0, 0, 0, 0), 0))
         {
             gob->SetFloatValue(OBJECT_FIELD_SCALE_X, 0.5f);
             _map->RemoveFromMap(gob, false);

@@ -44,7 +44,7 @@ public:
             TestPlayer* p = SpawnRandomPlayer(CLASS_WARRIOR, 1); //lvl 1
             Wait(Seconds(1));
             //use player to spawn object... we don't have another good and simple way to spawn a gameoject right now
-            GameObject* obj = p->SummonGameObject(2061, p->GetPosition(), G3D::Quat(), 0); //campfire
+            GameObject* obj = p->SummonGameObject(2061, p->GetPosition(), QuaternionData(), 0); //campfire
             TEST_ASSERT(obj != nullptr);
             obj->SetOwnerGUID(ObjectGuid::Empty); //remove owner, environmental traps don't have any
 

@@ -1,3 +1,26 @@
+set(SCRIPTS_AVAILABLE_OPTIONS none static dynamic minimal-static minimal-dynamic)
+
+# Log a fatal error when the value of the SCRIPTS variable isn't a valid option.
+if (SCRIPTS)
+  list (FIND SCRIPTS_AVAILABLE_OPTIONS "${SCRIPTS}" SCRIPTS_INDEX)
+  if (${SCRIPTS_INDEX} EQUAL -1)
+    message(FATAL_ERROR "The value (${SCRIPTS}) of your SCRIPTS variable is invalid! "
+                        "Allowed values are: ${SCRIPTS_AVAILABLE_OPTIONS} if you still "
+                        "have problems search on forum for TCE00019.")
+  endif()
+endif()
+
+set(SCRIPTS "static" CACHE STRING "Build core with scripts (recommanded static for production environnement")
+set_property(CACHE SCRIPTS PROPERTY STRINGS ${SCRIPTS_AVAILABLE_OPTIONS})
+
+# Build a list of all script modules when -DSCRIPT="custom" is selected
+GetScriptModuleList(SCRIPT_MODULE_LIST)
+foreach(SCRIPT_MODULE ${SCRIPT_MODULE_LIST})
+  ScriptModuleNameToVariable(${SCRIPT_MODULE} SCRIPT_MODULE_VARIABLE)
+  set(${SCRIPT_MODULE_VARIABLE} "default" CACHE STRING "Build type of the ${SCRIPT_MODULE} module.")
+  set_property(CACHE ${SCRIPT_MODULE_VARIABLE} PROPERTY STRINGS default disabled static dynamic)
+endforeach()
+
 option(DO_DEBUG "Debug mode (No optimization and debug symbols)" 0)
 option(DO_WARN "Enable all compilation warnings" 0)
 option(TOOLS "Build map/vmap/mmap extraction/assembler tools" 0)
@@ -32,19 +55,6 @@ option(CLANG_MEMORY_SANITIZER "Enable clang MemorySanitizer (~3x slowdown)" 0)
 option(CLANG_LEAK_SANITIZER "Enable clang LeakSanitizer (Almost no slowdown). Generate report at the program end" 0)
 option(CLANG_THREAD_SAFETY_ANALYSIS "Enable clang Thread Safety Analysis (compile time only)" 0)
 endif()
-
-
-set(SCRIPTS "static" CACHE STRING "Build core with scripts (recommanded static for production environnement")
-set(SCRIPTS_AVAILABLE_OPTIONS none static dynamic minimal-static minimal-dynamic)
-set_property(CACHE SCRIPTS PROPERTY STRINGS ${SCRIPTS_AVAILABLE_OPTIONS})
-
-# Build a list of all script modules when -DSCRIPT="custom" is selected
-GetScriptModuleList(SCRIPT_MODULE_LIST)
-foreach(SCRIPT_MODULE ${SCRIPT_MODULE_LIST})
-  ScriptModuleNameToVariable(${SCRIPT_MODULE} SCRIPT_MODULE_VARIABLE)
-  set(${SCRIPT_MODULE_VARIABLE} "default" CACHE STRING "Build type of the ${SCRIPT_MODULE} module.")
-  set_property(CACHE ${SCRIPT_MODULE_VARIABLE} PROPERTY STRINGS default disabled static dynamic)
-endforeach()
 
 set(WITH_SOURCE_TREE    "hierarchical" CACHE STRING "Build the source tree for IDE's.")
 set_property(CACHE WITH_SOURCE_TREE PROPERTY STRINGS no flat hierarchical hierarchical-folders)

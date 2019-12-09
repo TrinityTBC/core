@@ -34,41 +34,30 @@ addons:
 before_install:
   - git config user.email "travis@build.bot" && git config user.name "Travis CI"
   - git tag -a -m "Travis build" init
-  # To get core dump infos
-  - ulimit -c
-  - ulimit -a -S
-  - ulimit -a -H
-  - cat /proc/sys/kernel/core_pattern
-  # More recent cmake
-  - sudo apt-get remove cmake
-  - sudo mkdir /opt/cmake
-  - wget https://cmake.org/files/v3.11/cmake-3.11.4-Linux-x86_64.sh
-  - sudo sh cmake-3.11.4-Linux-x86_64.sh --prefix=/opt/cmake --skip-license
  
 install:
   - mysql -uroot -e 'create database test_mysql'
   - mkdir bin logs data
   - cd bin
-  - /opt/cmake/bin/cmake ../ -DPLAYERBOT=1 -DTOOLS=1 -DSCRIPTS=static -DTESTS=1 -DCMAKE_BUILD_TYPE=Release -DDO_DEBUG=1 -DCMAKE_INSTALL_PREFIX=check_install
+  - cmake ../ -DPLAYERBOT=1 -DTOOLS=1 -DSCRIPTS=dynamic -DTESTS=1 -DCMAKE_BUILD_TYPE=Debug -DDO_DEBUG=1 -DCMAKE_INSTALL_PREFIX=check_install
   - cd ..
 
 script:
   - $CXX --version
   - mysql -uroot < sql/create/create_mysql.sql
   - mysql -utrinity -ptrinity auth < sql/base/auth_database.sql
+  - ./contrib/check_updates.sh auth auth localhost
   - mysql -utrinity -ptrinity characters < sql/base/characters_database.sql
+  - ./contrib/check_updates.sh characters characters localhost
   - mysql -utrinity -ptrinity logs < sql/base/logs_database.sql
+  - ./contrib/check_updates.sh logs logs localhost
+  - mysql -utrinity -ptrinity world < sql/base/dev/world_database.sql
+  - cat sql/updates/world/*.sql | mysql -utrinity -ptrinity world
+  - mysql -uroot < sql/create/drop_mysql.sql
   - cd bin
-  - make -j 10 -k && make install && make clean
+  - make -j 4 -k && make install
   - cd check_install
   - ls
   - cd bin
   - ./authserver --version
   - ./worldserver --version
-  - wget https://github.com/TrinityTBC/database/raw/master/world_full_2019_01_30.7z
-  - 7zr x world_full_2019_01_30.7z -y > /dev/null
-  - ls
-  - rm world_full_2019_01_30.7z
-  - sed -e 's!^DataDir\s*=.*!DataDir = "../data/"!g;' -e 's!^LogsDir\s*=.*!LogsDir = "../logs/"!g;'  -e 's!^Testing.MaxParallel\s*=.*!Testing.MaxParallel = 1000!g;' -e 's!^Logger.scripts.ai\s*=.*!Logger.scripts.ai=6,Console Server!g;' < "../etc/worldserver.conf.dist" > "../etc/worldserver.conf"
-  - ulimit -c unlimited -S
-  - ls -l

@@ -5,17 +5,17 @@
 
 The only windows compiler supported for now is MSVC 15 (Visual Studio Community 2017).
 
-When downloading dependencies (such as OpenSSL, Boost or MariaDB) you must get the
+When downloading dependencies (such as OpenSSL, Boost) you must get the
 version corresponding to the compiler version (x86 or x64) you will use, else
 the linking will fail.
 
 1. Get Git, and clone the repository
-   (https://github.com/ValorenWoW/sunstrider-core.git).
+   (https://github.com/TrinityTBC/core.git).
 
 2. Install [CMake][cmake]
 
 3. Install [OpenSSL 1.0.x][openssl] note the directory to which you
-   install it. Caution, do not use the 'Light' version. OpenSSL 1.1 is NOT supported!
+   install it. Caution, do not use the 'Light' version. OpenSSL 1.1 is also supported.
 
 4. Install [Boost 1.62][boost] or higher.
    Get the windows prebuilt binaries corresponding to your MSVC compiler. 
@@ -25,7 +25,7 @@ the linking will fail.
 5. Run `cmake-gui` and indicate the repository as the source directory, and a
    directory of your choice to hold the compiled artifacts.
 
-5. Install MariaDB, as instructed in the "Setting Up The DB" section below.
+5. Install MySQL, as instructed in the "Setting Up The DB" section below.
 
 6. Click Configure, then tweak the variables that appear.
 
@@ -38,14 +38,14 @@ the linking will fail.
    install the binaries.
    Note that this location is important if you want to use dynamic (reloadable) script libraries.
 
-   If you installed MariaDB in an unusual way (e.g. by unzipping binaries or
+   If you installed MySQL in an unusual way (e.g. by unzipping binaries or
    compiling manually), indicate the location of the MySQL dynamic libraries in
    a new variable named `MYSQL_ADD_LIBRARIES_PATH`; and the location of the
    MySQL headers in a new variabled named `MYSQL_ADD_INCLUDE_PATH`.
 
 7. Click Generate, and select your compiler.
 
-8. Open the `Sunstrider.sln` solution generated in the build directory.
+8. Open the `TrinityTBC.sln` solution generated in the build directory.
 
 9. Right-click the `INSTALL` project, then click `build`.
 
@@ -61,11 +61,9 @@ https://dl.bintray.com/boostorg/release/1.67.0/binaries/
 <!----------------------------------------------------------------------------->
 ## Extracting maps, vmaps and dbc
 
-You can skip this step by downloading [the already extracted data folders][githubdata] and extracting them into your `<install dir>/data` folder.
+Follow these steps after compiling the core.
 
-Otherwise, if those files were missing, outdated, if if you want to do it by yourself, follow these steps after compiling the core.
-
-- Copy `libmysql.dll` from your mariadb directory (for example `C:\Program Files\MariaDB 10.1\lib`) to your
+- Copy `libmysql.dll` from your mysql directory (for example `C:\Program Files\MySQL\MySQL Server 5.7\lib`) to your
   burning crusade install directory. (This dependency should be removed)
 
 - Copy `src/tools/map_extractor/<configuration>/mapextractor.exe`from the build
@@ -97,32 +95,15 @@ Otherwise, if those files were missing, outdated, if if you want to do it by you
   `CMAKE_INSTALL_PREFIX` variable inside CMake. If you're not sure, you can
   re-run `cmake-gui` to check. You can delete the `Buildings` directory.
 
-
-[githubdata]:
-https://github.com/ValorenWoW/sunstrider-core/releases
-
-
 <!----------------------------------------------------------------------------->
 ## Setting Up The DB
 
-1. Download [MariaDB][maria_db] (10.1 series) and install it. Be sure to note
-   down your root password, and the port you select if it not the default. If
-   you don't already have an SQL client, you can install HeidiSQL when proposed
-   to do so.  
-   /!\ Only 10.1 series or lower are supported at the moment.
-
-2. Download the last world database [here][world_db], extract it to your CMAKE_INSTALL_PREFIX directory. 
+1. Download the last world database [here][world_db], extract it to your CMAKE_INSTALL_PREFIX directory. 
 
 3. You may follow the instructions [here][trinity_db_instructions]. Just use the world you just downloaded instead.
 
-[maria_db]:
-https://downloads.mariadb.org/
-
 [world_db]:
-https://github.com/ValorenWoW/sunstrider-core/releases
-
-[my_ini]:
-http://www.avajava.com/tutorials/lessons/how-do-i-log-on-to-mysql-automatically.html
+https://github.com/TrinityTBC/database
 
 [trinity_db_instructions]:
 https://trinitycore.atlassian.net/wiki/spaces/tc/pages/2130092/Databases+Installation
@@ -133,7 +114,7 @@ https://trinitycore.atlassian.net/wiki/spaces/tc/pages/2130092/Databases+Install
 - Copy to your CMAKE_INSTALL_PREFIX directory :
 
 	- `libeay32.dll` from the OpenSSL install directory.
-	- `libmysql.dll` from your mariadb directory (for example `C:\Program Files\MariaDB 10.1\lib`)
+	- `libmysql.dll` from your mariadb directory (for example `C:\Program Files\MySQL\MySQL Server 5.7\lib`)
 
 <!-- comment for spacing -->
 

@@ -3,20 +3,18 @@
 <!----------------------------------------------------------------------------->
 ## Requirements
 
-1. Get the right mariadb repository [here][mariadbrepository] (version 10.1). MySQL should also work but is not supported, and you may encounter problems when importing the databases.
+1. Get mysql server 5.7 installed
 
-2. clang: Get the right LLVM repository [here][llvmrepository]. Current supported clang version is 7. gcc may work too but is not supported.
+2. clang: Get the right LLVM repository [here][llvmrepository]. Current supported clang versions are 7 and 8. gcc may work too but is not supported.
 
 3. Add LLVM key `wget -O - http://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -`
 
 4. Minimal boost version is 1.62
 
-5. sudo apt-get install clang-7 make cmake libmariadbclient-dev mariadb-server mariadb-client openssl libssl-dev zlib1g-dev libtool libncurses5-dev patch build-essential git libreadline-dev libbz2-1.0 libbz2-dev libboost-dev libboost-thread-dev libboost-system-dev libboost-filesystem-dev libboost-program-options-dev libboost-regex-dev libboost-iostreams-dev 
+5. sudo apt-get install clang-7 make cmake libmysqlclient-dev mysql-server mysql-client openssl libssl-dev zlib1g-dev libtool libncurses5-dev patch build-essential git libreadline-dev libbz2-1.0 libbz2-dev libboost-dev libboost-thread-dev libboost-system-dev libboost-filesystem-dev libboost-program-options-dev libboost-regex-dev libboost-iostreams-dev 
 
 6. If you plan to use the option `USE_GPERFTOOLS` you'll also need packages `libgoogle-perftools-dev google-perftools`
 
-[mariadbrepository]:
-https://downloads.mariadb.org/mariadb/repositories/
 [llvmrepository]:
 http://apt.llvm.org/
 
@@ -44,24 +42,12 @@ Inside, create the following folders :
 <!----------------------------------------------------------------------------->
 ## Setting Up The DB
 
-1. Download [MariaDB][maria_db] (10.1 series) and install it. Be sure to note
-   down your root password, and the port you select if it not the default. If
-   you don't already have an SQL client, you can install HeidiSQL when proposed
-   to do so.  
-   /!\ Only 10.1 series or lower are supported at the moment.
+1. Download the last world database [here][world_db], extract it to your CMAKE_INSTALL_PREFIX directory. 
 
-2. Download the last world database [here][world_db], extract it to your CMAKE_INSTALL_PREFIX directory. 
-
-3. You may follow the instructions [here][trinity_db_instructions]. Just use the world you just downloaded instead.
-
-[maria_db]:
-https://downloads.mariadb.org/
+2. You may follow the instructions [here][trinity_db_instructions]. Just use the world you just downloaded instead.
 
 [world_db]:
-https://github.com/ValorenWoW/sunstrider-core/releases
-
-[my_ini]:
-http://www.avajava.com/tutorials/lessons/how-do-i-log-on-to-mysql-automatically.html
+https://github.com/TrinityTBC/database
 
 [trinity_db_instructions]:
 https://trinitycore.atlassian.net/wiki/spaces/tc/pages/2130092/Databases+Installation
@@ -92,9 +78,6 @@ https://trinitycore.atlassian.net/wiki/spaces/tc/pages/2130092/Databases+Install
 
 6. Move the directories `maps`, `dbc`, `vmaps` and `mmaps` from your game
   directory to `<root_install_folder>/data`. You can delete the `Buildings` directory generated at step 3.
-
-[githubdata]:
-https://github.com/ValorenWoW/sunstrider-core/releases
 
 <!----------------------------------------------------------------------------->
 
@@ -129,4 +112,4 @@ Just run both the **worldserver** and the **authserver** in the `<root_install_f
 Sunstrider also has some generic systemd scripts that you can use, see [this directory][restarterscripts].
 
 [restarterscripts]:
-https://github.com/ValorenWoW/sunstrider-core/tree/master/contrib/sunstrider
+https://github.com/TrinityTBC/core/tree/master/contrib/sunstrider

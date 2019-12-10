@@ -235,8 +235,6 @@ DispelableAura::DispelableAura(Aura* aura, int32 dispelChance, uint8 dispelCharg
 {
 }
 
-DispelableAura::~DispelableAura() = default;
-
 bool DispelableAura::RollDispel() const
 {
     return roll_chance_i(_chance);

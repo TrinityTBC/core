@@ -100,7 +100,7 @@ class DispelableAura
 {
 public:
     DispelableAura(Aura* aura, int32 dispelChance, uint8 dispelCharges);
-    ~DispelableAura();
+    ~DispelableAura() {}
 
     Aura* GetAura() const { return _aura; }
     bool RollDispel() const;

@@ -8920,7 +8920,7 @@ void ObjectMgr::LoadBroadcastTextLocales()
 {
     uint32 oldMSTime = GetMSTime();
 
-    QueryResult result = WorldDatabase.Query("SELECT ID, locale, MaleText, FemaleText FROM locales_broadcast_text");
+    QueryResult result = WorldDatabase.Query("SELECT ID, locale, MaleText, FemaleText FROM broadcast_text_locale");
 
     if (!result)
     {

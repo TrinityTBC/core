@@ -22,7 +22,7 @@ struct FormationInfo
     GroupAI groupAI = GROUP_AI_FULL_SUPPORT;
     bool respawn = false;
     bool linkedLoot = false;
-    uint32 leaderWaypointIDs[2] = { }; //formation does a 180° on these points. // NYI, this is somewhat automated for now
+    uint32 leaderWaypointIDs[2] = { }; //formation does a 180 on these points. // NYI, this is somewhat automated for now
 
     Position originalHome; //home before being in the formation
 };

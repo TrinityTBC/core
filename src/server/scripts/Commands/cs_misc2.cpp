@@ -1307,7 +1307,6 @@ public:
                 chn->AddNewGMBan(accountid, time(nullptr) + durationSecs);
                 //TODO translate
                 ChatHandler(player).PSendSysMessage("You have been banned from World channel with this reason: %s", reasonstr.c_str());
-                //ChatHandler(player).PSendSysMessage("Vous avez été banni du channel world avec la raison suivante : %s", reasonstr.c_str());
             }
         }
 

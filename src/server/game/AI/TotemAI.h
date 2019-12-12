@@ -18,7 +18,7 @@ class TC_GAME_API TotemAI : public CreatureAI
         void AttackStart(Unit *) override;
         void EnterEvadeMode(EvadeReason /* why */) override;
 
-        void UpdateAI(const uint32) override;
+        void UpdateAI(uint32) override;
         static int Permissible(const Creature *);
 
     private:

@@ -55,7 +55,7 @@ void ArcherAI::AttackStart(Unit *who)
         me->GetMotionMaster()->MoveIdle();
 }
 
-void ArcherAI::UpdateAI(const uint32 /*diff*/)
+void ArcherAI::UpdateAI(uint32 /*diff*/)
 {
     if (!UpdateVictim())
         return;

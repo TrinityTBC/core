@@ -37,7 +37,7 @@ void TotemAI::EnterEvadeMode(EvadeReason why)
     i_totem.CombatStop();
 }
 
-void TotemAI::UpdateAI(const uint32 /*diff*/)
+void TotemAI::UpdateAI(uint32 /*diff*/)
 {
     if (i_totem.GetTotemType() != TOTEM_ACTIVE)
         return;

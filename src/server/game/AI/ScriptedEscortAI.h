@@ -45,7 +45,7 @@ struct TC_GAME_API EscortAI : public ScriptedAI
         void FailQuest();
         void ReturnToLastPoint();
         void EnterEvadeMode(EvadeReason why = EVADE_REASON_OTHER) override;
-        void UpdateAI(const uint32) override;
+        void UpdateAI(uint32) override;
         void MovementInform(uint32, uint32) override;
 
         virtual void UpdateEscortAI(uint32 diff); // used when it's needed to add code in update (abilities, scripted events, etc)

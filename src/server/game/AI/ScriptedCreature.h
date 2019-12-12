@@ -170,7 +170,7 @@ struct TC_GAME_API ScriptedAI : public CreatureAI
     void HealReceived(Unit* /*done_by*/, uint32& /*addhealth*/) override {}
 
     //Called at World update tick
-    void UpdateAI(const uint32) override;
+    void UpdateAI(uint32) override;
 
     //Called at creature death
     void JustDied(Unit*) override{}
@@ -320,7 +320,7 @@ public:
     void JustSummoned(Creature* summon) override;
     void SummonedCreatureDespawn(Creature* summon) override;
 
-    void UpdateAI(const uint32 diff) override;
+    void UpdateAI(uint32 diff) override;
 
     // Hook used to execute events scheduled into EventMap without the need
     // to override UpdateAI

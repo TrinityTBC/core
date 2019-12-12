@@ -79,7 +79,7 @@ class SimpleCharmedPlayerAI : public PlayerAI
 {
     public:
         SimpleCharmedPlayerAI(Player* player) : PlayerAI(player), _castCheckTimer(2500), _chaseCloser(false), _forceFacing(true), _isFollowing(false) { }
-        void UpdateAI(const uint32 diff) override;
+        void UpdateAI(uint32 diff) override;
         void OnCharmed(bool isNew) override;
 
     protected:

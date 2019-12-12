@@ -1370,7 +1370,7 @@ PlayerAI::TargetedSpell SimpleCharmedPlayerAI::SelectAppropriateCastForSpec()
 }
 
 static const float CASTER_CHASE_DISTANCE = 28.0f;
-void SimpleCharmedPlayerAI::UpdateAI(const uint32 diff)
+void SimpleCharmedPlayerAI::UpdateAI(uint32 diff)
 {
     Creature* charmer = me->GetCharmer() ? me->GetCharmer()->ToCreature() : nullptr;
     if (!charmer)

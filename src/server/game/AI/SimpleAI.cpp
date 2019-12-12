@@ -206,7 +206,7 @@ void SimpleAI::DamageTaken(Unit *killer, uint32 &damage)
         DoCast(target, Death_Spell);
 }
 
-void SimpleAI::UpdateAI(const uint32 diff)
+void SimpleAI::UpdateAI(uint32 diff)
 {
     //Return since we have no target
     if (!UpdateVictim())

@@ -103,7 +103,7 @@ class TC_GAME_API SmartAI : public CreatureAI
         void HealReceived(Unit* doneBy, uint32& addhealth) override;
 
         // Called at World update tick
-        void UpdateAI(const uint32 diff) override;
+        void UpdateAI(uint32 diff) override;
 
         // Called at text emote receive from player
         void ReceiveEmote(Player* player, uint32 textEmote) override;
@@ -266,7 +266,7 @@ class TC_GAME_API SmartGameObjectAI : public GameObjectAI
         SmartGameObjectAI(GameObject* g) : GameObjectAI(g), _gossipReturn(false) { }
         ~SmartGameObjectAI() override { }
 
-        void UpdateAI(const uint32 diff) override;
+        void UpdateAI(uint32 diff) override;
         void InitializeAI() override;
         void Reset() override;
         SmartScript* GetScript() { return &mScript; }

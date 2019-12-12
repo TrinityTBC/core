@@ -33,7 +33,7 @@ public:
 
     void DamageTaken(Unit *killer, uint32 &damage) override;
 
-    void UpdateAI(const uint32 diff) override;
+    void UpdateAI(uint32 diff) override;
 
 public:
 

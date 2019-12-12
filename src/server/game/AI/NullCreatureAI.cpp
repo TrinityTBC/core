@@ -2,7 +2,7 @@
 #include "NullCreatureAI.h"
 #include "Creature.h"
 
-void PassiveAI::UpdateAI(const uint32)
+void PassiveAI::UpdateAI(uint32)
 {
     if (me->IsEngaged() && !me->IsInCombat())
         EnterEvadeMode(EVADE_REASON_NO_HOSTILES);
@@ -13,7 +13,7 @@ void PossessedAI::AttackStart(Unit *target)
     me->Attack(target, true);
 }
 
-void PossessedAI::UpdateAI(const uint32 diff)
+void PossessedAI::UpdateAI(uint32 diff)
 {
     if(me->GetVictim())
     {

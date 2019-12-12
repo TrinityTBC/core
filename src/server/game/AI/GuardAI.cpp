@@ -55,7 +55,7 @@ void GuardAI::EnterEvadeMode(EvadeReason why)
     i_creature.AddAura(8279, &i_creature);
 }
 
-void GuardAI::UpdateAI(const uint32 /*diff*/)
+void GuardAI::UpdateAI(uint32 /*diff*/)
 {
     if (i_creature.IsContestedGuard() && !i_creature.HasAura(18950)) //Invisibility and Stealth Detection
         i_creature.CastSpell(&i_creature, 18950, true);
@@ -122,7 +122,7 @@ void guardAI::JustDied(Unit *Killer)
         me->SendZoneUnderAttackMessage(pKiller);
 }
 
-void guardAI::UpdateAI(const uint32 diff)
+void guardAI::UpdateAI(uint32 diff)
 {
     //Always decrease our global cooldown first
     if (GlobalCooldown > diff)

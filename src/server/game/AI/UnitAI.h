@@ -107,7 +107,7 @@ class TC_GAME_API UnitAI
         virtual bool CanAIAttack(Unit const* /*target*/) const { return true; }
         virtual void AttackStart(Unit *);
         void AttackStartCaster(Unit* victim, float dist);
-        virtual void UpdateAI(const uint32 diff) { }
+        virtual void UpdateAI(uint32 diff) { }
 
         bool IsCombatMovementAllowed() { return m_allowCombatMovement; };
         void SetCombatMovementAllowed(bool allow);

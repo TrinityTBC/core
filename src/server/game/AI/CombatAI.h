@@ -15,7 +15,7 @@ class TC_GAME_API AggressorAI : public CreatureAI
     public:
         explicit AggressorAI(Creature* c) : CreatureAI(c) {}
 
-        void UpdateAI(const uint32);
+        void UpdateAI(uint32) override;
         static int Permissible(const Creature*);
 };
 

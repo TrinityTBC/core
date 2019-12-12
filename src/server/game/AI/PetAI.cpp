@@ -348,7 +348,7 @@ void PetAI::DoAttack(Unit* target, bool chase)
     }
 }
 
-void PetAI::UpdateAI(const uint32 diff)
+void PetAI::UpdateAI(uint32 diff)
 {
     if (!i_pet.IsAlive())
         return;

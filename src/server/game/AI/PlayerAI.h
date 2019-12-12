@@ -75,7 +75,7 @@ class TC_GAME_API PlayerAI : public UnitAI
         bool _isSelfRangedAttacker;
 };
 
-class SimpleCharmedPlayerAI : public PlayerAI
+class TC_GAME_API SimpleCharmedPlayerAI : public PlayerAI
 {
     public:
         SimpleCharmedPlayerAI(Player* player) : PlayerAI(player), _castCheckTimer(2500), _chaseCloser(false), _forceFacing(true), _isFollowing(false) { }

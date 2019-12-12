@@ -3,14 +3,14 @@
  * Please see the included DOCS/LICENSE.TXT for more information */
 
 /* ScriptData
-SDName: FollowerAI
+SDName: ScriptedFollowerAI
 SD%Complete: 50
 SDComment: This AI is under development
 SDCategory: Npc
 EndScriptData */
 
 
-#include "FollowerAI.h"
+#include "ScriptedFollowerAI.h"
 #include "Pet.h"
 
 const float MAX_PLAYER_DISTANCE = 100.0f;
@@ -20,13 +20,13 @@ enum ePoints
     POINT_COMBAT_START  = 0xFFFFFF
 };
 
-FollowerAI::FollowerAI(Creature* pCreature) : ScriptedAI(pCreature),
+ScriptedFollowerAI::ScriptedFollowerAI(Creature* pCreature) : ScriptedAI(pCreature),
     m_pQuestForFollow(nullptr),
     m_uiUpdateFollowTimer(2500),
     m_uiFollowState(STATE_FOLLOW_NONE)
 {}
 
-void FollowerAI::AttackStart(Unit* pWho)
+void ScriptedFollowerAI::AttackStart(Unit* pWho)
 {
     if (!pWho)
         return;
@@ -46,7 +46,7 @@ void FollowerAI::AttackStart(Unit* pWho)
 //This part provides assistance to a player that are attacked by pWho, even if out of normal aggro range
 //It will cause me to attack pWho that are attacking _any_ player (which has been confirmed may happen also on offi)
 //The flag (type_flag) is unconfirmed, but used here for further research and is a good candidate.
-bool FollowerAI::AssistPlayerInCombat(Unit* pWho)
+bool ScriptedFollowerAI::AssistPlayerInCombat(Unit* pWho)
 {
     if (!pWho || !pWho->GetVictim())
         return false;
@@ -82,7 +82,7 @@ bool FollowerAI::AssistPlayerInCombat(Unit* pWho)
     return false;
 }
 
-void FollowerAI::MoveInLineOfSight(Unit* pWho)
+void ScriptedFollowerAI::MoveInLineOfSight(Unit* pWho)
 {
     if (!me->HasUnitState(UNIT_STATE_STUNNED) && me->CanCreatureAttack(pWho) && pWho->isInAccessiblePlaceFor(me))
     {
@@ -111,7 +111,7 @@ void FollowerAI::MoveInLineOfSight(Unit* pWho)
     }
 }
 
-void FollowerAI::JustDied(Unit* /*pKiller*/)
+void ScriptedFollowerAI::JustDied(Unit* /*pKiller*/)
 {
     if (!HasFollowState(STATE_FOLLOW_INPROGRESS) || !m_uiLeaderGUID || !m_pQuestForFollow)
         return;
@@ -138,7 +138,7 @@ void FollowerAI::JustDied(Unit* /*pKiller*/)
     }
 }
 
-void FollowerAI::JustAppeared()
+void ScriptedFollowerAI::JustAppeared()
 {
     m_uiFollowState = STATE_FOLLOW_NONE;
 
@@ -151,7 +151,7 @@ void FollowerAI::JustAppeared()
     Reset();
 }
 
-void FollowerAI::EnterEvadeMode(EvadeReason /* why */)
+void ScriptedFollowerAI::EnterEvadeMode(EvadeReason /* why */)
 {
     me->RemoveAllAuras();
     me->GetThreatManager().ClearAllThreat();
@@ -176,7 +176,7 @@ void FollowerAI::EnterEvadeMode(EvadeReason /* why */)
     Reset();
 }
 
-void FollowerAI::UpdateAI(uint32 uiDiff)
+void ScriptedFollowerAI::UpdateAI(uint32 uiDiff)
 {
     if (HasFollowState(STATE_FOLLOW_INPROGRESS) && !me->GetVictim())
     {
@@ -234,7 +234,7 @@ void FollowerAI::UpdateAI(uint32 uiDiff)
     UpdateFollowerAI(uiDiff);
 }
 
-void FollowerAI::UpdateFollowerAI(uint32 uiDiff)
+void ScriptedFollowerAI::UpdateFollowerAI(uint32 uiDiff)
 {
     if (!UpdateVictim())
         return;
@@ -242,7 +242,7 @@ void FollowerAI::UpdateFollowerAI(uint32 uiDiff)
     DoMeleeAttackIfReady();
 }
 
-void FollowerAI::MovementInform(uint32 uiMotionType, uint32 uiPointId)
+void ScriptedFollowerAI::MovementInform(uint32 uiMotionType, uint32 uiPointId)
 {
     if (uiMotionType != POINT_MOTION_TYPE || !HasFollowState(STATE_FOLLOW_INPROGRESS))
         return;
@@ -259,14 +259,14 @@ void FollowerAI::MovementInform(uint32 uiMotionType, uint32 uiPointId)
     }
 }
 
-void FollowerAI::StartFollow(Player* pLeader, uint32 uiFactionForFollower, const Quest* pQuest)
+void ScriptedFollowerAI::StartFollow(Player* pLeader, uint32 uiFactionForFollower, const Quest* pQuest)
 {
     if (me->GetVictim())
         return;
 
     if (HasFollowState(STATE_FOLLOW_INPROGRESS))
     {
-        TC_LOG_ERROR("scripts","FollowerAI attempt to StartFollow while already following for creature %u.", me->GetEntry());
+        TC_LOG_ERROR("scripts","ScriptedFollowerAI attempt to StartFollow while already following for creature %u.", me->GetEntry());
         return;
     }
 
@@ -291,7 +291,7 @@ void FollowerAI::StartFollow(Player* pLeader, uint32 uiFactionForFollower, const
     me->GetMotionMaster()->MoveFollow(pLeader, PET_FOLLOW_DIST, me->GetFollowAngle());
 }
 
-Player* FollowerAI::GetLeaderForFollower()
+Player* ScriptedFollowerAI::GetLeaderForFollower()
 {
     if (Player* pLeader = ObjectAccessor::GetPlayer(*me, m_uiLeaderGUID))
     {
@@ -316,11 +316,11 @@ Player* FollowerAI::GetLeaderForFollower()
         }
     }
 
-    TC_LOG_ERROR("scripts","FollowerAI GetLeader can not find suitable leader for creature %u.", me->GetEntry());
+    TC_LOG_ERROR("scripts","ScriptedFollowerAI GetLeader can not find suitable leader for creature %u.", me->GetEntry());
     return nullptr;
 }
 
-void FollowerAI::SetFollowComplete(bool bWithEndEvent)
+void ScriptedFollowerAI::SetFollowComplete(bool bWithEndEvent)
 {
     if (me->HasUnitState(UNIT_STATE_FOLLOW))
     {
@@ -342,7 +342,7 @@ void FollowerAI::SetFollowComplete(bool bWithEndEvent)
     AddFollowState(STATE_FOLLOW_COMPLETE);
 }
 
-void FollowerAI::SetFollowPaused(bool bPaused)
+void ScriptedFollowerAI::SetFollowPaused(bool bPaused)
 {
     if (!HasFollowState(STATE_FOLLOW_INPROGRESS) || HasFollowState(STATE_FOLLOW_COMPLETE))
         return;

@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.28, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.23, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: auth
+-- Host: localhost    Database: auth
 -- ------------------------------------------------------
--- Server version	5.7.23
+-- Server version	5.7.23-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -250,13 +250,13 @@ LOCK TABLES `ip2nation` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `ip2nationCountries`
+-- Table structure for table `ip2nationcountries`
 --
 
-DROP TABLE IF EXISTS `ip2nationCountries`;
+DROP TABLE IF EXISTS `ip2nationcountries`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ip2nationCountries` (
+CREATE TABLE `ip2nationcountries` (
   `code` varchar(4) NOT NULL DEFAULT '',
   `iso_code_2` varchar(2) NOT NULL DEFAULT '',
   `iso_code_3` varchar(3) DEFAULT '',
@@ -270,12 +270,12 @@ CREATE TABLE `ip2nationCountries` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `ip2nationCountries`
+-- Dumping data for table `ip2nationcountries`
 --
 
-LOCK TABLES `ip2nationCountries` WRITE;
-/*!40000 ALTER TABLE `ip2nationCountries` DISABLE KEYS */;
-/*!40000 ALTER TABLE `ip2nationCountries` ENABLE KEYS */;
+LOCK TABLES `ip2nationcountries` WRITE;
+/*!40000 ALTER TABLE `ip2nationcountries` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ip2nationcountries` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -546,7 +546,7 @@ CREATE TABLE `updates` (
 
 LOCK TABLES `updates` WRITE;
 /*!40000 ALTER TABLE `updates` DISABLE KEYS */;
-INSERT INTO `updates` VALUES ('auth_2018_11_24_01.sql','57189621964879219C368ABADA76EA8064967086','ARCHIVED','2019-12-08 07:04:07',23),('auth_2018_01_03_01.sql','08AF5DAB45515B681B738DA17FA414C7C7CCA44E','ARCHIVED','2019-12-08 07:04:07',25),('2019_12_08_00_auth.sql','67E0FE77385F3A571864185E3C6D09C9B133A82C','RELEASED','2019-12-08 06:43:58',21);
+INSERT INTO `updates` VALUES ('auth_2018_11_24_01.sql','57189621964879219C368ABADA76EA8064967086','ARCHIVED','2019-12-08 07:04:07',23),('auth_2018_01_03_01.sql','08AF5DAB45515B681B738DA17FA414C7C7CCA44E','ARCHIVED','2019-12-08 07:04:07',25),('2019_12_08_00_auth.sql','67E0FE77385F3A571864185E3C6D09C9B133A82C','ARCHIVED','2019-12-08 06:43:58',21),('2019_12_12_00_auth.sql','45EC74C00CB2D4A3DB249B1A2B06A5912947F182','RELEASED','2019-12-12 07:09:42',27);
 /*!40000 ALTER TABLE `updates` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -597,6 +597,7 @@ CREATE TABLE `uptime` (
 
 LOCK TABLES `uptime` WRITE;
 /*!40000 ALTER TABLE `uptime` DISABLE KEYS */;
+INSERT INTO `uptime` VALUES (1,1576134582,0,0,'2019-12-12 15:10:31');
 /*!40000 ALTER TABLE `uptime` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -609,4 +610,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-08 15:10:35
+-- Dump completed on 2019-12-12 15:11:05

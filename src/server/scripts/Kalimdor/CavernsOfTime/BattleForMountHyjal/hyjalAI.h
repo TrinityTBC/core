@@ -24,7 +24,7 @@
 
 #define HYJAL_AI_MAX_SPELLS 3
 
-enum SpellIds
+enum ASpellIds
 {
     SPELL_TELEPORT_VISUAL     = 41232,
     SPELL_MASS_TELEPORT       = 16807,

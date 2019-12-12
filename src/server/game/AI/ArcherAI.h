@@ -9,7 +9,7 @@ struct ArcherAI : public CreatureAI
 {
     public:
         explicit ArcherAI(Creature *c);
-        void AttackStart(Unit *who);
+        void AttackStart(Unit *who) override;
         void UpdateAI(uint32 diff) override;
 
         static int Permissible(const Creature *);

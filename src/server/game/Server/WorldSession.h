@@ -320,6 +320,7 @@ class TC_GAME_API WorldSession
         //void SendTestCreatureQueryOpcode( uint32 entry, ObjectGuid guid, uint32 testvalue );
         void SendNameQueryOpcode(ObjectGuid guid);
 
+        void SendTrainerList(ObjectGuid guid);
         void SendTrainerList(Creature* npc);
         void SendListInventory(ObjectGuid guid);
         void SendShowBank(ObjectGuid guid);

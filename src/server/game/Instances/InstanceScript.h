@@ -231,6 +231,7 @@ friend class InstanceMap;
         void LoadDoorData(std::vector<DoorData> const data);
         void LoadDoorData(DoorData const* data);
         void LoadMinionData(std::vector<MinionData> const data);
+        void LoadMinionData(MinionData const* data);
         void LoadObjectData(std::vector<ObjectData> const creatureData, std::vector<ObjectData> const gameObjectData);
         void LoadObjectData(ObjectData const* creatureData, ObjectData const* gameObjectData);
 

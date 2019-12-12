@@ -2027,6 +2027,39 @@ enum CreatureEliteType
     CREATURE_UNKNOWN               = 5                      // found in 2.2.3 for 2 mobs
 };
 
+// this does not exist in tbc, so using event ids
+enum HolidayIds
+{
+    HOLIDAY_NONE                     = 0,
+
+    HOLIDAY_FIREWORKS_SPECTACULAR    = 6,
+    HOLIDAY_FEAST_OF_WINTER_VEIL     = 2,
+    HOLIDAY_NOBLEGARDEN              = 9,
+    HOLIDAY_CHILDRENS_WEEK           = 10,
+    HOLIDAY_CALL_TO_ARMS_AV          = 18,
+    HOLIDAY_CALL_TO_ARMS_WS          = 19,
+    HOLIDAY_CALL_TO_ARMS_AB          = 20,
+    HOLIDAY_FISHING_EXTRAVAGANZA     = 15,
+    HOLIDAY_HARVEST_FESTIVAL         = 11,
+    HOLIDAY_HALLOWS_END              = 12,
+    HOLIDAY_LUNAR_FESTIVAL           = 7,
+    // HOLIDAY_LOVE_IS_IN_THE_AIR    = 335, unused/duplicated
+    HOLIDAY_FIRE_FESTIVAL            = 1,
+    HOLIDAY_CALL_TO_ARMS_EY          = 21,
+    HOLIDAY_BREWFEST                 = 26,
+    HOLIDAY_DARKMOON_FAIRE_ELWYNN    = 4,
+    HOLIDAY_DARKMOON_FAIRE_THUNDER   = 5,
+    HOLIDAY_DARKMOON_FAIRE_SHATTRATH = 3,
+    HOLIDAY_PIRATES_DAY              = 0,
+    HOLIDAY_CALL_TO_ARMS_SA          = 0,
+    HOLIDAY_PILGRIMS_BOUNTY          = 0,
+    HOLIDAY_WOTLK_LAUNCH             = 0,
+    HOLIDAY_DAY_OF_DEAD              = 0,
+    HOLIDAY_CALL_TO_ARMS_IC          = 0,
+    HOLIDAY_LOVE_IS_IN_THE_AIR       = 8,
+    HOLIDAY_KALU_AK_FISHING_DERBY    = 0
+};
+
 // values based at QuestInfo.dbc
 enum QuestTypes
 {

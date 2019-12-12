@@ -111,6 +111,13 @@ void WorldSession::HandleTrainerListOpcode(WorldPackets::NPC::Hello& packet)
     SendTrainerList(npc);
 }
 
+void WorldSession::SendTrainerList(ObjectGuid guid)
+{
+    Creature *unit = GetPlayer()->GetNPCIfCanInteractWith(guid, UNIT_NPC_FLAG_TRAINER);
+    if (unit)
+        SendTrainerList(unit);
+}
+
 void WorldSession::SendTrainerList(Creature* npc)
 {
     // remove fake death

@@ -1311,6 +1311,7 @@ void ObjectMgr::LoadCreatures()
 
         CreatureData& data = _creatureDataStore[spawnId];
         data.ids = spawnEntryItr->second;
+        data.spawnId          = spawnId;
         uint32 mapId          = fields[1].GetUInt16();
         data.spawnMask        = fields[2].GetUInt8();
         data.displayid        = fields[3].GetUInt32();

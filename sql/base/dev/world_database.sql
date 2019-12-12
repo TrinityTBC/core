@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.28, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.23, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: world
+-- Host: localhost    Database: world
 -- ------------------------------------------------------
--- Server version	5.7.23
+-- Server version	5.7.23-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -251,6 +251,23 @@ CREATE TABLE `broadcast_text` (
   `VerifiedBuild` smallint(5) DEFAULT '0',
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `broadcast_text_locale`
+--
+
+DROP TABLE IF EXISTS `broadcast_text_locale`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `broadcast_text_locale` (
+  `ID` int(11) unsigned NOT NULL DEFAULT '0',
+  `locale` varchar(4) NOT NULL,
+  `MaleText` text,
+  `FemaleText` text,
+  `VerifiedBuild` smallint(5) DEFAULT '0',
+  PRIMARY KEY (`ID`,`locale`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -824,9 +841,31 @@ CREATE TABLE `creature_text` (
   `comment` varchar(255) CHARACTER SET latin1 DEFAULT '',
   `BroadcastTextId` mediumint(6) NOT NULL DEFAULT '0',
   `TextRange` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`CreatureID`,`groupid`,`id`),
-  CONSTRAINT `creature_text_ibfk_2` FOREIGN KEY (`CreatureID`) REFERENCES `creature_template` (`entry`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`CreatureID`,`groupid`,`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `creature_text_locale`
+--
+
+DROP TABLE IF EXISTS `creature_text_locale`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `creature_text_locale` (
+  `entry` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `groupid` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `id` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `text_loc1` text,
+  `text_loc2` text,
+  `text_loc3` text,
+  `text_loc4` text,
+  `text_loc5` text,
+  `text_loc6` text,
+  `text_loc7` text,
+  `text_loc8` text,
+  PRIMARY KEY (`entry`,`groupid`,`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1959,24 +1998,6 @@ CREATE TABLE `item_template` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `locales_broadcast_text`
---
-
-DROP TABLE IF EXISTS `locales_broadcast_text`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `locales_broadcast_text` (
-  `ID` int(11) unsigned NOT NULL DEFAULT '0',
-  `locale` varchar(4) NOT NULL,
-  `MaleText` text,
-  `FemaleText` text,
-  `VerifiedBuild` smallint(5) DEFAULT '0',
-  PRIMARY KEY (`ID`,`locale`),
-  CONSTRAINT `locales_broadcast_text_ibfk_1` FOREIGN KEY (`ID`) REFERENCES `broadcast_text` (`ID`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table `locales_creature`
 --
 
@@ -2004,30 +2025,6 @@ CREATE TABLE `locales_creature` (
   PRIMARY KEY (`entry`),
   CONSTRAINT `locales_creature_ibfk_2` FOREIGN KEY (`entry`) REFERENCES `creature_template` (`entry`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `locales_creature_text`
---
-
-DROP TABLE IF EXISTS `locales_creature_text`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `locales_creature_text` (
-  `entry` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `groupid` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `id` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `text_loc1` text,
-  `text_loc2` text,
-  `text_loc3` text,
-  `text_loc4` text,
-  `text_loc5` text,
-  `text_loc6` text,
-  `text_loc7` text,
-  `text_loc8` text,
-  PRIMARY KEY (`entry`,`groupid`,`id`),
-  CONSTRAINT `locales_creature_text_ibfk_1` FOREIGN KEY (`entry`) REFERENCES `creature_text` (`CreatureID`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -4760,6 +4757,14 @@ CREATE TABLE `waypoints` (
   UNIQUE KEY `entry-point_unique` (`entry`,`pointid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping events for database 'world'
+--
+
+--
+-- Dumping routines for database 'world'
+--
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -4770,4 +4775,4 @@ CREATE TABLE `waypoints` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-09 18:52:07
+-- Dump completed on 2019-12-12 13:44:49

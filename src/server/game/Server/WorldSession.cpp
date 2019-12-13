@@ -568,6 +568,8 @@ void WorldSession::LogoutPlayer(bool Save)
         sRandomPlayerbotMgr.OnPlayerLogout(_player);
         #endif
 
+        sScriptMgr->OnPlayerLogout(_player);
+
         ///- If the player just died before logging out, make him appear as a ghost
         //FIXME: logout must be delayed in case lost connection with client in time of combat
         if (_player->GetDeathTimer())
@@ -715,8 +717,6 @@ void WorldSession::LogoutPlayer(bool Save)
         ///- Since each account can only have one online character at any given time, ensure all characters for active account are marked as offline
         CharacterDatabase.PExecute("UPDATE characters SET online = 0 WHERE account = '%u'", GetAccountId());
     }
-
-    sScriptMgr->OnPlayerLogout(_player);
 
     m_playerLogout = false;
     m_playerSave = false;

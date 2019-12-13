@@ -58,9 +58,9 @@ public:
             { "item_enchantment_template",   SEC_ADMINISTRATOR, true, &HandleReloadItemEnchantementsCommand,       "" },
             { "item_extended_cost",          SEC_ADMINISTRATOR, true, &HandleReloadItemExtendedCostCommand,        "" },
             { "item_loot_template",          SEC_ADMINISTRATOR, true, &HandleReloadLootTemplatesItemCommand,       "" },
-            { "locales_creature",            SEC_ADMINISTRATOR, true, &HandleReloadLocalesCreatureCommand,         "" },
-            { "locales_gameobject",          SEC_ADMINISTRATOR, true, &HandleReloadLocalesGameobjectCommand,       "" },
-            { "locales_item",                SEC_ADMINISTRATOR, true, &HandleReloadLocalesItemCommand,             "" },
+            { "creature_template_locale",    SEC_ADMINISTRATOR, true, &HandleReloadLocalesCreatureCommand,         "" },
+            { "gameobject_template_locale",  SEC_ADMINISTRATOR, true, &HandleReloadLocalesGameobjectCommand,       "" },
+            { "item_template_locale",        SEC_ADMINISTRATOR, true, &HandleReloadLocalesItemCommand,             "" },
             { "locales_gossip_text",         SEC_ADMINISTRATOR, true, &HandleReloadLocalesGossipTextCommand,       "" },
             { "locales_page_text",           SEC_ADMINISTRATOR, true, &HandleReloadLocalesPageTextCommand,         "" },
             { "locales_quest",               SEC_ADMINISTRATOR, true, &HandleReloadLocalesQuestCommand,            "" },
@@ -832,7 +832,7 @@ public:
     {
         TC_LOG_INFO("command", "Re-Loading Locales Creature ...");
         sObjectMgr->LoadCreatureLocales();
-        handler->SendGlobalGMSysMessage("DB table `locales_creature` reloaded.");
+        handler->SendGlobalGMSysMessage("DB table `creature_template_locale` reloaded.");
         return true;
     }
 
@@ -840,7 +840,7 @@ public:
     {
         TC_LOG_INFO("command", "Re-Loading Locales Gameobject ... ");
         sObjectMgr->LoadGameObjectLocales();
-        handler->SendGlobalGMSysMessage("DB table `locales_gameobject` reloaded.");
+        handler->SendGlobalGMSysMessage("DB table `gameobject_template_locale` reloaded.");
         return true;
     }
 
@@ -848,7 +848,7 @@ public:
     {
         TC_LOG_INFO("command", "Re-Loading Locales Item ... ");
         sObjectMgr->LoadItemLocales();
-        handler->SendGlobalGMSysMessage("DB table `locales_item` reloaded.");
+        handler->SendGlobalGMSysMessage("DB table `item_template_locale` reloaded.");
         return true;
     }
 

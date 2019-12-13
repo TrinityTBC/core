@@ -454,7 +454,7 @@ class boss_alar : public CreatureScript
                 DoMeleeAttackIfReady();
             }
 
-            void DoMeleeAttackIfReady()
+            void DoMeleeAttackIfReady() override
             {
                 if (me->IsAttackReady() && !me->IsNonMeleeSpellCast(false))
                 {

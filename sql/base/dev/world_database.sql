@@ -803,6 +803,23 @@ CREATE TABLE `creature_template_addon` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `creature_template_locale`
+--
+
+DROP TABLE IF EXISTS `creature_template_locale`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `creature_template_locale` (
+  `entry` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `locale` varchar(4) NOT NULL,
+  `Name` text,
+  `Title` text,
+  `VerifiedBuild` smallint(5) DEFAULT '0',
+  PRIMARY KEY (`entry`,`locale`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `creature_template_movement`
 --
 
@@ -1501,6 +1518,23 @@ CREATE TABLE `gameobject_template` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `gameobject_template_locale`
+--
+
+DROP TABLE IF EXISTS `gameobject_template_locale`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `gameobject_template_locale` (
+  `entry` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `locale` varchar(4) NOT NULL,
+  `name` text,
+  `castBarCaption` text,
+  `VerifiedBuild` smallint(5) DEFAULT '0',
+  PRIMARY KEY (`entry`,`locale`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `gmgroups`
 --
 
@@ -1998,63 +2032,20 @@ CREATE TABLE `item_template` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `locales_creature`
+-- Table structure for table `item_template_locale`
 --
 
-DROP TABLE IF EXISTS `locales_creature`;
+DROP TABLE IF EXISTS `item_template_locale`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `locales_creature` (
-  `entry` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `name_loc1` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `name_loc2` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `name_loc3` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `name_loc4` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `name_loc5` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `name_loc6` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `name_loc7` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `name_loc8` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `subname_loc1` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `subname_loc2` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `subname_loc3` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `subname_loc4` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `subname_loc5` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `subname_loc6` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `subname_loc7` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `subname_loc8` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`entry`),
-  CONSTRAINT `locales_creature_ibfk_2` FOREIGN KEY (`entry`) REFERENCES `creature_template` (`entry`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `locales_gameobject`
---
-
-DROP TABLE IF EXISTS `locales_gameobject`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `locales_gameobject` (
-  `entry` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `name_loc1` varchar(100) NOT NULL DEFAULT '',
-  `name_loc2` varchar(100) NOT NULL DEFAULT '',
-  `name_loc3` varchar(100) NOT NULL DEFAULT '',
-  `name_loc4` varchar(100) NOT NULL DEFAULT '',
-  `name_loc5` varchar(100) NOT NULL DEFAULT '',
-  `name_loc6` varchar(100) NOT NULL DEFAULT '',
-  `name_loc7` varchar(100) NOT NULL DEFAULT '',
-  `name_loc8` varchar(100) NOT NULL DEFAULT '',
-  `castbarcaption_loc1` varchar(100) NOT NULL DEFAULT '',
-  `castbarcaption_loc2` varchar(100) NOT NULL DEFAULT '',
-  `castbarcaption_loc3` varchar(100) NOT NULL DEFAULT '',
-  `castbarcaption_loc4` varchar(100) NOT NULL DEFAULT '',
-  `castbarcaption_loc5` varchar(100) NOT NULL DEFAULT '',
-  `castbarcaption_loc6` varchar(100) NOT NULL DEFAULT '',
-  `castbarcaption_loc7` varchar(100) NOT NULL DEFAULT '',
-  `castbarcaption_loc8` varchar(100) NOT NULL DEFAULT '',
-  PRIMARY KEY (`entry`),
-  CONSTRAINT `locales_gameobject_ibfk_2` FOREIGN KEY (`entry`) REFERENCES `gameobject_template` (`entry`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `item_template_locale` (
+  `ID` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `locale` varchar(4) NOT NULL,
+  `Name` text,
+  `Description` text,
+  `VerifiedBuild` smallint(5) DEFAULT '0',
+  PRIMARY KEY (`ID`,`locale`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2227,36 +2218,6 @@ CREATE TABLE `locales_gossip_text` (
   `Text7_1_loc8` longtext COLLATE utf8_unicode_ci,
   PRIMARY KEY (`id`),
   CONSTRAINT `locales_gossip_text_ibfk_1` FOREIGN KEY (`id`) REFERENCES `gossip_text` (`ID`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `locales_item`
---
-
-DROP TABLE IF EXISTS `locales_item`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `locales_item` (
-  `entry` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `name_loc1` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `name_loc2` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `name_loc3` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `name_loc4` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `name_loc5` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `name_loc6` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `name_loc7` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `name_loc8` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `description_loc1` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description_loc2` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description_loc3` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description_loc4` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description_loc5` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description_loc6` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description_loc7` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description_loc8` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`entry`),
-  CONSTRAINT `locales_item_ibfk_2` FOREIGN KEY (`entry`) REFERENCES `item_template` (`entry`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -4757,14 +4718,6 @@ CREATE TABLE `waypoints` (
   UNIQUE KEY `entry-point_unique` (`entry`,`pointid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping events for database 'world'
---
-
---
--- Dumping routines for database 'world'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -4775,4 +4728,4 @@ CREATE TABLE `waypoints` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-12 13:44:49
+-- Dump completed on 2019-12-13 20:58:30

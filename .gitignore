@@ -8,6 +8,6 @@ syntax: glob
 .git/
 .git-rewrite/
 sql/world.sql
-
+.vscode
 ################################################################################
 syntax: regexp

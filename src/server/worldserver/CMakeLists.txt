@@ -78,10 +78,17 @@ endif()
 
 if( WIN32 )
   if ( MSVC )
-    add_custom_command(TARGET worldserver
-      POST_BUILD
-      COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/worldserver.conf.dist ${CMAKE_BINARY_DIR}/bin/$(ConfigurationName)/
-    )
+    if (${CMAKE_MAKE_PROGRAM} MATCHES "ninja")
+      add_custom_command(TARGET worldserver
+        POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/worldserver.conf.dist ${CMAKE_BINARY_DIR}/bin/${CMAKE_BUILD_TYPE}/
+      )
+    else()
+      add_custom_command(TARGET worldserver
+        POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/worldserver.conf.dist ${CMAKE_BINARY_DIR}/bin/$(ConfigurationName)/
+      )
+    endif()
   endif()
 endif()
 

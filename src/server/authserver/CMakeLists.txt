@@ -56,10 +56,17 @@ set_target_properties(authserver
 
 if( WIN32 )
   if ( MSVC )
-    add_custom_command(TARGET authserver
-      POST_BUILD
-      COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/authserver.conf.dist ${CMAKE_BINARY_DIR}/bin/$(ConfigurationName)/
-    )
+    if (${CMAKE_MAKE_PROGRAM} MATCHES "ninja")
+      add_custom_command(TARGET authserver
+        POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/authserver.conf.dist ${CMAKE_BINARY_DIR}/bin/${CMAKE_BUILD_TYPE}/
+      )
+    else()
+      add_custom_command(TARGET authserver
+        POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/authserver.conf.dist ${CMAKE_BINARY_DIR}/bin/$(ConfigurationName)/
+      )
+    endif()
   elseif ( MINGW )
     add_custom_command(TARGET authserver
       POST_BUILD

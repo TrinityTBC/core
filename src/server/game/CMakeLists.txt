@@ -96,10 +96,17 @@ if(PLAYERBOT)
 
     if( WIN32 )
       if ( MSVC )
-        add_custom_command(TARGET game
-          POST_BUILD
-          COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/playerbot/aiplayerbot.conf.dist.in ${CMAKE_BINARY_DIR}/bin/$(ConfigurationName)/
-        ) 
+        if (${CMAKE_MAKE_PROGRAM} MATCHES "ninja")
+          add_custom_command(TARGET game
+            POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/playerbot/aiplayerbot.conf.dist.in ${CMAKE_BINARY_DIR}/bin/${CMAKE_BUILD_TYPE}/
+          )
+        else()
+          add_custom_command(TARGET game
+            POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/playerbot/aiplayerbot.conf.dist.in ${CMAKE_BINARY_DIR}/bin/$(ConfigurationName)/
+          )
+        endif()
       elseif ( MINGW )
          add_custom_command(TARGET game
           POST_BUILD

@@ -1051,10 +1051,10 @@ ClientCacheVersion = 0
 #
 #    Motd
 #        Description: Message of the Day, displayed at login. Use '@' for a newline.
-#        Default:     "Welcome to sunstrider-core server!"
+#        Default:     "Welcome to TrinityTBC server!"
 #
 
-Motd = "Welcome to a sunstrider-core server!"
+Motd = "Welcome to a TrinityTBC server!"
 
 #
 #    Guild.BankEventLogRecordsCount

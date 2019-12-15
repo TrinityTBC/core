@@ -6467,7 +6467,16 @@ void Spell::EffectCharge(uint32 i)
     {
         // not all charge effects used in negative spells
         if (!m_spellInfo->IsPositive() && _unitCaster->GetTypeId() == TYPEID_PLAYER)
+        {
             _unitCaster->Attack(target, true);
+
+            // Delay attack, otherwise player makes instant attack after cast
+            if (_unitCaster->GetTypeId() == TYPEID_PLAYER)
+            {
+                _unitCaster->SetAttackTimer(BASE_ATTACK, _unitCaster->GetAttackTimer(BASE_ATTACK) + 200 + 40 * _unitCaster->GetDistance(unitTarget));
+                _unitCaster->SetAttackTimer(OFF_ATTACK,  _unitCaster->GetAttackTimer(OFF_ATTACK)  + 200 + 40 * _unitCaster->GetDistance(unitTarget));
+            }
+        }
     }
 }
 

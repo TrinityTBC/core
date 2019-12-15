@@ -4228,13 +4228,11 @@ void AuraEffect::HandleModStealth(AuraApplication const* aurApp, uint8 mode, boo
 
     if (apply)
     {
-        if (target->GetTypeId() == TYPEID_PLAYER)
-        {
-            target->m_stealth.AddFlag(type);
-            target->m_stealth.AddValue(type, GetAmount());
+        target->m_stealth.AddFlag(type);
+        target->m_stealth.AddValue(type, GetAmount());
 
+        if (target->GetTypeId() == TYPEID_PLAYER)
             target->RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_IMMUNE_OR_LOST_SELECTION);  // drop flag at stealth in bg
-        }
 
         target->SetStandFlags(UNIT_STAND_FLAGS_CREEP);
         if (target->GetTypeId() == TYPEID_PLAYER)

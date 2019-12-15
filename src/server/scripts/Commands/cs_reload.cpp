@@ -63,7 +63,7 @@ public:
             { "item_template_locale",        SEC_ADMINISTRATOR, true, &HandleReloadLocalesItemCommand,             "" },
             { "locales_gossip_text",         SEC_ADMINISTRATOR, true, &HandleReloadLocalesGossipTextCommand,       "" },
             { "locales_page_text",           SEC_ADMINISTRATOR, true, &HandleReloadLocalesPageTextCommand,         "" },
-            { "locales_quest",               SEC_ADMINISTRATOR, true, &HandleReloadLocalesQuestCommand,            "" },
+            { "quest_template_locale",       SEC_ADMINISTRATOR, true, &HandleReloadLocalesQuestCommand,            "" },
             { "gossip_menu",                 SEC_ADMINISTRATOR, true, &HandleReloadGossipMenuCommand,              "" },
             { "gossip_menu_option",          SEC_ADMINISTRATOR, true, &HandleReloadGossipMenuOptionCommand,        "" },
             { "gossip_text",                 SEC_ADMINISTRATOR, true, &HandleReloadGossipTextCommand,              "" },
@@ -872,7 +872,9 @@ public:
     {
         TC_LOG_INFO("command", "Re-Loading Locales Quest ... ");
         sObjectMgr->LoadQuestLocales();
-        handler->SendGlobalGMSysMessage("DB table `locales_quest` reloaded.");
+        sObjectMgr->LoadQuestOfferRewardLocale();
+        sObjectMgr->LoadQuestRequestItemsLocale();
+        handler->SendGlobalGMSysMessage("DB table `quest_template_locale` reloaded.");
         return true;
     }
 

@@ -184,10 +184,18 @@ struct QuestLocale
     std::vector<std::string> Title;
     std::vector<std::string> Details;
     std::vector<std::string> Objectives;
-    std::vector<std::string> _offerRewardText;
-    std::vector<std::string> _requestItemsText;
     std::vector<std::string> AreaDescription;
     std::vector< std::vector<std::string> > ObjectiveText;
+};
+
+struct QuestRequestItemsLocale
+{
+    std::vector<std::string> CompletionText;
+};
+
+struct QuestOfferRewardLocale
+{
+    std::vector<std::string> RewardText;
 };
 
 // This Quest class provides a convenient way to access a few pretotaled (cached) quest details,

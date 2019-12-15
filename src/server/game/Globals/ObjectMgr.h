@@ -415,6 +415,8 @@ typedef std::unordered_map<uint32,CreatureLocale> CreatureLocaleContainer;
 typedef std::unordered_map<uint32,GameObjectLocale> GameObjectLocaleContainer;
 typedef std::unordered_map<uint32,ItemLocale> ItemLocaleContainer;
 typedef std::unordered_map<uint32,QuestLocale> QuestLocaleContainer;
+typedef std::unordered_map<uint32, QuestOfferRewardLocale> QuestOfferRewardLocaleContainer;
+typedef std::unordered_map<uint32, QuestRequestItemsLocale> QuestRequestItemsLocaleContainer;
 typedef std::unordered_map<uint32,NpcTextLocale> NpcTextLocaleContainer;
 typedef std::unordered_map<uint32, QuestGreetingLocale> QuestGreetingLocaleContainer;
 typedef std::unordered_map<uint32,PageTextLocale> PageTextLocaleContainer;
@@ -875,6 +877,8 @@ class TC_GAME_API ObjectMgr
         void LoadItemLocales();
         void LoadItemExtendedCost();
         void LoadQuestLocales();
+        void LoadQuestOfferRewardLocale();
+        void LoadQuestRequestItemsLocale();
         void LoadGossipTextLocales();
         void LoadPageTextLocales();
         void LoadGossipMenuItemsLocales();
@@ -1045,6 +1049,14 @@ class TC_GAME_API ObjectMgr
         QuestLocale const* GetQuestLocale(uint32 entry) const
         {
             return Trinity::Containers::MapGetValuePtr(_questLocaleStore, entry);
+        }
+        QuestOfferRewardLocale const* GetQuestOfferRewardLocale(uint32 entry) const
+        {
+            return Trinity::Containers::MapGetValuePtr(_questOfferRewardLocaleStore, entry);
+        }
+        QuestRequestItemsLocale const* GetQuestRequestItemsLocale(uint32 entry) const
+        {
+            return Trinity::Containers::MapGetValuePtr(_questRequestItemsLocaleStore, entry);
         }
         NpcTextLocale const* GetNpcTextLocale(uint32 entry) const
         {
@@ -1317,6 +1329,9 @@ class TC_GAME_API ObjectMgr
         GameObjectLocaleContainer _gameObjectLocaleStore;
         ItemLocaleContainer _itemLocaleStore;
         QuestLocaleContainer _questLocaleStore;
+        QuestOfferRewardLocaleContainer _questOfferRewardLocaleStore;
+        QuestRequestItemsLocaleContainer _questRequestItemsLocaleStore;
+
         NpcTextLocaleContainer mGossipTextLocaleMap;
         PageTextLocaleContainer mPageTextLocaleMap;
         TrinityStringLocaleContainer _trinityStringStore;

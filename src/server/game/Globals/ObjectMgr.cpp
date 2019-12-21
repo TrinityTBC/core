@@ -234,46 +234,6 @@ void ObjectMgr::LoadCreatureLocales()
     TC_LOG_INFO("server.loading", ">> Loaded %u creature locale strings in %u ms", uint32(_creatureLocaleStore.size()), GetMSTimeDiffToNow(oldMSTime));
 }
 
-void ObjectMgr::LoadGossipMenuItemsLocales()
-{
-    uint32 oldMSTime = GetMSTime();
-
-    _gossipMenuItemsLocaleStore.clear();                              // need for reload case
-
-    QueryResult result = WorldDatabase.Query("SELECT menu_id, id,"
-        "option_text_loc1,box_text_loc1,option_text_loc2,box_text_loc2,"
-        "option_text_loc3,box_text_loc3,option_text_loc4,box_text_loc4,"
-        "option_text_loc5,box_text_loc5,option_text_loc6,box_text_loc6,"
-        "option_text_loc7,box_text_loc7,option_text_loc8,box_text_loc8 "
-        "FROM locales_gossip_menu_option");
-
-    if(!result)
-    {
-        TC_LOG_INFO("sql.sql",">> Loaded 0 locales_gossip_menu_option locale strings. DB table `locales_gossip_menu_option` is empty.");
-        return;
-    }
-
-     do
-    {
-        Field* fields = result->Fetch();
-
-        uint16 menuId   = fields[0].GetUInt16();
-        uint16 id       = fields[1].GetUInt16();
-
-        GossipMenuItemsLocale& data = _gossipMenuItemsLocaleStore[MAKE_PAIR32(menuId, id)];
-
-        for (uint8 i = TOTAL_LOCALES - 1; i > 0; --i)
-        {
-            LocaleConstant locale = (LocaleConstant) i;
-            AddLocaleString(fields[2 + 2 * (i - 1)].GetString(), locale, data.OptionText);
-            AddLocaleString(fields[2 + 2 * (i - 1) + 1].GetString(), locale, data.BoxText);
-        }
-    }
-    while (result->NextRow());
-
-    TC_LOG_INFO("server.loading", ">> Loaded %u gossip_menu_option locale strings in %u ms", uint32(_gossipMenuItemsLocaleStore.size()), GetMSTimeDiffToNow(oldMSTime));
-}
-
 void ObjectMgr::LoadCreatureTemplates(bool reload /* = false */)
 {
     uint32 oldMSTime = GetMSTime();
@@ -4751,32 +4711,29 @@ void ObjectMgr::LoadPageTextLocales()
 {
     uint32 oldMSTime = GetMSTime();
 
-    mPageTextLocaleMap.clear();                             // need for reload case
+    _pageTextLocaleStore.clear();                             // need for reload case
 
-    QueryResult result = WorldDatabase.Query("SELECT entry,text_loc1,text_loc2,text_loc3,text_loc4,text_loc5,text_loc6,text_loc7,text_loc8 FROM locales_page_text");
+    //                                               0   1       2
+    QueryResult result = WorldDatabase.Query("SELECT ID, locale, Text FROM page_text_locale");
 
-    if(!result)
-    {
-        TC_LOG_INFO("server.loading",">> Loaded 0 PageText locale strings. DB table `locales_page_text` is empty.");
-        
+    if (!result)
         return;
-    }
 
     do
     {
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
 
-        uint32 entry = fields[0].GetUInt32();
+        uint32 id                   = fields[0].GetUInt32();
+        std::string localeName      = fields[1].GetString();
+        std::string text            = fields[2].GetString();
 
-        PageTextLocale& data = mPageTextLocaleMap[entry];
+        PageTextLocale& data = _pageTextLocaleStore[id];
+        LocaleConstant locale = GetLocaleByName(localeName);
 
-        for (uint8 i = TOTAL_LOCALES - 1; i > 0; --i)
-            AddLocaleString(fields[i].GetString(), LocaleConstant(i), data.Text);
-
+        AddLocaleString(text, locale, data.Text);
     } while (result->NextRow());
 
-    TC_LOG_INFO("server.loading", ">> Loaded " UI64FMTD " PageText locale strings in %u ms", mPageTextLocaleMap.size(), GetMSTimeDiffToNow(oldMSTime));
-    
+    TC_LOG_INFO("server.loading", ">> Loaded %u PageText locale strings in %u ms", uint32(_pageTextLocaleStore.size()), GetMSTimeDiffToNow(oldMSTime));
 }
 
 void ObjectMgr::LoadInstanceTemplate()
@@ -7751,127 +7708,72 @@ void ObjectMgr::LoadGossipMenuItems()
         "SELECT MenuID, OptionID, OptionIcon, OptionText, OptionBroadcastTextID, OptionType, OptionNpcFlag, ActionMenuID, ActionPoiID, BoxCoded, BoxMoney, BoxText, BoxBroadcastTextID "
         "FROM gossip_menu_option WHERE %u >= patch_min AND %u <= patch_max ORDER BY MenuID, OptionID", sWorld->GetWowPatch(), sWorld->GetWowPatch());
     
-    if (result)
+    if (!result)
     {
-        uint32 count = 0;
-
-        do
-        {
-            Field* fields = result->Fetch();
-
-            GossipMenuItems gMenuItem;
-
-            gMenuItem.MenuId = fields[0].GetUInt16();
-            gMenuItem.OptionIndex = fields[1].GetUInt16();
-            gMenuItem.OptionIcon = fields[2].GetUInt32();
-            gMenuItem.OptionText = fields[3].GetString();
-            gMenuItem.OptionBroadcastTextId = fields[4].GetUInt32();
-            gMenuItem.OptionType = fields[5].GetUInt8();
-            gMenuItem.OptionNpcflag = fields[6].GetUInt32();
-            gMenuItem.ActionMenuId = fields[7].GetUInt16();
-            gMenuItem.ActionPoiId = fields[8].GetUInt32();
-            gMenuItem.BoxCoded = fields[9].GetBool();
-            gMenuItem.BoxMoney = fields[10].GetUInt32();
-            gMenuItem.BoxText = fields[11].GetString();
-            gMenuItem.BoxBroadcastTextId = fields[12].GetUInt32();
-
-            if (gMenuItem.MenuId == 0)
-            {
-                TC_LOG_ERROR("sql.sql", "Table `gossip_menu_option` has invalid menuId 0, skipping.");
-                continue;
-            }
-
-            if (gMenuItem.OptionIcon >= GOSSIP_ICON_MAX)
-            {
-                TC_LOG_ERROR("sql.sql", "Table `gossip_menu_option` for menu %u, id %u has unknown icon id %u. Replacing with GOSSIP_ICON_CHAT", gMenuItem.MenuId, gMenuItem.OptionIndex, gMenuItem.OptionIcon);
-                gMenuItem.OptionIcon = GOSSIP_ICON_CHAT;
-            }
-
-            if (gMenuItem.OptionBroadcastTextId)
-            {
-                if (!GetBroadcastText(gMenuItem.OptionBroadcastTextId))
-                {
-                    TC_LOG_ERROR("sql.sql", "Table `gossip_menu_option` for menu %u, id %u has non-existing or incompatible OptionBroadcastTextId %u, ignoring.", gMenuItem.MenuId, gMenuItem.OptionIndex, gMenuItem.OptionBroadcastTextId);
-                    gMenuItem.OptionBroadcastTextId = 0;
-                }
-            }
-
-            if (gMenuItem.OptionType >= GOSSIP_OPTION_MAX)
-            {
-                TC_LOG_ERROR("sql.sql", "Table `gossip_menu_option` for menu %u, id %u has unknown option id %u. Option will not be used", gMenuItem.MenuId, gMenuItem.OptionIndex, gMenuItem.OptionType);
-                continue;
-            }
-
-            if (gMenuItem.ActionPoiId && !GetPointOfInterest(gMenuItem.ActionPoiId))
-            {
-                TC_LOG_ERROR("sql.sql", "Table `gossip_menu_option` for menu %u, id %u use non-existing action_poi_id %u, ignoring", gMenuItem.MenuId, gMenuItem.OptionIndex, gMenuItem.ActionPoiId);
-                gMenuItem.ActionPoiId = 0;
-            }
-
-            if (gMenuItem.BoxBroadcastTextId)
-            {
-                if (!GetBroadcastText(gMenuItem.BoxBroadcastTextId))
-                {
-                    TC_LOG_ERROR("sql.sql", "Table `gossip_menu_option` for menu %u, id %u has non-existing or incompatible BoxBroadcastTextId %u, ignoring.", gMenuItem.MenuId, gMenuItem.OptionIndex, gMenuItem.BoxBroadcastTextId);
-                    gMenuItem.BoxBroadcastTextId = 0;
-                }
-            }
-
-            _gossipMenuItemsStore.insert(GossipMenuItemsContainer::value_type(gMenuItem.MenuId, gMenuItem));
-            ++count;
-        } while (result->NextRow());
-
-        TC_LOG_INFO("server.loading", ">> Loaded %u gossip_menu_option entries in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
-    }
-    else {
         TC_LOG_ERROR("server.loading", ">> Loaded 0 gossip_menu_option entries. DB table `gossip_menu_option` is empty!");
+        return;
     }
 
-    oldMSTime = GetMSTime();
-
-    result = WorldDatabase.Query(
-        //      0       1           2           3           4
-        "SELECT MenuID, OptionIcon, OptionText, OptionType, OptionNpcFlag "
-        "FROM gossip_menu_option_generic ORDER BY MenuID");
-
-    if (result)
+    do
     {
-        uint32 count = 0;
+        Field* fields = result->Fetch();
 
-        do
+        GossipMenuItems gMenuItem;
+
+        gMenuItem.MenuId = fields[0].GetUInt16();
+        gMenuItem.OptionIndex = fields[1].GetUInt16();
+        gMenuItem.OptionIcon = fields[2].GetUInt32();
+        gMenuItem.OptionText = fields[3].GetString();
+        gMenuItem.OptionBroadcastTextId = fields[4].GetUInt32();
+        gMenuItem.OptionType = fields[5].GetUInt8();
+        gMenuItem.OptionNpcflag = fields[6].GetUInt32();
+        gMenuItem.ActionMenuId = fields[7].GetUInt16();
+        gMenuItem.ActionPoiId = fields[8].GetUInt32();
+        gMenuItem.BoxCoded = fields[9].GetBool();
+        gMenuItem.BoxMoney = fields[10].GetUInt32();
+        gMenuItem.BoxText = fields[11].GetString();
+        gMenuItem.BoxBroadcastTextId = fields[12].GetUInt32();
+
+        if (gMenuItem.OptionIcon >= GOSSIP_ICON_MAX)
         {
-            Field* fields = result->Fetch();
+            TC_LOG_ERROR("sql.sql", "Table `gossip_menu_option` for menu %u, id %u has unknown icon id %u. Replacing with GOSSIP_ICON_CHAT", gMenuItem.MenuId, gMenuItem.OptionIndex, gMenuItem.OptionIcon);
+            gMenuItem.OptionIcon = GOSSIP_ICON_CHAT;
+        }
 
-            GossipMenuItems gMenuItem;
-
-            gMenuItem.MenuId = GENERIC_OPTIONS_MENU;
-            gMenuItem.OptionIndex = fields[0].GetUInt16();
-            gMenuItem.OptionIcon = fields[1].GetUInt32();
-            gMenuItem.OptionText = fields[2].GetString();
-            gMenuItem.OptionType = fields[3].GetUInt8();
-            gMenuItem.OptionNpcflag = fields[4].GetUInt32();
-
-            if (gMenuItem.OptionIcon >= GOSSIP_ICON_MAX)
+        if (gMenuItem.OptionBroadcastTextId)
+        {
+            if (!GetBroadcastText(gMenuItem.OptionBroadcastTextId))
             {
-                TC_LOG_ERROR("sql.sql", "Table `gossip_menu_option_generic` for menu %u, id %u has unknown icon id %u. Replacing with GOSSIP_ICON_CHAT", gMenuItem.MenuId, gMenuItem.OptionIndex, gMenuItem.OptionIcon);
-                gMenuItem.OptionIcon = GOSSIP_ICON_CHAT;
+                TC_LOG_ERROR("sql.sql", "Table `gossip_menu_option` for menu %u, id %u has non-existing or incompatible OptionBroadcastTextId %u, ignoring.", gMenuItem.MenuId, gMenuItem.OptionIndex, gMenuItem.OptionBroadcastTextId);
+                gMenuItem.OptionBroadcastTextId = 0;
             }
+        }
 
-            if (gMenuItem.OptionType >= GOSSIP_OPTION_MAX)
+        if (gMenuItem.OptionType >= GOSSIP_OPTION_MAX)
+        {
+            TC_LOG_ERROR("sql.sql", "Table `gossip_menu_option` for menu %u, id %u has unknown option id %u. Option will not be used", gMenuItem.MenuId, gMenuItem.OptionIndex, gMenuItem.OptionType);
+            continue;
+        }
+
+        if (gMenuItem.ActionPoiId && !GetPointOfInterest(gMenuItem.ActionPoiId))
+        {
+            TC_LOG_ERROR("sql.sql", "Table `gossip_menu_option` for menu %u, id %u use non-existing action_poi_id %u, ignoring", gMenuItem.MenuId, gMenuItem.OptionIndex, gMenuItem.ActionPoiId);
+            gMenuItem.ActionPoiId = 0;
+        }
+
+        if (gMenuItem.BoxBroadcastTextId)
+        {
+            if (!GetBroadcastText(gMenuItem.BoxBroadcastTextId))
             {
-                TC_LOG_ERROR("sql.sql", "Table `gossip_menu_option_generic` for menu %u, id %u has unknown option id %u. Option will not be used", gMenuItem.MenuId, gMenuItem.OptionIndex, gMenuItem.OptionType);
-                continue;
+                TC_LOG_ERROR("sql.sql", "Table `gossip_menu_option` for menu %u, id %u has non-existing or incompatible BoxBroadcastTextId %u, ignoring.", gMenuItem.MenuId, gMenuItem.OptionIndex, gMenuItem.BoxBroadcastTextId);
+                gMenuItem.BoxBroadcastTextId = 0;
             }
+        }
 
-            _gossipMenuItemsStore.insert(GossipMenuItemsContainer::value_type(GENERIC_OPTIONS_MENU, gMenuItem));
-            ++count;
-        } while (result->NextRow());
+        _gossipMenuItemsStore.insert(GossipMenuItemsContainer::value_type(gMenuItem.MenuId, gMenuItem));
+    } while (result->NextRow());
 
-        TC_LOG_INFO("server.loading", ">> Loaded %u gossip_menu_option_generic entries in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
-    }
-    else {
-        TC_LOG_ERROR("server.loading", ">> Loaded 0 gossip_menu_option_generic entries. DB table `gossip_menu_option_generic` is empty!");
-    }
+    TC_LOG_INFO("server.loading", ">> Loaded %u gossip_menu_option entries in %u ms", uint32(_gossipMenuItemsStore.size()), GetMSTimeDiffToNow(oldMSTime));
 }
 
 Trainer::Trainer const* ObjectMgr::GetTrainer(uint32 creatureId) const

@@ -495,9 +495,6 @@ struct GraveYardData
 };
 typedef std::multimap<uint32,GraveYardData> GraveYardMap;
 
-// Generic items are loaded in the same container as creature specific items, under menu id 0
-#define GENERIC_OPTIONS_MENU 0
-
 // NPC gossip text id
 typedef std::unordered_map<uint32, uint32> CacheNpcTextIdMap;
 typedef std::unordered_map<uint32, uint32> CacheGoTextIdMap;
@@ -881,7 +878,6 @@ class TC_GAME_API ObjectMgr
         void LoadQuestRequestItemsLocale();
         void LoadGossipTextLocales();
         void LoadPageTextLocales();
-        void LoadGossipMenuItemsLocales();
         void LoadQuestGreetingsLocales();
         void LoadInstanceTemplate();
 
@@ -1064,7 +1060,7 @@ class TC_GAME_API ObjectMgr
         }
         PageTextLocale const* GetPageTextLocale(uint32 entry) const
         {
-            return Trinity::Containers::MapGetValuePtr(mPageTextLocaleMap, entry);
+            return Trinity::Containers::MapGetValuePtr(_pageTextLocaleStore, entry);
         }
         GossipMenuItemsLocale const* GetGossipMenuItemsLocale(uint16 menuId, uint16 optionIndex) const
         {
@@ -1333,7 +1329,7 @@ class TC_GAME_API ObjectMgr
         QuestRequestItemsLocaleContainer _questRequestItemsLocaleStore;
 
         NpcTextLocaleContainer mGossipTextLocaleMap;
-        PageTextLocaleContainer mPageTextLocaleMap;
+        PageTextLocaleContainer _pageTextLocaleStore;
         TrinityStringLocaleContainer _trinityStringStore;
         GossipMenuItemsLocaleContainer _gossipMenuItemsLocaleStore;
         PointOfInterestLocaleContainer _pointOfInterestLocaleStore;

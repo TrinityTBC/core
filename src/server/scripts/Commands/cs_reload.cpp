@@ -62,7 +62,7 @@ public:
             { "gameobject_template_locale",  SEC_ADMINISTRATOR, true, &HandleReloadLocalesGameobjectCommand,       "" },
             { "item_template_locale",        SEC_ADMINISTRATOR, true, &HandleReloadLocalesItemCommand,             "" },
             { "locales_gossip_text",         SEC_ADMINISTRATOR, true, &HandleReloadLocalesGossipTextCommand,       "" },
-            { "locales_page_text",           SEC_ADMINISTRATOR, true, &HandleReloadLocalesPageTextCommand,         "" },
+            { "page_text_locale",            SEC_ADMINISTRATOR, true, &HandleReloadLocalesPageTextCommand,         "" },
             { "quest_template_locale",       SEC_ADMINISTRATOR, true, &HandleReloadLocalesQuestCommand,            "" },
             { "gossip_menu",                 SEC_ADMINISTRATOR, true, &HandleReloadGossipMenuCommand,              "" },
             { "gossip_menu_option",          SEC_ADMINISTRATOR, true, &HandleReloadGossipMenuOptionCommand,        "" },
@@ -473,8 +473,7 @@ public:
     {
         TC_LOG_INFO("command", "Re-Loading `gossip_menu_option` Table!");
         sObjectMgr->LoadGossipMenuItems();
-        sObjectMgr->LoadGossipMenuItemsLocales();
-        handler->SendGlobalGMSysMessage("DB tables `gossip_menu_option` and `locales_gossip_menu_option` reloaded.");
+        handler->SendGlobalGMSysMessage("DB tables `gossip_menu_option` reloaded.");
         return true;
     }
 
@@ -864,7 +863,7 @@ public:
     {
         TC_LOG_INFO("command", "Re-Loading Locales Page Text ... ");
         sObjectMgr->LoadPageTextLocales();
-        handler->SendGlobalGMSysMessage("DB table `locales_page_text` reloaded.");
+        handler->SendGlobalGMSysMessage("DB table `page_text_locale` reloaded.");
         return true;
     }
 

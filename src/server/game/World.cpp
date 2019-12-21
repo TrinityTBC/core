@@ -1574,7 +1574,6 @@ void World::SetInitialWorldSettings()
     sObjectMgr->LoadQuestRequestItemsLocale();
     sObjectMgr->LoadGossipTextLocales();
     sObjectMgr->LoadPageTextLocales();
-    sObjectMgr->LoadGossipMenuItemsLocales();
     sObjectMgr->LoadQuestGreetingsLocales();
     sObjectMgr->SetDBCLocaleIndex(GetDefaultDbcLocale());        // Get once for all the locale index of DBC language (console/broadcasts)
 

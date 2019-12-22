@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.23, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.28, for Linux (x86_64)
 --
 -- Host: localhost    Database: world
 -- ------------------------------------------------------
--- Server version	5.7.23-log
+-- Server version	5.7.28-0ubuntu0.18.04.4
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -1563,8 +1563,7 @@ CREATE TABLE `gossip_menu` (
   `patch_min` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `patch_max` tinyint(3) unsigned NOT NULL DEFAULT '10',
   UNIQUE KEY `entry_text_id` (`MenuID`,`TextID`),
-  KEY `text_id` (`TextID`),
-  CONSTRAINT `gossip_menu_ibfk_1` FOREIGN KEY (`TextID`) REFERENCES `gossip_text` (`ID`) ON UPDATE CASCADE
+  KEY `text_id` (`TextID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1591,35 +1590,8 @@ CREATE TABLE `gossip_menu_option` (
   `BoxBroadcastTextID` int(11) unsigned DEFAULT NULL,
   `patch_min` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `patch_max` tinyint(3) unsigned NOT NULL DEFAULT '10',
-  PRIMARY KEY (`MenuID`,`OptionID`),
-  KEY `menu_id` (`MenuID`),
-  KEY `action_menu_id` (`ActionMenuID`),
-  KEY `pk_broadcast1` (`OptionBroadcastTextID`),
-  KEY `pk_broadcast2` (`BoxBroadcastTextID`),
-  KEY `pk_poi` (`ActionPoiID`),
-  CONSTRAINT `pk_action_menuId` FOREIGN KEY (`ActionMenuID`) REFERENCES `gossip_menu` (`MenuID`) ON UPDATE CASCADE,
-  CONSTRAINT `pk_broadcast1` FOREIGN KEY (`OptionBroadcastTextID`) REFERENCES `broadcast_text` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `pk_broadcast2` FOREIGN KEY (`BoxBroadcastTextID`) REFERENCES `broadcast_text` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `pk_menuId` FOREIGN KEY (`MenuID`) REFERENCES `gossip_menu` (`MenuID`) ON UPDATE CASCADE,
-  CONSTRAINT `pk_poi` FOREIGN KEY (`ActionPoiID`) REFERENCES `points_of_interest` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `gossip_menu_option_generic`
---
-
-DROP TABLE IF EXISTS `gossip_menu_option_generic`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `gossip_menu_option_generic` (
-  `MenuID` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `OptionIcon` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `OptionText` text,
-  `OptionType` tinyint(3) unsigned NOT NULL DEFAULT '1',
-  `OptionNpcFlag` int(10) unsigned NOT NULL DEFAULT '1',
-  PRIMARY KEY (`MenuID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`MenuID`,`OptionID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1720,24 +1692,8 @@ CREATE TABLE `gossip_text` (
   `em7_3` smallint(5) unsigned NOT NULL DEFAULT '0',
   `em7_4` smallint(5) unsigned NOT NULL DEFAULT '0',
   `em7_5` smallint(5) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`ID`),
-  KEY `broadcast0` (`BroadcastTextID0`),
-  KEY `broadcast1` (`BroadcastTextID1`),
-  KEY `broadcast2` (`BroadcastTextID2`),
-  KEY `broadcast3` (`BroadcastTextID3`),
-  KEY `broadcast4` (`BroadcastTextID4`),
-  KEY `broadcast5` (`BroadcastTextID5`),
-  KEY `broadcast6` (`BroadcastTextID6`),
-  KEY `broadcast7` (`BroadcastTextID7`),
-  CONSTRAINT `broadcast0` FOREIGN KEY (`BroadcastTextID0`) REFERENCES `broadcast_text` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `broadcast1` FOREIGN KEY (`BroadcastTextID1`) REFERENCES `broadcast_text` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `broadcast2` FOREIGN KEY (`BroadcastTextID2`) REFERENCES `broadcast_text` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `broadcast3` FOREIGN KEY (`BroadcastTextID3`) REFERENCES `broadcast_text` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `broadcast4` FOREIGN KEY (`BroadcastTextID4`) REFERENCES `broadcast_text` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `broadcast5` FOREIGN KEY (`BroadcastTextID5`) REFERENCES `broadcast_text` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `broadcast6` FOREIGN KEY (`BroadcastTextID6`) REFERENCES `broadcast_text` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `broadcast7` FOREIGN KEY (`BroadcastTextID7`) REFERENCES `broadcast_text` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2049,37 +2005,6 @@ CREATE TABLE `item_template_locale` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `locales_gossip_menu_option`
---
-
-DROP TABLE IF EXISTS `locales_gossip_menu_option`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `locales_gossip_menu_option` (
-  `menu_id` smallint(6) unsigned NOT NULL DEFAULT '0',
-  `id` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `option_text_loc1` text COLLATE utf8_unicode_ci,
-  `option_text_loc2` text COLLATE utf8_unicode_ci,
-  `option_text_loc3` text COLLATE utf8_unicode_ci,
-  `option_text_loc4` text COLLATE utf8_unicode_ci,
-  `option_text_loc5` text COLLATE utf8_unicode_ci,
-  `option_text_loc6` text COLLATE utf8_unicode_ci,
-  `option_text_loc7` text COLLATE utf8_unicode_ci,
-  `option_text_loc8` text COLLATE utf8_unicode_ci,
-  `box_text_loc1` text COLLATE utf8_unicode_ci,
-  `box_text_loc2` text COLLATE utf8_unicode_ci,
-  `box_text_loc3` text COLLATE utf8_unicode_ci,
-  `box_text_loc4` text COLLATE utf8_unicode_ci,
-  `box_text_loc5` text COLLATE utf8_unicode_ci,
-  `box_text_loc6` text COLLATE utf8_unicode_ci,
-  `box_text_loc7` text COLLATE utf8_unicode_ci,
-  `box_text_loc8` text COLLATE utf8_unicode_ci,
-  PRIMARY KEY (`menu_id`,`id`),
-  CONSTRAINT `locales_gossip_menu_option_ibfk_1` FOREIGN KEY (`menu_id`) REFERENCES `gossip_menu_option` (`MenuID`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table `locales_gossip_text`
 --
 
@@ -2216,124 +2141,7 @@ CREATE TABLE `locales_gossip_text` (
   `Text7_1_loc6` longtext COLLATE utf8_unicode_ci,
   `Text7_1_loc7` longtext COLLATE utf8_unicode_ci,
   `Text7_1_loc8` longtext COLLATE utf8_unicode_ci,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `locales_gossip_text_ibfk_1` FOREIGN KEY (`id`) REFERENCES `gossip_text` (`ID`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `locales_page_text`
---
-
-DROP TABLE IF EXISTS `locales_page_text`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `locales_page_text` (
-  `entry` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `Text_loc1` longtext COLLATE utf8_unicode_ci,
-  `Text_loc2` longtext COLLATE utf8_unicode_ci,
-  `Text_loc3` longtext COLLATE utf8_unicode_ci,
-  `Text_loc4` longtext COLLATE utf8_unicode_ci,
-  `Text_loc5` longtext COLLATE utf8_unicode_ci,
-  `Text_loc6` longtext COLLATE utf8_unicode_ci,
-  `Text_loc7` longtext COLLATE utf8_unicode_ci,
-  `Text_loc8` longtext COLLATE utf8_unicode_ci,
-  PRIMARY KEY (`entry`),
-  CONSTRAINT `locales_page_text_ibfk_1` FOREIGN KEY (`entry`) REFERENCES `page_text` (`entry`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `locales_quest`
---
-
-DROP TABLE IF EXISTS `locales_quest`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `locales_quest` (
-  `entry` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `Title_loc1` text COLLATE utf8_unicode_ci,
-  `Title_loc2` text COLLATE utf8_unicode_ci,
-  `Title_loc3` text COLLATE utf8_unicode_ci,
-  `Title_loc4` text COLLATE utf8_unicode_ci,
-  `Title_loc5` text COLLATE utf8_unicode_ci,
-  `Title_loc6` text COLLATE utf8_unicode_ci,
-  `Title_loc7` text COLLATE utf8_unicode_ci,
-  `Title_loc8` text COLLATE utf8_unicode_ci,
-  `Details_loc1` text COLLATE utf8_unicode_ci,
-  `Details_loc2` text COLLATE utf8_unicode_ci,
-  `Details_loc3` text COLLATE utf8_unicode_ci,
-  `Details_loc4` text COLLATE utf8_unicode_ci,
-  `Details_loc5` text COLLATE utf8_unicode_ci,
-  `Details_loc6` text COLLATE utf8_unicode_ci,
-  `Details_loc7` text COLLATE utf8_unicode_ci,
-  `Details_loc8` text COLLATE utf8_unicode_ci,
-  `Objectives_loc1` text COLLATE utf8_unicode_ci,
-  `Objectives_loc2` text COLLATE utf8_unicode_ci,
-  `Objectives_loc3` text COLLATE utf8_unicode_ci,
-  `Objectives_loc4` text COLLATE utf8_unicode_ci,
-  `Objectives_loc5` text COLLATE utf8_unicode_ci,
-  `Objectives_loc6` text COLLATE utf8_unicode_ci,
-  `Objectives_loc7` text COLLATE utf8_unicode_ci,
-  `Objectives_loc8` text COLLATE utf8_unicode_ci,
-  `OfferRewardText_loc1` text COLLATE utf8_unicode_ci,
-  `OfferRewardText_loc2` text COLLATE utf8_unicode_ci,
-  `OfferRewardText_loc3` text COLLATE utf8_unicode_ci,
-  `OfferRewardText_loc4` text COLLATE utf8_unicode_ci,
-  `OfferRewardText_loc5` text COLLATE utf8_unicode_ci,
-  `OfferRewardText_loc6` text COLLATE utf8_unicode_ci,
-  `OfferRewardText_loc7` text COLLATE utf8_unicode_ci,
-  `OfferRewardText_loc8` text COLLATE utf8_unicode_ci,
-  `RequestItemsText_loc1` text COLLATE utf8_unicode_ci,
-  `RequestItemsText_loc2` text COLLATE utf8_unicode_ci,
-  `RequestItemsText_loc3` text COLLATE utf8_unicode_ci,
-  `RequestItemsText_loc4` text COLLATE utf8_unicode_ci,
-  `RequestItemsText_loc5` text COLLATE utf8_unicode_ci,
-  `RequestItemsText_loc6` text COLLATE utf8_unicode_ci,
-  `RequestItemsText_loc7` text COLLATE utf8_unicode_ci,
-  `RequestItemsText_loc8` text COLLATE utf8_unicode_ci,
-  `EndText_loc1` text COLLATE utf8_unicode_ci,
-  `EndText_loc2` text COLLATE utf8_unicode_ci,
-  `EndText_loc3` text COLLATE utf8_unicode_ci,
-  `EndText_loc4` text COLLATE utf8_unicode_ci,
-  `EndText_loc5` text COLLATE utf8_unicode_ci,
-  `EndText_loc6` text COLLATE utf8_unicode_ci,
-  `EndText_loc7` text COLLATE utf8_unicode_ci,
-  `EndText_loc8` text COLLATE utf8_unicode_ci,
-  `ObjectiveText1_loc1` text COLLATE utf8_unicode_ci,
-  `ObjectiveText1_loc2` text COLLATE utf8_unicode_ci,
-  `ObjectiveText1_loc3` text COLLATE utf8_unicode_ci,
-  `ObjectiveText1_loc4` text COLLATE utf8_unicode_ci,
-  `ObjectiveText1_loc5` text COLLATE utf8_unicode_ci,
-  `ObjectiveText1_loc6` text COLLATE utf8_unicode_ci,
-  `ObjectiveText1_loc7` text COLLATE utf8_unicode_ci,
-  `ObjectiveText1_loc8` text COLLATE utf8_unicode_ci,
-  `ObjectiveText2_loc1` text COLLATE utf8_unicode_ci,
-  `ObjectiveText2_loc2` text COLLATE utf8_unicode_ci,
-  `ObjectiveText2_loc3` text COLLATE utf8_unicode_ci,
-  `ObjectiveText2_loc4` text COLLATE utf8_unicode_ci,
-  `ObjectiveText2_loc5` text COLLATE utf8_unicode_ci,
-  `ObjectiveText2_loc6` text COLLATE utf8_unicode_ci,
-  `ObjectiveText2_loc7` text COLLATE utf8_unicode_ci,
-  `ObjectiveText2_loc8` text COLLATE utf8_unicode_ci,
-  `ObjectiveText3_loc1` text COLLATE utf8_unicode_ci,
-  `ObjectiveText3_loc2` text COLLATE utf8_unicode_ci,
-  `ObjectiveText3_loc3` text COLLATE utf8_unicode_ci,
-  `ObjectiveText3_loc4` text COLLATE utf8_unicode_ci,
-  `ObjectiveText3_loc5` text COLLATE utf8_unicode_ci,
-  `ObjectiveText3_loc6` text COLLATE utf8_unicode_ci,
-  `ObjectiveText3_loc7` text COLLATE utf8_unicode_ci,
-  `ObjectiveText3_loc8` text COLLATE utf8_unicode_ci,
-  `ObjectiveText4_loc1` text COLLATE utf8_unicode_ci,
-  `ObjectiveText4_loc2` text COLLATE utf8_unicode_ci,
-  `ObjectiveText4_loc3` text COLLATE utf8_unicode_ci,
-  `ObjectiveText4_loc4` text COLLATE utf8_unicode_ci,
-  `ObjectiveText4_loc5` text COLLATE utf8_unicode_ci,
-  `ObjectiveText4_loc6` text COLLATE utf8_unicode_ci,
-  `ObjectiveText4_loc7` text COLLATE utf8_unicode_ci,
-  `ObjectiveText4_loc8` text COLLATE utf8_unicode_ci,
-  PRIMARY KEY (`entry`),
-  CONSTRAINT `locales_quest_ibfk_1` FOREIGN KEY (`entry`) REFERENCES `quest_template` (`entry`) ON UPDATE CASCADE
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -2414,6 +2222,22 @@ CREATE TABLE `page_text` (
   KEY `next_page` (`next_page`),
   CONSTRAINT `page_text_ibfk_1` FOREIGN KEY (`next_page`) REFERENCES `page_text` (`entry`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `page_text_locale`
+--
+
+DROP TABLE IF EXISTS `page_text_locale`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `page_text_locale` (
+  `ID` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `locale` varchar(4) NOT NULL,
+  `Text` text,
+  `VerifiedBuild` smallint(5) DEFAULT '0',
+  PRIMARY KEY (`ID`,`locale`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3083,6 +2907,22 @@ CREATE TABLE `quest_offer_reward` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `quest_offer_reward_locale`
+--
+
+DROP TABLE IF EXISTS `quest_offer_reward_locale`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `quest_offer_reward_locale` (
+  `ID` int(10) unsigned NOT NULL DEFAULT '0',
+  `locale` varchar(4) NOT NULL,
+  `RewardText` text,
+  `VerifiedBuild` smallint(6) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ID`,`locale`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `quest_request_items`
 --
 
@@ -3097,6 +2937,22 @@ CREATE TABLE `quest_request_items` (
   PRIMARY KEY (`ID`),
   CONSTRAINT `quest_request_items_ibfk_1` FOREIGN KEY (`ID`) REFERENCES `quest_template` (`entry`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `quest_request_items_locale`
+--
+
+DROP TABLE IF EXISTS `quest_request_items_locale`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `quest_request_items_locale` (
+  `ID` int(10) unsigned NOT NULL DEFAULT '0',
+  `locale` varchar(4) NOT NULL,
+  `CompletionText` text,
+  `VerifiedBuild` smallint(6) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ID`,`locale`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3298,6 +3154,30 @@ CREATE TABLE `quest_template_addon` (
   `SpecialFlags` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `quest_template_locale`
+--
+
+DROP TABLE IF EXISTS `quest_template_locale`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `quest_template_locale` (
+  `ID` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `locale` varchar(4) NOT NULL,
+  `Title` text,
+  `Details` text,
+  `Objectives` text,
+  `EndText` text,
+  `CompletedText` text,
+  `ObjectiveText1` text,
+  `ObjectiveText2` text,
+  `ObjectiveText3` text,
+  `ObjectiveText4` text,
+  `VerifiedBuild` smallint(5) DEFAULT '0',
+  PRIMARY KEY (`ID`,`locale`) USING BTREE
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -4728,4 +4608,4 @@ CREATE TABLE `waypoints` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-13 20:58:30
+-- Dump completed on 2019-12-22 11:58:38

@@ -6473,8 +6473,8 @@ void Spell::EffectCharge(uint32 i)
             // Delay attack, otherwise player makes instant attack after cast
             if (_unitCaster->GetTypeId() == TYPEID_PLAYER)
             {
-                _unitCaster->SetAttackTimer(BASE_ATTACK, _unitCaster->GetAttackTimer(BASE_ATTACK) + 200 + SPEED_CHARGE * _unitCaster->GetDistance(unitTarget));
-                _unitCaster->SetAttackTimer(OFF_ATTACK,  _unitCaster->GetAttackTimer(OFF_ATTACK)  + 200 + SPEED_CHARGE * _unitCaster->GetDistance(unitTarget));
+                _unitCaster->SetAttackTimer(BASE_ATTACK, _unitCaster->GetAttackTimer(BASE_ATTACK) + 200 + 40 * _unitCaster->GetDistance(unitTarget));
+                _unitCaster->SetAttackTimer(OFF_ATTACK,  _unitCaster->GetAttackTimer(OFF_ATTACK)  + 200 + 40 * _unitCaster->GetDistance(unitTarget));
             }
         }
     }

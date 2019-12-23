@@ -1289,7 +1289,7 @@ void npc_lord_illidan_stormrage::npc_lord_illidan_stormrageAI::SummonNextWave()
 
         if (Spawn)
         {
-            Spawn->LoadCreatureAddon();
+            Spawn->LoadCreaturesAddon();
 
             if (WaveCount == 0)//1 Wave
             {

@@ -743,10 +743,8 @@ class TC_GAME_API Creature : public Unit, public GridObject<Creature>, public Ma
         void DisappearAndDie();
 
         bool Create(ObjectGuid::LowType guidlow, Map *map, uint32 phaseMask, uint32 entry, Position const& pos, const CreatureData *data = nullptr, bool dynamic = false);
-        //get data from SQL storage
-        void LoadCreatureAddon();
         //reapply creature addon data to creature
-        bool InitCreatureAddon(bool reload = false);
+        bool LoadCreaturesAddon();
         void SelectLevel();
         void UpdateLevelDependantStats();
         void LoadEquipment(int8 id = 1, bool force = false);
@@ -876,7 +874,7 @@ class TC_GAME_API Creature : public Unit, public GridObject<Creature>, public Ma
 
         CreatureTemplate const *GetCreatureTemplate() const { return m_creatureInfo; }
         CreatureData const* GetCreatureData() const { return m_creatureData; }
-        CreatureAddon const* GetCreatureAddon() const { return m_creatureInfoAddon; }
+        CreatureAddon const* GetCreatureAddon() const;
 
         std::string GetScriptName() const;
         uint32 GetScriptId() const;
@@ -1203,7 +1201,6 @@ class TC_GAME_API Creature : public Unit, public GridObject<Creature>, public Ma
 
         CreatureTemplate const* m_creatureInfo;                 // in heroic mode can different from ObjectMgr::GetCreatureTemplate(GetEntry())
         CreatureData const* m_creatureData;
-        CreatureAddon const* m_creatureInfoAddon;
 
         time_t m_lastDamagedTime; // Part of Evade mechanic
 

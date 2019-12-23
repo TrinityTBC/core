@@ -261,7 +261,6 @@ Creature::Creature(bool isWorldObject) : Unit(isWorldObject), MapObject(),
     m_meleeDamageSchoolMask(SPELL_SCHOOL_MASK_NORMAL),
     m_creatureInfo(nullptr), 
     m_creatureData(nullptr),
-    m_creatureInfoAddon(nullptr), 
     m_spawnId(0), 
     m_formation(nullptr),
     m_PlayerDamageReq(0),
@@ -669,9 +668,9 @@ bool Creature::UpdateEntry(uint32 Entry, const CreatureData* data)
 
     if (GetMovementTemplate().IsRooted())
         SetControlled(true, UNIT_STATE_ROOT);
-
-    //TrinityCore has this LoadCreatureAddon();
     UpdateMovementFlags();
+
+    LoadCreaturesAddon();
     LoadTemplateImmunities();
 
     GetThreatManager().EvaluateSuppressed();
@@ -1109,9 +1108,6 @@ bool Creature::Create(ObjectGuid::LowType guidlow, Map *map, uint32 phaseMask, u
             break;
         }
     } //else, keep at 0
-
-    LoadCreatureAddon();
-    InitCreatureAddon();
 
 #ifdef LICH_KING
     m_positionZ += GetHoverOffset();
@@ -2196,7 +2192,7 @@ void Creature::SetDeathState(DeathState s)
 
         Motion_Initialize();
         Unit::SetDeathState(ALIVE);
-        InitCreatureAddon(true);
+        LoadCreaturesAddon();
     }
 }
 
@@ -2762,59 +2758,80 @@ void Creature::SaveRespawnTime(uint32 forceDelay, bool savetodb)
     GetMap()->SaveRespawnTime(SPAWN_TYPE_CREATURE, m_spawnId, GetEntry(), thisRespawnTime, GetMap()->GetZoneId(GetHomePosition()), Trinity::ComputeGridCoord(GetHomePosition().GetPositionX(), GetHomePosition().GetPositionY()).GetId(), savetodb && m_creatureData && m_creatureData->dbData);
 }
 
-void Creature::LoadCreatureAddon()
+CreatureAddon const* Creature::GetCreatureAddon() const
 {
     if (m_spawnId)
     {
-        if((m_creatureInfoAddon = sObjectMgr->GetCreatureAddon(m_spawnId)))
-            return;
+        if (CreatureAddon const* addon = sObjectMgr->GetCreatureAddon(m_spawnId))
+            return addon;
     }
 
-    m_creatureInfoAddon = sObjectMgr->GetCreatureTemplateAddon(GetCreatureTemplate()->Entry);
+    // dependent from difficulty mode entry
+    return sObjectMgr->GetCreatureTemplateAddon(GetCreatureTemplate()->Entry);
 }
 
 //creature_addon table
-bool Creature::InitCreatureAddon(bool reload)
+bool Creature::LoadCreaturesAddon()
 {
-    if(!m_creatureInfoAddon)
+    CreatureAddon const* cainfo = GetCreatureAddon();
+    if (!cainfo)
         return false;
 
-    if (m_creatureInfoAddon->mount != 0)
-        Mount(m_creatureInfoAddon->mount);
+    if (cainfo->mount != 0)
+        Mount(cainfo->mount);
 
-    if (m_creatureInfoAddon->bytes0 != 0)
-        SetUInt32Value(UNIT_FIELD_BYTES_0, m_creatureInfoAddon->bytes0);
+    if (cainfo->bytes0 != 0)
+        SetUInt32Value(UNIT_FIELD_BYTES_0, cainfo->bytes0);
 
-    if (m_creatureInfoAddon->bytes1 != 0)
-        SetUInt32Value(UNIT_FIELD_BYTES_1, m_creatureInfoAddon->bytes1);
+    if (cainfo->bytes1 != 0)
+    {
+        // 0 StandState
+        // 1 FreeTalentPoints   Pet only, so always 0 for default creature
+        // 2 StandFlags
+        // 3 StandMiscFlags
 
-    if (m_creatureInfoAddon->bytes2 != 0)
+        SetByteValue(UNIT_FIELD_BYTES_1, UNIT_BYTES_1_OFFSET_STAND_STATE, uint8(cainfo->bytes1 & 0xFF));
+        //SetByteValue(UNIT_FIELD_BYTES_1, UNIT_BYTES_1_OFFSET_PET_TALENTS, uint8((cainfo->bytes1 >> 8) & 0xFF));
+        SetByteValue(UNIT_FIELD_BYTES_1, UNIT_BYTES_1_OFFSET_PET_LOYALTY, 0);
+        SetByteValue(UNIT_FIELD_BYTES_1, UNIT_BYTES_1_OFFSET_VIS_FLAG, uint8((cainfo->bytes1 >> 16) & 0xFF));
+        SetByteValue(UNIT_FIELD_BYTES_1, UNIT_BYTES_1_OFFSET_ANIM_TIER, uint8((cainfo->bytes1 >> 24) & 0xFF));
+
+        //! Suspected correlation between UNIT_FIELD_BYTES_1, offset 3, value 0x2:
+        //! If no inhabittype_fly (if no MovementFlag_DisableGravity or MovementFlag_CanFly flag found in sniffs)
+        //! Check using InhabitType as movement flags are assigned dynamically
+        //! basing on whether the creature is in air or not
+        //! Set MovementFlag_Hover. Otherwise do nothing.
+        if (CanHover())
+            AddUnitMovementFlag(MOVEMENTFLAG_HOVER);
+    }
+
+    if (cainfo->bytes2 != 0)
     {
 #ifndef LICH_KING
         //sun: keep buff limit intact
         uint8 const buffLimit = GetByteValue(UNIT_FIELD_BYTES_2, UNIT_BYTES_2_OFFSET_BUFF_LIMIT);
-        SetUInt32Value(UNIT_FIELD_BYTES_2, m_creatureInfoAddon->bytes2);
+        SetUInt32Value(UNIT_FIELD_BYTES_2, cainfo->bytes2);
         SetByteValue(UNIT_FIELD_BYTES_2, UNIT_BYTES_2_OFFSET_BUFF_LIMIT, buffLimit);
 #else
-        SetUInt32Value(UNIT_FIELD_BYTES_2, m_creatureInfoAddon->bytes2);
+        SetUInt32Value(UNIT_FIELD_BYTES_2, cainfo->bytes2);
 #endif
     }
 
-    if (m_creatureInfoAddon->emote != 0)
-        SetEmoteState(m_creatureInfoAddon->emote);
+    if (cainfo->emote != 0)
+        SetEmoteState(cainfo->emote);
 
-    if (m_creatureInfoAddon->move_flags != 0)
-        SetUnitMovementFlags(m_creatureInfoAddon->move_flags);
+    if (cainfo->move_flags != 0)
+        SetUnitMovementFlags(cainfo->move_flags);
 
     // Check if visibility distance different
-    if (m_creatureInfoAddon->visibilityDistanceType != VisibilityDistanceType::Normal)
-        SetVisibilityDistanceOverride(m_creatureInfoAddon->visibilityDistanceType);
+    if (cainfo->visibilityDistanceType != VisibilityDistanceType::Normal)
+        SetVisibilityDistanceOverride(cainfo->visibilityDistanceType);
 
     //Load Path
-    if (m_creatureInfoAddon->path_id != 0)
-        _waypointPathId = m_creatureInfoAddon->path_id;
+    if (cainfo->path_id != 0)
+        _waypointPathId = cainfo->path_id;
 
-    for(auto id : m_creatureInfoAddon->auras)
+    for(auto id : cainfo->auras)
     {
         SpellInfo const *AdditionalSpellInfo = sSpellMgr->GetSpellInfo(id);
         if (!AdditionalSpellInfo)
@@ -2825,12 +2842,7 @@ bool Creature::InitCreatureAddon(bool reload)
 
         // skip already applied aura
         if(HasAura(id))
-        {
-            if(!reload)
-                TC_LOG_ERROR("sql.sql","Creature (GUIDLow: %u Entry: %u ) has duplicate aura (spell %u) in `auras` field.",GetSpawnId(),GetEntry(),id);
-
             continue;
-        }
 
         AddAura(id, this);
         TC_LOG_DEBUG("entities.unit", "Spell: %u added to creature (GUID: %u Entry: %u)", id, GetSpawnId(), GetEntry());

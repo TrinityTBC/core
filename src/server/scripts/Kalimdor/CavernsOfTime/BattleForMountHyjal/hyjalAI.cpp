@@ -425,7 +425,7 @@ void hyjalAI::EnterEvadeMode(EvadeReason /*why*/)
         me->RemoveAllAuras();
     me->GetThreatManager().ClearAllThreat();
     me->CombatStop(true);
-    me->LoadCreatureAddon();
+    me->LoadCreaturesAddon();
 
     if (me->IsAlive())
         me->GetMotionMaster()->MoveTargetedHome();

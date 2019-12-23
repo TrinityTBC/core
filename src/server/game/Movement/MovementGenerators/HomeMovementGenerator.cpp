@@ -110,7 +110,7 @@ void HomeMovementGenerator<Creature>::DoFinalize(Creature* owner, bool active, b
     if (movementInform && HasFlag(MOVEMENTGENERATOR_FLAG_INFORM_ENABLED))
     {
         owner->SetWalk(true);
-        owner->InitCreatureAddon(true);
+        owner->LoadCreaturesAddon();
         owner->SetSpawnHealth();
         owner->AI()->JustReachedHome();
     }

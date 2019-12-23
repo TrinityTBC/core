@@ -281,7 +281,7 @@ bool WorldSession::Update(uint32 diff, PacketFilter& updater)
 
     ///- Before we process anything:
     /// If necessary, kick the player from the game
-    if (IsConnectionIdle())
+    if (IsConnectionIdle() && GetSecurity() <= SEC_PLAYER)
     {
         if(sWorld->getConfig(CONFIG_DEBUG_LOG_LAST_PACKETS))
         {

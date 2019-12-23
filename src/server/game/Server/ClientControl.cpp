@@ -193,6 +193,9 @@ bool ClientControl::HasPendingMovementChange(MovementChangeType changeType) cons
 
 void ClientControl::CheckPendingMovementAcks()
 {
+    if (_owner->GetSecurity() > SEC_PLAYER)
+        return;
+
     if (!HasPendingMovementChange())
         return;
 

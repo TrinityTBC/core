@@ -2315,7 +2315,7 @@ void Unit::AttackerStateUpdate(Unit* victim, WeaponAttackType attType, bool extr
     if (GetTypeId() == TYPEID_PLAYER && !IsWithinLOSInMap(victim, LINEOFSIGHT_ALL_CHECKS, VMAP::ModelIgnoreFlags::M2))
         return;
         
-    AttackedTarget(victim, true);
+    AtTargetAttacked(victim, true);
     RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_MELEE_ATTACK);
 
     if (attType != BASE_ATTACK && attType != OFF_ATTACK)
@@ -7134,7 +7134,7 @@ void Unit::EngageWithTarget(Unit* enemy)
         SetInCombatWith(enemy);
 }
 
-void Unit::AttackedTarget(Unit* target, bool canInitialAggro)
+void Unit::AtTargetAttacked(Unit* target, bool canInitialAggro)
 {
     if (!target->IsEngaged() && !canInitialAggro)
         return;
@@ -7142,7 +7142,7 @@ void Unit::AttackedTarget(Unit* target, bool canInitialAggro)
     if (Unit* targetOwner = target->GetCharmerOrOwner())
         targetOwner->EngageWithTarget(this);
 
-    //from cmangos: Since patch 1.5.0 sitting characters always stand up on attack (even if stunned) (sun: moved to AttackedTarget instead of DealDamage, we want to to be triggered even on a miss)
+    //from cmangos: Since patch 1.5.0 sitting characters always stand up on attack (even if stunned) (sun: moved to AtTargetAttacked instead of DealDamage, we want to to be triggered even on a miss)
     if (!target->IsStandState() && (target->GetTypeId() == TYPEID_PLAYER || !target->HasUnitState(UNIT_STATE_STUNNED)))
         target->SetStandState(UNIT_STAND_STATE_STAND);
 

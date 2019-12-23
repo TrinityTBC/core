@@ -2802,7 +2802,7 @@ void Spell::TargetInfo::DoDamageAndTriggers(Spell* spell)
         //sun: prevent triggered spells to trigger pvp... a frost armor proc is not an offensive action. But we also want it to proc for some direct trigger spells such as charge stun.
         if (!spell->m_triggeredByAuraSpell || !unit->IsCharmedOwnedByPlayerOrPlayer()) 
             if (Unit* uCaster = spell->m_caster->ToUnit())
-                uCaster->AttackedTarget(unit, spell->m_spellInfo->HasInitialAggro());
+                uCaster->AtTargetAttacked(unit, spell->m_spellInfo->HasInitialAggro());
 
         if (!unit->IsStandState())
             unit->SetStandState(UNIT_STAND_STATE_STAND);

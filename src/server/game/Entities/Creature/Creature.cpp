@@ -3576,6 +3576,8 @@ void Creature::AtEnterCombat()
     if (!(GetCreatureTemplate()->type_flags & CREATURE_TYPE_FLAG_MOUNTED_COMBAT_ALLOWED))
         Dismount();
 
+    SetStandState(UNIT_STAND_STATE_STAND);
+
     if (IsPet() || IsGuardian()) // update pets' speed for catchup OOC speed
     {
         UpdateSpeed(MOVE_RUN);

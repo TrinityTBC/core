@@ -5998,7 +5998,7 @@ void AuraEffect::HandleSpiritOfRedemption(AuraApplication const* aurApp, uint8 m
 
             // set stand state (expected in this form)
             if (!m_target->IsStandState())
-                m_target->SetStandState(PLAYER_STATE_NONE);
+                m_target->SetStandState(UNIT_STAND_STATE_STAND);
 
             m_target->RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_IMMUNE_OR_LOST_SELECTION);
         }

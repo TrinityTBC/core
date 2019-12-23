@@ -379,7 +379,7 @@ void WorldSession::HandleLogoutRequestOpcode( WorldPacket & /*recvData*/ )
     if(GetPlayer()->CanFreeMove())
     {
         if (GetPlayer()->GetStandState() == UNIT_STAND_STATE_STAND)
-           GetPlayer()->SetStandState(PLAYER_STATE_SIT);
+           GetPlayer()->SetStandState(UNIT_STAND_STATE_SIT);
 
         GetPlayer()->SetRooted(true);
         GetPlayer()->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_STUNNED);
@@ -413,7 +413,7 @@ void WorldSession::HandleLogoutCancelOpcode( WorldPacket & /*recvData*/ )
         GetPlayer()->SetRooted(false);
 
         //! Stand Up
-        GetPlayer()->SetStandState(PLAYER_STATE_NONE);
+        GetPlayer()->SetStandState(UNIT_STAND_STATE_STAND);
 
         //! DISABLE_ROTATE
         GetPlayer()->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_STUNNED);

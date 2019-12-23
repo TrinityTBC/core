@@ -14,13 +14,17 @@
 #define PLAYER_FLIGHT_SPEED 32.0f
 
 FlightPathMovementGenerator::FlightPathMovementGenerator(uint32 startNode /*= 0*/)
-    : MovementGeneratorMedium(MOTION_MODE_DEFAULT, MOTION_PRIORITY_HIGHEST, UNIT_STATE_IN_FLIGHT)
 {
     _currentNode = startNode;
     _endGridX = 0.0f;
     _endGridY = 0.0f;
     _endMapId = 0;
     _preloadTargetNode = 0;
+
+    Mode = MOTION_MODE_DEFAULT;
+    Priority = MOTION_PRIORITY_HIGHEST;
+    Flags = MOVEMENTGENERATOR_FLAG_INITIALIZATION_PENDING;
+    BaseUnitState = UNIT_STATE_IN_FLIGHT;
 }
 
 MovementGeneratorType FlightPathMovementGenerator::GetMovementGeneratorType() const
@@ -251,4 +255,28 @@ void FlightPathMovementGenerator::PreloadEndGrid()
     }
     else
         TC_LOG_INFO("movement.flightpath", "FlightPathMovementGenerator::PreloadEndGrid: unable to determine map to preload flightmaster grid");
+}
+
+uint32 FlightPathMovementGenerator::GetPathId(size_t index) const
+{
+    if (index >= _path.size())
+        return 0;
+
+    return _path[index]->PathID;
+}
+
+std::string FlightPathMovementGenerator::GetDebugInfo() const
+{
+    std::stringstream sstr;
+    sstr << std::boolalpha
+        << PathMovementBase::GetDebugInfo() << "\n"
+        << MovementGeneratorMedium::GetDebugInfo() << "\n"
+        << "Start Path Id: " << GetPathId(0)
+        << " Path Size: " << _path.size()
+        << " HasArrived: " << HasArrived()
+        << " End Grid X: " << _endGridX
+        << " End Grid Y: " << _endGridY
+        << " End Map Id: " << _endMapId
+        << " Preloaded Target Node: " << _preloadTargetNode;
+    return sstr.str();
 }

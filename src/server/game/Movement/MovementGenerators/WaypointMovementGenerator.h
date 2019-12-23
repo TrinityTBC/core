@@ -115,6 +115,8 @@ class TC_GAME_API WaypointMovementGenerator<Creature> : public MovementGenerator
 
         bool GetCurrentDestinationPoint(Creature* creature, Position& pos) const;
 
+        std::string GetDebugInfo() const override;
+
     private:
         WaypointMovementGenerator(float fake);
 

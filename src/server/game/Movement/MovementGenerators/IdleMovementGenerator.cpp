@@ -5,9 +5,11 @@
 #include "MovementDefines.h"
 
 IdleMovementGenerator::IdleMovementGenerator()
-    : MovementGenerator(MOTION_MODE_DEFAULT, MOTION_PRIORITY_NORMAL, 0)
 {
+    Mode = MOTION_MODE_DEFAULT;
+    Priority = MOTION_PRIORITY_NORMAL;
     Flags = MOVEMENTGENERATOR_FLAG_INITIALIZED;
+    BaseUnitState = 0;
 }
 
 /*

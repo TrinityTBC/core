@@ -12,21 +12,19 @@
 #include "CreatureGroups.h"
 
 template<class T>
-PointMovementGenerator<T>::PointMovementGenerator(uint32 _id, float _x, float _y, float _z, bool _generatePath, float _speed /*= 0.0f*/, Optional<float> finalOrient /*= {}*/, bool forceDestination /*= false*/)
-    : MovementGeneratorMedium<T, PointMovementGenerator<T>>(MOTION_MODE_DEFAULT, MOTION_PRIORITY_NORMAL, UNIT_STATE_ROAMING),
-    _movementId(_id),
-    _destination(_x, _y, _z),
-    _finalOrient(finalOrient),
-    _speed(_speed),
-    _generatePath(_generatePath),
-    _forceDestination(forceDestination)
-{ }
+PointMovementGenerator<T>::PointMovementGenerator(uint32 id, float x, float y, float z, bool generatePath, float speed, Optional<float> finalOrient) : _movementId(id), _x(x), _y(y), _z(z), _speed(speed), _generatePath(generatePath), _finalOrient(finalOrient)
+{
+    this->Mode = MOTION_MODE_DEFAULT;
+    this->Priority = MOTION_PRIORITY_NORMAL;
+    this->Flags = MOVEMENTGENERATOR_FLAG_INITIALIZATION_PENDING;
+    this->BaseUnitState = UNIT_STATE_ROAMING;
+}
 
 template<class T>
 void PointMovementGenerator<T>::LaunchMove(T* owner)
 {
     Movement::MoveSplineInit init(owner);
-    init.MoveTo(G3D::Vector3(_destination.GetPositionX(), _destination.GetPositionY(), _destination.GetPositionZ()), _generatePath, _forceDestination);
+    init.MoveTo(_x, _y, _z, _generatePath);
     if (_speed > 0.0f)
         init.SetVelocity(_speed);
 
@@ -37,7 +35,7 @@ void PointMovementGenerator<T>::LaunchMove(T* owner)
 
     // Call for creature group update
     if (Creature* creature = owner->ToCreature())
-        creature->SignalFormationMovement(_destination, _movementId);
+        creature->SignalFormationMovement(Position(_x, _y, _z), _movementId);
 }
 
 //----- Point Movement Generator
@@ -150,8 +148,8 @@ template <> void PointMovementGenerator<Creature>::MovementInform(Creature* unit
         unit->AI()->MovementInform(POINT_MOTION_TYPE, _movementId);
 }
 
-template PointMovementGenerator<Player>::PointMovementGenerator(uint32, float, float, float, bool, float, Optional<float>, bool);
-template PointMovementGenerator<Creature>::PointMovementGenerator(uint32, float, float, float, bool, float, Optional<float>, bool);
+template PointMovementGenerator<Player>::PointMovementGenerator(uint32, float, float, float, bool, float, Optional<float>);
+template PointMovementGenerator<Creature>::PointMovementGenerator(uint32, float, float, float, bool, float, Optional<float>);
 template MovementGeneratorType PointMovementGenerator<Player>::GetMovementGeneratorType() const;
 template MovementGeneratorType PointMovementGenerator<Creature>::GetMovementGeneratorType() const;
 template void PointMovementGenerator<Player>::DoInitialize(Player*);
@@ -185,7 +183,7 @@ void AssistanceMovementGenerator::Initialize(Unit* owner)
 
     owner->AddUnitState(UNIT_STATE_ROAMING | UNIT_STATE_ROAMING_MOVE);
     Movement::MoveSplineInit init(owner);
-    init.MoveTo(_destination.GetPositionX(), _destination.GetPositionY(), _destination.GetPositionZ());
+    init.MoveTo(_x, _y, _z);
     init.SetVelocity(owner->GetSpeed(MOVE_RUN) * 0.66);
     init.Launch();
 }

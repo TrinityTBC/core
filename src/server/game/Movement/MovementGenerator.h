@@ -30,14 +30,7 @@ enum MovementGeneratorFlags : uint16
 class MovementGenerator
 {
     public:
-        MovementGenerator(uint8 mode, uint8 priority, uint32 baseUnitState) :
-            Mode(mode),
-            Priority(priority),
-            BaseUnitState(baseUnitState)
-        {}
-
         MovementGenerator() : Mode(0), Priority(0), Flags(MOVEMENTGENERATOR_FLAG_NONE), BaseUnitState(0) { }
-
         virtual ~MovementGenerator();
 
         // on top first update
@@ -64,9 +57,11 @@ class MovementGenerator
         bool HasFlag(uint16 const flag) const { return (Flags & flag) != 0; }
         void RemoveFlag(uint16 const flag) { Flags &= ~flag; }
 
+        virtual std::string GetDebugInfo() const;
+
         uint8 Mode;
         uint8 Priority;
-        uint16 Flags = MOVEMENTGENERATOR_FLAG_INITIALIZATION_PENDING;
+        uint16 Flags;
         uint32 BaseUnitState;
 };
 
@@ -74,10 +69,6 @@ template<class T, class D>
 class MovementGeneratorMedium : public MovementGenerator
 {
     public:
-        MovementGeneratorMedium(uint8 mode, uint8 priority, uint32 baseUnitState) :
-            MovementGenerator(mode, priority, baseUnitState)
-        {}
-
         void Initialize(Unit* owner) override
         {
             (static_cast<D*>(this))->DoInitialize(static_cast<T*>(owner));

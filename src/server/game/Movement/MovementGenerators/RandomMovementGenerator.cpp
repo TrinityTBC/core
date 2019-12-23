@@ -13,10 +13,12 @@
 #define RUNNING_CHANCE_RANDOMMV 20                                  //will be "1 / RUNNING_CHANCE_RANDOMMV"
 
 template<class T>
-RandomMovementGenerator<T>::RandomMovementGenerator(float spawn_dist /*= 0.0f*/) 
-    : MovementGeneratorMedium<T, RandomMovementGenerator<T>>(MOTION_MODE_DEFAULT, MOTION_PRIORITY_NORMAL, UNIT_STATE_ROAMING),
-    _timer(0), _wanderDistance(spawn_dist), _reference()
+RandomMovementGenerator<T>::RandomMovementGenerator(float spawn_dist /*= 0.0f*/) : _timer(0), _wanderDistance(spawn_dist), _reference()
 { 
+    this->Mode = MOTION_MODE_DEFAULT;
+    this->Priority = MOTION_PRIORITY_NORMAL;
+    this->Flags = MOVEMENTGENERATOR_FLAG_INITIALIZATION_PENDING;
+    this->BaseUnitState = UNIT_STATE_ROAMING;
 }
 
 template RandomMovementGenerator<Creature>::RandomMovementGenerator(float/* distance*/);

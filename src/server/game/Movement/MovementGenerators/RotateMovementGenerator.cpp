@@ -4,9 +4,13 @@
 #include "Creature.h"
 
 RotateMovementGenerator::RotateMovementGenerator(uint32 id, uint32 time, RotateDirection direction) :
-    MovementGenerator(MOTION_MODE_DEFAULT, MOTION_PRIORITY_NORMAL, UNIT_STATE_ROTATING),
     _id(id), _duration(time), _maxDuration(time), _direction(direction)
-{ }
+{
+    this->Mode = MOTION_MODE_DEFAULT;
+    this->Priority = MOTION_PRIORITY_NORMAL;
+    this->Flags = MOVEMENTGENERATOR_FLAG_INITIALIZATION_PENDING;
+    this->BaseUnitState = UNIT_STATE_ROTATING;
+}
 
 void RotateMovementGenerator::Initialize(Unit* owner)
 {

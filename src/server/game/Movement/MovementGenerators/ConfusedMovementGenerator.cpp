@@ -11,10 +11,13 @@
 
 
 template<class T>
-ConfusedMovementGenerator<T>::ConfusedMovementGenerator() :
-    MovementGeneratorMedium<T, ConfusedMovementGenerator<T>>(MOTION_MODE_DEFAULT, MOTION_PRIORITY_HIGHEST, UNIT_STATE_CONFUSED),
-    _nextMoveTime(0)
-{ }
+ConfusedMovementGenerator<T>::ConfusedMovementGenerator() : _timer(0), _x(0.f), _y(0.f), _z(0.f)
+{
+    this->Mode = MOTION_MODE_DEFAULT;
+    this->Priority = MOTION_PRIORITY_HIGHEST;
+    this->Flags = MOVEMENTGENERATOR_FLAG_INITIALIZATION_PENDING;
+    this->BaseUnitState = UNIT_STATE_CONFUSED;
+}
 
 template<class T>
 MovementGeneratorType ConfusedMovementGenerator<T>::GetMovementGeneratorType() const
@@ -35,8 +38,8 @@ void ConfusedMovementGenerator<T>::DoInitialize(T* owner)
     owner->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_CONFUSED);
     owner->StopMoving();
 
-    _nextMoveTime.Reset(0);
-    _reference = owner->GetPosition();
+    _timer.Reset(0);
+    owner->GetPosition(_x, _y, _z);
     _path = nullptr;
 }
 
@@ -65,16 +68,15 @@ bool ConfusedMovementGenerator<T>::DoUpdate(T* owner, uint32 diff)
         MovementGenerator::RemoveFlag(MOVEMENTGENERATOR_FLAG_INTERRUPTED);
 
     // waiting for next move
-    _nextMoveTime.Update(diff);
-    if ((MovementGenerator::HasFlag(MOVEMENTGENERATOR_FLAG_SPEED_UPDATE_PENDING) && !owner->movespline->Finalized()) || (_nextMoveTime.Passed() && owner->movespline->Finalized()))
+    _timer.Update(diff);
+    if ((MovementGenerator::HasFlag(MOVEMENTGENERATOR_FLAG_SPEED_UPDATE_PENDING) && !owner->movespline->Finalized()) || (_timer.Passed() && owner->movespline->Finalized()))
     {
         // start moving
         MovementGenerator::RemoveFlag(MOVEMENTGENERATOR_FLAG_TRANSITORY);
 
         float dest = 4.0f * (float)rand_norm() - 2.0f;
 
-        Position destination;
-        destination.Relocate(_reference);
+        Position destination(_x, _y, _z);
         owner->MovePositionToFirstWalkableCollision(destination, dest, 0.0f);
 
         _path = std::make_unique<PathGenerator>(owner); //sun: new generator at each update, to update options and position
@@ -87,7 +89,7 @@ bool ConfusedMovementGenerator<T>::DoUpdate(T* owner, uint32 diff)
         bool result = _path->CalculatePath(destination.m_positionX, destination.m_positionY, destination.m_positionZ);
         if (!result || (_path->GetPathType() & PATHFIND_NOPATH))
         {
-            _nextMoveTime.Reset(100);
+            _timer.Reset(100);
             return true;
         }
 
@@ -97,7 +99,7 @@ bool ConfusedMovementGenerator<T>::DoUpdate(T* owner, uint32 diff)
         init.MovebyPath(_path->GetPath(), 0, ownerTransport);
         init.SetWalk(true);
         int32 traveltime = init.Launch();
-        _nextMoveTime.Reset(traveltime + urand(800, 1500));
+        _timer.Reset(traveltime + urand(800, 1500));
     }
 
     return true;

@@ -29,6 +29,11 @@ class PathMovementBase
 
         uint32 GetCurrentNode() const { return _currentNode; }
 
+        virtual std::string GetDebugInfo() const
+        {
+            return "Current Node: " + std::to_string(GetCurrentNode());
+        };
+
     protected:
         BasePath _path;
         uint32 _currentNode;

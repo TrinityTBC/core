@@ -25,7 +25,7 @@ class ConfusedMovementGenerator : public MovementGeneratorMedium<T, ConfusedMove
 
     private:
         std::unique_ptr<PathGenerator> _path;
-        TimeTracker _nextMoveTime;
-        Position _reference;
+        TimeTracker _timer;
+        float _x, _y, _z;
 };
 #endif

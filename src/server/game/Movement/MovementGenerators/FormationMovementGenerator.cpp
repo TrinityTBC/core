@@ -18,13 +18,15 @@
 #include <boost/geometry/geometries/point_xy.hpp>
 
 FormationMovementGenerator::FormationMovementGenerator(uint32 id, ObjectGuid leaderGUID, FormationMoveSegment moveSegment) :
-    MovementGeneratorMedium(MOTION_MODE_DEFAULT, MOTION_PRIORITY_NORMAL, UNIT_STATE_ROAMING),
     _movementId(id), 
     _leaderGUID(leaderGUID),
     _moveSegment(moveSegment),
     _movingToStart(false)
 {
+    Mode = MOTION_MODE_DEFAULT;
+    Priority = MOTION_PRIORITY_NORMAL;
     Flags = MOVEMENTGENERATOR_FLAG_INITIALIZATION_PENDING;
+    BaseUnitState = UNIT_STATE_ROAMING;
 }
 
 MovementGeneratorType FormationMovementGenerator::GetMovementGeneratorType() const

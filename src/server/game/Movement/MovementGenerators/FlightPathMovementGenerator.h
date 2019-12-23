@@ -30,6 +30,7 @@ public:
     TaxiPathNodeList const& GetPath() { return _path; }
     uint32 GetPathAtMapEnd() const;
     bool HasArrived() const { return _currentNode >= _path.size(); }
+    uint32 GetPathId(size_t index) const;
 
     void LoadPath(Player* owner); // called from MotionMaster
     void SetCurrentNodeAfterTeleport();
@@ -37,6 +38,8 @@ public:
     void DoEventIfAny(Player* owner, TaxiPathNodeEntry const* node, bool departure);
     void InitEndGridInfo();
     void PreloadEndGrid();
+
+    std::string GetDebugInfo() const override;
 
 private:
     float _endGridX; //! X coord of last node location

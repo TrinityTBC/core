@@ -14,10 +14,13 @@
 #define MAX_QUIET_DISTANCE 43.0f
 
 template<class T>
-FleeingMovementGenerator<T>::FleeingMovementGenerator(ObjectGuid fleeTargetGUID) :
-    MovementGeneratorMedium<T, FleeingMovementGenerator<T>>(MOTION_MODE_DEFAULT, MOTION_PRIORITY_HIGHEST, UNIT_STATE_FLEEING),
-    _fleeTargetGUID(fleeTargetGUID), i_nextCheckTime(0) 
-{ }
+FleeingMovementGenerator<T>::FleeingMovementGenerator(ObjectGuid fleeTargetGUID) : _fleeTargetGUID(fleeTargetGUID), i_nextCheckTime(0) 
+{
+    this->Mode = MOTION_MODE_DEFAULT;
+    this->Priority = MOTION_PRIORITY_HIGHEST;
+    this->Flags = MOVEMENTGENERATOR_FLAG_INITIALIZATION_PENDING;
+    this->BaseUnitState = UNIT_STATE_FLEEING;
+}
 
 template<class T>
 MovementGeneratorType FleeingMovementGenerator<T>::GetMovementGeneratorType() const

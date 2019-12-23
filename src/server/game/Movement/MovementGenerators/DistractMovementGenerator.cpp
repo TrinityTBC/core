@@ -6,11 +6,15 @@
 // DistractMovementGenerator
 
 DistractMovementGenerator::DistractMovementGenerator(Unit const* owner, float targetOrientation, uint32 timer) :
-    MovementGenerator(MOTION_MODE_DEFAULT, MOTION_PRIORITY_HIGHEST, UNIT_STATE_DISTRACTED),
     _timer(timer),
     originalOrientation(owner->GetOrientation()),
     targetOrientation(targetOrientation)
-{ }
+{
+    Mode = MOTION_MODE_DEFAULT;
+    Priority = MOTION_PRIORITY_HIGHEST;
+    Flags = MOVEMENTGENERATOR_FLAG_INITIALIZATION_PENDING;
+    BaseUnitState = UNIT_STATE_DISTRACTED;
+}
 
 void DistractMovementGenerator::Initialize(Unit* owner)
 {

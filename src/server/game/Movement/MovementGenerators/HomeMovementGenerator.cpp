@@ -10,9 +10,12 @@
 //Important diff with TC: this generator handle UNIT_STATE_EVADE itself
 
 template<class T>
-HomeMovementGenerator<T>::HomeMovementGenerator() : 
-    MovementGeneratorMedium<T, HomeMovementGenerator<T>>(MOTION_MODE_DEFAULT, MOTION_PRIORITY_NORMAL, UNIT_STATE_ROAMING)
+HomeMovementGenerator<T>::HomeMovementGenerator()
 {
+    this->Mode = MOTION_MODE_DEFAULT;
+    this->Priority = MOTION_PRIORITY_NORMAL;
+    this->Flags = MOVEMENTGENERATOR_FLAG_INITIALIZATION_PENDING;
+    this->BaseUnitState = UNIT_STATE_ROAMING;
 }
 
 template HomeMovementGenerator<Creature>::HomeMovementGenerator();

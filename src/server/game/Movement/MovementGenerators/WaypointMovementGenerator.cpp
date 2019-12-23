@@ -14,7 +14,6 @@
 #include "WaypointManager.h"
 
 WaypointMovementGenerator<Creature>::WaypointMovementGenerator(float fake) : 
-    MovementGeneratorMedium(MOTION_MODE_DEFAULT, MOTION_PRIORITY_NORMAL, UNIT_STATE_ROAMING),
     direction(WP_PATH_DIRECTION_NORMAL),
     path_type(WP_PATH_TYPE_UNSPECIFIED),
     _nextMoveTime(0),
@@ -26,6 +25,10 @@ WaypointMovementGenerator<Creature>::WaypointMovementGenerator(float fake) :
     customPath(nullptr),
     _pathId(0)
 {
+    Mode = MOTION_MODE_DEFAULT;
+    Priority = MOTION_PRIORITY_NORMAL;
+    Flags = MOVEMENTGENERATOR_FLAG_INITIALIZATION_PENDING;
+    BaseUnitState = UNIT_STATE_ROAMING;
 }
 
 WaypointMovementGenerator<Creature>::WaypointMovementGenerator(Movement::PointsArray& points, Optional<bool> repeating /*= {}*/, bool smoothSpline) :
@@ -714,4 +717,12 @@ std::string GetWaypointPathTypeName(WaypointPathType type)
     default: pathTypeStr = "Error"; break;
     }
     return pathTypeStr;
+}
+
+std::string WaypointMovementGenerator<Creature>::GetDebugInfo() const
+{
+    std::stringstream sstr;
+    sstr << PathMovementBase::GetDebugInfo() << "\n"
+        << MovementGeneratorMedium::GetDebugInfo();
+    return sstr.str();
 }

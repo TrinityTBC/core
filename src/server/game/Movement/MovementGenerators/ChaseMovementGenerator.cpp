@@ -42,10 +42,12 @@ static void DoMovementInform(Unit* owner, Unit* target)
 }
 
 ChaseMovementGenerator::ChaseMovementGenerator(Unit* target, Optional<ChaseRange> range, Optional<ChaseAngle> angle, bool run /*= true*/) :
-    AbstractFollower(ASSERT_NOTNULL(target)), 
-    MovementGenerator(MOTION_MODE_DEFAULT, MOTION_PRIORITY_NORMAL, UNIT_STATE_CHASE),
-    _range(range), _angle(angle), _run(run)
+    AbstractFollower(ASSERT_NOTNULL(target)), _range(range), _angle(angle), _run(run)
 {
+    Mode = MOTION_MODE_DEFAULT;
+    Priority = MOTION_PRIORITY_NORMAL;
+    Flags = MOVEMENTGENERATOR_FLAG_INITIALIZATION_PENDING;
+    BaseUnitState = UNIT_STATE_CHASE;
 }
 
 ChaseMovementGenerator::~ChaseMovementGenerator() = default;

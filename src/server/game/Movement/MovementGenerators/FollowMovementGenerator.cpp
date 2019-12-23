@@ -32,11 +32,13 @@ static bool PositionOkay(Unit* owner, Unit* target, float range, Optional<ChaseA
     return !angle || angle->IsAngleOkay(target->GetRelativeAngle(owner));
 }
 
-FollowMovementGenerator::FollowMovementGenerator(Unit* target, float range, ChaseAngle angle) : 
-    AbstractFollower(ASSERT_NOTNULL(target)), 
-    MovementGenerator(MOTION_MODE_DEFAULT, MOTION_PRIORITY_NORMAL, UNIT_STATE_FOLLOW),
-    _range(range), _angle(angle) 
-{}
+FollowMovementGenerator::FollowMovementGenerator(Unit* target, float range, ChaseAngle angle) : AbstractFollower(ASSERT_NOTNULL(target)), _range(range), _angle(angle) 
+{
+    Mode = MOTION_MODE_DEFAULT;
+    Priority = MOTION_PRIORITY_NORMAL;
+    Flags = MOVEMENTGENERATOR_FLAG_INITIALIZATION_PENDING;
+    BaseUnitState = UNIT_STATE_FOLLOW;
+}
 FollowMovementGenerator::~FollowMovementGenerator() = default;
 
 void FollowMovementGenerator::Initialize(Unit* owner)

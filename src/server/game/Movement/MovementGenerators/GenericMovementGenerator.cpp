@@ -5,10 +5,14 @@
 #include "MoveSpline.h"
 #include "Unit.h"
 
-GenericMovementGenerator::GenericMovementGenerator(Movement::MoveSplineInit&& splineInit, MovementGeneratorType type, uint32 id) 
-    : MovementGenerator(MOTION_MODE_DEFAULT, MOTION_PRIORITY_NORMAL, UNIT_STATE_ROAMING),
+GenericMovementGenerator::GenericMovementGenerator(Movement::MoveSplineInit&& splineInit, MovementGeneratorType type, uint32 id) :
     _splineInit(std::move(splineInit)), _type(type), _pointId(id), _duration(0) 
-{ }
+{
+    Mode = MOTION_MODE_DEFAULT;
+    Priority = MOTION_PRIORITY_NORMAL;
+    Flags = MOVEMENTGENERATOR_FLAG_INITIALIZATION_PENDING;
+    BaseUnitState = UNIT_STATE_ROAMING;
+}
 
 void GenericMovementGenerator::Initialize(Unit* /*owner*/)
 {

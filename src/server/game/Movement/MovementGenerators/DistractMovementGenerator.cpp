@@ -12,7 +12,7 @@ DistractMovementGenerator::DistractMovementGenerator(Unit const* owner, float ta
     targetOrientation(targetOrientation)
 { }
 
-bool DistractMovementGenerator::Initialize(Unit* owner)
+void DistractMovementGenerator::Initialize(Unit* owner)
 {
     RemoveFlag(MOVEMENTGENERATOR_FLAG_INITIALIZATION_PENDING);
     AddFlag(MOVEMENTGENERATOR_FLAG_INITIALIZED);
@@ -22,7 +22,6 @@ bool DistractMovementGenerator::Initialize(Unit* owner)
         owner->SetStandState(UNIT_STAND_STATE_STAND);
 
     owner->SetFacingTo(targetOrientation);
-    return true;
 }
 
 void DistractMovementGenerator::Reset(Unit* owner)

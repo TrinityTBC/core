@@ -39,7 +39,7 @@ FollowMovementGenerator::FollowMovementGenerator(Unit* target, float range, Chas
 {}
 FollowMovementGenerator::~FollowMovementGenerator() = default;
 
-bool FollowMovementGenerator::Initialize(Unit* owner)
+void FollowMovementGenerator::Initialize(Unit* owner)
 {
     RemoveFlag(MOVEMENTGENERATOR_FLAG_INITIALIZATION_PENDING | MOVEMENTGENERATOR_FLAG_DEACTIVATED);
     AddFlag(MOVEMENTGENERATOR_FLAG_INITIALIZED);
@@ -47,7 +47,6 @@ bool FollowMovementGenerator::Initialize(Unit* owner)
     owner->StopMoving();
     _path = nullptr;
     _lastTargetPosition.reset();
-    return true;
 }
 
 void FollowMovementGenerator::Reset(Unit* owner) 

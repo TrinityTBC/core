@@ -112,19 +112,18 @@ void FleeingMovementGenerator<T>::GetPoint(T* owner, Position &position)
 }
 
 template<class T>
-bool FleeingMovementGenerator<T>::DoInitialize(T* owner)
+void FleeingMovementGenerator<T>::DoInitialize(T* owner)
 {
     MovementGenerator::RemoveFlag(MOVEMENTGENERATOR_FLAG_INITIALIZATION_PENDING | MOVEMENTGENERATOR_FLAG_DEACTIVATED | MOVEMENTGENERATOR_FLAG_TRANSITORY);
     MovementGenerator::AddFlag(MOVEMENTGENERATOR_FLAG_INITIALIZED);
 
     if (!owner || !owner->IsAlive())
-        return false;
+        return;
 
     // TODO: UNIT_FIELD_FLAGS should not be handled by generators
     owner->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_FLEEING);
     SetTargetLocation(owner);
     _path = nullptr;
-    return true;
 }
 
 template<class T>
@@ -204,8 +203,8 @@ template FleeingMovementGenerator<Player>::FleeingMovementGenerator(ObjectGuid);
 template FleeingMovementGenerator<Creature>::FleeingMovementGenerator(ObjectGuid);
 template MovementGeneratorType FleeingMovementGenerator<Player>::GetMovementGeneratorType() const;
 template MovementGeneratorType FleeingMovementGenerator<Creature>::GetMovementGeneratorType() const;
-template bool FleeingMovementGenerator<Player>::DoInitialize(Player*);
-template bool FleeingMovementGenerator<Creature>::DoInitialize(Creature*);
+template void FleeingMovementGenerator<Player>::DoInitialize(Player*);
+template void FleeingMovementGenerator<Creature>::DoInitialize(Creature*);
 template void FleeingMovementGenerator<Player>::GetPoint(Player*, Position&);
 template void FleeingMovementGenerator<Creature>::GetPoint(Creature*, Position&);
 template void FleeingMovementGenerator<Player>::SetTargetLocation(Player*);

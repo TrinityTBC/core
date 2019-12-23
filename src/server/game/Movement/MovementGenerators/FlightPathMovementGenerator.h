@@ -21,7 +21,7 @@ public:
     MovementGeneratorType GetMovementGeneratorType() const override;
     bool GetResetPosition(Unit* owner, float& x, float& y, float& z) override;
 
-    bool DoInitialize(Player*);
+    void DoInitialize(Player*);
     void DoReset(Player*);
     bool DoUpdate(Player*, uint32);
     void DoDeactivate(Player*);

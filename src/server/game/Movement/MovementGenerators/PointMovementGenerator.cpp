@@ -48,7 +48,7 @@ MovementGeneratorType PointMovementGenerator<T>::GetMovementGeneratorType() cons
 }
 
 template<class T>
-bool PointMovementGenerator<T>::DoInitialize(T* owner)
+void PointMovementGenerator<T>::DoInitialize(T* owner)
 {
     MovementGenerator::RemoveFlag(MOVEMENTGENERATOR_FLAG_INITIALIZATION_PENDING | MOVEMENTGENERATOR_FLAG_DEACTIVATED | MOVEMENTGENERATOR_FLAG_TRANSITORY);
     MovementGenerator::AddFlag(MOVEMENTGENERATOR_FLAG_INITIALIZED);
@@ -58,7 +58,7 @@ bool PointMovementGenerator<T>::DoInitialize(T* owner)
     if (_movementId == EVENT_CHARGE_PREPATH)
     {
         owner->AddUnitState(UNIT_STATE_ROAMING_MOVE);
-        return true;
+        return;
     }
 
     //if cannot move : init generator but don't move for now
@@ -66,11 +66,10 @@ bool PointMovementGenerator<T>::DoInitialize(T* owner)
     {
         MovementGenerator::AddFlag(MOVEMENTGENERATOR_FLAG_INTERRUPTED);
         owner->StopMoving();
-        return true;
+        return;
     }
 
     LaunchMove(owner);
-    return true;
 }
 
 template<class T>
@@ -155,8 +154,8 @@ template PointMovementGenerator<Player>::PointMovementGenerator(uint32, float, f
 template PointMovementGenerator<Creature>::PointMovementGenerator(uint32, float, float, float, bool, float, Optional<float>, bool);
 template MovementGeneratorType PointMovementGenerator<Player>::GetMovementGeneratorType() const;
 template MovementGeneratorType PointMovementGenerator<Creature>::GetMovementGeneratorType() const;
-template bool PointMovementGenerator<Player>::DoInitialize(Player*);
-template bool PointMovementGenerator<Creature>::DoInitialize(Creature*);
+template void PointMovementGenerator<Player>::DoInitialize(Player*);
+template void PointMovementGenerator<Creature>::DoInitialize(Creature*);
 template void PointMovementGenerator<Player>::DoFinalize(Player*, bool, bool);
 template void PointMovementGenerator<Creature>::DoFinalize(Creature*, bool, bool);
 template void PointMovementGenerator<Player>::DoDeactivate(Player*);
@@ -173,13 +172,13 @@ MovementGeneratorType AssistanceMovementGenerator::GetMovementGeneratorType() co
     return ASSISTANCE_MOTION_TYPE;
 }
 
-bool AssistanceMovementGenerator::Initialize(Unit* owner)
+void AssistanceMovementGenerator::Initialize(Unit* owner)
 {
     RemoveFlag(MOVEMENTGENERATOR_FLAG_INITIALIZATION_PENDING | MOVEMENTGENERATOR_FLAG_DEACTIVATED);
     AddFlag(MOVEMENTGENERATOR_FLAG_INITIALIZED);
 
     if (owner->HasUnitState(UNIT_STATE_LOST_CONTROL | UNIT_STATE_NOT_MOVE))
-        return false;
+        return;
 
     if (!owner->IsStopped())
         owner->StopMoving();
@@ -189,8 +188,6 @@ bool AssistanceMovementGenerator::Initialize(Unit* owner)
     init.MoveTo(_destination.GetPositionX(), _destination.GetPositionY(), _destination.GetPositionZ());
     init.SetVelocity(owner->GetSpeed(MOVE_RUN) * 0.66);
     init.Launch();
-
-    return true;
 }
 
 void AssistanceMovementGenerator::Finalize(Unit* owner, bool active, bool movementInform)

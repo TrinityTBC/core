@@ -41,18 +41,15 @@ class MovementGenerator
         virtual ~MovementGenerator();
 
         // on top first update
-        virtual bool Initialize(Unit*) = 0;
-        //@premature: generator was stopped before expiration
-        /*virtual void Finalize(Unit*, bool premature) = 0;*/ //can be replaced by Deactivate?
-        // on movement delete
-        virtual void Finalize(Unit*, bool, bool) = 0;
+        virtual void Initialize(Unit*) = 0;
         // on top reassign
         virtual void Reset(Unit*) = 0;
+        // on top on MotionMaster::Update
+        virtual bool Update(Unit*, uint32 time_diff) = 0;
         // on current top if another movement replaces
         virtual void Deactivate(Unit*) = 0;
-
-        virtual bool Update(Unit*, uint32 time_diff) = 0;
-
+        // on movement delete
+        virtual void Finalize(Unit*, bool, bool) = 0;
         virtual MovementGeneratorType GetMovementGeneratorType() const = 0;
 
         virtual void UnitSpeedChanged() { }
@@ -60,7 +57,6 @@ class MovementGenerator
         virtual void Pause(uint32/* timer = 0*/) { } 
         // timer in ms
         virtual void Resume(uint32/* overrideTimer = 0*/) { }
-
         // used by Evade code for select point to evade with expected restart default movement
         virtual bool GetResetPosition(Unit*, float&/* x*/, float&/* y*/, float&/* z*/) { return false; } 
 
@@ -82,9 +78,9 @@ class MovementGeneratorMedium : public MovementGenerator
             MovementGenerator(mode, priority, baseUnitState)
         {}
 
-        bool Initialize(Unit* owner) override
+        void Initialize(Unit* owner) override
         {
-            return (static_cast<D*>(this))->DoInitialize(static_cast<T*>(owner));
+            (static_cast<D*>(this))->DoInitialize(static_cast<T*>(owner));
         }
 
         void Reset(Unit* owner) override

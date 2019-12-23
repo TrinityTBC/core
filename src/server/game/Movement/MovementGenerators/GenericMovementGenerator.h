@@ -15,7 +15,7 @@ class GenericMovementGenerator : public MovementGenerator
     public:
         explicit GenericMovementGenerator(Movement::MoveSplineInit&& splineInit, MovementGeneratorType type, uint32 id);
 
-        bool Initialize(Unit*) override;
+        void Initialize(Unit*) override;
         void Finalize(Unit*, bool active, bool movementInform) override;
         void Reset(Unit*) override;
         bool Update(Unit*, uint32) override;

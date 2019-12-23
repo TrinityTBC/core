@@ -14,10 +14,9 @@ IdleMovementGenerator::IdleMovementGenerator()
  *  TODO: "if (!owner->IsStopped())" is useless, each generator cleans their own STATE_MOVE, the result is that StopMoving is almost never called
  *  Old comment: "StopMoving is needed to make unit stop if its last movement generator expires but it should not be sent otherwise there are many redundent packets"
  */
-bool IdleMovementGenerator::Initialize(Unit* owner)
+void IdleMovementGenerator::Initialize(Unit* owner)
 {
     owner->StopMoving();
-    return true;
 }
 
 void IdleMovementGenerator::Reset(Unit* owner)

@@ -33,7 +33,7 @@ class ChaseMovementGenerator : public MovementGenerator, public AbstractFollower
         explicit ChaseMovementGenerator(Unit* target, Optional<ChaseRange> range = {}, Optional<ChaseAngle> angle = {}, bool run = true); // sun: added run argument, we need a way to chase walk
         ~ChaseMovementGenerator();
 
-        bool Initialize(Unit* owner) override;
+        void Initialize(Unit* owner) override;
         void Reset(Unit* owner) override;
         bool Update(Unit* owner, uint32 diff) override;
         void Deactivate(Unit*) override;

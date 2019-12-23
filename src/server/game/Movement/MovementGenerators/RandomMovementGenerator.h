@@ -11,7 +11,7 @@ class RandomMovementGenerator : public MovementGeneratorMedium< T, RandomMovemen
         RandomMovementGenerator(float spawn_dist = 0.0f);
 
         void SetRandomLocation(T*);
-        bool DoInitialize(T*);
+        void DoInitialize(T*);
         void DoFinalize(T*, bool, bool);
         void DoReset(T*);
         void DoDeactivate(T*);

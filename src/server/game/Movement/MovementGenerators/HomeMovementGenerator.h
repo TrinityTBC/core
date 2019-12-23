@@ -10,7 +10,7 @@ class HomeMovementGenerator : public MovementGeneratorMedium< T, HomeMovementGen
     public:
         explicit HomeMovementGenerator();
 
-        bool DoInitialize(T*);
+        void DoInitialize(T*);
         void DoReset(T*);
         bool DoUpdate(T*, const uint32);
         void DoDeactivate(T*);

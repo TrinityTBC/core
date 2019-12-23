@@ -8,7 +8,7 @@ class TC_GAME_API DistractMovementGenerator : public MovementGenerator
     public:
         explicit DistractMovementGenerator(Unit const* owner, float targetOrientation, uint32 timer);
 
-        bool Initialize(Unit*) override;
+        void Initialize(Unit*) override;
         void Finalize(Unit*, bool, bool) override;
         void Deactivate(Unit*) override;
         void Reset(Unit*) override;

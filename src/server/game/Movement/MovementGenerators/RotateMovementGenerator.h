@@ -10,7 +10,7 @@ class RotateMovementGenerator : public MovementGenerator
     public:
         explicit RotateMovementGenerator(uint32 id, uint32 time, RotateDirection direction);
 
-        bool Initialize(Unit*) override;
+        void Initialize(Unit*) override;
         void Finalize(Unit*, bool, bool) override;
         void Deactivate(Unit*) override;
         void Reset(Unit*) override;

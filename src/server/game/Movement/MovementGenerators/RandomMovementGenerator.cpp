@@ -81,13 +81,13 @@ void RandomMovementGenerator<Creature>::SetRandomLocation(Creature* owner)
 }
 
 template<>
-bool RandomMovementGenerator<Creature>::DoInitialize(Creature* owner)
+void RandomMovementGenerator<Creature>::DoInitialize(Creature* owner)
 {
     RemoveFlag(MOVEMENTGENERATOR_FLAG_INITIALIZATION_PENDING | MOVEMENTGENERATOR_FLAG_DEACTIVATED | MOVEMENTGENERATOR_FLAG_TRANSITORY);
     AddFlag(MOVEMENTGENERATOR_FLAG_INITIALIZED);
 
     if (!owner || !owner->IsAlive())
-        return false;
+        return;
 
     _reference = owner->GetPosition();
 
@@ -96,7 +96,6 @@ bool RandomMovementGenerator<Creature>::DoInitialize(Creature* owner)
 
     _timer.Reset(0);
     _path = nullptr;
-    return true;
 }
 
 template<class T>

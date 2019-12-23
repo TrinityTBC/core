@@ -61,13 +61,12 @@ void HomeMovementGenerator<Creature>::SetTargetLocation(Creature* owner)
 }
 
 template<>
-bool HomeMovementGenerator<Creature>::DoInitialize(Creature* owner)
+void HomeMovementGenerator<Creature>::DoInitialize(Creature* owner)
 {
     RemoveFlag(MOVEMENTGENERATOR_FLAG_INITIALIZATION_PENDING | MOVEMENTGENERATOR_FLAG_DEACTIVATED);
     AddFlag(MOVEMENTGENERATOR_FLAG_INITIALIZED);
 
     SetTargetLocation(owner);
-    return true;
 }
 
 template<>

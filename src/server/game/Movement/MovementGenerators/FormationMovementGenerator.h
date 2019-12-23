@@ -30,7 +30,7 @@ class FormationMovementGenerator : public MovementGeneratorMedium<Creature, Form
 
         MovementGeneratorType GetMovementGeneratorType() const override;
 
-        bool DoInitialize(Creature*);
+        void DoInitialize(Creature*);
         void DoReset(Creature*);
         bool DoUpdate(Creature*, uint32);
         void DoDeactivate(Creature*);

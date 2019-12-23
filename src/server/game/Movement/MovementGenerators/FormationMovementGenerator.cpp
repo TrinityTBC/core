@@ -179,7 +179,7 @@ void FormationMovementGenerator::MoveToDest(Creature* owner)
     owner->SetHomePosition(POSITION_GET_X_Y_Z(&dest), 0.0f);
 }
 
-bool FormationMovementGenerator::DoInitialize(Creature* owner)
+void FormationMovementGenerator::DoInitialize(Creature* owner)
 {
     _previousHome = owner->GetHomePosition();
     RemoveFlag(MOVEMENTGENERATOR_FLAG_INITIALIZATION_PENDING | MOVEMENTGENERATOR_FLAG_TRANSITORY | MOVEMENTGENERATOR_FLAG_DEACTIVATED);
@@ -189,11 +189,10 @@ bool FormationMovementGenerator::DoInitialize(Creature* owner)
     {
         AddFlag(MOVEMENTGENERATOR_FLAG_INTERRUPTED);
         owner->StopMoving();
-        return true;
+        return;
     }
 
     MoveToStart(owner);
-    return true;
 }
 
 void FormationMovementGenerator::DoReset(Creature* owner)

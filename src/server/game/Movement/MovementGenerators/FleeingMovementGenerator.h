@@ -11,7 +11,7 @@ class TC_GAME_API FleeingMovementGenerator : public MovementGeneratorMedium< T, 
     public:
         explicit FleeingMovementGenerator(ObjectGuid fleeTargetGUID);
 
-        bool DoInitialize(T*);
+        void DoInitialize(T*);
         void DoReset(T*);
         bool DoUpdate(T*, uint32);
         void DoDeactivate(T*);

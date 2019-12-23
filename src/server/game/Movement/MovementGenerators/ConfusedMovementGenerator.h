@@ -13,7 +13,7 @@ class ConfusedMovementGenerator : public MovementGeneratorMedium<T, ConfusedMove
     public:
         explicit ConfusedMovementGenerator();
 
-        bool DoInitialize(T*);
+        void DoInitialize(T*);
         void DoReset(T*);
         bool DoUpdate(T*, uint32);
         void DoDeactivate(T*);

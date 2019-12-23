@@ -99,7 +99,7 @@ class TC_GAME_API WaypointMovementGenerator<Creature> : public MovementGenerator
         void Resume(uint32 overrideTimer = 0) override;
         bool GetResetPosition(Unit*, float& x, float& y, float& z) override;
 
-        bool DoInitialize(Creature*);
+        void DoInitialize(Creature*);
         void DoFinalize(Creature* owner, bool active, bool movementInform);
         void DoReset(Creature*);
         bool DoUpdate(Creature*, uint32 diff);

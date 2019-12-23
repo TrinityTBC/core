@@ -9,7 +9,7 @@ class TC_GAME_API IdleMovementGenerator : public MovementGenerator
     public:
         explicit IdleMovementGenerator();
 
-        bool Initialize(Unit*) override;
+        void Initialize(Unit*) override;
         void Reset(Unit*) override;
         bool Update(Unit*, uint32) override { return true; }
         void Deactivate(Unit*) override;

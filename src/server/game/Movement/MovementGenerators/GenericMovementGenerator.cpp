@@ -10,20 +10,19 @@ GenericMovementGenerator::GenericMovementGenerator(Movement::MoveSplineInit&& sp
     _splineInit(std::move(splineInit)), _type(type), _pointId(id), _duration(0) 
 { }
 
-bool GenericMovementGenerator::Initialize(Unit* /*owner*/)
+void GenericMovementGenerator::Initialize(Unit* /*owner*/)
 {
     if (HasFlag(MOVEMENTGENERATOR_FLAG_DEACTIVATED) && !HasFlag(MOVEMENTGENERATOR_FLAG_INITIALIZATION_PENDING)) // Resume spline is not supported
     {
         RemoveFlag(MOVEMENTGENERATOR_FLAG_DEACTIVATED);
         AddFlag(MOVEMENTGENERATOR_FLAG_FINALIZED);
-        return true;
+        return;
     }
 
     RemoveFlag(MOVEMENTGENERATOR_FLAG_INITIALIZATION_PENDING | MOVEMENTGENERATOR_FLAG_DEACTIVATED);
     AddFlag(MOVEMENTGENERATOR_FLAG_INITIALIZED);
 
     _duration.Reset(_splineInit.Launch());
-    return true;
 }
 
 void GenericMovementGenerator::Reset(Unit* owner)

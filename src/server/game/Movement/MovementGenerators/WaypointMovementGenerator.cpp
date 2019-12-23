@@ -151,23 +151,22 @@ bool WaypointMovementGenerator<Creature>::LoadPath(Creature* creature)
     return true;
 }
 
-bool WaypointMovementGenerator<Creature>::DoInitialize(Creature* creature)
+void WaypointMovementGenerator<Creature>::DoInitialize(Creature* creature)
 {
     RemoveFlag(MOVEMENTGENERATOR_FLAG_INITIALIZATION_PENDING | MOVEMENTGENERATOR_FLAG_DEACTIVATED | MOVEMENTGENERATOR_FLAG_TRANSITORY);
 
     if (!creature->IsAlive())
-        return false;
+        return;
 
     bool result = LoadPath(creature);
     if (result == false)
     {
         TC_LOG_ERROR("misc","WaypointMovementGenerator failed to init for creature %u (entry %u)", creature->GetSpawnId(), creature->GetEntry());
-        return false;
+        return;
     }
 
     _originalHome = creature->GetHomePosition();
     TC_LOG_TRACE("misc", "Creature %u  WaypointMovementGenerator<Creature>::DoInitialize", creature->GetEntry());
-    return true;
 }
 
 void WaypointMovementGenerator<Creature>::DoFinalize(Creature* owner, bool active, bool/* movementInform*/)

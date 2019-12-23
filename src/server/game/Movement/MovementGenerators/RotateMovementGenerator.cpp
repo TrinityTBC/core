@@ -8,7 +8,7 @@ RotateMovementGenerator::RotateMovementGenerator(uint32 id, uint32 time, RotateD
     _id(id), _duration(time), _maxDuration(time), _direction(direction)
 { }
 
-bool RotateMovementGenerator::Initialize(Unit* owner)
+void RotateMovementGenerator::Initialize(Unit* owner)
 {
     RemoveFlag(MOVEMENTGENERATOR_FLAG_INITIALIZATION_PENDING | MOVEMENTGENERATOR_FLAG_DEACTIVATED);
     AddFlag(MOVEMENTGENERATOR_FLAG_INITIALIZED);
@@ -20,7 +20,6 @@ bool RotateMovementGenerator::Initialize(Unit* owner)
         owner->SetInFront(owner->GetVictim());
 
     owner->AttackStop();
-    return true;
 }
 
 void RotateMovementGenerator::Reset(Unit* owner)

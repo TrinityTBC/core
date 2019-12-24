@@ -7644,9 +7644,10 @@ void Unit::UpdateSpeed(UnitMoveType mtype)
             return;
     }
 
-    float bonus = non_stack_bonus > stack_bonus ? non_stack_bonus : stack_bonus;
     // now we ready for speed calculation
-    float speed  = main_speed_mod ? bonus*(100.0f + main_speed_mod)/100.0f : bonus;
+    float speed = std::max(non_stack_bonus, stack_bonus);
+    if (main_speed_mod)
+        AddPct(speed, main_speed_mod);
 
     switch(mtype)
     {
@@ -7654,6 +7655,10 @@ void Unit::UpdateSpeed(UnitMoveType mtype)
         case MOVE_SWIM:
         case MOVE_FLIGHT:
         {
+            // Set creature speed rate
+            if (GetTypeId() == TYPEID_UNIT)
+                speed *= ToCreature()->GetCreatureTemplate()->speed_run;    // at this point, MOVE_WALK is never reached
+
             // Normalize speed by 191 aura SPELL_AURA_USE_NORMAL_MOVEMENT_SPEED if need
             // TODO: possible affect only on MOVE_RUN
             if(int32 normalization = GetMaxPositiveAuraModifier(SPELL_AURA_USE_NORMAL_MOVEMENT_SPEED))

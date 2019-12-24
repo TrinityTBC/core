@@ -9,7 +9,7 @@ template<class T>
 class TC_GAME_API FleeingMovementGenerator : public MovementGeneratorMedium< T, FleeingMovementGenerator<T> >
 {
     public:
-        explicit FleeingMovementGenerator(ObjectGuid fleeTargetGUID);
+        explicit FleeingMovementGenerator(ObjectGuid fleeTargetGUID, bool reduceSpeed = true);
 
         void DoInitialize(T*);
         void DoReset(T*);
@@ -26,6 +26,7 @@ class TC_GAME_API FleeingMovementGenerator : public MovementGeneratorMedium< T, 
 
         ObjectGuid _fleeTargetGUID;
         TimeTracker i_nextCheckTime;
+        bool _reduceSpeed;
         std::unique_ptr<PathGenerator> _path;
 };
 

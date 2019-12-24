@@ -10308,7 +10308,7 @@ void Unit::SetFeared(bool apply)
         if (!caster)
             caster = GetAttackerForHelper();
 
-       GetMotionMaster()->MoveFleeing(caster, fearAuras.empty() ? sWorld->getConfig(CONFIG_CREATURE_FAMILY_FLEE_DELAY) : 0);             // caster == NULL processed in MoveFleeing
+       GetMotionMaster()->MoveFleeing(caster, fearAuras.empty() ? sWorld->getConfig(CONFIG_CREATURE_FAMILY_FLEE_DELAY) : 0, false);             // caster == NULL processed in MoveFleeing
     }
     else
     {

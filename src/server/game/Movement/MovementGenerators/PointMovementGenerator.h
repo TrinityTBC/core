@@ -25,7 +25,7 @@ class PointMovementGenerator : public MovementGeneratorMedium<T, PointMovementGe
 
         void GetDestination(float& x, float& y, float& z) const { x = _x; y = _y; z = _z; }
 
-    protected:
+    private:
         uint32 _movementId;
         float _x, _y, _z;
         float _speed;
@@ -40,10 +40,9 @@ class PointMovementGenerator : public MovementGeneratorMedium<T, PointMovementGe
 class AssistanceMovementGenerator : public PointMovementGenerator<Creature>
 {
     public:
-        explicit AssistanceMovementGenerator(uint32 id, float _x, float _y, float _z) :
-            PointMovementGenerator<Creature>(id, _x, _y, _z, true, 0.0f) { }
+        explicit AssistanceMovementGenerator(uint32 id, float _x, float _y, float _z, float speed) :
+            PointMovementGenerator<Creature>(id, _x, _y, _z, true, speed) { }
 
-        void Initialize(Unit* owner) override;
         void Finalize(Unit*, bool, bool) override;
 
         MovementGeneratorType GetMovementGeneratorType() const override;

@@ -829,7 +829,7 @@ void MotionMaster::MoveSeekAssistance(float x, float y, float z)
         _owner->AttackStop();
         _owner->CastStop();
         _owner->ToCreature()->SetReactState(REACT_PASSIVE);
-        Add(new AssistanceMovementGenerator(EVENT_ASSIST_MOVE, x, y, z));
+        Add(new AssistanceMovementGenerator(EVENT_ASSIST_MOVE, x, y, z, _owner->GetSpeed(MOVE_RUN) * 0.66f));
     } 
     else
     {

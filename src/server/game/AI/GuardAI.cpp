@@ -78,8 +78,9 @@ void GuardAI::UpdateAI(uint32 /*diff*/)
 
 void GuardAI::JustDied(Unit *killer)
 {
-    if(Player* pkiller = killer->GetCharmerOrOwnerPlayerOrPlayerItself())
-        i_creature.SendZoneUnderAttackMessage(pkiller);
+    if (killer)
+        if (Player* player = killer->GetCharmerOrOwnerPlayerOrPlayerItself())
+            i_creature.SendZoneUnderAttackMessage(player);
 }
 
 
@@ -115,11 +116,12 @@ void guardAI::JustEngagedWith(Unit *who)
         DoCastSpell(who, spell);
 }
 
-void guardAI::JustDied(Unit *Killer)
+void guardAI::JustDied(Unit *killer)
 {
     //Send Zone Under Attack message to the LocalDefense and WorldDefense Channels
-    if (Player* pKiller = Killer->GetCharmerOrOwnerPlayerOrPlayerItself())
-        me->SendZoneUnderAttackMessage(pKiller);
+    if (killer)
+        if (Player* player = killer->GetCharmerOrOwnerPlayerOrPlayerItself())
+            me->SendZoneUnderAttackMessage(player);
 }
 
 void guardAI::UpdateAI(uint32 diff)

@@ -763,6 +763,10 @@ void MotionMaster::MoveFall(uint32 id /*=0*/)
     if (fabs(_owner->GetPositionZ() - tz) < 0.1f)
         return;
 
+    // rooted units don't move (also setting falling+root flag causes client freezes)
+    if (_owner->HasUnitState(UNIT_STATE_ROOT | UNIT_STATE_STUNNED))
+        return;
+
     _owner->AddUnitMovementFlag(MOVEMENTFLAG_JUMPING_OR_FALLING);
     _owner->SetFallTime(0);
 

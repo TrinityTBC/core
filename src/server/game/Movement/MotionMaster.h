@@ -141,7 +141,7 @@ class TC_GAME_API MotionMaster
         inline void MoveChase(Unit* target, float dist, float angle) { MoveChase(target, Optional<ChaseRange>(dist), Optional<ChaseAngle>(angle)); }
         inline void MoveChase(Unit* target, float dist) { MoveChase(target, dist ? Optional<ChaseRange>(dist) : Optional<ChaseRange>()); }
         void MoveConfused();
-        void MoveFleeing(Unit* enemy, uint32 time = 0, bool reduceSpeed = true);
+        void MoveFleeing(Unit* enemy, uint32 time, bool reducedSpeed);
         void MovePoint(uint32 id, Position const& pos, bool generatePath = true, Optional<float> finalOrient = {}, bool forceDestination = true);
         void MovePoint(uint32 id, float x, float y, float z, bool generatePath = true, Optional<float> finalOrient = {}, bool forceDestination = true);
         /*  Makes the unit move toward the target until it is at a certain distance from it. The unit then stops.

@@ -1307,7 +1307,7 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
             for (WorldObject* target : targets)
             {
                 if (IsCreature(target))
-                    target->ToCreature()->GetMotionMaster()->MoveFleeing(me, e.action.flee.fleeTime);
+                    target->ToCreature()->GetMotionMaster()->MoveFleeing(me, e.action.flee.fleeTime, true);
             }
 
             break;

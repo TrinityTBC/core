@@ -14,7 +14,7 @@
 #define MAX_QUIET_DISTANCE 43.0f
 
 template<class T>
-FleeingMovementGenerator<T>::FleeingMovementGenerator(ObjectGuid fleeTargetGUID, bool reduceSpeed/* = false*/) : _fleeTargetGUID(fleeTargetGUID), i_nextCheckTime(0), _reduceSpeed(reduceSpeed)
+FleeingMovementGenerator<T>::FleeingMovementGenerator(ObjectGuid fleeTargetGUID, bool reducedSpeed/* = false*/) : _fleeTargetGUID(fleeTargetGUID), i_nextCheckTime(0), _reducedSpeed(reducedSpeed)
 {
     this->Mode = MOTION_MODE_DEFAULT;
     this->Priority = MOTION_PRIORITY_HIGHEST;
@@ -70,7 +70,7 @@ void FleeingMovementGenerator<T>::SetTargetLocation(T* owner)
     Movement::MoveSplineInit init(owner);
     init.MovebyPath(_path->GetPath(), 0, ownerTransport);
     init.SetWalk(false);
-    if (_reduceSpeed)
+    if (_reducedSpeed)
         init.SetVelocity(owner->GetSpeed(MOVE_RUN) * 0.66f);
     int32 traveltime = init.Launch();
     i_nextCheckTime.Reset(traveltime + urand(800, 1500));

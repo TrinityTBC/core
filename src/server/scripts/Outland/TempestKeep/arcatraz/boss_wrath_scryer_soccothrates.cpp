@@ -138,7 +138,7 @@ class boss_wrath_scryer_soccothrates : public CreatureScript
                 }
             }
 
-            void SetData(uint32 /*type*/, uint32 data, Unit* setter = nullptr) override
+            void SetData(uint32 /*type*/, uint32 data) override
             {
                 switch (data)
                 {

@@ -127,7 +127,7 @@ class TC_GAME_API UnitAI
         // Pass parameters between AI
         virtual void DoAction(const int32 param) {}
         virtual uint32 GetData(uint32 /*id = 0*/) const { return 0; }
-        virtual void SetData(uint32 /*id*/, uint32 /*value*/, Unit* setter = nullptr) {}
+        virtual void SetData(uint32 /*id*/, uint32 /*value*/) {}
         virtual void SetGUID(ObjectGuid const& /*guid*/, int32 /*id*/ = 0) { }
         virtual ObjectGuid GetGUID(int32 /*id*/ = 0) const { return ObjectGuid::Empty; }
 

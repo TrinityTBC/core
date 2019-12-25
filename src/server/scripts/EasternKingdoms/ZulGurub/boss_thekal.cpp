@@ -160,7 +160,7 @@ class boss_thekal : public CreatureScript
                 events.ScheduleEvent(EVENT_SILENCE, 9s, 0, PHASE_ONE);
             }
 
-            void SetData(uint32 type, uint32 data, Unit* setter = nullptr) override
+            void SetData(uint32 type, uint32 data) override
             {
                 if (type == DATA_FAKE_DEATH)
                 {

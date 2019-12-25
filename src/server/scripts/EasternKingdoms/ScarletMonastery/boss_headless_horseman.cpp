@@ -174,7 +174,7 @@ struct npc_wisp_invis : public ScriptedAI
         creature->SetDisplayId(DISPLAYID_INVIS_WISP_INVISIBLE);
     }
 
-    void SetData(uint32 type, uint32 value, Unit* setter = nullptr) override
+    void SetData(uint32 type, uint32 value) override
     {
         if (type != DATA_INVIS_WISP_CREATURE_TYPE)
             return;
@@ -267,7 +267,7 @@ struct npc_head : public ScriptedAI
         me->GetMotionMaster()->MoveIdle();
     }
 
-    void SetData(uint32 type, uint32 value, Unit* setter = nullptr) override
+    void SetData(uint32 type, uint32 value) override
     {
         switch (type)
         {

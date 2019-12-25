@@ -419,7 +419,7 @@ class npc_omrogg_heads : public CreatureScript
 
             void JustEngagedWith(Unit* /*who*/) override { }
 
-            void SetData(uint32 data, uint32 value, Unit* setter = nullptr) override
+            void SetData(uint32 data, uint32 value) override
             {
                 if (data == SETDATA_DATA && value == SETDATA_YELL)
                 {

@@ -120,7 +120,7 @@ class boss_shattered_executioner : public CreatureScript
                 }
             }
 
-            void SetData(uint32 type, uint32 data, Unit* setter = nullptr) override
+            void SetData(uint32 type, uint32 data) override
             {
                 if (type == DATA_PRISONERS_EXECUTED && data <= 3)
                 {

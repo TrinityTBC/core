@@ -94,7 +94,7 @@ struct boss_the_beast : public BossAI
                     DoCastAOE(SPELL_FINKLE_IS_EINHORN, true);
     }
 
-    void SetData(uint32 type, uint32 /*data*/, Unit* setter = nullptr) override
+    void SetData(uint32 type, uint32 /*data*/) override
     {
         switch (type)
         {

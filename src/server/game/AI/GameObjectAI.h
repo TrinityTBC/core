@@ -47,7 +47,7 @@ class TC_GAME_API GameObjectAI
         virtual Optional<QuestGiverStatus> GetDialogStatus(Player* /*player*/) { return boost::none; }
 
         virtual void Destroyed(Player* player, uint32 eventId) { }
-        virtual void SetData(uint32 id, uint32 value, Unit* setter = nullptr) { }
+        virtual void SetData(uint32 id, uint32 value) { }
         virtual void GetData(uint32 id) const { }
         virtual void EventInform(uint32 /*eventId*/) { }
 

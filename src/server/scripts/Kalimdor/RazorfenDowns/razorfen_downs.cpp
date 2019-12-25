@@ -273,7 +273,7 @@ public:
 
         void Reset() override { }
 
-        void SetData(uint32 /*type*/, uint32 data, Unit* setter = nullptr) override
+        void SetData(uint32 /*type*/, uint32 data) override
         {
             if (data < 7)
             {

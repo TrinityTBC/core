@@ -203,7 +203,7 @@ public:
                 victor->AI()->SetData(1, 2);
         }
 
-        void SetData(uint32 type, uint32 data, Unit* setter = nullptr) override
+        void SetData(uint32 type, uint32 data) override
         {
             if (type == AREATRIGGER && data == AREATRIGGER_BLACKROCK_STADIUM)
             {

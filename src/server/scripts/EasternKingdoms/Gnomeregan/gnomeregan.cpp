@@ -263,7 +263,7 @@ public:
             }
         }
 
-        void SetData(uint32 uiI, uint32 uiValue, Unit* setter = nullptr) override
+        void SetData(uint32 uiI, uint32 uiValue) override
         {
             switch (uiI)
             {

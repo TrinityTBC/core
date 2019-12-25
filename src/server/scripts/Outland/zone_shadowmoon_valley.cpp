@@ -84,7 +84,7 @@ public:
             events.ScheduleEvent(EVENT_CAST_SUMMON_INFERNAL, 1s, 3s);
         }
 
-        void SetData(uint32 id, uint32 data, Unit* setter = nullptr) override
+        void SetData(uint32 id, uint32 data) override
         {
             if (id == TYPE_INFERNAL && data == DATA_DIED)
                 SummonInfernal();
@@ -1646,7 +1646,7 @@ public:
     {
         npc_shadowmoon_tuber_nodeAI(Creature* creature) : ScriptedAI(creature) { }
 
-        void SetData(uint32 id, uint32 data, Unit* setter = nullptr) override
+        void SetData(uint32 id, uint32 data) override
         {
             if (id == TYPE_BOAR && data == DATA_BOAR)
             {

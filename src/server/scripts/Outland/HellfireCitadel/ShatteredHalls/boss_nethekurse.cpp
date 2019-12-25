@@ -122,7 +122,7 @@ class boss_grand_warlock_nethekurse : public CreatureScript
                 Talk(SAY_DIE);
             }
 
-            void SetData(uint32 data, uint32 value, Unit* setter = nullptr) override
+            void SetData(uint32 data, uint32 value) override
             {
                 if (data != SETDATA_DATA)
                     return;

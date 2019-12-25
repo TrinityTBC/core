@@ -1063,7 +1063,7 @@ struct npc_watch_commander_leonus : public ScriptedAI
         _events.ScheduleEvent(EVENT_START, 2min, 10min);
     }
 
-    void SetData(uint32 /*type*/, uint32 data, Unit* setter) override
+    void SetData(uint32 /*type*/, uint32 data) override
     {
         switch (data)
         {
@@ -1146,7 +1146,7 @@ struct npc_infernal_rain_hellfire : public ScriptedAI
 {
     npc_infernal_rain_hellfire(Creature* creature) : ScriptedAI(creature) { }
 
-    void SetData(uint32 /*type*/, uint32 data, Unit* setter) override
+    void SetData(uint32 /*type*/, uint32 data) override
     {
         switch (data)
         {
@@ -1213,7 +1213,7 @@ struct npc_fear_controller : public ScriptedAI
 {
     npc_fear_controller(Creature* creature) : ScriptedAI(creature) { }
 
-    void SetData(uint32 /*type*/, uint32 data, Unit* setter) override
+    void SetData(uint32 /*type*/, uint32 data) override
     {
         if (data == DATA_ACTIVE)
         {

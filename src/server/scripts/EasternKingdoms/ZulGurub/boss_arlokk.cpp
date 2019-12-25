@@ -168,7 +168,7 @@ class boss_arlokk : public CreatureScript
                 me->DespawnOrUnsummon(4000);
             }
 
-            void SetData(uint32 id, uint32 /*value*/, Unit* setter = nullptr) override
+            void SetData(uint32 id, uint32 /*value*/) override
             {
                 if (id == 1)
                     --_summonCountA;

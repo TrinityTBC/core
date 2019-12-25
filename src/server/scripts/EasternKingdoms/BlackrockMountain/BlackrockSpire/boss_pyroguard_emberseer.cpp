@@ -99,7 +99,7 @@ public:
                 OpenDoors(false); // Opens 2 entrance doors
         }
 
-        void SetData(uint32 /*type*/, uint32 data, Unit* setter = nullptr) override
+        void SetData(uint32 /*type*/, uint32 data) override
         {
             switch (data)
             {
@@ -355,7 +355,7 @@ public:
             me->DespawnOrUnsummon(10000);
         }
 
-        void SetData(uint32 data, uint32 value, Unit* setter = nullptr) override
+        void SetData(uint32 data, uint32 value) override
         {
             if (data == 1 && value == 1)
             {

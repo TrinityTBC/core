@@ -205,7 +205,7 @@ struct boss_felblood_kaelthas : public BossAI
             damage = me->GetHealth() - 1;
     }
 
-    void SetData(uint32 type, uint32 /*data*/, Unit* setter = nullptr) override
+    void SetData(uint32 type, uint32 /*data*/) override
     {
         if (type == DATA_KAELTHAS_INTRO)
         {

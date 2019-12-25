@@ -531,7 +531,7 @@ class npc_simon_bunny : public CreatureScript
             }
 
             // Called by color clusters script (go_simon_cluster) and used for knowing the button pressed by player
-            void SetData(uint32 type, uint32 /*data*/, Unit* setter) override
+            void SetData(uint32 type, uint32 /*data*/) override
             {
                 if (!listening)
                     return;

@@ -103,7 +103,7 @@ struct boss_blackheart_the_inciter : public BossAI
     }
 
     uint8 charmCount = 0;
-    void SetData(uint32 /*index*/, uint32 data, Unit* setter = nullptr) override
+    void SetData(uint32 /*index*/, uint32 data) override
     {
         if (data)
             ++charmCount;

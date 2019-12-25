@@ -14,7 +14,9 @@ if( WIN32 )
   endif()
 endif()
 
-set(PRIVATE_PCH_HEADER PrecompiledHeaders/authPCH.h)
+if (USE_COREPCH)
+  set(PRIVATE_PCH_HEADER PrecompiledHeaders/authPCH.h)
+endif()
 
 GroupSources(${CMAKE_CURRENT_SOURCE_DIR})
 
@@ -84,4 +86,6 @@ elseif( WIN32 )
 endif()
 
 # Generate precompiled header
-add_cxx_pch(authserver ${PRIVATE_PCH_HEADER})
+if (USE_COREPCH)
+  add_cxx_pch(authserver ${PRIVATE_PCH_HEADER})
+endif()

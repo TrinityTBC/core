@@ -5,8 +5,9 @@ CollectSourceFiles(
   ${CMAKE_CURRENT_SOURCE_DIR}/PrecompiledHeaders
 )
 
-set(PRIVATE_PCH_HEADER PrecompiledHeaders/sharedPCH.h)
-
+if (USE_COREPCH)
+  set(PRIVATE_PCH_HEADER PrecompiledHeaders/sharedPCH.h)
+endif()
 
 GroupSources(${CMAKE_CURRENT_SOURCE_DIR})
 
@@ -53,8 +54,9 @@ if( BUILD_SHARED_LIBS )
 endif()
 
 # Generate precompiled header
-add_cxx_pch(shared ${PRIVATE_PCH_HEADER})
-
+if (USE_COREPCH)
+  add_cxx_pch(shared ${PRIVATE_PCH_HEADER})
+endif ()
 
 if(WIN32 AND MSVC)
     add_definitions(/openmp)

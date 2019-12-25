@@ -39,7 +39,7 @@ install:
   - mysql -uroot -e 'create database test_mysql'
   - mkdir bin logs data
   - cd bin
-  - cmake ../ -DPLAYERBOT=1 -DTOOLS=1 -DSCRIPTS=dynamic -DTESTS=1 -DCMAKE_BUILD_TYPE=Debug -DDO_DEBUG=1 -DCMAKE_INSTALL_PREFIX=check_install
+  - cmake ../ -DPLAYERBOT=1 -DTOOLS=1 -DSCRIPTS=dynamic -DTESTS=1 -DCMAKE_BUILD_TYPE=Debug -DWITH_COREDEBUG=1 -DCMAKE_INSTALL_PREFIX=check_install
   - cd ..
 
 script:

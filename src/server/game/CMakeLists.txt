@@ -15,7 +15,9 @@ CollectSourceFiles(
   ${EXCLUDE_TESTS}
 )
 
-set(PRIVATE_PCH_HEADER PrecompiledHeaders/gamePCH.h)
+if (USE_COREPCH)
+  set(PRIVATE_PCH_HEADER PrecompiledHeaders/gamePCH.h)
+endif ()
 
 GroupSources(${CMAKE_CURRENT_SOURCE_DIR})
 
@@ -85,7 +87,10 @@ if( BUILD_SHARED_LIBS )
 endif()
 
 # Generate precompiled header
-add_cxx_pch(game ${PRIVATE_PCH_HEADER})
+if (USE_COREPCH)
+  add_cxx_pch(game ${PRIVATE_PCH_HEADER})
+endif ()
+
 
 if(PLAYERBOT)
     if ( UNIX )

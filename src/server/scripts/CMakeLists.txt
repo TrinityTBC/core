@@ -82,8 +82,10 @@ foreach(GRAPH_KEY ${GRAPH_KEYS})
   message("    |")
 endforeach()
 
-
-set(PRIVATE_PCH_HEADER ScriptPCH.h)
+# Base sources which are used by every script project
+if (USE_SCRIPTPCH)
+  set(PRIVATE_PCH_HEADER ScriptPCH.h)
+endif ()
 
 GroupSources(${CMAKE_CURRENT_SOURCE_DIR})
 
@@ -219,8 +221,10 @@ set_target_properties(scripts
       "scripts")
 	  
 # Generate precompiled header
-list(APPEND ALL_SCRIPT_PROJECTS scripts ${DYNAMIC_SCRIPT_MODULE_PROJECTS})
-add_cxx_pch("${ALL_SCRIPT_PROJECTS}" ${PRIVATE_PCH_HEADER})
+if (USE_SCRIPTPCH)
+  list(APPEND ALL_SCRIPT_PROJECTS scripts ${DYNAMIC_SCRIPT_MODULE_PROJECTS})
+  add_cxx_pch("${ALL_SCRIPT_PROJECTS}" ${PRIVATE_PCH_HEADER})
+endif()
 
 # Remove all shared libraries in the installl directory which
 # are contained in the static library already.

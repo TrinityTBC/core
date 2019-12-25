@@ -5,7 +5,7 @@ target_compile_definitions(trinity-compile-option-interface
    INTERFACE
      -D_BUILD_DIRECTIVE="${CMAKE_BUILD_TYPE}")
 
-if(DO_WARN)
+if(WITH_WARNINGS)
   target_compile_options(trinity-warning-interface
     INTERFACE
         -W
@@ -19,7 +19,7 @@ if(DO_WARN)
   message(STATUS "Clang: All warnings enabled")
 endif()
 
-if(DO_DEBUG)
+if(WITH_COREDEBUG)
   target_compile_options(trinity-compile-option-interface
     INTERFACE
         -g3)

@@ -11,8 +11,9 @@ if( WIN32 )
   endif()
 endif()
 
-#set(PRIVATE_PCH_HEADER PrecompiledHeaders/worldPCH.h)
-
+if (USE_COREPCH)
+  set(PRIVATE_PCH_HEADER PrecompiledHeaders/worldPCH.h)
+endif()
 
 GroupSources(${CMAKE_CURRENT_SOURCE_DIR})
 
@@ -33,14 +34,6 @@ endif()
 
 set_target_properties(worldserver PROPERTIES LINK_FLAGS "${worldserver_LINK_FLAGS}")
 
-if (UNIX)
-    #todo: is gomp still used ?
-    set(UNIX_LIBS gomp)
-endif()
-
-#todo3: This fixes some linking problem, but is it still necessary ?
-set_target_properties(game scripts PROPERTIES LINK_INTERFACE_MULTIPLICITY 5)
-
 target_link_libraries(worldserver
   PRIVATE
     trinity-core-interface
@@ -49,7 +42,6 @@ target_link_libraries(worldserver
     game
     gsoap
     readline
-    ${UNIX_LIBS}
 )
 
 CollectIncludeDirectories(
@@ -63,8 +55,6 @@ target_include_directories(worldserver
     ${PUBLIC_INCLUDES}
   PRIVATE
     ${CMAKE_CURRENT_BINARY_DIR})
-
-link_directories(${LIBSDIR})
 
 set_target_properties(worldserver
     PROPERTIES
@@ -101,4 +91,6 @@ elseif( WIN32 )
 endif()
 
 # Generate precompiled header
-#add_cxx_pch(worldserver ${PRIVATE_PCH_HEADER})
+if( USE_COREPCH )
+  add_cxx_pch(worldserver ${PRIVATE_PCH_HEADER})
+endif()

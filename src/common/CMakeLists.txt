@@ -14,7 +14,9 @@ list(APPEND PRIVATE_SOURCES
   ${CMAKE_CURRENT_SOURCE_DIR}/Debugging/Errors.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Debugging/Errors.h)
 
-set(PRIVATE_PCH_HEADER PrecompiledHeaders/commonPCH.h)
+if (USE_COREPCH)
+  set(PRIVATE_PCH_HEADER PrecompiledHeaders/commonPCH.h)
+endif (USE_COREPCH)
 
 GroupSources(${CMAKE_CURRENT_SOURCE_DIR})
 
@@ -83,4 +85,6 @@ if( BUILD_SHARED_LIBS )
 endif()
 
 # Generate precompiled header
-add_cxx_pch(common ${PRIVATE_PCH_HEADER})
+if (USE_COREPCH)
+  add_cxx_pch(common ${PRIVATE_PCH_HEADER})
+endif ()

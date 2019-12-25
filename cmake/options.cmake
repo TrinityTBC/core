@@ -1,3 +1,5 @@
+option(SERVERS          "Build worldserver and authserver"                            1)
+
 set(SCRIPTS_AVAILABLE_OPTIONS none static dynamic minimal-static minimal-dynamic)
 
 # Log a fatal error when the value of the SCRIPTS variable isn't a valid option.
@@ -21,16 +23,9 @@ foreach(SCRIPT_MODULE ${SCRIPT_MODULE_LIST})
   set_property(CACHE ${SCRIPT_MODULE_VARIABLE} PROPERTY STRINGS default disabled static dynamic)
 endforeach()
 
-option(DO_DEBUG "Debug mode (No optimization and debug symbols)" 0)
-option(DO_WARN "Enable all compilation warnings" 0)
 option(TOOLS "Build map/vmap/mmap extraction/assembler tools" 0)
-option(PLAYERBOT "Include playerbot system" 0)
-option(TESTS "Include tests functionalities" 0)
-if(TESTS AND NOT PLAYERBOT)
-	message("Tests are enabled, playerbot system is needed and will be compiled too")
-	set(PLAYERBOT ON CACHE BOOL "Include playerbot system" FORCE)
-endif(TESTS AND NOT PLAYERBOT)
-
+option(USE_SCRIPTPCH    "Use precompiled headers when compiling scripts"              1)
+option(USE_COREPCH      "Use precompiled headers when compiling servers"              1)
 option(WITH_DYNAMIC_LINKING "Enable dynamic library linking." 0)
 IsDynamicLinkingRequired(WITH_DYNAMIC_LINKING_FORCED)
 if (WITH_DYNAMIC_LINKING AND WITH_DYNAMIC_LINKING_FORCED)
@@ -41,14 +36,24 @@ if (WITH_DYNAMIC_LINKING OR WITH_DYNAMIC_LINKING_FORCED)
 else()
   set(BUILD_SHARED_LIBS OFF)
 endif()
+option(WITH_WARNINGS    "Show all warnings during compile"                            0)
+option(WITH_COREDEBUG   "Include additional debug-code in core"                       0)
+
+option(PLAYERBOT "Include playerbot system" 0)
+option(TESTS "Include tests functionalities" 0)
+if(TESTS AND NOT PLAYERBOT)
+	message("Tests are enabled, playerbot system is needed and will be compiled too")
+	set(PLAYERBOT ON CACHE BOOL "Include playerbot system" FORCE)
+endif(TESTS AND NOT PLAYERBOT)
 
 if(UNIX)
 	#not working on windows atm
 	option(USE_GPERFTOOLS "Include profiling capabilities from gperftools" 0)
 endif()
 option(LICH_KING "NYI Lich King realm" 0)
+
 #more clang options 
-if(DO_DEBUG AND CLANG_COMPILER)
+if(WITH_COREDEBUG AND CLANG_COMPILER)
 option(CLANG_ADDRESS_SANITIZER "Enable clang AddressSanitizer (~2x slowdown)" 0)
 option(CLANG_THREAD_SANITIZER "Enable clang ThreadSanitizer (~5-15x slowdown and 5-10x memory overhead)" 0)
 option(CLANG_MEMORY_SANITIZER "Enable clang MemorySanitizer (~3x slowdown)" 0)

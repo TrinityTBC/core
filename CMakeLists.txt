@@ -37,21 +37,23 @@ include(ConfigureScripts)
 # set default buildoptions and print them
 include(cmake/options.cmake)
 
+# turn off PCH totally if enabled (hidden setting, mainly for devs)
+if( NOPCH )
+  set(USE_COREPCH 0)
+  set(USE_SCRIPTPCH 0)
+endif()
+
 include(ConfigureBaseTargets)
 include(CheckPlatform)
+
 include(GroupSources)
 include(AutoCollect)
-include(PlatformRelatedSettings)
 
 include(FindThreads)
 find_package(MySQL)
 include(FindPCHSupport)
 
 find_package(Git) 
-
-if(DO_DEBUG)
-    add_definitions(-DTRINITY_DEBUG)
-endif(DO_DEBUG)
 
 if(USE_GPERFTOOLS)
     add_definitions(-DUSE_GPERFTOOLS)
@@ -76,7 +78,3 @@ add_subdirectory(dep)
 
 # add core sources
 add_subdirectory(src)
-
-if(DO_DEBUG)
-	message(STATUS "CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
-endif(DO_DEBUG)

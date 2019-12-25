@@ -594,6 +594,10 @@ void Unit::RemoveSpellbyDamageTaken(uint32 damage, uint32 spellId)
 
 uint32 Unit::DealDamage(Unit* attacker, Unit* pVictim, uint32 damage, CleanDamage const* cleanDamage, DamageEffectType damagetype, SpellSchoolMask damageSchoolMask, SpellInfo const* spellProto, bool durabilityLoss)
 {
+    // remove stealth affects from attacker at any non-DoT damage (including 0 damage)
+    if (damagetype != DOT)
+        attacker->RemoveAurasByType(SPELL_AURA_MOD_STEALTH);
+
     if (attacker && pVictim->IsImmunedToDamage(spellProto))
     {
         attacker->SendSpellDamageImmune(pVictim, spellProto->Id);

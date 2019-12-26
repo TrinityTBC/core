@@ -53,7 +53,9 @@ include(FindThreads)
 find_package(MySQL)
 include(FindPCHSupport)
 
-find_package(Git) 
+if(NOT WITHOUT_GIT)
+  find_package(Git)
+endif()
 
 if(USE_GPERFTOOLS)
     add_definitions(-DUSE_GPERFTOOLS)

@@ -1,3 +1,13 @@
+# Copyright (C) 2008-2019 TrinityCore <https://www.trinitycore.org/>
+#
+# This file is free software; as a special exception the author gives
+# unlimited permission to copy and/or distribute it, with or without
+# modifications, as long as this notice is preserved.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
+# implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
 option(SERVERS          "Build worldserver and authserver"                            1)
 
 set(SCRIPTS_AVAILABLE_OPTIONS none static dynamic minimal-static minimal-dynamic)
@@ -12,7 +22,7 @@ if (SCRIPTS)
   endif()
 endif()
 
-set(SCRIPTS "static" CACHE STRING "Build core with scripts (recommanded static for production environnement")
+set(SCRIPTS "static" CACHE STRING "Build core with scripts")
 set_property(CACHE SCRIPTS PROPERTY STRINGS ${SCRIPTS_AVAILABLE_OPTIONS})
 
 # Build a list of all script modules when -DSCRIPT="custom" is selected
@@ -23,10 +33,10 @@ foreach(SCRIPT_MODULE ${SCRIPT_MODULE_LIST})
   set_property(CACHE ${SCRIPT_MODULE_VARIABLE} PROPERTY STRINGS default disabled static dynamic)
 endforeach()
 
-option(TOOLS "Build map/vmap/mmap extraction/assembler tools" 0)
+option(TOOLS            "Build map/vmap/mmap extraction/assembler tools"              1)
 option(USE_SCRIPTPCH    "Use precompiled headers when compiling scripts"              1)
 option(USE_COREPCH      "Use precompiled headers when compiling servers"              1)
-option(WITH_DYNAMIC_LINKING "Enable dynamic library linking." 0)
+option(WITH_DYNAMIC_LINKING "Enable dynamic library linking."                         0)
 IsDynamicLinkingRequired(WITH_DYNAMIC_LINKING_FORCED)
 if (WITH_DYNAMIC_LINKING AND WITH_DYNAMIC_LINKING_FORCED)
   set(WITH_DYNAMIC_LINKING_FORCED OFF)
@@ -38,6 +48,10 @@ else()
 endif()
 option(WITH_WARNINGS    "Show all warnings during compile"                            0)
 option(WITH_COREDEBUG   "Include additional debug-code in core"                       0)
+option(WITH_STRICT_DATABASE_TYPE_CHECKS "Enable strict checking of database field value accessors" 0)
+set(WITH_SOURCE_TREE    "hierarchical" CACHE STRING "Build the source tree for IDE's.")
+set_property(CACHE WITH_SOURCE_TREE PROPERTY STRINGS no flat hierarchical hierarchical-folders)
+option(WITHOUT_GIT      "Disable the GIT testing routines"                            0)
 
 option(PLAYERBOT "Include playerbot system" 0)
 option(TESTS "Include tests functionalities" 0)
@@ -60,6 +74,3 @@ option(CLANG_MEMORY_SANITIZER "Enable clang MemorySanitizer (~3x slowdown)" 0)
 option(CLANG_LEAK_SANITIZER "Enable clang LeakSanitizer (Almost no slowdown). Generate report at the program end" 0)
 option(CLANG_THREAD_SAFETY_ANALYSIS "Enable clang Thread Safety Analysis (compile time only)" 0)
 endif()
-
-set(WITH_SOURCE_TREE    "hierarchical" CACHE STRING "Build the source tree for IDE's.")
-set_property(CACHE WITH_SOURCE_TREE PROPERTY STRINGS no flat hierarchical hierarchical-folders)

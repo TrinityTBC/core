@@ -89,6 +89,13 @@ else()
   message("* Use GIT revision hash  : Yes (default)")
 endif()
 
+if ( ASAN )
+  message("")
+  message(" *** ASAN - WARNING!")
+  message(" *** Please note that this is for DEBUGGING WITH ADDRESS SANITIZER only!")
+  add_definitions(-DASAN)
+endif()
+
 if( WITH_STRICT_DATABASE_TYPE_CHECKS )
   message("")
   message(" *** WITH_STRICT_DATABASE_TYPE_CHECKS - WARNING!")

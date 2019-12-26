@@ -86,6 +86,8 @@ public:
             { "setanimationtier",SEC_GAMEMASTER3, false, &HandleSetAnimationTierCommand,     "" },
             //Dev utilities
             { "spawnbatchobjects",SEC_SUPERADMIN, false, &HandleSpawnBatchObjects,            "" },
+            { "memoryleak",     SEC_SUPERADMIN,   true,  &HandleDebugMemoryLeak,              "" },
+            { "outofbounds",    SEC_SUPERADMIN,   true,  &HandleDebugOutOfBounds,             "" },
         };
         static std::vector<ChatCommand> commandTable =
         {
@@ -1938,6 +1940,22 @@ public:
         if(permanent)
             handler->SendSysMessage("Saved all to DB");
 
+        return true;
+    }
+
+    static bool HandleDebugOutOfBounds(ChatHandler* handler, char const* args)
+    {
+        uint8 stack_array[10] = {};
+        int size = 10;
+
+        handler->PSendSysMessage("Triggered an array out of bounds read at address %p, value %u", stack_array + size, stack_array[size]);
+        return true;
+    }
+
+    static bool HandleDebugMemoryLeak(ChatHandler* handler, char const* args)
+    {
+        uint8* leak = new uint8();
+        handler->PSendSysMessage("Leaked 1 uint8 object at address %p", leak);
         return true;
     }
 };

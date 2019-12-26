@@ -65,12 +65,3 @@ if(UNIX)
 	option(USE_GPERFTOOLS "Include profiling capabilities from gperftools" 0)
 endif()
 option(LICH_KING "NYI Lich King realm" 0)
-
-#more clang options 
-if(WITH_COREDEBUG AND CLANG_COMPILER)
-option(CLANG_ADDRESS_SANITIZER "Enable clang AddressSanitizer (~2x slowdown)" 0)
-option(CLANG_THREAD_SANITIZER "Enable clang ThreadSanitizer (~5-15x slowdown and 5-10x memory overhead)" 0)
-option(CLANG_MEMORY_SANITIZER "Enable clang MemorySanitizer (~3x slowdown)" 0)
-option(CLANG_LEAK_SANITIZER "Enable clang LeakSanitizer (Almost no slowdown). Generate report at the program end" 0)
-option(CLANG_THREAD_SAFETY_ANALYSIS "Enable clang Thread Safety Analysis (compile time only)" 0)
-endif()

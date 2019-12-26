@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2017 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2019 TrinityCore <https://www.trinitycore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -67,14 +67,11 @@ class TC_DATABASE_API TransactionTask : public SQLOperation
         TransactionTask(SQLTransaction trans) : m_trans(trans) { }
         ~TransactionTask() { }
 
-        TransactionCompleteFuture GetFuture() { return m_result.get_future(); }
-
     protected:
         bool Execute() override;
 
         SQLTransaction m_trans;
         static std::mutex _deadlockLock;
-        TransactionCompletePromise m_result;
 };
 
 #endif

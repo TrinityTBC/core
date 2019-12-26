@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2017 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2019 TrinityCore <https://www.trinitycore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -340,7 +340,7 @@ static char const* FieldTypeToString(enum_field_types type)
     }
 }
 
-void Field::SetMetadata(MYSQL_FIELD* field, uint32 fieldIndex)
+void Field::SetMetadata(MySQLField* field, uint32 fieldIndex)
 {
     meta.TableName = field->org_table;
     meta.TableAlias = field->table;

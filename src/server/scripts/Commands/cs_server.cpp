@@ -7,6 +7,7 @@
 #include <numeric>
 #include "VMapFactory.h"
 #include "Realm.h"
+#include "MySQLThreading.h"
 #include "DatabaseLoader.h"
 #include "Config.h"
 #include "UpdateTime.h"
@@ -14,13 +15,6 @@
 #include <boost/filesystem.hpp>
 #include <openssl/crypto.h>
 #include <openssl/opensslv.h>
-
-#if __has_include("server/errmsg.h")
-    #include "server/errmsg.h"
-    #include "server/mysql_version.h"
-#else
-#include "mysql_version.h"
-#endif
 
 class server_commandscript : public CommandScript
 {
@@ -100,7 +94,7 @@ public:
         handler->PSendSysMessage("%s", GitRevision::GetFullVersion());
         handler->PSendSysMessage("Using SSL version: %s (library: %s)", OPENSSL_VERSION_TEXT, SSLeay_version(SSLEAY_VERSION));
         handler->PSendSysMessage("Using Boost version: %i.%i.%i", BOOST_VERSION / 100000, BOOST_VERSION / 100 % 1000, BOOST_VERSION % 100);
-        handler->PSendSysMessage("Using MySQL version: %s", MYSQL_SERVER_VERSION);
+        handler->PSendSysMessage("Using MySQL version: %s", MySQL::GetLibraryVersion());
         handler->PSendSysMessage("Using CMake version: %s", GitRevision::GetCMakeVersion());
 
         handler->PSendSysMessage("Compiled on: %s", GitRevision::GetHostOSVersion());

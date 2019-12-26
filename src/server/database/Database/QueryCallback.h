@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2017 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2019 TrinityCore <https://www.trinitycore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -31,23 +31,14 @@ class TC_DATABASE_API QueryCallback
 public:
     explicit QueryCallback(QueryResultFuture&& result);
     explicit QueryCallback(PreparedQueryResultFuture&& result);
-    explicit QueryCallback(TransactionCompleteFuture&& result);
     QueryCallback(QueryCallback&& right);
     QueryCallback& operator=(QueryCallback&& right);
-    virtual ~QueryCallback();
+    ~QueryCallback();
 
-    // Transaction
-    QueryCallback&& WithCallback(std::function<void()>&& callback);
-    // String query
     QueryCallback&& WithCallback(std::function<void(QueryResult)>&& callback);
-    // Prepared query
     QueryCallback&& WithPreparedCallback(std::function<void(PreparedQueryResult)>&& callback);
 
-    // Transaction
-    QueryCallback&& WithChainingCallback(std::function<void(QueryCallback&)>&& callback);
-    // String query
     QueryCallback&& WithChainingCallback(std::function<void(QueryCallback&, QueryResult)>&& callback);
-    // Prepared query
     QueryCallback&& WithChainingPreparedCallback(std::function<void(QueryCallback&, PreparedQueryResult)>&& callback);
 
     // Moves std::future from next to this object
@@ -60,14 +51,7 @@ public:
         Completed
     };
 
-    enum QueryType
-    {
-        STRING_QUERY,
-        PREPARED_QUERY,
-        TRANSACTION,
-    };
-
-    virtual Status InvokeIfReady();
+    Status InvokeIfReady();
 
 private:
     QueryCallback(QueryCallback const& right) = delete;
@@ -81,9 +65,8 @@ private:
     {
         QueryResultFuture _string;
         PreparedQueryResultFuture _prepared;
-        TransactionCompleteFuture _transaction;
     };
-    QueryType _type;
+    bool _isPrepared;
 
     struct QueryCallbackData;
     std::queue<QueryCallbackData, std::list<QueryCallbackData>> _callbacks;

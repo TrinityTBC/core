@@ -1,4 +1,5 @@
 #include "LogsDatabase.h"
+#include "MySQLPreparedStatement.h"
 
 void LogsDatabaseConnection::DoPrepareStatements()
 {

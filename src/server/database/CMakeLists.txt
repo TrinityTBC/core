@@ -1,3 +1,13 @@
+# Copyright (C) 2008-2019 TrinityCore <https://www.trinitycore.org/>
+#
+# This file is free software; as a special exception the author gives
+# unlimited permission to copy and/or distribute it, with or without
+# modifications, as long as this notice is preserved.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
+# implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
 CollectSourceFiles(
   ${CMAKE_CURRENT_SOURCE_DIR}
   PRIVATE_SOURCES
@@ -11,10 +21,9 @@ endif()
 GroupSources(${CMAKE_CURRENT_SOURCE_DIR})
 
 add_library(database
-  ${PRIVATE_PCH_SOURCE}
   ${PRIVATE_SOURCES}
 )
- 
+
 # Do NOT add any extra include directory unless it does not create unneeded extra dependencies,
 # and specially, not add any dependency to neither of these: shared, game, scripts
 # This way we ensure that if either a PR does that without modifying this file,
@@ -41,9 +50,9 @@ add_definitions(-DTRINITY_API_EXPORT_DATABASE)
 target_link_libraries(database
   PRIVATE
     trinity-core-interface
+    mysql
   PUBLIC
-    common
-    mysql)
+    common)
 
 set_target_properties(database
     PROPERTIES

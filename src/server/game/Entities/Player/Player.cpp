@@ -17447,15 +17447,8 @@ void Player::SaveToDB(bool create /*=false*/)
     m_reputationMgr->SaveToDB(trans);
     GetSession()->SaveTutorialsData(trans);                 // changed only while character in game
 
-    WorldSession* session = GetSession(); //This player object won't exist anymore when executing the callback, so extract session in a variable to capture
-    GetSession()->GetQueryProcessor().AddQuery(CharacterDatabase.CommitTransaction(trans).WithCallback([session, create]() -> void
-    {
-        //sun: Moved CHAR_CREATE_SUCCESS here, we need to ensure character is created before sending it.
-        //     (else client may end up with a char enum without the newly created character)
-        if (create)
-            session->SendCharCreate(CHAR_CREATE_SUCCESS);
-    }));
-   
+    CharacterDatabase.CommitTransaction(trans);
+
     // save pet (hunter pet level and experience and all type pets health/mana).
     if(Pet* pet = GetPet())
         pet->SavePetToDB(PET_SAVE_AS_CURRENT);

@@ -534,8 +534,7 @@ void WorldSession::HandleCharCreateOpcode(WorldPacket & recvData)
 
             LoginDatabase.CommitTransaction(trans);
 
-            // sun: moved to Player::SaveToDB (see explanation there)
-            // SendCharCreate(CHAR_CREATE_SUCCESS);
+            SendCharCreate(CHAR_CREATE_SUCCESS);
 
             std::string IP_str = GetRemoteAddress();
             TC_LOG_INFO("entities.player.character", "Account: %d (IP: %s) Create Character:[%s] (GUID: %u)", GetAccountId(), IP_str.c_str(), createInfo->Name.c_str(), newChar.GetGUID().GetCounter());

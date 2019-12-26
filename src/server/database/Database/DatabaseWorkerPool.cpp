@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2017 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2019 TrinityCore <https://www.trinitycore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -24,6 +24,7 @@
 #include "Implementation/CharacterDatabase.h"
 #include "Implementation/LogsDatabase.h"
 #include "Log.h"
+#include "MySQLPreparedStatement.h"
 #include "PreparedStatement.h"
 #include "ProducerConsumerQueue.h"
 #include "QueryCallback.h"
@@ -31,14 +32,8 @@
 #include "QueryResult.h"
 #include "SQLOperation.h"
 #include "Transaction.h"
-#ifdef _WIN32 // hack for broken mysql.h not including the correct winsock header for SOCKET definition, fixed in 5.7
-#include <winsock2.h>
-#endif
-#include <mysql.h>
+#include "MySQLWorkaround.h"
 #include <mysqld_error.h>
-#if __has_include("server/mysql_version.h")
-    #include "server/mysql_version.h"
-#endif
 
 #define MIN_MYSQL_SERVER_VERSION 50100u
 #define MIN_MYSQL_CLIENT_VERSION 50100u
@@ -244,9 +239,9 @@ SQLTransaction DatabaseWorkerPool<T>::BeginTransaction()
 }
 
 template <class T>
-QueryCallback DatabaseWorkerPool<T>::CommitTransaction(SQLTransaction transaction)
+void DatabaseWorkerPool<T>::CommitTransaction(SQLTransaction transaction)
 {
-    //sun: removed debug ifdef. A lot of the code actually sends empty transactions, so this should be some time gained to stop here
+#ifdef TRINITY_DEBUG
     //! Only analyze transaction weaknesses in Debug mode.
     //! Ideally we catch the faults in Debug mode and then correct them,
     //! so there's no need to waste these CPU cycles in Release mode.
@@ -254,18 +249,16 @@ QueryCallback DatabaseWorkerPool<T>::CommitTransaction(SQLTransaction transactio
     {
     case 0:
         TC_LOG_DEBUG("sql.driver", "Transaction contains 0 queries. Not executing.");
-        return QueryCallback(TransactionCompleteFuture()); //dummy callback
-    /*case 1:
+        return;
+    case 1:
         TC_LOG_DEBUG("sql.driver", "Warning: Transaction only holds 1 query, consider removing Transaction context in code.");
-        break;*/
+        break;
     default:
         break;
     }
+#endif // TRINITY_DEBUG
 
-    auto task = new TransactionTask(transaction);
-    TransactionCompleteFuture result = task->GetFuture();
-    Enqueue(task);
-    return QueryCallback(std::move(result));
+    Enqueue(new TransactionTask(transaction));
 }
 
 template <class T>
@@ -361,7 +354,7 @@ uint32 DatabaseWorkerPool<T>::OpenConnections(InternalIndex type, uint8 numConne
             _connections[type].clear();
             return error;
         }
-        else if (mysql_get_server_version(connection->GetHandle()) < MIN_MYSQL_SERVER_VERSION)
+        else if (connection->GetServerVersion() < MIN_MYSQL_SERVER_VERSION)
         {
             TC_LOG_ERROR("sql.driver", "TrinityCore does not support MySQL versions below 5.1");
             return 1;
@@ -382,8 +375,7 @@ unsigned long DatabaseWorkerPool<T>::EscapeString(char* to, char const* from, un
     if (!to || !from || !length)
         return 0;
 
-    return mysql_real_escape_string(
-        _connections[IDX_SYNCH].front()->GetHandle(), to, from, length);
+    return _connections[IDX_SYNCH].front()->EscapeString(to, from, length);
 }
 
 template <class T>

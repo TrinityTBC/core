@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2017 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2019 TrinityCore <https://www.trinitycore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -33,36 +33,30 @@ inline void Destroy(T& t)
 template<typename T>
 inline void ConstructActiveMember(T* obj)
 {
-    switch (obj->_type)
-    {
-    case QueryCallback::STRING_QUERY:   Construct(obj->_string); break;
-    case QueryCallback::PREPARED_QUERY: Construct(obj->_prepared); break;
-    case QueryCallback::TRANSACTION:    Construct(obj->_transaction); break;
-    }
+    if (!obj->_isPrepared)
+        Construct(obj->_string);
+    else
+        Construct(obj->_prepared);
 }
 
 template<typename T>
 inline void DestroyActiveMember(T* obj)
 {
-    switch (obj->_type)
-    {
-    case QueryCallback::STRING_QUERY:   Destroy(obj->_string); break;
-    case QueryCallback::PREPARED_QUERY: Destroy(obj->_prepared); break;
-    case QueryCallback::TRANSACTION:    Destroy(obj->_transaction); break;
-    }
+    if (!obj->_isPrepared)
+        Destroy(obj->_string);
+    else
+        Destroy(obj->_prepared);
 }
 
 template<typename T>
 inline void MoveFrom(T* to, T&& from)
 {
-    ASSERT(to->_type == from._type);
+    ASSERT(to->_isPrepared == from._isPrepared);
 
-    switch (to->_type)
-    {
-    case QueryCallback::STRING_QUERY:   to->_string = std::move(from._string); break;
-    case QueryCallback::PREPARED_QUERY: to->_prepared = std::move(from._prepared); break;
-    case QueryCallback::TRANSACTION:    to->_transaction = std::move(from._transaction); break;
-    }
+    if (!to->_isPrepared)
+        to->_string = std::move(from._string);
+    else
+        to->_prepared = std::move(from._prepared);
 }
 
 struct QueryCallback::QueryCallbackData
@@ -70,12 +64,11 @@ struct QueryCallback::QueryCallbackData
 public:
     friend class QueryCallback;
 
-    QueryCallbackData(std::function<void(QueryCallback&, QueryResult)>&& callback) : _string(std::move(callback)), _type(STRING_QUERY) { }
-    QueryCallbackData(std::function<void(QueryCallback&, PreparedQueryResult)>&& callback) : _prepared(std::move(callback)), _type(PREPARED_QUERY) { }
-    QueryCallbackData(std::function<void(QueryCallback&)>&& callback) : _transaction(std::move(callback)), _type(TRANSACTION) { }
+    QueryCallbackData(std::function<void(QueryCallback&, QueryResult)>&& callback) : _string(std::move(callback)), _isPrepared(false) { }
+    QueryCallbackData(std::function<void(QueryCallback&, PreparedQueryResult)>&& callback) : _prepared(std::move(callback)), _isPrepared(true) { }
     QueryCallbackData(QueryCallbackData&& right)
     {
-        _type = right._type;
+        _isPrepared = right._isPrepared;
         ConstructActiveMember(this);
         MoveFrom(this, std::move(right));
     }
@@ -83,10 +76,10 @@ public:
     {
         if (this != &right)
         {
-            if (_type != right._type)
+            if (_isPrepared != right._isPrepared)
             {
                 DestroyActiveMember(this);
-                _type = right._type;
+                _isPrepared = right._isPrepared;
                 ConstructActiveMember(this);
             }
             MoveFrom(this, std::move(right));
@@ -107,33 +100,26 @@ private:
     {
         std::function<void(QueryCallback&, QueryResult)> _string;
         std::function<void(QueryCallback&, PreparedQueryResult)> _prepared;
-        std::function<void(QueryCallback&)> _transaction;
     };
-    QueryCallback::QueryType _type;
+    bool _isPrepared;
 };
 
 // Not using initialization lists to work around segmentation faults when compiling with clang without precompiled headers
-QueryCallback::QueryCallback(QueryResultFuture&& result)
-    : _type(STRING_QUERY)
+QueryCallback::QueryCallback(std::future<QueryResult>&& result)
 {
+    _isPrepared = false;
     Construct(_string, std::move(result));
 }
 
-QueryCallback::QueryCallback(PreparedQueryResultFuture&& result)
-    : _type(PREPARED_QUERY)
+QueryCallback::QueryCallback(std::future<PreparedQueryResult>&& result)
 {
+    _isPrepared = true;
     Construct(_prepared, std::move(result));
-}
-
-QueryCallback::QueryCallback(TransactionCompleteFuture&& result)
-    : _type(TRANSACTION)
-{
-    Construct(_transaction, std::move(result));
 }
 
 QueryCallback::QueryCallback(QueryCallback&& right)
 {
-    _type = right._type;
+    _isPrepared = right._isPrepared;
     ConstructActiveMember(this);
     MoveFrom(this, std::move(right));
     _callbacks = std::move(right._callbacks);
@@ -143,10 +129,10 @@ QueryCallback& QueryCallback::operator=(QueryCallback&& right)
 {
     if (this != &right)
     {
-        if (_type != right._type)
+        if (_isPrepared != right._isPrepared)
         {
             DestroyActiveMember(this);
-            _type = right._type;
+            _isPrepared = right._isPrepared;
             ConstructActiveMember(this);
         }
         MoveFrom(this, std::move(right));
@@ -160,11 +146,6 @@ QueryCallback::~QueryCallback()
     DestroyActiveMember(this);
 }
 
-QueryCallback&& QueryCallback::WithCallback(std::function<void()>&& callback)
-{
-    return WithChainingCallback([callback](QueryCallback& /*this*/) { callback(); });
-}
-
 QueryCallback&& QueryCallback::WithCallback(std::function<void(QueryResult)>&& callback)
 {
     return WithChainingCallback([callback](QueryCallback& /*this*/, QueryResult result) { callback(std::move(result)); });
@@ -175,23 +156,16 @@ QueryCallback&& QueryCallback::WithPreparedCallback(std::function<void(PreparedQ
     return WithChainingPreparedCallback([callback](QueryCallback& /*this*/, PreparedQueryResult result) { callback(std::move(result)); });
 }
 
-QueryCallback&& QueryCallback::WithChainingCallback(std::function<void(QueryCallback&)>&& callback)
-{
-    ASSERT(!_callbacks.empty() || _type == TRANSACTION, "Attempted to set callback function for transaction on a string or prepared async query");
-    _callbacks.emplace(std::move(callback));
-    return std::move(*this);
-}
-
 QueryCallback&& QueryCallback::WithChainingCallback(std::function<void(QueryCallback&, QueryResult)>&& callback)
 {
-    ASSERT(!_callbacks.empty() || _type == STRING_QUERY, "Attempted to set callback function for string query on a transaction or prepared async query");
+    ASSERT(!_callbacks.empty() || !_isPrepared, "Attempted to set callback function for string query on a prepared async query");
     _callbacks.emplace(std::move(callback));
     return std::move(*this);
 }
 
 QueryCallback&& QueryCallback::WithChainingPreparedCallback(std::function<void(QueryCallback&, PreparedQueryResult)>&& callback)
 {
-    ASSERT(!_callbacks.empty() || _type == PREPARED_QUERY, "Attempted to set callback function for prepared query on a transaction or string async query");
+    ASSERT(!_callbacks.empty() || _isPrepared, "Attempted to set callback function for prepared query on a string async query");
     _callbacks.emplace(std::move(callback));
     return std::move(*this);
 }
@@ -207,13 +181,7 @@ QueryCallback::Status QueryCallback::InvokeIfReady()
     auto checkStateAndReturnCompletion = [this]()
     {
         _callbacks.pop();
-        bool hasNext = false;
-        switch (_type)
-        {
-        case STRING_QUERY:   hasNext = _string.valid(); break;
-        case PREPARED_QUERY: hasNext = _prepared.valid(); break;
-        case TRANSACTION:    hasNext = _transaction.valid(); break;
-        }
+        bool hasNext = !_isPrepared ? _string.valid() : _prepared.valid();
         if (_callbacks.empty())
         {
             ASSERT(!hasNext);
@@ -224,13 +192,12 @@ QueryCallback::Status QueryCallback::InvokeIfReady()
         if (!hasNext)
             return Completed;
 
-        ASSERT(_type == _callbacks.front()._type);
+        ASSERT(_isPrepared == _callbacks.front()._isPrepared);
         return NextStep;
     };
 
-    switch (_type)
+    if (!_isPrepared)
     {
-    case STRING_QUERY:   
         if (_string.valid() && _string.wait_for(std::chrono::seconds(0)) == std::future_status::ready)
         {
             QueryResultFuture f(std::move(_string));
@@ -238,8 +205,9 @@ QueryCallback::Status QueryCallback::InvokeIfReady()
             cb(*this, f.get());
             return checkStateAndReturnCompletion();
         }
-        break;
-    case PREPARED_QUERY: 
+    }
+    else
+    {
         if (_prepared.valid() && _prepared.wait_for(std::chrono::seconds(0)) == std::future_status::ready)
         {
             PreparedQueryResultFuture f(std::move(_prepared));
@@ -247,16 +215,6 @@ QueryCallback::Status QueryCallback::InvokeIfReady()
             cb(*this, f.get());
             return checkStateAndReturnCompletion();
         }
-        break;
-    case TRANSACTION: 
-        if (_transaction.valid() && _transaction.wait_for(std::chrono::seconds(0)) == std::future_status::ready)
-        {
-            TransactionCompleteFuture f(std::move(_transaction));
-            std::function<void(QueryCallback&)> cb(std::move(callback._transaction));
-            cb(*this);
-            return checkStateAndReturnCompletion();
-        }
-        break;
     }
 
     return NotReady;

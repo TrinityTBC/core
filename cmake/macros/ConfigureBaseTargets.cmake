@@ -1,4 +1,4 @@
-# Copyright (C) 2008-2017 TrinityCore <http://www.trinitycore.org/>
+# Copyright (C) 2008-2019 TrinityCore <https://www.trinitycore.org/>
 #
 # This file is free software; as a special exception the author gives
 # unlimited permission to copy and/or distribute it, with or without
@@ -10,12 +10,7 @@
 
 # An interface library to make the target com available to other targets
 add_library(trinity-compile-option-interface INTERFACE)
-#Disabled until TrinityCore/TrinityCore/#22343 is fixed
-#We'll add it in specific modules for now
-#target_compile_features(trinity-compile-option-interface
-#   INTERFACE
-#     cxx_std_17)
-	 
+
 # Use -std=c++11 instead of -std=gnu++11
 set(CXX_EXTENSIONS OFF)
 

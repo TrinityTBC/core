@@ -49,7 +49,6 @@ include(CheckPlatform)
 include(GroupSources)
 include(AutoCollect)
 
-include(FindThreads)
 find_package(MySQL)
 include(FindPCHSupport)
 

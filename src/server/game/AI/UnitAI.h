@@ -1,6 +1,7 @@
 #ifndef TRINITY_UNITAI_H
 #define TRINITY_UNITAI_H
 
+#include "Containers.h"
 #include "Define.h"
 #include "Unit.h"
 #include "QuestDef.h"

@@ -377,17 +377,16 @@ bool Pet::LoadPetFromDB(Player* owner, uint32 petentry, uint32 petnumber, bool c
         InitTalentForLevel();                               // re-init to check talent count
 #else
         //init teach spells
-        Tokens tokens = StrSplit(fields[17].GetString(), " ");
-        Tokens::iterator iter;
-        int index;
-        for (iter = tokens.begin(), index = 0; index < 4; ++iter, ++index)
+        Tokenizer tokens(fields[17].GetString(), ' ');
+        int index = 0;
+        for (Tokenizer::const_iterator iter = tokens.begin(); index < 4; ++iter, ++index)
         {
-            uint32 tmp = atol((*iter).c_str());
+            uint32 tmp = atoul(*iter);
 
             ++iter;
 
             if (tmp)
-                AddTeachSpell(tmp, atol((*iter).c_str()));
+                AddTeachSpell(tmp, atoul(*iter));
             else
                 break;
         }

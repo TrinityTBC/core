@@ -36,17 +36,15 @@ void PlayerTaxi::InitTaxiNodesForLevel(uint32 race, uint32 level)
         SetTaximaskNode(213);                               //Shattered Sun Staging Area
 }
 
-void PlayerTaxi::LoadTaxiMask(const char* data)
+void PlayerTaxi::LoadTaxiMask(std::string const& data)
 {
-    Tokens tokens = StrSplit(data, " ");
+    Tokenizer tokens(data, ' ');
 
-    int index;
-    Tokens::iterator iter;
-    for (iter = tokens.begin(), index = 0;
-        (index < TaxiMaskSize) && (iter != tokens.end()); ++iter, ++index)
+    uint8 index = 0;
+    for (Tokenizer::const_iterator iter = tokens.begin(); index < TaxiMaskSize && iter != tokens.end(); ++iter, ++index)
     {
-        // load and set bits only for existed taxi nodes
-        m_taximask[index] = sTaxiNodesMask[index] & uint32(atol((*iter).c_str()));
+        // load and set bits only for existing taxi nodes
+        m_taximask[index] = sTaxiNodesMask[index] & atoul(*iter);
     }
 }
 

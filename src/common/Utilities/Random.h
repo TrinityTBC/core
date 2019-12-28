@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2015 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2019 TrinityCore <https://www.trinitycore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -21,7 +21,6 @@
 #include "Define.h"
 #include "Duration.h"
 #include <limits>
-#include <random>
 
 /* Return a random number in the range min..max. */
 TC_COMMON_API int32 irand(int32 min, int32 max);
@@ -63,9 +62,9 @@ inline bool roll_chance_i(int chance)
 }
 
 /*
-* SFMT wrapper satisfying UniformRandomNumberGenerator concept for use in <random> algorithms
+* Wrapper satisfying UniformRandomNumberGenerator concept for use in <random> algorithms
 */
-class TC_COMMON_API SFMTEngine
+class TC_COMMON_API RandomEngine
 {
 public:
     typedef uint32 result_type;
@@ -74,29 +73,7 @@ public:
     static constexpr result_type max() { return std::numeric_limits<result_type>::max(); }
     result_type operator()() const { return rand32(); }
 
-    static SFMTEngine& Instance();
+    static RandomEngine& Instance();
 };
-
-// Ugly, horrible, i don't even..., hack for VS2013 to work around missing discrete_distribution(iterator, iterator) constructor
-namespace Trinity
-{
-#if COMPILER == TRINITY_COMPILER_MICROSOFT && _MSC_VER <= 1800
-    template<typename T>
-    struct discrete_distribution_param : public std::discrete_distribution<T>::param_type
-    {
-        typedef typename std::discrete_distribution<T>::param_type base;
-
-        template<typename InIt>
-        discrete_distribution_param(InIt begin, InIt end) : base(_Noinit())
-        {
-            this->_Pvec.assign(begin, end);
-            this->_Init();
-        }
-    };
-#else
-    template<typename T>
-    using discrete_distribution_param = typename std::discrete_distribution<T>::param_type;
-#endif
-}
 
 #endif // Random_h__

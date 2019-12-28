@@ -1659,7 +1659,7 @@ bool Player::BuildEnumData(PreparedQueryResult result, WorldPacket * p_data, Wor
     *p_data << (uint32)petLevel;
     *p_data << (uint32)petFamily;
 
-    Tokens equipCache = StrSplit(fields[19].GetString(), " ");
+    Tokenizer equipCache(fields[19].GetString(), ' ');
     for (uint8 slot = 0; slot < EQUIPMENT_SLOT_END; slot++)
     {
         uint32 visualBase = slot * 2;
@@ -15071,7 +15071,7 @@ bool Player::LoadPositionFromDB(uint32& mapid, float& x,float& y,float& z,float&
     return true;
 }
 
-bool Player::LoadValuesArrayFromDB(Tokens& data, ObjectGuid guid)
+bool Player::LoadValuesArrayFromDB(Tokenizer& data, ObjectGuid guid)
 {
     QueryResult result = CharacterDatabase.PQuery("SELECT data FROM characters WHERE guid='%u'",guid.GetCounter());
     if( !result )
@@ -15079,20 +15079,20 @@ bool Player::LoadValuesArrayFromDB(Tokens& data, ObjectGuid guid)
 
     Field *fields = result->Fetch();
 
-    data = StrSplit(fields[0].GetString(), " ");
+    data = Tokenizer(fields[0].GetString(), ' ');
 
     return true;
 }
 
-uint32 Player::GetUInt32ValueFromArray(Tokens const& data, uint16 index)
+uint32 Player::GetUInt32ValueFromArray(Tokenizer const& data, uint16 index)
 {
     if(index >= data.size())
         return 0;
 
-    return (uint32)atoi(data[index].c_str());
+    return (uint32)atoi(data[index]);
 }
 
-float Player::GetFloatValueFromArray(Tokens const& data, uint16 index)
+float Player::GetFloatValueFromArray(Tokenizer const& data, uint16 index)
 {
     float result;
     uint32 temp = Player::GetUInt32ValueFromArray(data,index);
@@ -15103,7 +15103,7 @@ float Player::GetFloatValueFromArray(Tokens const& data, uint16 index)
 
 uint32 Player::GetUInt32ValueFromDB(uint16 index, ObjectGuid guid)
 {
-    Tokens data;
+    Tokenizer data("", ' ');
     if(!LoadValuesArrayFromDB(data,guid))
         return 0;
 
@@ -15642,7 +15642,7 @@ bool Player::LoadFromDB( uint32 guid, SQLQueryHolder *holder )
     if( HasFlag(PLAYER_FLAGS, PLAYER_FLAGS_GM) )
         SetUInt32Value(PLAYER_FLAGS, 0 | old_safe_flags);
 
-    m_taxi.LoadTaxiMask(fields[LOAD_DATA_TAXIMASK].GetCString());          // must be before InitTaxiNodesForLevel
+    m_taxi.LoadTaxiMask(fields[LOAD_DATA_TAXIMASK].GetString());          // must be before InitTaxiNodesForLevel
 
     uint32 extraflags = fields[LOAD_DATA_EXTRA_FLAGS].GetUInt16();
 
@@ -18028,7 +18028,7 @@ void Player::SaveDataFieldToDB()
     CharacterDatabase.Execute(ss.str().c_str());
 }
 
-bool Player::SaveValuesArrayInDB(Tokens const& tokens, ObjectGuid guid)
+bool Player::SaveValuesArrayInDB(Tokenizer const& tokens, ObjectGuid guid)
 {
     std::ostringstream ss2;
     ss2<<"UPDATE characters SET data='";
@@ -18044,7 +18044,7 @@ bool Player::SaveValuesArrayInDB(Tokens const& tokens, ObjectGuid guid)
     return true;
 }
 
-void Player::SetUInt32ValueInArray(Tokens& tokens,uint16 index, uint32 value)
+void Player::SetUInt32ValueInArray(Tokenizer& tokens,uint16 index, uint32 value)
 {
     char buf[11];
     snprintf(buf,11,"%u",value);
@@ -18057,7 +18057,7 @@ void Player::SetUInt32ValueInArray(Tokens& tokens,uint16 index, uint32 value)
 
 void Player::SetUInt32ValueInDB(uint16 index, uint32 value, ObjectGuid guid)
 {
-    Tokens tokens;
+    Tokenizer tokens("", ' ');
     if(!LoadValuesArrayFromDB(tokens,guid))
         return;
 

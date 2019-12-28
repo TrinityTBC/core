@@ -1514,9 +1514,9 @@ class TC_GAME_API Player : public Unit, public GridObject<Player>
         /*********************************************************/
 
         bool LoadFromDB(uint32 guid, SQLQueryHolder *holder);
-        static bool   LoadValuesArrayFromDB(Tokens& data,ObjectGuid guid);
-        static uint32 GetUInt32ValueFromArray(Tokens const& data, uint16 index);
-        static float  GetFloatValueFromArray(Tokens const& data, uint16 index);
+        static bool   LoadValuesArrayFromDB(Tokenizer& data,ObjectGuid guid);
+        static uint32 GetUInt32ValueFromArray(Tokenizer const& data, uint16 index);
+        static float  GetFloatValueFromArray(Tokenizer const& data, uint16 index);
         static uint32 GetUInt32ValueFromDB(uint16 index, ObjectGuid guid);
         static float  GetFloatValueFromDB(uint16 index, ObjectGuid guid);
         static uint32 GetZoneIdFromDB(ObjectGuid guid);
@@ -1534,8 +1534,8 @@ class TC_GAME_API Player : public Unit, public GridObject<Player>
         virtual void SaveInventoryAndGoldToDB(SQLTransaction trans);                    // fast save function for item/money cheating preventing
         virtual void SaveGoldToDB(SQLTransaction trans);
         virtual void SaveDataFieldToDB();
-        static bool SaveValuesArrayInDB(Tokens const& data,ObjectGuid guid);
-        static void SetUInt32ValueInArray(Tokens& data,uint16 index, uint32 value);
+        static bool SaveValuesArrayInDB(Tokenizer const& data,ObjectGuid guid);
+        static void SetUInt32ValueInArray(Tokenizer& data,uint16 index, uint32 value);
         static void SetUInt32ValueInDB(uint16 index, uint32 value, ObjectGuid guid);
         static void SetFloatValueInDB(uint16 index, float value, ObjectGuid guid);
         static void SavePositionInDB(uint32 mapid, float x,float y,float z,float o,uint32 zone,ObjectGuid guid);

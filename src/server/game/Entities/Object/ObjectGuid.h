@@ -4,8 +4,12 @@
 
 #include "ByteBuffer.h"
 
+#include <deque>
+#include <set>
 #include <functional>
 #include <unordered_set>
+#include <type_traits>
+#include <vector>
 
 enum TypeID
 {

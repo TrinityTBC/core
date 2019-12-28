@@ -768,30 +768,30 @@ void World::LoadConfigSettings(bool reload)
     }
 
     std::string s_leaderTeams = sConfigMgr->GetStringDefault("Arena.NewTitleDistribution.StaticLeaders", "0,0,0,0,0,0,0,0,0,0,0,0");
-    Tokens leadertokens = StrSplit(s_leaderTeams, ",");
+    Tokenizer leadertokens(s_leaderTeams, ',');
     for (int i = 0; i < leadertokens.size(); i++)
-        confStaticLeaders[i] = atoi(leadertokens[i].c_str());
+        confStaticLeaders[i] = atoi(leadertokens[i]);
     for (int i = leadertokens.size(); i < 12; i++)
         confStaticLeaders[i] = 0;
 
     confGladiators.clear();
     std::string s_Gladiators = sConfigMgr->GetStringDefault("Arena.NewTitleDistribution.Gladiators", ""); //format : "<playerguid> <rank [1-3]>, <playerguid2> <rank>,..."
-    Tokens gladtokens = StrSplit(s_Gladiators, ",");
+    Tokenizer gladtokens(s_Gladiators, ',');
     for (auto & gladtoken : gladtokens)
     {
-        Tokens subTokens = StrSplit(gladtoken, " ");
+        Tokenizer subTokens(gladtoken, ' ');
         if(subTokens.size() != 2)
         {
             TC_LOG_ERROR("server.loading","ERROR in config file in Arena.NewTitleDistribution.Gladiators, skipped this entry.");
             continue;
         }
-        ObjectGuid::LowType playerguid = atoi(subTokens[0].c_str());
+        ObjectGuid::LowType playerguid = atoi(subTokens[0]);
         if(playerguid == 0)
         {
             TC_LOG_ERROR("server.loading","ERROR in config file in Arena.NewTitleDistribution.Gladiators, skipped this entry.");
             continue;
         }
-        uint32 rank = atoi(subTokens[1].c_str());
+        uint32 rank = atoi(subTokens[1]);
         Gladiator glad(playerguid, rank);
         confGladiators.push_back(glad);
     }

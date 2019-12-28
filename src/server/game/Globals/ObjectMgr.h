@@ -2,6 +2,7 @@
 #ifndef _OBJECTMGR_H
 #define _OBJECTMGR_H
 
+#include "Containers.h"
 #include "Creature.h"
 #include "GameObject.h"
 #include "QuestDef.h"

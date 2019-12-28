@@ -45,7 +45,7 @@ class TC_GAME_API PlayerTaxi
         ~PlayerTaxi() = default;
         // Nodes
         void InitTaxiNodesForLevel(uint32 race, uint32 level);
-        void LoadTaxiMask(const char* data);
+        void LoadTaxiMask(std::string const& data);
 
         uint32 GetTaximask( uint8 index ) const { return m_taximask[index]; }
         bool IsTaximaskNodeKnown(uint32 nodeidx) const;

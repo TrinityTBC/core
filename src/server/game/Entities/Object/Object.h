@@ -246,7 +246,7 @@ class TC_GAME_API Object
         void ClearUpdateMask(bool remove);
         //void SendUpdateObjectToAllExcept(Player* exceptPlayer);
 
-        bool LoadValues(const char* data);
+        bool LoadValues(std::string const& data);
 
         uint16 GetValuesCount() const { return m_valuesCount; }
 

@@ -392,20 +392,19 @@ void Object::ClearUpdateMask(bool remove)
     }
 }
 
-bool Object::LoadValues(const char* data)
+bool Object::LoadValues(std::string const& data)
 {
     if(!m_uint32Values) _InitValues();
 
-    Tokens tokens = StrSplit(data, " ");
+    Tokenizer tokens(data, ' ');
 
     if(tokens.size() != m_valuesCount)
         return false;
 
-    Tokens::iterator iter;
-    int index;
-    for (iter = tokens.begin(), index = 0; index < m_valuesCount; ++iter, ++index)
+    int index = 0;
+    for (Tokenizer::const_iterator iter = tokens.begin(); index < m_valuesCount; ++iter, ++index)
     {
-        m_uint32Values[index] = atol((*iter).c_str());
+        m_uint32Values[index] = atoul(*iter);
     }
 
     return true;

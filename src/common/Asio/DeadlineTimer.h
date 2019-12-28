@@ -15,39 +15,31 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef Strand_h__
-#define Strand_h__
+#ifndef DeadlineTimer_h__
+#define DeadlineTimer_h__
 
-#include "IoContext.h"
-#include <boost/asio/strand.hpp>
+#include <boost/asio/deadline_timer.hpp>
 
-#if BOOST_VERSION >= 106600
-#include <boost/asio/bind_executor.hpp>
+#if BOOST_VERSION >= 107000
+#define BasicDeadlineTimerThirdTemplateArg , boost::asio::io_context::executor_type
+#elif BOOST_VERSION >= 106600
+#define BasicDeadlineTimerThirdTemplateArg
+#else
+#define BasicDeadlineTimerThirdTemplateArg , boost::asio::deadline_timer_service<boost::posix_time::ptime, boost::asio::time_traits<boost::posix_time::ptime>>
 #endif
+
+#define DeadlineTimerBase boost::asio::basic_deadline_timer<boost::posix_time::ptime, boost::asio::time_traits<boost::posix_time::ptime> BasicDeadlineTimerThirdTemplateArg>
 
 namespace Trinity
 {
     namespace Asio
     {
-        /**
-          Hack to make it possible to forward declare strand (which is a inner class)
-        */
-        class Strand : public IoContextBaseNamespace::IoContextBase::strand
+        class DeadlineTimer : public DeadlineTimerBase
         {
         public:
-            Strand(IoContext& ioContext) : IoContextBaseNamespace::IoContextBase::strand(ioContext) { }
+            using DeadlineTimerBase::basic_deadline_timer;
         };
-
-#if BOOST_VERSION >= 106600
-        using boost::asio::bind_executor;
-#else
-        template<typename T>
-        inline decltype(auto) bind_executor(Strand& strand, T&& t)
-        {
-            return strand.wrap(std::forward<T>(t));
-        }
-#endif
     }
 }
 
-#endif // Strand_h__
+#endif // DeadlineTimer_h__

@@ -27,6 +27,7 @@
 #include <utility>
 #include <vector>
 #include <math.h>
+#include <ctime>
 
 class TC_COMMON_API Tokenizer
 {

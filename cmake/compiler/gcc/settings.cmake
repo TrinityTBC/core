@@ -6,7 +6,7 @@ target_compile_definitions(trinity-compile-option-interface
 set(GCC_EXPECTED_VERSION 7.1.0)
 
 if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS GCC_EXPECTED_VERSION)
-  message(FATAL_ERROR "GCC: Sunstrider requires version ${GCC_EXPECTED_VERSION} to build but found ${CMAKE_CXX_COMPILER_VERSION}")
+  message(FATAL_ERROR "GCC: TrinityTBC requires version ${GCC_EXPECTED_VERSION} to build but found ${CMAKE_CXX_COMPILER_VERSION}")
 endif()
 
 if(PLATFORM EQUAL 32)
@@ -61,6 +61,14 @@ if(ASAN)
 
   message(STATUS "GCC: Enabled Address Sanitizer")
 endif()
+
+# -Wno-narrowing needed to suppress a warning in g3d
+# -Wno-switch because I find this warning useless
+target_compile_options(trinity-compile-option-interface
+  INTERFACE
+    -Wno-narrowing
+    -Wno-format-zero-length
+    -Wno-switch)
 
 if (BUILD_SHARED_LIBS)
   target_compile_options(trinity-compile-option-interface

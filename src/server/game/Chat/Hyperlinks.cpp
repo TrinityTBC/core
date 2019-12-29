@@ -305,23 +305,22 @@ struct LinkValidator<LinkTags::trade>
 };
 #endif
 
-#define TryValidateAs(tagname)                                                                  \
-{                                                                                               \
-    using taginfo = typename LinkTags::tagname;                                                 \
-    ASSERT(!strcmp(taginfo::tag(), #tagname));                                                  \
-    if (info.tag.second == strlen(taginfo::tag()) &&                                            \
-        !strncmp(info.tag.first, taginfo::tag(), strlen(taginfo::tag())))                       \
-    {                                                                                           \
-        advstd::remove_cvref_t<typename taginfo::value_type> t;                                 \
-        if (!taginfo::StoreTo(t, info.data.first, info.data.second))                            \
-            return false;                                                                       \
-        if (!LinkValidator<taginfo>::IsColorValid(t, info.color))                               \
-            return false;                                                                       \
-        if (sWorld->getIntConfig(CONFIG_CHAT_STRICT_LINK_CHECKING_SEVERITY))                    \
-            if (!LinkValidator<taginfo>::IsTextValid(t, info.text.first, info.text.second))     \
-                return false;                                                                   \
-        return true;                                                                            \
-    }                                                                                           \
+#define TryValidateAs(tagname)                                                                          \
+{                                                                                                       \
+    ASSERT(!strcmp(LinkTags::tagname::tag(), #tagname));                                                \
+    if (info.tag.second == strlen(LinkTags::tagname::tag()) &&                                          \
+        !strncmp(info.tag.first, LinkTags::tagname::tag(), strlen(LinkTags::tagname::tag())))           \
+    {                                                                                                   \
+        advstd::remove_cvref_t<typename LinkTags::tagname::value_type> t;                               \
+        if (!LinkTags::tagname::StoreTo(t, info.data.first, info.data.second))                          \
+            return false;                                                                               \
+        if (!LinkValidator<LinkTags::tagname>::IsColorValid(t, info.color))                             \
+            return false;                                                                               \
+        if (sWorld->getIntConfig(CONFIG_CHAT_STRICT_LINK_CHECKING_SEVERITY))                            \
+            if (!LinkValidator<LinkTags::tagname>::IsTextValid(t, info.text.first, info.text.second))   \
+                return false;                                                                           \
+        return true;                                                                                    \
+    }                                                                                                   \
 }
         
 static bool ValidateLinkInfo(HyperlinkInfo const& info)

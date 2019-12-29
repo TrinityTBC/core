@@ -1174,10 +1174,10 @@ void OpcodeTable::Initialize()
      /* ###############################################	
                         LK OPCODES	
        ############################################### */	
- #define DEFINE_HANDLER_LK(opcode, status, processing, handler) \	
-    DEFINE_HANDLER(OpcodeClient(opcode), status, processing, handler)	
- #define DEFINE_SERVER_OPCODE_HANDLER_LK(opcode, status) \	
-    DEFINE_SERVER_OPCODE_HANDLER(OpcodeClient(opcode), status)	
+ #define DEFINE_HANDLER_LK(opcode, status, processing, handler) \
+    DEFINE_HANDLER(OpcodeClient(opcode), status, processing, handler)
+ #define DEFINE_SERVER_OPCODE_HANDLER_LK(opcode, status) \
+    DEFINE_SERVER_OPCODE_HANDLER(OpcodeClient(opcode), status)
 
     /*0x000*/ DEFINE_HANDLER_LK(LK_MSG_NULL_ACTION,                               STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL                      );	
     /*0x001*/ DEFINE_HANDLER_LK(LK_CMSG_BOOTME,                                   STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL                      );	

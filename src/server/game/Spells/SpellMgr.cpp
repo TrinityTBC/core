@@ -428,7 +428,7 @@ void SpellMgr::LoadSpellGroupStackRules()
 void SpellMgr::LoadSpellAffects(bool reload)
 {
 #ifdef LICH_KING
-    This shouldn't be called at all;
+    //This shouldn't be called at all;
 #endif
     // Spell affects related declarations (accessed using SpellMgr functions)
     typedef std::multimap<uint32 /*spellId*/, std::pair<uint8 /*effect*/, uint64 /*mask*/>> SpellAffectMap;

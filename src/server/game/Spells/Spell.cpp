@@ -2517,6 +2517,12 @@ void Spell::TargetInfo::PreprocessTarget(Spell* spell)
         _spellHitTarget = unit;
     else if (MissCondition == SPELL_MISS_REFLECT && ReflectResult == SPELL_MISS_NONE)
         _spellHitTarget = spell->m_caster->ToUnit();    
+
+    // Ensure that a player target is put in combat by a taunt, even if they result immune clientside
+    if ((MissCondition == SPELL_MISS_IMMUNE || MissCondition == SPELL_MISS_IMMUNE2) && spell->m_caster->GetTypeId() == TYPEID_PLAYER && unit->GetTypeId() == TYPEID_PLAYER && spell->m_caster->IsValidAttackTarget(unit, spell->GetSpellInfo()))
+        unit->SetInCombatWith(spell->m_caster->ToPlayer());
+
+    spell->CallScriptBeforeHitHandlers(MissCondition);
     
     _enablePVP = false; // need to check PvP state before spell effects, but act on it afterwards
     if (_spellHitTarget)
@@ -2869,7 +2875,7 @@ void Spell::GOTargetInfo::DoTargetSpellHit(Spell* spell, uint8 effIndex)
     if (!go)
         return;
 
-    spell->CallScriptBeforeHitHandlers();
+    spell->CallScriptBeforeHitHandlers(SPELL_MISS_NONE);
 
     spell->HandleEffects(nullptr, nullptr, go, effIndex, SPELL_EFFECT_HANDLE_HIT_TARGET);
 
@@ -2896,7 +2902,7 @@ void Spell::GOTargetInfo::DoTargetSpellHit(Spell* spell, uint8 effIndex)
 
 void Spell::ItemTargetInfo::DoTargetSpellHit(Spell* spell, uint8 effIndex)
 {
-    spell->CallScriptBeforeHitHandlers();
+    spell->CallScriptBeforeHitHandlers(SPELL_MISS_NONE);
 
     spell->HandleEffects(nullptr, TargetItem, nullptr, effIndex, SPELL_EFFECT_HANDLE_HIT_TARGET);
 
@@ -3005,8 +3011,6 @@ SpellMissInfo Spell::PreprocessSpellHit(Unit* unit, bool scaleAura, TargetInfo& 
     // For delayed spells immunity may be applied between missile launch and hit - check immunity for that case
     if (m_spellInfo->Speed && unit->IsImmunedToSpell(m_spellInfo, m_caster))
         return SPELL_MISS_IMMUNE;
-
-    CallScriptBeforeHitHandlers();
 
 #ifdef LICH_KING
     if (Player* player = unit->ToPlayer())
@@ -3429,7 +3433,7 @@ uint32 Spell::prepare(SpellCastTargets const& targets, AuraEffect const* trigger
                 tmpPlayer->SendSpectatorAddonMsgToBG(msg);
             }
 
-    CallScriptSpellStartHandlers();
+    OnSpellLaunch();
 
     //Containers for channeled spells have to be set
     // Why check duration? 29350: channelled triggers channelled
@@ -5400,7 +5404,7 @@ void Spell::HandleEffects(Unit* pUnitTarget, Item* pItemTarget, GameObject* pGOT
     damage = CalculateDamage(i);
 
     SpellEffIndex effIndex = static_cast<SpellEffIndex>(i);
-    bool preventDefault = CallScriptEffectHandlers(effIndex, mode, damage);
+    bool preventDefault = CallScriptEffectHandlers(effIndex, mode);
 
     if (!preventDefault)
         (this->*SpellEffectHandlers[effect])(effIndex);
@@ -8430,54 +8434,53 @@ void Spell::CallScriptObjectTargetSelectHandlers(WorldObject*& target, SpellEffI
     }
 }
 
-bool Spell::CallScriptEffectHandlers(SpellEffIndex effIndex, SpellEffectHandleMode mode, int32& _damage)
+bool Spell::CallScriptEffectHandlers(SpellEffIndex effIndex, SpellEffectHandleMode mode)
 {
     // execute script effect handler hooks and check if effects was prevented
     bool preventDefault = false;
-
-    for (auto & m_loadedScript : m_loadedScripts)
+    for (auto scritr = m_loadedScripts.begin(); scritr != m_loadedScripts.end(); ++scritr)
     {
-        m_loadedScript->_InitHit();
+        (*scritr)->_InitHit();
+
         HookList<SpellScript::EffectHandler>::iterator effItr, effEndItr;
         SpellScriptHookType hookType;
         switch (mode)
         {
-        case SPELL_EFFECT_HANDLE_LAUNCH:
-            effItr = m_loadedScript->OnEffectLaunch.begin();
-            effEndItr = m_loadedScript->OnEffectLaunch.end();
-            hookType = SPELL_SCRIPT_HOOK_EFFECT_LAUNCH;
-            break;
-        case SPELL_EFFECT_HANDLE_LAUNCH_TARGET:
-            effItr = m_loadedScript->OnEffectLaunchTarget.begin();
-            effEndItr = m_loadedScript->OnEffectLaunchTarget.end();
-            hookType = SPELL_SCRIPT_HOOK_EFFECT_LAUNCH_TARGET;
-            break;
-        case SPELL_EFFECT_HANDLE_HIT:
-            effItr = m_loadedScript->OnEffectHit.begin();
-            effEndItr = m_loadedScript->OnEffectHit.end();
-            hookType = SPELL_SCRIPT_HOOK_EFFECT_HIT;
-            break;
-        case SPELL_EFFECT_HANDLE_HIT_TARGET:
-            effItr = m_loadedScript->OnEffectHitTarget.begin();
-            effEndItr = m_loadedScript->OnEffectHitTarget.end();
-            hookType = SPELL_SCRIPT_HOOK_EFFECT_HIT_TARGET;
-            break;
-        default:
-            ASSERT(false);
-            return false;
+            case SPELL_EFFECT_HANDLE_LAUNCH:
+                effItr = (*scritr)->OnEffectLaunch.begin();
+                effEndItr = (*scritr)->OnEffectLaunch.end();
+                hookType = SPELL_SCRIPT_HOOK_EFFECT_LAUNCH;
+                break;
+            case SPELL_EFFECT_HANDLE_LAUNCH_TARGET:
+                effItr = (*scritr)->OnEffectLaunchTarget.begin();
+                effEndItr = (*scritr)->OnEffectLaunchTarget.end();
+                hookType = SPELL_SCRIPT_HOOK_EFFECT_LAUNCH_TARGET;
+                break;
+            case SPELL_EFFECT_HANDLE_HIT:
+                effItr = (*scritr)->OnEffectHit.begin();
+                effEndItr = (*scritr)->OnEffectHit.end();
+                hookType = SPELL_SCRIPT_HOOK_EFFECT_HIT;
+                break;
+            case SPELL_EFFECT_HANDLE_HIT_TARGET:
+                effItr = (*scritr)->OnEffectHitTarget.begin();
+                effEndItr = (*scritr)->OnEffectHitTarget.end();
+                hookType = SPELL_SCRIPT_HOOK_EFFECT_HIT_TARGET;
+                break;
+            default:
+                ABORT();
+                return false;
         }
-        m_loadedScript->_PrepareScriptCall(hookType);
+        (*scritr)->_PrepareScriptCall(hookType);
         for (; effItr != effEndItr; ++effItr)
             // effect execution can be prevented
-            if (!m_loadedScript->_IsEffectPrevented(effIndex) && (*effItr).IsEffectAffected(m_spellInfo, effIndex))
-                (*effItr).Call(m_loadedScript, effIndex, _damage);
+            if (!(*scritr)->_IsEffectPrevented(effIndex) && (*effItr).IsEffectAffected(m_spellInfo, effIndex))
+                (*effItr).Call(*scritr, effIndex);
 
         if (!preventDefault)
-            preventDefault = m_loadedScript->_IsDefaultEffectPrevented(effIndex);
+            preventDefault = (*scritr)->_IsDefaultEffectPrevented(effIndex);
 
-        m_loadedScript->_FinishScriptCall();
+        (*scritr)->_FinishScriptCall();
     }
-
     return preventDefault;
 }
 
@@ -8494,16 +8497,25 @@ void Spell::CallScriptAfterCastHandlers()
     }
 }
 
-void Spell::CallScriptSpellStartHandlers()
+void Spell::OnSpellLaunch()
 {
-    for (auto & m_loadedScript : m_loadedScripts)
-    {
-        m_loadedScript->_PrepareScriptCall(SPELL_SCRIPT_HOOK_ON_START);
-        auto hookItrEnd = m_loadedScript->OnSpellStart.end(), hookItr = m_loadedScript->OnSpellStart.begin();
-        for (; hookItr != hookItrEnd; ++hookItr)
-            (*hookItr).Call(m_loadedScript);
+    if (!m_caster || !m_caster->IsInWorld())
+        return;
 
-        m_loadedScript->_FinishScriptCall();
+    // Make sure the player is sending a valid GO target and lock ID. SPELL_EFFECT_OPEN_LOCK
+    // can succeed with a lockId of 0
+    if (m_spellInfo->Id == 21651)
+    {
+        GameObject* target = m_caster->GetMap()->GetGameObject(m_targets.GetObjectTargetGUID());
+        if (!target)
+            return;
+
+        LockEntry const *lockInfo = sLockStore.LookupEntry(target->GetGOInfo()->GetLockId());
+        if (lockInfo && lockInfo->Index[1] == LOCKTYPE_SLOW_OPEN)
+        {
+            //24390 periodically triggers 24391
+            m_caster->CastSpell(target, 24390, true);
+        }
     }
 }
 
@@ -8552,17 +8564,17 @@ void Spell::CallScriptBeforeCastHandlers()
     }
 }
 
-void Spell::CallScriptBeforeHitHandlers()
+void Spell::CallScriptBeforeHitHandlers(SpellMissInfo missInfo)
 {
-    for (auto & m_loadedScript : m_loadedScripts)
+    for (auto scritr = m_loadedScripts.begin(); scritr != m_loadedScripts.end(); ++scritr)
     {
-        m_loadedScript->_InitHit();
-        m_loadedScript->_PrepareScriptCall(SPELL_SCRIPT_HOOK_BEFORE_HIT);
-        auto hookItrEnd = m_loadedScript->BeforeHit.end(), hookItr = m_loadedScript->BeforeHit.begin();
+        (*scritr)->_InitHit();
+        (*scritr)->_PrepareScriptCall(SPELL_SCRIPT_HOOK_BEFORE_HIT);
+        auto hookItrEnd = (*scritr)->BeforeHit.end(), hookItr = (*scritr)->BeforeHit.begin();
         for (; hookItr != hookItrEnd; ++hookItr)
-            (*hookItr).Call(m_loadedScript);
+            (*hookItr).Call(*scritr, missInfo);
 
-        m_loadedScript->_FinishScriptCall();
+        (*scritr)->_FinishScriptCall();
     }
 }
 

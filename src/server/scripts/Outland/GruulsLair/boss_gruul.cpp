@@ -280,7 +280,7 @@ class spell_gruul_shatter : public SpellScriptLoader
                 return ValidateSpellInfo({ SPELL_STONED, SPELL_SHATTER_EFFECT });
             }
 
-            void HandleScript(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
+            void HandleScript(SpellEffIndex /*effIndex*/)
             {
                 if (Unit* target = GetHitUnit())
                 {

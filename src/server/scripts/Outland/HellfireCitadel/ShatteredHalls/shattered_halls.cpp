@@ -224,7 +224,7 @@ class spell_remove_kargath_executioner : public SpellScriptLoader
         {
             PrepareSpellScript(spell_remove_kargath_executioner_SpellScript);
 
-            void HandleScript(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
+            void HandleScript(SpellEffIndex /*effIndex*/)
             {
                 Unit* target = GetCaster();
 

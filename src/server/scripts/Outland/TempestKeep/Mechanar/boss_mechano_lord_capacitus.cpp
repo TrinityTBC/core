@@ -202,7 +202,7 @@ class spell_capacitus_polarity_charge : public SpellScriptLoader
                 }
             }
 
-            void HandleDamage(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
+            void HandleDamage(SpellEffIndex /*effIndex*/)
             {
                 if (!GetTriggeringSpell())
                     return;
@@ -240,7 +240,7 @@ class spell_capacitus_polarity_shift : public SpellScriptLoader
                 return ValidateSpellInfo({ SPELL_POSITIVE_POLARITY, SPELL_NEGATIVE_POLARITY });
             }
 
-            void HandleDummy(SpellEffIndex /* effIndex */, int32& /*dmg*/)
+            void HandleDummy(SpellEffIndex /* effIndex */)
             {
                 Unit* target = GetHitUnit();
                 Unit* caster = GetCaster();

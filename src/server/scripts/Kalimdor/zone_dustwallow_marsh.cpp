@@ -121,7 +121,7 @@ class spell_ooze_zap : public SpellScriptLoader
                 return SPELL_CAST_OK;
             }
 
-            void HandleDummy(SpellEffIndex effIndex, int32& /*dmg*/)
+            void HandleDummy(SpellEffIndex effIndex)
             {
                 PreventHitDefaultEffect(effIndex);
                 if (GetHitUnit())
@@ -155,7 +155,7 @@ class spell_ooze_zap_channel_end : public SpellScriptLoader
                 return ValidateSpellInfo({ SPELL_OOZE_ZAP_CHANNEL_END });
             }
 
-            void HandleDummy(SpellEffIndex effIndex, int32& /*dmg*/)
+            void HandleDummy(SpellEffIndex effIndex)
             {
                 PreventHitDefaultEffect(effIndex);
                 if (Player* player = GetCaster()->ToPlayer())
@@ -201,7 +201,7 @@ class spell_energize_aoe : public SpellScriptLoader
                 targets.push_back(GetCaster());
             }
 
-            void HandleScript(SpellEffIndex effIndex, int32& /*dmg*/)
+            void HandleScript(SpellEffIndex effIndex)
             {
                 PreventHitDefaultEffect(effIndex);
                 GetCaster()->CastSpell(GetCaster(), uint32(GetEffectValue()), true);

@@ -260,7 +260,7 @@ public:
             return ValidateSpellInfo({ SPELL_TRUE_FULFILLMENT_2, SPELL_GENERIC_DISMOUNT });
         }
 
-        void HandleEffect(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
+        void HandleEffect(SpellEffIndex /*effIndex*/)
         {
             GetCaster()->CastSpell(GetHitUnit(), SPELL_GENERIC_DISMOUNT, true);
             GetCaster()->CastSpell(GetHitUnit(), SPELL_TRUE_FULFILLMENT_2, true);

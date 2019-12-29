@@ -183,7 +183,7 @@ class spell_murmur_sonic_boom : public SpellScriptLoader
                 return ValidateSpellInfo({ SPELL_SONIC_BOOM_EFFECT });
             }
 
-            void HandleEffect(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
+            void HandleEffect(SpellEffIndex /*effIndex*/)
             {
                 GetCaster()->CastSpell(nullptr, SPELL_SONIC_BOOM_EFFECT, true);
             }

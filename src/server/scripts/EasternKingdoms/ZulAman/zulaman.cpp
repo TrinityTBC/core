@@ -447,7 +447,7 @@ class spell_banging_the_gong : public SpellScriptLoader
         {
             PrepareSpellScript(spell_banging_the_gong_SpellScript);
 
-            void Activate(SpellEffIndex index, int32& /*dmg*/)
+            void Activate(SpellEffIndex index)
             {
                 PreventHitDefaultEffect(index);
                 GetHitGObj()->SendCustomAnim(0);

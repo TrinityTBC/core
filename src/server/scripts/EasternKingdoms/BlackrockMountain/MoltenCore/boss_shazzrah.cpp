@@ -144,7 +144,7 @@ class spell_shazzrah_gate_dummy : public SpellScriptLoader
                 targets.push_back(target);
             }
 
-            void HandleScript(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
+            void HandleScript(SpellEffIndex /*effIndex*/)
             {
                 if (Unit* target = GetHitUnit())
                 {

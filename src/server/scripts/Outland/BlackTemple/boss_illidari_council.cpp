@@ -560,7 +560,7 @@ class spell_illidari_council_empyreal_balance : public SpellScript
 {
     PrepareSpellScript(spell_illidari_council_empyreal_balance);
 
-    void HandleDummy(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
+    void HandleDummy(SpellEffIndex /*effIndex*/)
     {
         Unit* target = GetHitUnit();
         uint32 health = GetCaster()->CountPctFromCurHealth(25);
@@ -579,7 +579,7 @@ class spell_illidari_council_empyreal_equivalency : public SpellScript
 {
     PrepareSpellScript(spell_illidari_council_empyreal_equivalency);
 
-    void HandleScript(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
+    void HandleScript(SpellEffIndex /*effIndex*/)
     {
         GetHitUnit()->SetHealth(GetCaster()->CountPctFromCurHealth(25));
     }
@@ -723,7 +723,7 @@ class spell_illidari_council_judgement : public SpellScript
         });
     }
 
-    void HandleScript(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
+    void HandleScript(SpellEffIndex /*effIndex*/)
     {
         Unit* caster = GetCaster();
         Unit* target = GetHitUnit();

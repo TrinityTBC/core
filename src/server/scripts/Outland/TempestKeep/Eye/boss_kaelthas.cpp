@@ -1467,7 +1467,7 @@ class spell_kael_gravity_lapse : public SpellScriptLoader
                 return ValidateSpellInfo(GravityLapseSpells);
             }
 
-            void HandleScript(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
+            void HandleScript(SpellEffIndex /*effIndex*/)
             {
                 GetCaster()->CastSpell(GetHitUnit(), GravityLapseSpells[_targetCount], true);
                 GetHitUnit()->CastSpell(GetHitUnit(), SPELL_GRAVITY_LAPSE_PERIODIC, true);

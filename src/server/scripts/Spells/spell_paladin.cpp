@@ -65,11 +65,14 @@ class spell_pal_judgement_of_command : public SpellScript
 {
     PrepareSpellScript(spell_pal_judgement_of_command);
 
-    void HandleDamage(SpellEffIndex /*effIndex*/, int32& damage)
+    void HandleDamage(SpellEffIndex /*effIndex*/)
     {
+        int32 damage = GetEffectValue();
         if (Unit* target = GetHitUnit())
             if (!target->HasUnitState(UNIT_STATE_STUNNED))
                 damage /= 2;
+
+        SetEffectValue(damage);
     }
 
     void Register() override
@@ -748,7 +751,7 @@ class spell_pal_righteous_defense : public SpellScript
         return SPELL_CAST_OK;
     }
 
-    void HandleDummy(SpellEffIndex /*effIndex*/, int32& damage)
+    void HandleDummy(SpellEffIndex /*effIndex*/)
     {
         if (Unit* target = GetHitUnit())
         {
@@ -821,7 +824,7 @@ class spell_pal_judgement : public SpellScript
 {
     PrepareSpellScript(spell_pal_judgement);
 
-    void HandleDummy(SpellEffIndex /*effIndex*/, int32& damage)
+    void HandleDummy(SpellEffIndex /*effIndex*/)
     {
         Unit* caster = GetCaster();
         Unit* target = GetHitUnit();

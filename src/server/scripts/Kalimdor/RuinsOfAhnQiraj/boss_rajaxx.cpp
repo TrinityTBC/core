@@ -139,7 +139,7 @@ class spell_rajaxx_thundercrash : public SpellScript
 {
     PrepareSpellScript(spell_rajaxx_thundercrash);
 
-    void HandleDamageCalc(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
+    void HandleDamageCalc(SpellEffIndex /*effIndex*/)
     {
         int32 damage = GetHitUnit()->GetHealth() / 2;
         if (damage < 200)

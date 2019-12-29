@@ -1898,7 +1898,7 @@ class spell_illidan_draw_soul : public SpellScript
         return ValidateSpellInfo({ SPELL_DRAW_SOUL_HEAL });
     }
 
-    void HandleScriptEffect(SpellEffIndex effIndex, int32& /*dmg*/)
+    void HandleScriptEffect(SpellEffIndex effIndex)
     {
         PreventHitDefaultEffect(effIndex);
         GetHitUnit()->CastSpell(GetCaster(), SPELL_DRAW_SOUL_HEAL, true);
@@ -1987,7 +1987,7 @@ class spell_illidan_throw_warglaive : public SpellScript
 {
     PrepareSpellScript(spell_illidan_throw_warglaive);
 
-    void HandleDummy(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
+    void HandleDummy(SpellEffIndex /*effIndex*/)
     {
         Unit* target = GetHitUnit();
         target->m_Events.AddEvent(new SummonWarglaiveEvent(target), target->m_Events.CalculateTime(1000));
@@ -2039,7 +2039,7 @@ class spell_illidan_flame_blast : public SpellScript
         return ValidateSpellInfo({ SPELL_BLAZE_SUMMON });
     }
 
-    void HandleBlaze(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
+    void HandleBlaze(SpellEffIndex /*effIndex*/)
     {
         Unit* target = GetHitUnit();
         if (target->GetTypeId() == TYPEID_PLAYER)
@@ -2057,7 +2057,7 @@ class spell_illidan_return_glaives : public SpellScript
 {
     PrepareSpellScript(spell_illidan_return_glaives);
 
-    void HandleScriptEffect(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
+    void HandleScriptEffect(SpellEffIndex /*effIndex*/)
     {
         GetHitUnit()->SendPlaySpellVisual(SPELL_GLAIVE_VISUAL_KIT);
         if (Creature* caster = GetCaster()->ToCreature())
@@ -2090,7 +2090,7 @@ class spell_illidan_agonizing_flames : public SpellScript
         targets.push_back(target);
     }
 
-    void HandleScript(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
+    void HandleScript(SpellEffIndex /*effIndex*/)
     {
         GetCaster()->CastSpell(GetHitUnit(), SPELL_AGONIZING_FLAMES, true);
     }
@@ -2173,7 +2173,7 @@ class spell_illidan_flame_burst : public SpellScript
         return ValidateSpellInfo({ SPELL_FLAME_BURST_EFFECT });
     }
 
-    void HandleScriptEffect(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
+    void HandleScriptEffect(SpellEffIndex /*effIndex*/)
     {
         GetHitUnit()->CastSpell(GetHitUnit(), SPELL_FLAME_BURST_EFFECT, true);
     }
@@ -2206,7 +2206,7 @@ class spell_illidan_find_target : public SpellScript
         targets.push_back(target);
     }
 
-    void HandleScript(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
+    void HandleScript(SpellEffIndex /*effIndex*/)
     {
         Unit* target = GetHitUnit();
         if (Creature* caster = GetCaster()->ToCreature())
@@ -2245,7 +2245,7 @@ class spell_illidan_cage_trap : public SpellScript
 {
     PrepareSpellScript(spell_illidan_cage_trap);
 
-    void HandleScriptEffect(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
+    void HandleScriptEffect(SpellEffIndex /*effIndex*/)
     {
         Creature* target = GetHitCreature();
         Creature* caster = GetCaster()->ToCreature();
@@ -2342,7 +2342,7 @@ class spell_illidan_despawn_akama : public SpellScript
 {
     PrepareSpellScript(spell_illidan_despawn_akama);
 
-    void HandleDummy(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
+    void HandleDummy(SpellEffIndex /*effIndex*/)
     {
         if (Creature* target = GetHitCreature())
             target->DespawnOrUnsummon(Seconds(1));

@@ -555,7 +555,7 @@ public:
             return ValidateSpellInfo({ procSpellId });
         }
 
-        void HandleDummy(SpellEffIndex /*effIndex*/, int32& damage)
+        void HandleDummy(SpellEffIndex /*effIndex*/)
         {
             if (GetCaster()->GetTypeId() != TYPEID_PLAYER)
                 return;
@@ -570,7 +570,7 @@ public:
             if (item->GetSlot() == EQUIPMENT_SLOT_OFFHAND)
                 attType = OFF_ATTACK;
 
-            float basePoints = damage;
+            float basePoints = float(GetEffectValue());
 
             // Flametongue max damage is normalized based on a 4.0 speed weapon
             // Tooltip says max damage = BasePoints / 25, so BasePoints / 25 / 4 to get base damage per 1.0s AS

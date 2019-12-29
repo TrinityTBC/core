@@ -258,7 +258,7 @@ class spell_egg_explosion : public SpellScriptLoader
                     buru->AI()->DoAction(ACTION_EXPLODE);
             }
 
-            void HandleDummyHitTarget(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
+            void HandleDummyHitTarget(SpellEffIndex /*effIndex*/)
             {
                 if (Unit* target = GetHitUnit())
                     Unit::DealDamage(GetCaster(), target, -16 * GetCaster()->GetDistance(target) + 500);

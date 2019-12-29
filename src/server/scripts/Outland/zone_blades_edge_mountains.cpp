@@ -1035,7 +1035,7 @@ class spell_oscillating_field : public SpellScriptLoader
         {
             PrepareSpellScript(spell_oscillating_field_SpellScript);
 
-            void HandleEffect(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
+            void HandleEffect(SpellEffIndex /*effIndex*/)
             {
                 if (Player* player = GetHitPlayer())
                     if (player->GetAuraCount(SPELL_OSCILLATION_FIELD) == 5 && player->GetQuestStatus(QUEST_GAUGING_THE_RESONANT_FREQUENCY) == QUEST_STATUS_INCOMPLETE)

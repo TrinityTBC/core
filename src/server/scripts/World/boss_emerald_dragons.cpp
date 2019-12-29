@@ -787,7 +787,7 @@ class spell_mark_of_nature : public SpellScriptLoader
                 targets.remove_if(MarkOfNatureTargetSelector());
             }
 
-            void HandleEffect(SpellEffIndex effIndex, int32& /*dmg*/)
+            void HandleEffect(SpellEffIndex effIndex)
             {
                 PreventHitDefaultEffect(effIndex);
                 GetHitUnit()->CastSpell(GetHitUnit(), SPELL_AURA_OF_NATURE, true);

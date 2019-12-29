@@ -742,9 +742,10 @@ class TC_GAME_API Spell
         void CallScriptOnCastHandlers();
         void CallScriptAfterCastHandlers();
         SpellCastResult CallScriptCheckCastHandlers();
-        void CallScriptSpellStartHandlers();
-        bool CallScriptEffectHandlers(SpellEffIndex effIndex, SpellEffectHandleMode mode, int32& damage);
-        void CallScriptBeforeHitHandlers();
+        void OnSpellLaunch();
+        bool CallScriptEffectHandlers(SpellEffIndex effIndex, SpellEffectHandleMode mode);
+        void CallScriptSuccessfulDispel(SpellEffIndex effIndex);
+        void CallScriptBeforeHitHandlers(SpellMissInfo missInfo);
         void CallScriptOnHitHandlers();
         void CallScriptAfterHitHandlers();
         void CallScriptObjectAreaTargetSelectHandlers(std::list<WorldObject*>& targets, SpellEffIndex effIndex, SpellImplicitTargetInfo const& targetType);

@@ -171,7 +171,7 @@ public:
             return GetCaster()->GetTypeId() == TYPEID_PLAYER;
         }
 
-        void HandleDummy(SpellEffIndex /*effIndex*/, int32& /*damage*/)
+        void HandleDummy(SpellEffIndex /*effIndex*/)
         {
             Unit* caster = GetCaster();
             caster->GetSpellHistory()->ResetCooldowns([caster](SpellHistory::CooldownStorageType::iterator itr) -> bool
@@ -214,7 +214,7 @@ class spell_rog_shiv : public SpellScript
         return ValidateSpellInfo({ SPELL_ROGUE_SHIV_TRIGGERED });
     }
 
-    void HandleDummy(SpellEffIndex /*effIndex*/, int32& /*damage*/)
+    void HandleDummy(SpellEffIndex /*effIndex*/)
     {
         Unit* caster = GetCaster();
         if (Unit* unitTarget = GetHitUnit())

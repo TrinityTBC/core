@@ -186,7 +186,7 @@ class spell_talon_king_ikiss_blink : public SpellScriptLoader
                 targets.push_back(target);
             }
 
-            void HandleDummyHitTarget(SpellEffIndex effIndex, int32& /*dmg*/)
+            void HandleDummyHitTarget(SpellEffIndex effIndex)
             {
                 PreventHitDefaultEffect(effIndex);
                 GetHitUnit()->CastSpell(GetCaster(), SPELL_BLINK_TELEPORT, true);

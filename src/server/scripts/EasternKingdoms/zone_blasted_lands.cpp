@@ -51,7 +51,7 @@ class spell_razelikh_teleport_group : public SpellScriptLoader
                 return ValidateSpellInfo({ SPELL_TELEPORT_SINGLE, SPELL_TELEPORT_SINGLE_IN_GROUP });
             }
 
-            void HandleScriptEffect(SpellEffIndex /* effIndex */, int32& /*dmg*/)
+            void HandleScriptEffect(SpellEffIndex /* effIndex */)
             {
                 if (Player* player = GetHitPlayer())
                 {

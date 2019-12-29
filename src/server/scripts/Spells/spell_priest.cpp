@@ -179,7 +179,7 @@ public:
             return SPELL_FAILED_CASTER_AURASTATE;
         }
 
-        void HandleEffectHit(SpellEffIndex /*effIndex*/, int32& /*damage*/)
+        void HandleEffectHit(SpellEffIndex /*effIndex*/)
         {
             auto appliedAuras = GetCaster()->GetAppliedAuras();
             for (auto itr : appliedAuras)
@@ -223,8 +223,9 @@ public:
     {
         PrepareSpellScript(spell_pri_prayer_of_mending_SpellScript);
 
-        void OnLaunch(SpellEffIndex effIndex, int32& damage)
+        void OnLaunch(SpellEffIndex effIndex)
         {
+            int32 damage = GetEffectValue();
             if (Unit* caster = GetCaster())
             {
                 float bonus = 0.43f; //value from DrDamage (per proc)
@@ -236,6 +237,7 @@ public:
 
                 // Focused Power
                 damage *= caster->GetTotalAuraMultiplier(SPELL_AURA_MOD_HEALING_DONE_PERCENT);
+                SetEffectValue(damage);
             }
         }
 

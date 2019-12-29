@@ -220,7 +220,7 @@ class spell_warr_deep_wounds : public SpellScript
             });
     }
 
-    void HandleDummy(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
+    void HandleDummy(SpellEffIndex /*effIndex*/)
     {
         int32 damage = GetEffectValue();
         Unit* caster = GetCaster();
@@ -297,7 +297,7 @@ class spell_warr_bloodthirst : public SpellScript
 {
     PrepareSpellScript(spell_warr_bloodthirst);
 
-    void HandleDamage(SpellEffIndex /*effIndex*/, int32& /*damage*/)
+    void HandleDamage(SpellEffIndex /*effIndex*/)
     {
         uint32 APbonus = GetCaster()->GetTotalAttackPowerValue(BASE_ATTACK);
         if (Unit* victim = GetHitUnit())
@@ -306,7 +306,7 @@ class spell_warr_bloodthirst : public SpellScript
         SetEffectValue(CalculatePct(APbonus, GetEffectValue()));
     }
 
-    void HandleDummy(SpellEffIndex /*effIndex*/, int32& /*damage*/)
+    void HandleDummy(SpellEffIndex /*effIndex*/)
     {
 #ifdef LICH_KING
         uint32 spellId = SPELL_WARRIOR_BLOODTHIRST;

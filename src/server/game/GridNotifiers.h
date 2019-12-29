@@ -11,6 +11,8 @@
 #include "GameObject.h"
 #include "Player.h"
 #include "Unit.h"
+#include "Spell.h"
+#include "SpellInfo.h"
 
 //class Map;
 

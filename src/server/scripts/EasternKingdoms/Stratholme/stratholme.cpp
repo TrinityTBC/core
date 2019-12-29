@@ -340,7 +340,7 @@ class spell_ysida_saved_credit : public SpellScript
         });
     }
 
-    void HandleScript(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
+    void HandleScript(SpellEffIndex /*effIndex*/)
     {
         if (Player* player = GetHitUnit()->ToPlayer())
         {

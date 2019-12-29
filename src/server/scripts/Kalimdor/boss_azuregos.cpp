@@ -193,7 +193,7 @@ class spell_mark_of_frost : public SpellScriptLoader
                 targets.remove_if(MarkOfFrostTargetSelector());
             }
 
-            void HandleEffect(SpellEffIndex effIndex, int32& /*dmg*/)
+            void HandleEffect(SpellEffIndex effIndex)
             {
                 PreventHitDefaultEffect(effIndex);
                 GetHitUnit()->CastSpell(GetHitUnit(), SPELL_AURA_OF_FROST, true);

@@ -410,7 +410,7 @@ public:
             return ValidateSpellInfo({ SPELL_WARLOCK_LIFE_TAP_ENERGIZE, SPELL_WARLOCK_LIFE_TAP_ENERGIZE_2 });
         }
 
-        void HandleDummy(SpellEffIndex /*effIndex*/, int32& damage)
+        void HandleDummy(SpellEffIndex /*effIndex*/)
         {
             Player* caster = GetCaster()->ToPlayer();
             if (Unit* target = GetHitUnit())
@@ -555,7 +555,7 @@ class spell_warl_inferno : public SpellScript
         return ValidateSpellInfo({ SPELL_WARLOCK_ENSLAVE_DEMON, SPELL_WARLOCK_INFERNO_EFFECT });
     }
 
-    void HandleSummon(SpellEffIndex effIndex, int32& /*damage*/)
+    void HandleSummon(SpellEffIndex effIndex)
     {
         PreventHitDefaultEffect(effIndex);
         

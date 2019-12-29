@@ -431,7 +431,7 @@ class spell_direbrew_summon_mole_machine_target_picker : public SpellScript
         return ValidateSpellInfo({ SPELL_MOLE_MACHINE_MINION_SUMMONER });
     }
 
-    void HandleScriptEffect(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
+    void HandleScriptEffect(SpellEffIndex /*effIndex*/)
     {
         GetCaster()->CastSpell(GetHitUnit(), SPELL_MOLE_MACHINE_MINION_SUMMONER, true);
     }
@@ -469,7 +469,7 @@ class spell_send_mug_target_picker : public SpellScript
         targets.push_back(target);
     }
 
-    void HandleDummy(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
+    void HandleDummy(SpellEffIndex /*effIndex*/)
     {
         Unit* caster = GetCaster();
         caster->GetAI()->SetGUID(GetHitUnit()->GetGUID(), DATA_TARGET_GUID);
@@ -493,7 +493,7 @@ class spell_request_second_mug : public SpellScript
         return ValidateSpellInfo({ SPELL_SEND_SECOND_MUG });
     }
 
-    void HandleScriptEffect(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
+    void HandleScriptEffect(SpellEffIndex /*effIndex*/)
     {
         GetHitUnit()->CastSpell(GetCaster(), SPELL_SEND_SECOND_MUG, true);
     }

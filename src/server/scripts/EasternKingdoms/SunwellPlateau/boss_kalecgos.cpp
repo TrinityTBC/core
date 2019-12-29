@@ -604,7 +604,7 @@ class spell_kalecgos_tap_check : public SpellScript
         return ValidateSpellInfo({ uint32(spellInfo->Effects[EFFECT_0].CalcValue()) });
     }
 
-    void HandleDummy(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
+    void HandleDummy(SpellEffIndex /*effIndex*/)
     {
         GetHitUnit()->CastSpell(GetCaster(), (uint32)GetSpellInfo()->Effects[EFFECT_0].CalcValue(), true);
     }
@@ -650,7 +650,7 @@ class spell_kalecgos_spectral_blast : public SpellScript
         targets.remove_if(SpectralBlastSelector(GetCaster()));
     }
 
-    void HandleDummy(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
+    void HandleDummy(SpellEffIndex /*effIndex*/)
     {
         Unit* caster = GetCaster();
         Unit* target = GetHitUnit();
@@ -683,7 +683,7 @@ class spell_kalecgos_spectral_realm_trigger : public SpellScript
         });
     }
 
-    void HandleDummy(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
+    void HandleDummy(SpellEffIndex /*effIndex*/)
     {
         Unit* target = GetHitUnit();
         target->CastSpell(target, SPELL_SPECTRAL_REALM_TELEPORT, true);

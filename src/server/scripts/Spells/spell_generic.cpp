@@ -39,7 +39,7 @@ public:
             return SPELL_CAST_OK;
         }
 
-        void HandleDummy(SpellEffIndex /*effIndex*/, int32& /*damage*/)
+        void HandleDummy(SpellEffIndex /*effIndex*/)
         {
             GetCaster()->CastSpell(GetCaster(), SPELL_CANNIBALIZE_TRIGGERED, TRIGGERED_NONE);
         }
@@ -65,7 +65,7 @@ public:
 
     class spell_racial_stoneform_AuraScript : public AuraScript
     {
-        PrepareAuraScript(spell_racial_stoneform_AuraScript)
+        PrepareAuraScript(spell_racial_stoneform_AuraScript);
 
         void HandleEffectApply(AuraEffect const* aurEff, AuraEffectHandleModes /*mode*/)
         {
@@ -99,7 +99,7 @@ public:
 
     class spell_archimonde_doomfire_AuraScript : public AuraScript
     {
-        PrepareAuraScript(spell_archimonde_doomfire_AuraScript)
+        PrepareAuraScript(spell_archimonde_doomfire_AuraScript);
 
         //MARCH PA + utiliser le tick count pour les degats + prendre les degats du spell parent
         void PeriodicTick(AuraEffect const* aurEff)
@@ -369,7 +369,7 @@ class spell_gen_elune_candle : public SpellScript
             });
     }
 
-    void HandleScript(SpellEffIndex /*effIndex*/, int32& /*damage*/)
+    void HandleScript(SpellEffIndex /*effIndex*/)
     {
         uint32 spellId = 0;
 
@@ -400,31 +400,6 @@ class spell_gen_elune_candle : public SpellScript
     void Register() override
     {
         OnEffectHitTarget += SpellEffectFn(spell_gen_elune_candle::HandleScript, EFFECT_0, SPELL_EFFECT_DUMMY);
-    }
-};
-
-// 21651 - Battleground flag opening spell - Play visual effect
-class spell_opening : public SpellScript
-{
-    PrepareSpellScript(spell_opening);
-
-    void HandleSpellStart()
-    {
-        GameObject* target = GetCaster()->GetMap()->GetGameObject(GetSpell()->m_targets.GetObjectTargetGUID());
-        if (!target)
-            return;
-
-        LockEntry const *lockInfo = sLockStore.LookupEntry(target->GetGOInfo()->GetLockId());
-        if (!lockInfo || !(lockInfo->Index[1] == LOCKTYPE_SLOW_OPEN))
-            return;
-
-        //24390 periodically triggers 24391
-        GetCaster()->CastSpell(target, 24390, true);
-    }
-
-    void Register() override
-    {
-        OnSpellStart += SpellCastFn(spell_opening::HandleSpellStart);
     }
 };
 
@@ -494,7 +469,6 @@ void AddSC_generic_spell_scripts()
     RegisterAuraScript(spell_gen_enlightenment);
     RegisterAuraScript(spell_gen_creature_permanent_feign_death);
     RegisterSpellScript(spell_gen_elune_candle);
-    RegisterSpellScript(spell_opening);
     RegisterSpellScript(spell_mana_tap);
     RegisterAuraScript(aura_paralytic_poison);
 }

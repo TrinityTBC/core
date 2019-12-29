@@ -214,7 +214,7 @@ class spell_najentus_needle_spine : public SpellScript
         targets.remove_if(Trinity::UnitAuraCheck(true, SPELL_IMPALING_SPINE));
     }
 
-    void HandleScript(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
+    void HandleScript(SpellEffIndex /*effIndex*/)
     {
         GetCaster()->CastSpell(GetHitUnit(), SPELL_NEEDLE_SPINE, true);
     }

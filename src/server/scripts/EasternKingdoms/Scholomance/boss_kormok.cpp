@@ -157,7 +157,7 @@ class spell_kormok_summon_bone_mages : SpellScriptLoader
                 return ValidateSpellInfo(SummonMageSpells);
             }
 
-            void HandleScript(SpellEffIndex effIndex, int32& /*dmg*/)
+            void HandleScript(SpellEffIndex effIndex)
             {
                 PreventHitDefaultEffect(effIndex);
                 for (uint32 i = 0; i < 2; ++i)
@@ -191,7 +191,7 @@ class spell_kormok_summon_bone_minions : SpellScriptLoader
             return ValidateSpellInfo({ SPELL_SUMMON_BONE_MINIONS });
         }
 
-        void HandleScript(SpellEffIndex effIndex, int32& /*dmg*/)
+        void HandleScript(SpellEffIndex effIndex)
         {
             PreventHitDefaultEffect(effIndex);
 

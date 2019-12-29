@@ -554,7 +554,7 @@ class spell_collecting_fallout : public SpellScriptLoader
         {
             PrepareSpellScript(spell_collecting_fallout_SpellScript);
 
-            void OnLaunch(SpellEffIndex effIndex, int32& /*dmg*/)
+            void OnLaunch(SpellEffIndex effIndex)
             {
                 // estimated 25% chance of success
                 if (roll_chance_i(25))
@@ -563,7 +563,7 @@ class spell_collecting_fallout : public SpellScriptLoader
                     PreventHitDefaultEffect(effIndex);
             }
 
-            void HandleFail(SpellEffIndex effIndex, int32& /*dmg*/)
+            void HandleFail(SpellEffIndex effIndex)
             {
                 if (!_spellFail)
                     PreventHitDefaultEffect(effIndex);

@@ -51,7 +51,7 @@ class spell_voodoo : public SpellScriptLoader
                 return ValidateSpellInfo({ SPELL_BREW, SPELL_GHOSTLY, SPELL_HEX1, SPELL_HEX2, SPELL_HEX3, SPELL_GROW, SPELL_LAUNCH });
             }
 
-            void HandleDummy(SpellEffIndex /*effIndex*/, int32& /*damage*/)
+            void HandleDummy(SpellEffIndex /*effIndex*/)
             {
                 uint32 spellid = RAND(SPELL_BREW, SPELL_GHOSTLY, RAND(SPELL_HEX1, SPELL_HEX2, SPELL_HEX3), SPELL_GROW, SPELL_LAUNCH);
                 if (Unit* target = GetHitUnit())

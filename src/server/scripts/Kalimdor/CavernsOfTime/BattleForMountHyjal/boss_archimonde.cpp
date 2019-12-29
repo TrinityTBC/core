@@ -555,7 +555,7 @@ class spell_archimonde_drain_world_tree_dummy : public SpellScriptLoader
                 return ValidateSpellInfo({ SPELL_DRAIN_WORLD_TREE_TRIGGERED });
             }
 
-            void HandleScript(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
+            void HandleScript(SpellEffIndex /*effIndex*/)
             {
                 if (Unit* target = GetHitUnit())
                     target->CastSpell(GetCaster(), SPELL_DRAIN_WORLD_TREE_TRIGGERED, true);

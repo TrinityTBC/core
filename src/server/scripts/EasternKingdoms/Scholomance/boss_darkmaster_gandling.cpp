@@ -177,7 +177,7 @@ class spell_shadow_portal : public SpellScriptLoader
                 return InstanceHasScript(GetCaster(), ScholomanceScriptName);
             }
 
-            void HandleCast(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
+            void HandleCast(SpellEffIndex /*effIndex*/)
             {
                 Unit* caster = GetCaster();
                 uint8 attempts = 0;
@@ -299,7 +299,7 @@ class spell_shadow_portal_rooms : public SpellScriptLoader
                 return InstanceHasScript(GetCaster(), ScholomanceScriptName);
             }
 
-            void HandleSendEvent(SpellEffIndex effIndex, int32& /*dmg*/)
+            void HandleSendEvent(SpellEffIndex effIndex)
             {
                 // If only one player in threat list fail spell
 

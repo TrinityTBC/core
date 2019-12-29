@@ -408,7 +408,7 @@ class spell_apothecary_lingering_fumes : public SpellScriptLoader
 
             }
 
-            void HandleScript(SpellEffIndex /*effindex*/, int32& /*dmg*/)
+            void HandleScript(SpellEffIndex /*effindex*/)
             {
                 Unit* caster = GetCaster();
                 caster->CastSpell(GetHitUnit(), SPELL_VALIDATE_AREA, true);
@@ -449,7 +449,7 @@ class spell_apothecary_validate_area : public SpellScriptLoader
             }
 
 
-            void HandleScript(SpellEffIndex /*effindex*/, int32& /*dmg*/)
+            void HandleScript(SpellEffIndex /*effindex*/)
             {
                 GetHitUnit()->CastSpell(GetHitUnit(), SPELL_BUNNY_LOCKDOWN, true);
                 GetCaster()->CastSpell(GetHitUnit(), RAND(SPELL_THROW_COLOGNE, SPELL_THROW_PERFUME), true);
@@ -478,7 +478,7 @@ class spell_apothecary_throw_cologne : public SpellScriptLoader
         {
             PrepareSpellScript(spell_apothecary_throw_cologne_SpellScript);
 
-            void HandleScript(SpellEffIndex /*effindex*/, int32& /*dmg*/)
+            void HandleScript(SpellEffIndex /*effindex*/)
             {
                 GetHitUnit()->CastSpell(GetHitUnit(), SPELL_COLOGNE_SPILL, true);
             }
@@ -505,7 +505,7 @@ class spell_apothecary_throw_perfume : public SpellScriptLoader
         {
             PrepareSpellScript(spell_apothecary_throw_perfume_SpellScript);
 
-            void HandleScript(SpellEffIndex /*effindex*/, int32& /*dmg*/)
+            void HandleScript(SpellEffIndex /*effindex*/)
             {
                 GetHitUnit()->CastSpell(GetHitUnit(), SPELL_PERFUME_SPILL, true);
             }

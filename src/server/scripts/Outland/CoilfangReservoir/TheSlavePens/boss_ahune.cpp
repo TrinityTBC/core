@@ -620,7 +620,7 @@ class spell_ahune_synch_health : public SpellScript
 {
     PrepareSpellScript(spell_ahune_synch_health);
 
-    void HandleScript(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
+    void HandleScript(SpellEffIndex /*effIndex*/)
     {
         GetHitUnit()->SetHealth(GetCaster()->GetHealth());
     }
@@ -757,7 +757,7 @@ class spell_ice_spear_target_picker : public SpellScript
         targets.push_back(target);
     }
 
-    void HandleDummy(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
+    void HandleDummy(SpellEffIndex /*effIndex*/)
     {
         GetCaster()->CastSpell(GetHitUnit(), SPELL_SUMMON_ICE_SPEAR_BUNNY, true);
     }
@@ -779,7 +779,7 @@ class spell_slippery_floor_periodic : public SpellScript
         return ValidateSpellInfo({ SPELL_SLIPPERY_FLOOR_SLIP });
     }
 
-    void HandleScriptEffect(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
+    void HandleScriptEffect(SpellEffIndex /*effIndex*/)
     {
         if (Unit* target = GetHitUnit())
             if (target->isMoving())
@@ -822,7 +822,7 @@ class spell_ahune_minion_despawner : public SpellScript
 {
     PrepareSpellScript(spell_ahune_minion_despawner);
 
-    void HandleScript(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
+    void HandleScript(SpellEffIndex /*effIndex*/)
     {
         if (GetHitCreature())
             GetHitCreature()->DespawnOrUnsummon();
@@ -844,7 +844,7 @@ class spell_ice_bombardment_dest_picker : public SpellScript
         return ValidateSpellInfo({ SPELL_ICE_BOMBARDMENT });
     }
 
-    void HandleScriptEffect(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
+    void HandleScriptEffect(SpellEffIndex /*effIndex*/)
     {
         GetCaster()->CastSpell(GetHitDest()->GetPosition(), SPELL_ICE_BOMBARDMENT, true);
     }

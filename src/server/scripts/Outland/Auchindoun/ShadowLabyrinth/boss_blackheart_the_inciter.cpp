@@ -210,7 +210,7 @@ class spell_blackheart_incite_chaos : public SpellScript
     static const uint8 NUM_INCITE_SPELLS = 5;
     static const uint32 INCITE_SPELLS[NUM_INCITE_SPELLS];
     uint8 i=0;
-    void HandleDummy(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
+    void HandleDummy(SpellEffIndex /*effIndex*/)
     {
         if (Unit* target = GetHitUnit())
         {

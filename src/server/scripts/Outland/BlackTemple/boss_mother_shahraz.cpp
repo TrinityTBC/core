@@ -208,7 +208,7 @@ class spell_mother_shahraz_fatal_attraction : public SpellScript
         dest.Relocate(GetCaster()->GetRandomNearPosition(50.0f));
     }
 
-    void HandleTeleport(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
+    void HandleTeleport(SpellEffIndex /*effIndex*/)
     {
         GetCaster()->CastSpell(GetHitUnit(), SPELL_FATAL_ATTRACTION, true);
     }
@@ -231,7 +231,7 @@ class spell_mother_shahraz_fatal_attraction_link : public SpellScript
         return ValidateSpellInfo({ SPELL_FATAL_ATTRACTION_DAMAGE });
     }
 
-    void HandleDummy(SpellEffIndex /*effIndex*/, int32& /*dmg*/)
+    void HandleDummy(SpellEffIndex /*effIndex*/)
     {
         GetCaster()->CastSpell(GetCaster(), SPELL_FATAL_ATTRACTION_DAMAGE, true);
     }

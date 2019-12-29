@@ -4,6 +4,7 @@
 #include "Pet.h"
 #include "SpellAuras.h"
 #include "SpellMgr.h"
+#include "SpellHistory.h"
 #include "World.h"
 #include "CreatureTextMgr.h"
 #include "GridNotifiers.h"
@@ -211,6 +212,7 @@ bool CreatureAI::_EnterEvadeMode(EvadeReason /*why*/)
     me->SetLastDamagedTime(0);
     me->SetCannotReachTarget(false);
     me->DoNotReacquireTarget();
+    me->GetSpellHistory()->ResetAllCooldowns();
 
     if (me->IsInEvadeMode())
         return false;

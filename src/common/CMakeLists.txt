@@ -86,5 +86,5 @@ endif()
 
 # Generate precompiled header
 if (USE_COREPCH)
-  add_cxx_pch(common ${PRIVATE_PCH_HEADER})
+  target_precompile_headers(common PRIVATE ${PRIVATE_PCH_HEADER})
 endif ()

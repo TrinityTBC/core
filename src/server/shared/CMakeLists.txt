@@ -55,7 +55,7 @@ endif()
 
 # Generate precompiled header
 if (USE_COREPCH)
-  add_cxx_pch(shared ${PRIVATE_PCH_HEADER})
+  target_precompile_headers(shared PRIVATE ${PRIVATE_PCH_HEADER})
 endif ()
 
 if(WIN32 AND MSVC)

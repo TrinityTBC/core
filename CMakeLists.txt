@@ -1,5 +1,5 @@
 
-cmake_minimum_required(VERSION 3.11)
+cmake_minimum_required(VERSION 3.16)
 
 # add this options before PROJECT keyword
 set(CMAKE_DISABLE_SOURCE_CHANGES ON)
@@ -23,8 +23,7 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH 1)
 
 # set macro-directory
 list(APPEND CMAKE_MODULE_PATH
-  "${CMAKE_SOURCE_DIR}/cmake/macros"
-  "${CMAKE_SOURCE_DIR}/dep/cotire/CMake")
+  "${CMAKE_SOURCE_DIR}/cmake/macros")
   
 # build in Release-mode by default if not explicitly set
 if( NOT CMAKE_BUILD_TYPE )
@@ -50,7 +49,6 @@ include(GroupSources)
 include(AutoCollect)
 
 find_package(MySQL)
-include(FindPCHSupport)
 
 if(NOT WITHOUT_GIT)
   find_package(Git)

@@ -73,5 +73,5 @@ endif()
 
 # Generate precompiled header
 if (USE_COREPCH)
-  add_cxx_pch(database ${PRIVATE_PCH_HEADER})
+  target_precompile_headers(database PRIVATE ${PRIVATE_PCH_HEADER})
 endif ()

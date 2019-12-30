@@ -88,7 +88,7 @@ endif()
 
 # Generate precompiled header
 if (USE_COREPCH)
-  add_cxx_pch(game ${PRIVATE_PCH_HEADER})
+  target_precompile_headers(game PRIVATE ${PRIVATE_PCH_HEADER})
 endif ()
 
 

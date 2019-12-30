@@ -223,7 +223,9 @@ set_target_properties(scripts
 # Generate precompiled header
 if (USE_SCRIPTPCH)
   list(APPEND ALL_SCRIPT_PROJECTS scripts ${DYNAMIC_SCRIPT_MODULE_PROJECTS})
-  add_cxx_pch("${ALL_SCRIPT_PROJECTS}" ${PRIVATE_PCH_HEADER})
+  foreach(script_project ${ALL_SCRIPT_PROJECTS})
+    target_precompile_headers(${script_project} PRIVATE ${PRIVATE_PCH_HEADER})
+  endforeach()
 endif()
 
 # Remove all shared libraries in the installl directory which

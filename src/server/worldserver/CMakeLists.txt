@@ -92,5 +92,5 @@ endif()
 
 # Generate precompiled header
 if( USE_COREPCH )
-  add_cxx_pch(worldserver ${PRIVATE_PCH_HEADER})
+  target_precompile_headers(worldserver PRIVATE ${PRIVATE_PCH_HEADER})
 endif()

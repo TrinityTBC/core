@@ -87,5 +87,5 @@ endif()
 
 # Generate precompiled header
 if (USE_COREPCH)
-  add_cxx_pch(authserver ${PRIVATE_PCH_HEADER})
+  target_precompile_headers(authserver PRIVATE ${PRIVATE_PCH_HEADER})
 endif()

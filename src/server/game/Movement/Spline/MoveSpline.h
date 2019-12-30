@@ -113,6 +113,10 @@ namespace Movement
 
         bool onTransport;
         std::string ToString() const;
+        bool HasStarted() const
+        {
+            return time_passed > 0;
+        }
     };
 }
 #endif // TRINITYSERVER_MOVEPLINE_H

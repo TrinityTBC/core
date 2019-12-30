@@ -34,12 +34,16 @@ addons:
 before_install:
   - git config user.email "travis@build.bot" && git config user.name "Travis CI"
   - git tag -a -m "Travis build" init
+  # Get cmake 3.16.2
+  - sudo mkdir /opt/cmake
+  - wget https://cmake.org/files/v3.16/cmake-3.16.2-Linux-x86_64.sh
+  - sudo sh cmake-3.16.2-Linux-x86_64.sh --prefix=/opt/cmake --skip-license
  
 install:
   - mysql -uroot -e 'create database test_mysql'
   - mkdir bin logs data
   - cd bin
-  - cmake ../ -DPLAYERBOT=0 -DTOOLS=0 -DSCRIPTS=dynamic -DTESTS=0 -DCMAKE_BUILD_TYPE=Debug -DWITH_COREDEBUG=1 -DCMAKE_INSTALL_PREFIX=check_install
+  - /opt/cmake/bin/cmake ../ -DPLAYERBOT=0 -DTOOLS=0 -DSCRIPTS=dynamic -DTESTS=0 -DCMAKE_BUILD_TYPE=Debug -DWITH_COREDEBUG=1 -DCMAKE_INSTALL_PREFIX=check_install
   - cd ..
 
 script:

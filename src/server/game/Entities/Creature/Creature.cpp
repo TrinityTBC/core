@@ -535,8 +535,6 @@ bool Creature::InitEntry(uint32 Entry, const CreatureData* data)
 
     SetByteValue(UNIT_FIELD_BYTES_0, UNIT_BYTES_0_OFFSET_GENDER, minfo->gender);
 
-    LastUsedScriptID = GetScriptId();
-
     m_homeless = m_creatureInfo->flags_extra & CREATURE_FLAG_EXTRA_HOMELESS;
 
     // Load creature equipment
@@ -1086,34 +1084,30 @@ bool Creature::Create(ObjectGuid::LowType guidlow, Map *map, uint32 phaseMask, u
     if (GetCreatureTemplate()->flags_extra & CREATURE_FLAG_EXTRA_DUNGEON_BOSS && map->IsDungeon())
         m_respawnDelay = 0; // special value, prevents respawn for dungeon bosses unless overridden
 
-
-    if (!(GetCreatureTemplate()->DifficultyFlags.Flags1 & CREATURE_DIFFICULTYFLAGS_NO_CORPSE_UPON_DEATH))
+    switch (GetCreatureTemplate()->rank)
     {
-        switch (GetCreatureTemplate()->rank)
-        {
-        case CREATURE_ELITE_RARE:
-            m_corpseDelay = sWorld->getConfig(CONFIG_CORPSE_DECAY_RARE);
-            break;
-        case CREATURE_ELITE_ELITE:
-            m_corpseDelay = sWorld->getConfig(CONFIG_CORPSE_DECAY_ELITE);
-            break;
-        case CREATURE_ELITE_RAREELITE:
-            m_corpseDelay = sWorld->getConfig(CONFIG_CORPSE_DECAY_RAREELITE);
-            break;
-        case CREATURE_ELITE_WORLDBOSS:
-            m_corpseDelay = sWorld->getConfig(CONFIG_CORPSE_DECAY_WORLDBOSS);
-            break;
-        default:
-            m_corpseDelay = sWorld->getConfig(CONFIG_CORPSE_DECAY_NORMAL);
-            break;
-        }
-    } //else, keep at 0
+    case CREATURE_ELITE_RARE:
+        m_corpseDelay = sWorld->getConfig(CONFIG_CORPSE_DECAY_RARE);
+        break;
+    case CREATURE_ELITE_ELITE:
+        m_corpseDelay = sWorld->getConfig(CONFIG_CORPSE_DECAY_ELITE);
+        break;
+    case CREATURE_ELITE_RAREELITE:
+        m_corpseDelay = sWorld->getConfig(CONFIG_CORPSE_DECAY_RAREELITE);
+        break;
+    case CREATURE_ELITE_WORLDBOSS:
+        m_corpseDelay = sWorld->getConfig(CONFIG_CORPSE_DECAY_WORLDBOSS);
+        break;
+    default:
+        m_corpseDelay = sWorld->getConfig(CONFIG_CORPSE_DECAY_NORMAL);
+        break;
+    }
 
 #ifdef LICH_KING
     m_positionZ += GetHoverOffset();
 #endif
 
-    //LastUsedScriptID = GetScriptId(); sunstrider: Moved to InitEntry
+    LastUsedScriptID = GetScriptId();
 
     if (IsSpiritHealer() || IsSpiritGuide() || (GetCreatureTemplate()->flags_extra & CREATURE_FLAG_EXTRA_GHOST_VISIBILITY))
     {

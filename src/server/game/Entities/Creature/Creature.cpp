@@ -255,7 +255,6 @@ Creature::Creature(bool isWorldObject) : Unit(isWorldObject), MapObject(),
     m_equipmentId(0), 
     m_originalEquipmentId(0),
     m_areaCombatTimer(0), 
-    m_relocateTimer(60000),
     m_AlreadyCallAssistance(false), 
     m_regenHealth(true), 
     m_meleeDamageSchoolMask(SPELL_SCHOOL_MASK_NORMAL),
@@ -277,7 +276,6 @@ Creature::Creature(bool isWorldObject) : Unit(isWorldObject), MapObject(),
     m_canFly(false),
     m_stealthAlertCooldown(0), 
     m_keepActiveTimer(0), 
-    m_homeless(false), 
     m_respawnCompatibilityMode(false),
     m_triggerJustAppeared(false),
     m_boundaryCheckTime(2500), 
@@ -535,8 +533,6 @@ bool Creature::InitEntry(uint32 Entry, const CreatureData* data)
 
     SetByteValue(UNIT_FIELD_BYTES_0, UNIT_BYTES_0_OFFSET_GENDER, minfo->gender);
 
-    m_homeless = m_creatureInfo->flags_extra & CREATURE_FLAG_EXTRA_HOMELESS;
-
     // Load creature equipment
     if(!data)
         LoadEquipment(-1); //sunstrider: load random equipment
@@ -631,9 +627,6 @@ bool Creature::UpdateEntry(uint32 Entry, const CreatureData* data)
     SetStatFlatModifier(UNIT_MOD_RESISTANCE_SHADOW, BASE_VALUE, float(cInfo->resistance[SPELL_SCHOOL_SHADOW-1]));
     SetStatFlatModifier(UNIT_MOD_RESISTANCE_ARCANE, BASE_VALUE, float(cInfo->resistance[SPELL_SCHOOL_ARCANE-1]));
 
-    if(GetCreatureTemplate()->flags_extra & CREATURE_FLAG_EXTRA_DUAL_WIELD)
-        SetCanDualWield(true);
-
     SetCanModifyStats(true);
     UpdateAllStats();
 
@@ -661,8 +654,6 @@ bool Creature::UpdateEntry(uint32 Entry, const CreatureData* data)
         ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_MOD_TAUNT, true);
         ApplySpellImmune(0, IMMUNITY_EFFECT,SPELL_EFFECT_ATTACK_ME, true);
     }
-    if(GetCreatureTemplate()->flags_extra & CREATURE_FLAG_EXTRA_NO_SPELL_SLOW)
-        ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_HASTE_SPELLS, true);
 
     if (GetMovementTemplate().IsRooted())
         SetControlled(true, UNIT_STATE_ROOT);
@@ -859,25 +850,13 @@ void Creature::Update(uint32 diff)
             if(!IsAlive())
                 break;
 
-            if(!IsInCombat() && GetCreatureTemplate()->flags_extra & CREATURE_FLAG_EXTRA_PERIODIC_RELOC)
+            if (m_regenTimer > 0)
             {
-                if(m_relocateTimer < diff)
-                {
-                     m_relocateTimer = 60000;
-                     // forced recreate creature object at clients
-                     DestroyForNearbyPlayers();
-                     UpdateObjectVisibility();
-                } else m_relocateTimer -= diff;
+                if (diff >= m_regenTimer)
+                    m_regenTimer = 0;
+                else
+                    m_regenTimer -= diff;
             }
-            
-            if ((GetCreatureTemplate()->flags_extra & CREATURE_FLAG_EXTRA_NO_HEALTH_RESET) == 0)
-                if(m_regenTimer > 0)
-                {
-                    if(diff >= m_regenTimer)
-                        m_regenTimer = 0;
-                    else
-                        m_regenTimer -= diff;
-                }
             
             if (m_regenTimer == 0 && !m_disabledRegen)
             {
@@ -1951,7 +1930,7 @@ bool Creature::IsOutOfThreatArea(Unit const* target) const
         return false;
 
     float dist;
-    if (IsHomeless() || IsEscortNPC(true))
+    if (IsEscortNPC(true))
         dist = target->GetDistance(GetPositionX(), GetPositionY(), GetPositionZ());
     else {
         float x, y, z, o;

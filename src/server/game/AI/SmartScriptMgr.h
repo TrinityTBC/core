@@ -633,31 +633,6 @@ enum SMART_ACTION
     SMART_ACTION_RESPAWN_BY_SPAWNID                 = 133,    // spawnType, spawnId
     SMART_ACTION_INVOKER_CAST                       = 134,    // spellID, castFlags
 
-    /*
-    range reserved for TC updates
-    */
-    SMART_ACTION_SET_UNIT_FIELD_BYTES_2             = 150,    // bytes, target
-    SMART_ACTION_REMOVE_UNIT_FIELD_BYTES_2          = 151,    // bytes, target
-    SMART_ACTION_LOAD_PATH                          = 152,    // path
-    SMART_ACTION_TELEPORT_ON_ME                     = 153,    // useVisual (0/1)
-    SMART_ACTION_SELF_TELEPORT_ON_TARGET            = 154,    // useVisual (0/1)
-    SMART_ACTION_ASSIST                             = 155,    // none
-    SMART_ACTION_PREVENT_MOVE_HOME                  = 156,    // prevent (0/1)
-    //affected creature add target(s) to own formation
-    SMART_ACTION_ADD_TO_FORMATION                   = 157,    // none
-    //affected creature add target(s) to own formation
-    SMART_ACTION_REMOVE_FROM_FORMATION              = 158,    // none
-    //break formation
-    SMART_ACTION_BREAK_FORMATION                    = 159,    // none
-    SMART_ACTION_SET_MECHANIC_IMMUNITY              = 160,    // type, apply
-    SMART_ACTION_SET_SPELL_IMMUNITY                 = 161,    // id, apply
-    // Should only be used internally
-    SMART_ACTION_SET_EVENT_TEMPLATE_PHASE           = 162,    // Phase 
-    // Store a phase for future usage
-    SMART_ACTION_STORE_PHASE                        = 163,    //
-    // Apply stored phase by previous action
-    SMART_ACTION_RESTORE_PHASE                      = 164,    //
-
     SMART_ACTION_END,
 };
 
@@ -1296,9 +1271,7 @@ enum SMARTAI_TEMPLATE
     SMARTAI_TEMPLATE_PASSIVE         = 3,
     SMARTAI_TEMPLATE_CAGED_GO_PART   = 4, //creatureID, give credit at point end?,
     SMARTAI_TEMPLATE_CAGED_NPC_PART  = 5, //gameObjectID, despawntime, run?, dist, TextGroupID
-    SMARTAI_TEMPLATE_CASTER_SUN      = 6, //spellid, repeatMin, repeatMax, castFlags
-    SMARTAI_TEMPLATE_CASTER_SUN_ROOT = 7, //spellid, spellRepeat, rootSpellId, rootSpellRepeat
-    SMARTAI_TEMPLATE_END,
+    SMARTAI_TEMPLATE_END             = 6,
 };
 
 enum SMARTAI_TARGETS

@@ -11063,7 +11063,7 @@ bool Unit::IsSpellDisabled(uint32 const spellId)
 
 void Unit::HandleParryRush()
 {
-    if(ToCreature() && ToCreature()->GetCreatureTemplate()->flags_extra & CREATURE_FLAG_EXTRA_NO_PARRY_RUSH)
+    if(ToCreature() && ToCreature()->GetCreatureTemplate()->flags_extra & CREATURE_FLAG_EXTRA_NO_PARRY_HASTEN)
         return;
 
     uint32 timeLeft = GetAttackTimer(BASE_ATTACK);

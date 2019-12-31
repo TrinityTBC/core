@@ -1400,30 +1400,6 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
 
             break;
         }
-        case SMART_ACTION_ASSIST:
-        {
-            if (!me)
-                break;
-
-            for (WorldObject* target : targets)
-            {
-                if (IsUnit(target))
-                {
-                    Unit* targetUnit = target->ToUnit();
-                    if(Unit* victim = targetUnit->GetVictim())
-                    {
-                        if (me->CanCreatureAttack(victim))
-                        {
-                            me->EngageWithTarget(victim);
-                            break; //found a valid target, no need to continue
-                        }
-                    }
-                }
-            }
-
-
-            break;
-        }
         case SMART_ACTION_SUMMON_CREATURE:
         {
 
@@ -1541,52 +1517,6 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
                         me->CastSpell(u, 46614, true); //teleport visual
             }
 
-
-            break;
-        }
-        case SMART_ACTION_TELEPORT_ON_ME:
-        {
-            if (targets.empty())
-                break;
-
-            float x,y,z,o;
-            me->GetPosition(x,y,z,o);
-
-            for (WorldObject* target : targets)
-            {
-                if(Unit* u = target->ToUnit())
-                {
-                    u->NearTeleportTo(x, y, z, o);
-                    if(e.action.teleportOnMe.useVisual)
-                        me->CastSpell(u, 46614, TRIGGERED_FULL_MASK); //teleport visual
-                }
-
-            }
-
-
-            break;
-        }
-        case SMART_ACTION_SELF_TELEPORT_ON_TARGET:
-        {
-            float x = 0.0f, y = 0.0f, z = 0.0f;
-            bool found = false;
-
-            for (WorldObject* target : targets)
-            {
-                if(Unit* u = target->ToUnit())
-                {
-                    u->GetPosition(x,y,z);
-                    found = true;
-                    break;
-                }
-            }
-
-            if (!found)
-                break;
-
-            me->NearTeleportTo(x, y, z, me->GetOrientation());
-            if(e.action.teleportSelfOnTarget.useVisual)
-                me->CastSpell(me, 46614, TRIGGERED_FULL_MASK); //teleport visual
 
             break;
         }
@@ -2216,15 +2146,6 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
 
             break;
         }
-        case SMART_ACTION_SET_UNIT_FIELD_BYTES_2:
-        {
-#ifndef LICH_KING
-            //sun: don't allow changing this field
-            if (e.action.setunitByte.type == UNIT_BYTES_2_OFFSET_BUFF_LIMIT)
-                break;
-#endif
-        }
-        [[fallthrough]];
         case SMART_ACTION_SET_UNIT_FIELD_BYTES_1:
         {
             uint32 field = (e.GetActionType() == SMART_ACTION_SET_UNIT_FIELD_BYTES_1 ? UNIT_FIELD_BYTES_1 : UNIT_FIELD_BYTES_2);
@@ -2236,7 +2157,6 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
             break;
         }
         case SMART_ACTION_REMOVE_UNIT_FIELD_BYTES_1:
-        case SMART_ACTION_REMOVE_UNIT_FIELD_BYTES_2:
         {
             uint32 field = (e.GetActionType() == SMART_ACTION_REMOVE_UNIT_FIELD_BYTES_1 ? UNIT_FIELD_BYTES_1 : UNIT_FIELD_BYTES_2);
             for (WorldObject* target : targets)
@@ -2564,96 +2484,6 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
                 TC_LOG_ERROR("sql.sql", "SmartScript::ProcessAction: Entry %d SourceType %u, Event %u - tries to respawn by spawnId but does not provide a map", e.entryOrGuid, e.GetScriptType(), e.event_id);
             break;
         }
-        case SMART_ACTION_LOAD_PATH:
-        {
-            for (WorldObject* _target : targets)
-            {
-                 if (Creature* target = _target->ToCreature())
-                 {
-                     //path Id can be 0, if then remove path and set motion type to 0
-                     target->LoadPath(e.action.setPath.pathId);
-                     if(e.action.setPath.pathId)
-                         target->SetDefaultMovementType(WAYPOINT_MOTION_TYPE);
-                     else
-                         target->SetDefaultMovementType(IDLE_MOTION_TYPE);
-
-                     target->GetMotionMaster()->Initialize();
-                 }
-            }
-
-            break;
-        }
-        case SMART_ACTION_PREVENT_MOVE_HOME:
-        {
-            for (auto target : targets)
-                if (Creature* creatureTarget = target->ToCreature())
-                    creatureTarget->SetHomeless(e.action.preventMoveHome.prevent);
-                    //CAST_AI(SmartAI, target->AI())->SetPreventMoveHome(e.action.preventMoveHome.prevent);
-
- 
-            break;
-        }
-        case SMART_ACTION_ADD_TO_FORMATION:
-        {
-            if(!me->GetFormation())
-                sFormationMgr->AddCreatureToGroup(me, me);
-
-            for (auto target : targets)
-                if (Creature* creatureTarget = target->ToCreature())
-                    sFormationMgr->AddCreatureToGroup(me, creatureTarget);
-
-            break;
-        }
-        case SMART_ACTION_REMOVE_FROM_FORMATION:
-        {
-            for (auto target : targets)
-                if (Creature* creatureTarget = target->ToCreature())
-                    sFormationMgr->RemoveCreatureFromGroup(me->GetGUID().GetCounter(), creatureTarget);
-
-            break;
-        }
-        case SMART_ACTION_BREAK_FORMATION:
-            sFormationMgr->BreakFormation(me);
-            break;
-        case SMART_ACTION_SET_MECHANIC_IMMUNITY:
-        {
-            for (WorldObject* target : targets)
-                if (IsUnit(target))
-                    target->ToUnit()->ApplySpellImmune(0, IMMUNITY_MECHANIC, e.action.mechanicImmunity.type, e.action.mechanicImmunity.apply);
-
-            break;
-        }
-        case SMART_ACTION_SET_SPELL_IMMUNITY:
-        {
-            for (WorldObject* target : targets)
-                if (IsUnit(target))
-                    target->ToUnit()->ApplySpellImmune(e.action.spellImmunity.id, IMMUNITY_ID, 0, e.action.spellImmunity.apply);
-
-            break;
-        }
-        case SMART_ACTION_SET_EVENT_TEMPLATE_PHASE:
-        {
-            for (WorldObject* target : targets)
-            {
-                if (!IsUnit(target))
-                    break;
-
-                Creature* c = target->ToCreature();
-                if (!IsSmart(c))
-                    break;
-
-                ENSURE_AI(SmartAI, c->AI())->GetScript()->SetTemplatePhase(e.action.setEventPhase.phase);
-                TC_LOG_DEBUG("scripts.ai", "SmartScript::ProcessAction:: SMART_ACTION_SET_EVENT_PHASE: Creature %u set event template phase %u",
-                    target->GetGUID().GetCounter(), e.action.setEventPhase.phase);
-            }
-            break;
-        }
-        case SMART_ACTION_STORE_PHASE:
-            mStoredPhase = GetPhase();
-            break;
-        case SMART_ACTION_RESTORE_PHASE:
-            SetPhase(mStoredPhase);
-            break;
         default:
             TC_LOG_ERROR("sql.sql","SmartScript::ProcessAction: Entry %d SourceType %u, Event %u, Unhandled Action type %u", e.entryOrGuid, e.GetScriptType(), e.event_id, e.GetActionType());
             break;
@@ -2715,103 +2545,8 @@ void SmartScript::InstallTemplate(SmartScriptHolder const& e)
                     //disable movement when in given range
                     AddEvent(0, 0, SMART_EVENT_RANGE, 0, 0, range, 0, 0, 0, SMART_ACTION_ALLOW_COMBAT_MOVEMENT, 0, 0, 0, 0, 0, 0, SMART_TARGET_SELF, 0, 0, 0, 0, SmartPhaseMask(0), SmartPhaseMask(1));
                 }
-                // start casting (go to phase 1) when at least at manaPercent
-                AddEvent(0, 0, SMART_EVENT_MANA_PCT, 0, manaPercent, 100, 1000, 1000, 0, SMART_ACTION_SET_EVENT_TEMPLATE_PHASE, 1, 0, 0, 0, 0, 0, SMART_TARGET_SELF, 0, 0, 0, 0, SmartPhaseMask(0));
-                // stop casting (go back to phase 0) when under manaPercent
-                AddEvent(0, 0, SMART_EVENT_MANA_PCT, 0, 0, manaPercent, 1000, 1000, 0, SMART_ACTION_SET_EVENT_TEMPLATE_PHASE, 0, 0, 0, 0, 0, 0, SMART_TARGET_SELF, 0, 0, 0, 0, SmartPhaseMask(0));
                 // enable movement when under given mana
                 AddEvent(0, 0, SMART_EVENT_MANA_PCT, 0, 0, manaPercent, 1000, 1000, 0, SMART_ACTION_ALLOW_COMBAT_MOVEMENT, 1, 0, 0, 0, 0, 0, SMART_TARGET_SELF, 0, 0, 0, 0, SmartPhaseMask(0));
-                break;
-            }
-        case SMARTAI_TEMPLATE_CASTER_SUN:
-            {
-                uint32 spellID = e.action.installTemplate.param1;
-                uint32 repeatMin = e.action.installTemplate.param2;
-                uint32 repeatMax = e.action.installTemplate.param3;
-                if (repeatMin > repeatMax)
-                    repeatMax = repeatMin;
-
-                uint32 castFlags = e.action.installTemplate.param4;
-
-                auto spellInfo = sSpellMgr->GetSpellInfo(spellID);
-                if (spellInfo == nullptr)
-                {
-                    SMARTAI_DB_ERROR(e.entryOrGuid, "SmartScript: Entry %d SourceType %u Event %u Action %u is using invalid spell %u", e.entryOrGuid, e.GetScriptType(), e.GetEventType(), e.GetActionType(), spellID);
-                    break;
-                }
-
-                uint32 range = std::min(spellInfo->GetMaxRange() - 5.0f, 30.0f); //cap at 30, some mobs spells have very long range
-                uint32 manaPercent = uint32((float(spellInfo->ManaCost) / float(me->GetMaxPower(POWER_MANA))) * 100.0f) + 1;
-                
-                //ai init event won't work for templates
-                AddEvent(1000, 0, SMART_EVENT_AGGRO, 0, 0, 0, 0, 0, 0, SMART_ACTION_SET_EVENT_TEMPLATE_PHASE, 1, 0, 0, 0, 0, 0, SMART_TARGET_SELF, 0, 0, 0, 0, SmartPhaseMask(0));
-
-                // Phase 1 = casting
-                // Chase at range
-                AddEvent(1001, 0, SMART_EVENT_EVENT_TEMPLATE_PHASE_CHANGE, 0, 1, 0, 0, 0, 0, SMART_ACTION_SET_RANGED_MOVEMENT, range, 0, 0, 0, 0, 0, SMART_TARGET_SELF, 0, 0, 0, 0, SmartPhaseMask(0));
-                // Cast spell
-                AddEvent(1002, 0, SMART_EVENT_UPDATE_IC, 0, 0, 0, repeatMin, repeatMax, 0, SMART_ACTION_CAST, spellID, castFlags, 0, 0, 0, 0, SMART_TARGET_VICTIM, 0, 0, 0, 0, SmartPhaseMask(0), SmartPhaseMask(1));
-                // Go to phase 2 when under manaPercent
-                AddEvent(1003, 1005, SMART_EVENT_MANA_PCT, 0, 0, manaPercent, 1000, 1000, 0, SMART_ACTION_SET_EVENT_TEMPLATE_PHASE, 2, 0, 0, 0, 0, 0, SMART_TARGET_SELF, 0, 0, 0, 0, SmartPhaseMask(0), SmartPhaseMask(1));
-            
-                // Phase 2 = need mana, meleeing
-                // Chase in melee
-                AddEvent(1004, 0, SMART_EVENT_EVENT_TEMPLATE_PHASE_CHANGE, 0, 2, 0, 0, 0, 0, SMART_ACTION_SET_RANGED_MOVEMENT, 0, 0, 0, 0, 0, 0, SMART_TARGET_SELF, 0, 0, 0, 0, SmartPhaseMask(0));
-                // Go back to phase 1 when at least at manaPercent
-                AddEvent(1005, 0, SMART_EVENT_MANA_PCT, 0, manaPercent, 100, 1000, 1000, 0, SMART_ACTION_SET_EVENT_TEMPLATE_PHASE, 1, 0, 0, 0, 0, 0, SMART_TARGET_SELF, 0, 0, 0, 0, SmartPhaseMask(0), SmartPhaseMask(2));
-             
-                break;
-            }
-        case SMARTAI_TEMPLATE_CASTER_SUN_ROOT:
-            {
-                uint32 spellID = e.action.installTemplate.param1;
-                uint32 spellRepeat = e.action.installTemplate.param2;
-                uint32 rootSpellID = e.action.installTemplate.param3;
-                uint32 rootSpellRepeat = e.action.installTemplate.param4;
-
-                auto spellInfo = sSpellMgr->GetSpellInfo(spellID);
-                if (spellInfo == nullptr)
-                {
-                    SMARTAI_DB_ERROR(e.entryOrGuid, "SmartScript: Entry %d SourceType %u Event %u Action %u is using invalid spell %u", e.entryOrGuid, e.GetScriptType(), e.GetEventType(), e.GetActionType(), spellID);
-                    break;
-                }
-                auto rootSpellInfo = sSpellMgr->GetSpellInfo(rootSpellID);
-                if (rootSpellInfo == nullptr)
-                {
-                    SMARTAI_DB_ERROR(e.entryOrGuid, "SmartScript: Entry %d SourceType %u Event %u Action %u is using invalid spell %u", e.entryOrGuid, e.GetScriptType(), e.GetEventType(), e.GetActionType(), rootSpellID);
-                    break;
-                }
-
-                uint32 range = std::min(spellInfo->GetMaxRange() - 5.0f, 30.0f); //cap at 30, some mobs spells have very long range
-                uint32 manaPercent = uint32((float(spellInfo->ManaCost) / float(me->GetMaxPower(POWER_MANA))) * 100.0f) + 1;
-                
-                //ai init event won't work for templates
-                AddEvent(1000, 0, SMART_EVENT_AGGRO, 0, 0, 0, 0, 0, 0, SMART_ACTION_SET_EVENT_TEMPLATE_PHASE, 1, 0, 0, 0, 0, 0, SMART_TARGET_SELF, 0, 0, 0, 0, SmartPhaseMask(0));
-
-                // Phase 1 = casting
-                // Cast spell
-                AddEvent(1001, 0, SMART_EVENT_UPDATE_IC, 0, 0, 0, spellRepeat, spellRepeat, 0, SMART_ACTION_CAST, spellID, 0, 0, 0, 0, 0, SMART_TARGET_VICTIM, 0, 0, 0, 0, SmartPhaseMask(0), SmartPhaseMask(1));
-                // Ranged movement when starting phase 1
-                AddEvent(1002, 0, SMART_EVENT_EVENT_TEMPLATE_PHASE_CHANGE, 0, 1, 0, 0, 0, 0, SMART_ACTION_SET_RANGED_MOVEMENT, range, 0, 0, 0, 0, 0, SMART_TARGET_SELF, 0, 0, 0, 0, SmartPhaseMask(0));
-                // Go to phase 2 when under manaPercent
-                AddEvent(1003, 0, SMART_EVENT_MANA_PCT, 0, 0, manaPercent, 1000, 1000, 0, SMART_ACTION_SET_EVENT_TEMPLATE_PHASE, 2, 0, 0, 0, 0, 0, SMART_TARGET_SELF, 0, 0, 0, 0, SmartPhaseMask(0), SmartPhaseMask(1));
-                 // Cast root spell when in melee 
-                AddEvent(1004, 0, SMART_EVENT_RANGE, 0, 0, 5, rootSpellRepeat, rootSpellRepeat, 0, SMART_ACTION_CAST, rootSpellID, SMARTCAST_TRIGGERED | SMARTCAST_INTERRUPT_PREVIOUS, TRIGGERED_IGNORE_SPELL_AND_CATEGORY_CD, 0, 0, 0, SMART_TARGET_VICTIM, 0, 0, 0, SmartPhaseMask(0), SmartPhaseMask(1));
-                // Trigger phase 3 on root spell hit
-                AddEvent(1005, 0, SMART_EVENT_SPELLHIT_TARGET, 0, rootSpellID, 0, 1, 1, 0, SMART_ACTION_SET_EVENT_TEMPLATE_PHASE, 3, 0, 0, 0, 0, 0, SMART_TARGET_SELF, 0, 0, 0, 0, SmartPhaseMask(0), SmartPhaseMask(1));
-
-                // Phase 2 = need mana, start melee
-                // Melee movement when starting phase 2
-                AddEvent(1010, 0, SMART_EVENT_EVENT_TEMPLATE_PHASE_CHANGE, 0, 2, 0, 0, 0, 0, SMART_ACTION_SET_RANGED_MOVEMENT, 0, 0, 0, 0, 0, 0, SMART_TARGET_SELF, 0, 0, 0, 0, SmartPhaseMask(0));
-                // Go back to phase 1 when at least at manaPercent
-                AddEvent(1011, 0, SMART_EVENT_MANA_PCT, 0, manaPercent, 100, 1000, 1000, 0, SMART_ACTION_SET_EVENT_TEMPLATE_PHASE, 1, 0, 0, 0, 0, 0, SMART_TARGET_SELF, 0, 0, 0, 0, SmartPhaseMask(0), SmartPhaseMask(2));
-              
-                // Phase 3 (mask 0x4) = root spell phase
-                // Min distance movement when starting phase 3
-                AddEvent(1020, 0, SMART_EVENT_EVENT_TEMPLATE_PHASE_CHANGE, 0, 4, 0, 0, 0, 0, SMART_ACTION_SET_RANGED_MOVEMENT, range, 0, 8, 0, 0, 0, SMART_TARGET_SELF, 0, 0, 0, 0, SmartPhaseMask(0));
-                // Go back to Phase 1 after 4s
-                AddEvent(1021, 0, SMART_EVENT_EVENT_TEMPLATE_PHASE_CHANGE, 0, 4, 0, 0, 0, 0, SMART_ACTION_CREATE_TIMED_EVENT, 99, 2500, 2500, 0, 0, 0, SMART_TARGET_SELF, 0, 0, 0, 0, SmartPhaseMask(0));
-                AddEvent(1022, 0, SMART_EVENT_TIMED_EVENT_TRIGGERED, 0, 99, 0, 0, 0, 0, SMART_ACTION_SET_EVENT_TEMPLATE_PHASE, 1, 0, 0, 0, 0, 0, SMART_TARGET_SELF, 0, 0, 0, 0, SmartPhaseMask(0));
                 break;
             }
         case SMARTAI_TEMPLATE_TURRET:
@@ -2831,7 +2566,6 @@ void SmartScript::InstallTemplate(SmartScriptHolder const& e)
                 AddEvent(0, 0, SMART_EVENT_UPDATE, SMART_EVENT_FLAG_NOT_REPEATABLE, 0, 0, 0, 0, 0, SMART_ACTION_RESET_GOBJECT, 0, 0, 0, 0, 0, 0, SMART_TARGET_GAMEOBJECT_DISTANCE, e.action.installTemplate.param1, 5, 0, 0, SmartPhaseMask(0));
 
                 AddEvent(0, 0, SMART_EVENT_DATA_SET, 0, 0, 0, 0, 0, 0, SMART_ACTION_SET_RUN, e.action.installTemplate.param3, 0, 0, 0, 0, 0, SMART_TARGET_NONE, 0, 0, 0, 0, SmartPhaseMask(0));
-                AddEvent(0, 0, SMART_EVENT_DATA_SET, 0, 0, 0, 0, 0, 0, SMART_ACTION_SET_EVENT_TEMPLATE_PHASE, 1, 0, 0, 0, 0, 0, SMART_TARGET_NONE, 0, 0, 0, 0, SmartPhaseMask(0));
 
                 AddEvent(0, 0, SMART_EVENT_UPDATE, SMART_EVENT_FLAG_NOT_REPEATABLE, 1000, 1000, 0, 0, 0, SMART_ACTION_MOVE_OFFSET, 0, 0, 0, 0, 0, 0, SMART_TARGET_SELF, 0, e.action.installTemplate.param4, 0, 0, SmartPhaseMask(0), SmartPhaseMask(1));
                 //phase 1: give quest credit on movepoint reached

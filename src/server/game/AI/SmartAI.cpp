@@ -531,7 +531,8 @@ void SmartAI::EnterEvadeMode(EvadeReason why)
         if (Unit* target = ObjectAccessor::GetUnit(*me, mFollowGuid))
             me->GetMotionMaster()->MoveFollow(target, mFollowDist, mFollowAngle);
     }
-    else if (!me->IsHomeless()) {
+    else
+    {
         me->GetMotionMaster()->MoveTargetedHome();
     }
 

@@ -132,7 +132,7 @@ public:
     static bool HandleReloadCreatureTemplateCommand(ChatHandler* handler, char const* /*args*/)
     {
         TC_LOG_INFO("command", "Re-Loading Creature Templates...");
-        sObjectMgr->LoadCreatureTemplates(true);
+        sObjectMgr->LoadCreatureTemplates();
         handler->SendGlobalGMSysMessage("Creature Templates reloaded.");
         return true;
     }
@@ -493,7 +493,6 @@ public:
     {
         TC_LOG_INFO("command", "Re-Loading `npc_vendor` Table!");
         sObjectMgr->LoadVendors();
-        sGameEventMgr->LoadVendors();
         handler->SendGlobalGMSysMessage("DB table `npc_vendor` reloaded.");
         return true;
     }

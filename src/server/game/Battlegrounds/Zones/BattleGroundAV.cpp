@@ -38,66 +38,79 @@ void BattlegroundAV::HandleKillPlayer(Player *player, Player *killer)
 
 void BattlegroundAV::HandleKillUnit(Creature *unit, Player *killer)
 {
-    if(GetStatus() != STATUS_IN_PROGRESS)
+    TC_LOG_DEBUG("bg.battleground", "bg_av HandleKillUnit %i", unit->GetEntry());
+    if (GetStatus() != STATUS_IN_PROGRESS)
         return;
     uint32 entry = unit->GetEntry();
-    if(entry == BG_AV_CreatureInfo[AV_NPC_A_BOSS][0])
+    /*
+    uint32 triggerSpawnID = 0;
+    if (creature->GetEntry() == BG_AV_CreatureInfo[AV_NPC_A_CAPTAIN][0])
+        triggerSpawnID = AV_CPLACE_TRIGGER16;
+    else if (creature->GetEntry() == BG_AV_CreatureInfo[AV_NPC_A_BOSS][0])
+        triggerSpawnID = AV_CPLACE_TRIGGER17;
+    else if (creature->GetEntry() == BG_AV_CreatureInfo[AV_NPC_H_CAPTAIN][0])
+        triggerSpawnID = AV_CPLACE_TRIGGER18;
+    else if (creature->GetEntry() == BG_AV_CreatureInfo[AV_NPC_H_BOSS][0])
+        triggerSpawnID = AV_CPLACE_TRIGGER19;
+    */
+    if (entry == BG_AV_CreatureInfo[AV_NPC_A_BOSS])
     {
-        CastSpellOnTeam(23658,HORDE); //this is a spell which finishes a quest where a player has to kill the boss
-        RewardReputationToTeam(729,BG_AV_REP_BOSS,HORDE);
-        RewardHonorToTeam(GetBonusHonor(BG_AV_KILL_BOSS),HORDE);
+        CastSpellOnTeam(23658, HORDE); //this is a spell which finishes a quest where a player has to kill the boss
+        RewardReputationToTeam(729, BG_AV_REP_BOSS, HORDE);
+        RewardHonorToTeam(GetBonusHonorFromKill(BG_AV_KILL_BOSS), HORDE);
         EndBattleground(HORDE);
+        DelCreature(AV_CPLACE_TRIGGER17);
     }
-    else if ( entry == BG_AV_CreatureInfo[AV_NPC_H_BOSS][0] )
+    else if (entry == BG_AV_CreatureInfo[AV_NPC_H_BOSS])
     {
-        CastSpellOnTeam(23658,ALLIANCE); //this is a spell which finishes a quest where a player has to kill the boss
-        RewardReputationToTeam(730,BG_AV_REP_BOSS,ALLIANCE);
-        RewardHonorToTeam(GetBonusHonor(BG_AV_KILL_BOSS),ALLIANCE);
+        CastSpellOnTeam(23658, ALLIANCE); //this is a spell which finishes a quest where a player has to kill the boss
+        RewardReputationToTeam(730, BG_AV_REP_BOSS, ALLIANCE);
+        RewardHonorToTeam(GetBonusHonorFromKill(BG_AV_KILL_BOSS), ALLIANCE);
         EndBattleground(ALLIANCE);
+        DelCreature(AV_CPLACE_TRIGGER19);
     }
-    else if(entry == BG_AV_CreatureInfo[AV_NPC_A_CAPTAIN][0])
+    else if (entry == BG_AV_CreatureInfo[AV_NPC_A_CAPTAIN])
     {
-        if(!m_CaptainAlive[0])
+        if (!m_CaptainAlive[0])
         {
-            TC_LOG_ERROR("battleground","Killed a Captain twice, please report this bug, if you haven't done \".respawn\"");
+            TC_LOG_ERROR("bg.battleground", "Killed a Captain twice, please report this bug, if you haven't done \".respawn\"");
             return;
         }
         m_CaptainAlive[0]=false;
-        RewardReputationToTeam(729,BG_AV_REP_CAPTAIN,HORDE);
-        RewardHonorToTeam(GetBonusHonor(BG_AV_KILL_CAPTAIN),HORDE);
-        UpdateScore(ALLIANCE,(-1)*BG_AV_RES_CAPTAIN);
+        RewardReputationToTeam(729, BG_AV_REP_CAPTAIN, HORDE);
+        RewardHonorToTeam(GetBonusHonorFromKill(BG_AV_KILL_CAPTAIN), HORDE);
+        UpdateScore(ALLIANCE, (-1)*BG_AV_RES_CAPTAIN);
         //spawn destroyed aura
-        for(uint8 i=0; i<=9; i++)
-            SpawnBGObject(BG_AV_OBJECT_BURN_BUILDING_ALLIANCE+i,RESPAWN_IMMEDIATELY);
-        Creature* creature = GetBGCreature(AV_CPLACE_HERALD);
-        if(creature)
-            creature->YellToMap(GetTrinityString(LANG_BG_AV_A_CAPTAIN_DEAD),LANG_UNIVERSAL);
+        for (uint8 i=0; i <= 9; i++)
+            SpawnBGObject(BG_AV_OBJECT_BURN_BUILDING_ALLIANCE+i, RESPAWN_IMMEDIATELY);
+        DelCreature(AV_CPLACE_TRIGGER16);
 
+        if (Creature* herold = GetBGCreature(AV_CPLACE_HERALD))
+            herold->AI()->Talk(TEXT_STORMPIKE_GENERAL_DEAD);
     }
-    else if ( entry == BG_AV_CreatureInfo[AV_NPC_H_CAPTAIN][0] )
+    else if (entry == BG_AV_CreatureInfo[AV_NPC_H_CAPTAIN])
     {
-        if(!m_CaptainAlive[1])
+        if (!m_CaptainAlive[1])
         {
-            TC_LOG_ERROR("battleground","Killed a Captain twice, please report this bug, if you haven't done \".respawn\"");
+            TC_LOG_ERROR("bg.battleground", "Killed a Captain twice, please report this bug, if you haven't done \".respawn\"");
             return;
         }
         m_CaptainAlive[1]=false;
-        RewardReputationToTeam(730,BG_AV_REP_CAPTAIN,ALLIANCE);
-        RewardHonorToTeam(GetBonusHonor(BG_AV_KILL_CAPTAIN),ALLIANCE);
-        UpdateScore(HORDE,(-1)*BG_AV_RES_CAPTAIN);
+        RewardReputationToTeam(730, BG_AV_REP_CAPTAIN, ALLIANCE);
+        RewardHonorToTeam(GetBonusHonorFromKill(BG_AV_KILL_CAPTAIN), ALLIANCE);
+        UpdateScore(HORDE, (-1)*BG_AV_RES_CAPTAIN);
         //spawn destroyed aura
-        for(uint8 i=0; i<=9; i++)
-            SpawnBGObject(BG_AV_OBJECT_BURN_BUILDING_HORDE+i,RESPAWN_IMMEDIATELY);
-        Creature* creature = GetBGCreature(AV_CPLACE_HERALD);
-        if(creature)
-            creature->YellToMap(GetTrinityString(LANG_BG_AV_H_CAPTAIN_DEAD),LANG_UNIVERSAL);
+        for (uint8 i=0; i <= 9; i++)
+            SpawnBGObject(BG_AV_OBJECT_BURN_BUILDING_HORDE+i, RESPAWN_IMMEDIATELY);
+        DelCreature(AV_CPLACE_TRIGGER18);
+
+        if (Creature* herold = GetBGCreature(AV_CPLACE_HERALD))
+            herold->AI()->Talk(TEXT_FROSTWOLF_GENERAL_DEAD);
     }
-    else if ( entry == BG_AV_CreatureInfo[AV_NPC_N_MINE_N_4][0] || entry == BG_AV_CreatureInfo[AV_NPC_N_MINE_A_4][0] || entry == BG_AV_CreatureInfo[AV_NPC_N_MINE_H_4][0])
-        ChangeMineOwner(AV_NORTH_MINE,killer->GetTeam());
-    else if ( entry == BG_AV_CreatureInfo[AV_NPC_S_MINE_N_4][0] || entry == BG_AV_CreatureInfo[AV_NPC_S_MINE_A_4][0] || entry == BG_AV_CreatureInfo[AV_NPC_S_MINE_H_4][0])
-        ChangeMineOwner(AV_SOUTH_MINE,killer->GetTeam());
-        
-    RemoveMarshalAura(killer, entry);
+    else if (entry == BG_AV_CreatureInfo[AV_NPC_N_MINE_N_4] || entry == BG_AV_CreatureInfo[AV_NPC_N_MINE_A_4] || entry == BG_AV_CreatureInfo[AV_NPC_N_MINE_H_4])
+        ChangeMineOwner(AV_NORTH_MINE, killer->GetTeam());
+    else if (entry == BG_AV_CreatureInfo[AV_NPC_S_MINE_N_4] || entry == BG_AV_CreatureInfo[AV_NPC_S_MINE_A_4] || entry == BG_AV_CreatureInfo[AV_NPC_S_MINE_H_4])
+        ChangeMineOwner(AV_SOUTH_MINE, killer->GetTeam());
 }
 
 void BattlegroundAV::HandleQuestComplete(uint32 questid, Player *player)
@@ -225,83 +238,79 @@ void BattlegroundAV::UpdateScore(uint16 team, int16 points )
     }
 }
 
-Creature* BattlegroundAV::AddAVCreature(uint16 cinfoid, uint16 type )
+Creature* BattlegroundAV::AddAVCreature(uint16 cinfoid, uint16 type)
 {
-    uint32 level;
-    bool isStatic=false;
+    bool isStatic = false;
     Creature* creature = nullptr;
-    assert(type <= AV_CPLACE_MAX + AV_STATICCPLACE_MAX);
-    if(type>=AV_CPLACE_MAX) //static
+    ASSERT(type < AV_CPLACE_MAX + AV_STATICCPLACE_MAX);
+    if (type >= AV_CPLACE_MAX) //static
     {
-        type-=AV_CPLACE_MAX;
-        cinfoid=int(BG_AV_StaticCreaturePos[type][4]);
-        creature = AddCreature(BG_AV_StaticCreatureInfo[cinfoid][0],(type+AV_CPLACE_MAX),BG_AV_StaticCreaturePos[type][0],BG_AV_StaticCreaturePos[type][1],BG_AV_StaticCreaturePos[type][2],BG_AV_StaticCreaturePos[type][3]);
-        level = ( BG_AV_StaticCreatureInfo[cinfoid][2] == BG_AV_StaticCreatureInfo[cinfoid][3] ) ? BG_AV_StaticCreatureInfo[cinfoid][2] : urand(BG_AV_StaticCreatureInfo[cinfoid][2],BG_AV_StaticCreatureInfo[cinfoid][3]);
-        isStatic=true;
+        type -= AV_CPLACE_MAX;
+        cinfoid = uint16(BG_AV_StaticCreaturePos[type][4]);
+        creature = AddCreature(BG_AV_StaticCreatureInfo[cinfoid],
+                               type + AV_CPLACE_MAX,
+                               BG_AV_StaticCreaturePos[type][0],
+                               BG_AV_StaticCreaturePos[type][1],
+                               BG_AV_StaticCreaturePos[type][2],
+                               BG_AV_StaticCreaturePos[type][3]);
+        isStatic = true;
     }
     else
     {
-        creature = AddCreature(BG_AV_CreatureInfo[cinfoid][0],type,BG_AV_CreaturePos[type][0],BG_AV_CreaturePos[type][1],BG_AV_CreaturePos[type][2],BG_AV_CreaturePos[type][3]);
-        level = ( BG_AV_CreatureInfo[cinfoid][2] == BG_AV_CreatureInfo[cinfoid][3] ) ? BG_AV_CreatureInfo[cinfoid][2] : urand(BG_AV_CreatureInfo[cinfoid][2],BG_AV_CreatureInfo[cinfoid][3]);
+        creature = AddCreature(BG_AV_CreatureInfo[cinfoid], type, BG_AV_CreaturePos[type]);
     }
-    if(!creature)
+    if (!creature)
         return nullptr;
-    if(creature->GetEntry() == BG_AV_CreatureInfo[AV_NPC_A_CAPTAIN][0] || creature->GetEntry() == BG_AV_CreatureInfo[AV_NPC_H_CAPTAIN][0]) {
-        creature->SetRespawnDelay(RESPAWN_ONE_DAY); // TODO: look if this can be done by database + also add this for the wingcommanders
-    }
-    else if (creature->GetEntry() == BG_AV_CreatureInfo[AV_NPC_A_MARSHAL_SOUTH][0] || creature->GetEntry() == BG_AV_CreatureInfo[AV_NPC_MARSHAL_NORTH][0] ||
-            creature->GetEntry() == BG_AV_CreatureInfo[AV_NPC_A_MARSHAL_ICE][0] || creature->GetEntry() == BG_AV_CreatureInfo[AV_NPC_A_MARSHAL_STONE][0]) {
-        m_allianceMarshals.push_back(creature->GetGUID());
-        creature->SetRespawnDelay(RESPAWN_ONE_DAY);
-        creature->GetMap()->AddCreatureToPool(creature,1); //link pack
-        creature->SetCreaturePoolId(1);
-    }
-    else if (creature->GetEntry() == BG_AV_CreatureInfo[AV_NPC_H_MARSHAL_ICE][0] || creature->GetEntry() == BG_AV_CreatureInfo[AV_NPC_H_MARSHAL_TOWER][0] ||
-            creature->GetEntry() == BG_AV_CreatureInfo[AV_NPC_MARSHAL_ETOWER][0] || creature->GetEntry() == BG_AV_CreatureInfo[AV_NPC_H_MARSHAL_WTOWER][0]) {
-        m_hordeMarshals.push_back(creature->GetGUID());
-        creature->SetRespawnDelay(RESPAWN_ONE_DAY);
-        creature->GetMap()->AddCreatureToPool(creature,2); //link pack
-        creature->SetCreaturePoolId(2);
-    }
-    else if (creature->GetEntry() == BG_AV_CreatureInfo[AV_NPC_A_BOSS][0]) {
-        creature->GetMap()->AddCreatureToPool(creature,1); //link to marshals
-        creature->SetCreaturePoolId(1);
-    }
-    else if (creature->GetEntry() == BG_AV_CreatureInfo[AV_NPC_H_BOSS][0]) {
-        creature->GetMap()->AddCreatureToPool(creature,2); //link to marshals
-        creature->SetCreaturePoolId(2);
-    }
-    else if (creature->GetEntry() == 13816) //Prospector Stonehewer
-        creature->SetRespawnDelay(300);
+    if (creature->GetEntry() == BG_AV_CreatureInfo[AV_NPC_A_CAPTAIN] || creature->GetEntry() == BG_AV_CreatureInfo[AV_NPC_H_CAPTAIN])
+        creature->SetRespawnDelay(RESPAWN_ONE_DAY); /// @todo look if this can be done by database + also add this for the wingcommanders
 
-    if ((isStatic && cinfoid >= 10 && cinfoid <= 14)
-        || (!isStatic && ((cinfoid >= AV_NPC_A_GRAVEDEFENSE0 && cinfoid <= AV_NPC_A_GRAVEDEFENSE3) ||
-            (cinfoid >= AV_NPC_H_GRAVEDEFENSE0 && cinfoid <= AV_NPC_H_GRAVEDEFENSE3))))
+    if ((isStatic && cinfoid >= 10 && cinfoid <= 14) || (!isStatic && (cinfoid <= AV_NPC_A_GRAVEDEFENSE3 || (cinfoid >= AV_NPC_H_GRAVEDEFENSE0 && cinfoid <= AV_NPC_H_GRAVEDEFENSE3))))
     {
-        CreatureData &data = sObjectMgr->NewOrExistCreatureData(creature->GetSpawnId());
-        data.spawnGroupData = sObjectMgr->GetDefaultSpawnGroup();
-        data.spawndist      = 5;
-
+        if (!isStatic && (cinfoid <= AV_NPC_A_GRAVEDEFENSE3 || (cinfoid >= AV_NPC_H_GRAVEDEFENSE0 && cinfoid <= AV_NPC_H_GRAVEDEFENSE3)))
+        {
+            CreatureData &data = sObjectMgr->NewOrExistCreatureData(creature->GetSpawnId());
+            data.spawnGroupData = sObjectMgr->GetDefaultSpawnGroup();
+            data.spawndist = 5;
+        }
         //else spawndist will be 15, so creatures move maximum=10
         //creature->SetDefaultMovementType(RANDOM_MOTION_TYPE);
         creature->GetMotionMaster()->Initialize();
         creature->SetDeathState(JUST_DIED);
         creature->Respawn();
-        //TODO: find a way to add a motionmaster without killing the creature (i
+        /// @todo find a way to add a motionmaster without killing the creature (i
         //just copied this code from a gm-command
     }
 
-    if(level != 0)
-        level += m_MaxLevel-60; //maybe we can do this more generic for custom level-range.. actually it's blizzlike
-    creature->SetLevel(level);
-    
-    /*if (cinfoid >= AV_NPC_A_MARSHAL_SOUTH && cinfoid <= AV_NPC_H_MARSHAL_WTOWER) {
-        if (cinfoid <= AV_NPC_A_MARSHAL_STONE)
-            m_allianceMarshals.push_back(creature->GetGUID());
-        else
-            m_hordeMarshals.push_back(creature->GetGUID());        
-    }*/
-    
+    uint32 triggerSpawnID = 0;
+    uint32 newFaction = 0;
+    if (creature->GetEntry() == BG_AV_CreatureInfo[AV_NPC_A_CAPTAIN])
+    {
+        triggerSpawnID = AV_CPLACE_TRIGGER16;
+        newFaction = 84;
+    }
+    else if (creature->GetEntry() == BG_AV_CreatureInfo[AV_NPC_A_BOSS])
+    {
+        triggerSpawnID = AV_CPLACE_TRIGGER17;
+        newFaction = 84;
+    }
+    else if (creature->GetEntry() == BG_AV_CreatureInfo[AV_NPC_H_CAPTAIN])
+    {
+        triggerSpawnID = AV_CPLACE_TRIGGER18;
+        newFaction = 83;
+    }
+    else if (creature->GetEntry() == BG_AV_CreatureInfo[AV_NPC_H_BOSS])
+    {
+        triggerSpawnID = AV_CPLACE_TRIGGER19;
+        newFaction = 83;
+    }
+    if (triggerSpawnID && newFaction)
+    {
+        if (Creature* trigger = AddCreature(WORLD_TRIGGER, triggerSpawnID, BG_AV_CreaturePos[triggerSpawnID]))
+        {
+            trigger->SetFaction(newFaction);
+        }
+    }
+
     return creature;
 }
 
@@ -362,8 +371,8 @@ void BattlegroundAV::Update(time_t diff)
             for(i = 0; i < AV_STATICCPLACE_MAX; i++)
                 AddAVCreature(0,i+AV_CPLACE_MAX);
             //mainspiritguides:
-            AddSpiritGuide(7, BG_AV_CreaturePos[7][0], BG_AV_CreaturePos[7][1], BG_AV_CreaturePos[7][2], BG_AV_CreaturePos[7][3], ALLIANCE);
-            AddSpiritGuide(8, BG_AV_CreaturePos[8][0], BG_AV_CreaturePos[8][1], BG_AV_CreaturePos[8][2], BG_AV_CreaturePos[8][3], HORDE);
+            AddSpiritGuide(7, BG_AV_CreaturePos[7], ALLIANCE);
+            AddSpiritGuide(8, BG_AV_CreaturePos[8], HORDE);
             //spawn the marshals (those who get deleted, if a tower gets destroyed)
             for(i = AV_NPC_A_MARSHAL_SOUTH; i <= AV_NPC_H_MARSHAL_WTOWER; i++)
                 AddAVCreature(i,AV_CPLACE_A_MARSHAL_SOUTH+(i-AV_NPC_A_MARSHAL_SOUTH));
@@ -895,7 +904,7 @@ void BattlegroundAV::PopulateNode(BG_AV_Nodes node)
         //spiritguide
         if( BgCreatures[node] )
             DelCreature(node);
-        if( !AddSpiritGuide(node, BG_AV_CreaturePos[node][0], BG_AV_CreaturePos[node][1], BG_AV_CreaturePos[node][2], BG_AV_CreaturePos[node][3], owner))
+        if( !AddSpiritGuide(node, BG_AV_CreaturePos[node], owner))
             TC_LOG_ERROR("bg.battleground","AV: couldn't spawn spiritguide at node %i",node);
 
     }

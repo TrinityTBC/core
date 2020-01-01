@@ -9040,9 +9040,20 @@ void CharmInfo::InitPossessCreateSpells()
 {
     if(_unit->GetTypeId() == TYPEID_UNIT)
     {
-        auto info = _unit->ToCreature()->GetCreatureTemplate();
-        if(!(info->DifficultyFlags.Flags2 & CREATURE_DIFFICULTYFLAGS_2_NO_DEFAULT_PET_BAR))
-            InitEmptyActionBar();
+        // Adding switch until better way is found. Malcrom
+        // Adding entrys to this switch will prevent COMMAND_ATTACK being added to pet bar.
+        switch (_unit->GetEntry())
+        {
+            case 23575: // Mindless Abomination
+            case 24783: // Trained Rock Falcon
+            case 27664: // Crashin' Thrashin' Racer
+            case 40281: // Crashin' Thrashin' Racer
+            case 28511: // Eye of Acherus
+                break;
+            default:
+                InitEmptyActionBar();
+                break;
+        }
 
         for (uint8 i = 0; i < MAX_CREATURE_SPELLS; ++i)
         {
@@ -9068,12 +9079,8 @@ void CharmInfo::InitCharmCreateSpells()
         InitEmptyActionBar();
         return;
     }
-    else if (_unit->GetTypeId() == TYPEID_UNIT)
-    {
-        auto info = _unit->ToCreature()->GetCreatureTemplate();
-        if (!(info->DifficultyFlags.Flags2 & CREATURE_DIFFICULTYFLAGS_2_NO_DEFAULT_PET_BAR))
-            InitPetActionBar();
-    }
+
+    InitPetActionBar();
 
     for (uint32 x = 0; x < MAX_SPELL_CHARM; ++x)
     {
@@ -9995,10 +10002,7 @@ bool Unit::InitTamedPet(Pet* pet, uint8 level, uint32 spell_id)
 
             // must be after setDeathState which resets dynamic flags
             if (!creature->loot.isLooted())
-            {
-                if (!cVictim->GetFormation() || !cVictim->GetFormation()->IsLootLinked(cVictim)) // else the flag is set when whole group is dead for those with linked loot 
-                    creature->SetFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
-            }
+                creature->SetFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
             else
                 creature->AllLootRemovedFromCorpse();
         }

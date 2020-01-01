@@ -13,6 +13,7 @@
 #include "Player.h"
 #include "SkillDiscovery.h"
 #include "QuestDef.h"
+#include "QuestPools.h"
 #include "GossipDef.h"
 #include "UpdateData.h"
 #include "Channel.h"
@@ -14232,7 +14233,7 @@ bool Player::CanShareQuest(uint32 quest_id) const
         if (itr != m_QuestStatus.end())
         {
             // in pool and not currently available (wintergrasp weekly, dalaran weekly) - can't share
-            if (sPoolMgr->IsPartOfAPool<Quest>(quest_id) && !sPoolMgr->IsSpawnedObject<Quest>(quest_id))
+            if (!sQuestPoolMgr->IsQuestActive(quest_id))
             {
 #ifdef LICH_KING
                 SendPushToPartyResponse(this, QUEST_PARTY_MSG_CANT_BE_SHARED_TODAY);

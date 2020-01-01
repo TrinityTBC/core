@@ -63,9 +63,6 @@ class ClientControl;
 #define MAX_AGGRO_RESET_TIME 10 // in seconds
 #define MAX_AGGRO_RADIUS 45.0f  // yards
 
-static const uint32 MAX_CREATURE_SPELLS = 8;
-static const uint32 MAX_CREATURE_MODELS = 4;
-
 enum VictimState : uint8
 {
     VICTIMSTATE_UNKNOWN1       = 0,

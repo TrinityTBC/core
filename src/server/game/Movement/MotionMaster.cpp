@@ -925,12 +925,13 @@ void MotionMaster::MoveRotate(uint32 id, uint32 time, RotateDirection direction)
     Add(new RotateMovementGenerator(id, time, direction), MOTION_SLOT_ACTIVE);
 }
 
-void MotionMaster::MoveFormation(uint32 id, FormationMoveSegment path, Creature* leader)
+void MotionMaster::MoveFormation(uint32 id, Position destination, uint32 moveType, bool forceRun /*= false*/, bool forceOrientation /*= false*/)
 {
-    if (_owner->GetTypeId() != TYPEID_UNIT)
-        return;
-
-    Add(new FormationMovementGenerator(id, leader->GetGUID(), path));
+    if (_owner->GetTypeId() == TYPEID_UNIT)
+    {
+        TC_LOG_DEBUG("movement.motionmaster", "MotionMaster::MoveFormation: '%s', targeted point Id: %u (X: %f, Y: %f, Z: %f)", _owner->GetGUID().ToString().c_str(), id, destination.GetPositionX(), destination.GetPositionY(), destination.GetPositionZ());
+        Add(new FormationMovementGenerator(id, destination, moveType, forceRun, forceOrientation));
+    }
 }
 
 void MotionMaster::LaunchMoveSpline(Movement::MoveSplineInit&& init, uint32 id/*= 0*/, MovementGeneratorPriority priority/* = MOTION_PRIORITY_NORMAL*/, MovementGeneratorType type/*= EFFECT_MOTION_TYPE*/)

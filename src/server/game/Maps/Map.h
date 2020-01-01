@@ -513,10 +513,6 @@ class TC_GAME_API Map : public GridRefManager<NGridType>
         }
         */
         
-        void AddCreatureToPool(Creature*, uint32);
-        void RemoveCreatureFromPool(Creature*, uint32);
-        std::list<Creature*> GetAllCreaturesFromPool(uint32);
-
         // Objects that must update even in inactive grids without activating them
         typedef std::set<MotionTransport*> TransportsContainer;
         TransportsContainer _transports;
@@ -771,9 +767,6 @@ class TC_GAME_API Map : public GridRefManager<NGridType>
             else
                 m_activeForcedNonPlayers.erase(obj);
         }
-
-        typedef std::map<uint32, std::set<ObjectGuid> > CreaturePoolMember;
-        CreaturePoolMember m_cpmembers;
 
         RespawnListContainer _respawnTimes;
         RespawnInfoMap       _creatureRespawnTimesBySpawnId;

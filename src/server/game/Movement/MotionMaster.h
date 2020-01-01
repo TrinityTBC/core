@@ -178,7 +178,7 @@ class TC_GAME_API MotionMaster
         void MoveRotate(uint32 id, uint32 time, RotateDirection direction);
         /** Look towards the target for given time */
         void MoveStealthAlert(Unit const* target, uint32 time);
-        void MoveFormation(uint32 id, FormationMoveSegment path, Creature* leader);
+        void MoveFormation(uint32 id, Position destination, uint32 moveType, bool forceRun = false, bool forceOrientation = false);
 
         void LaunchMoveSpline(Movement::MoveSplineInit&& init, uint32 id = 0, MovementGeneratorPriority priority = MOTION_PRIORITY_NORMAL, MovementGeneratorType type = EFFECT_MOTION_TYPE);
     private:

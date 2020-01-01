@@ -411,8 +411,8 @@ public:
         {
             if(target->GetCreatureAddon()->path_id != 0)
             {
-                WorldDatabase.PExecute("UPDATE creature_addon SET path_id = 0 WHERE spawnID = %u", guidlow);
-                WorldDatabase.PExecute("UPDATE creature SET MovementType = '%u' WHERE spawnID = '%u'", IDLE_MOTION_TYPE, guidlow);
+                WorldDatabase.PExecute("UPDATE creature_addon SET path_id = 0 WHERE guid = %u", guidlow);
+                WorldDatabase.PExecute("UPDATE creature SET MovementType = '%u' WHERE guid = '%u'", IDLE_MOTION_TYPE, guidlow);
                 target->LoadPath(0);
                 target->SetDefaultMovementType(IDLE_MOTION_TYPE);
                 target->GetMotionMaster()->MoveTargetedHome();
@@ -1137,33 +1137,31 @@ public:
         }
 
         guidlow = target->GetSpawnId();
-        QueryResult result = WorldDatabase.PQuery( "SELECT spawnId FROM creature_addon WHERE spawnID = '%u'",guidlow);
+        QueryResult result = WorldDatabase.PQuery( "SELECT spawnId FROM creature_addon WHERE guid = '%u'",guidlow);
 
         if( result )
         {
-            WorldDatabase.PExecute("UPDATE creature_addon SET path_id = '%u' WHERE spawnID = '%u'", pathid, guidlow);
+            WorldDatabase.PExecute("UPDATE creature_addon SET path_id = '%u' WHERE guid = '%u'", pathid, guidlow);
         }
         else
         {
             //if there's any creature_template_addon, let's base ourserlves on it
-            result = WorldDatabase.PQuery( "SELECT mount,bytes0,bytes1,bytes2,emote,moveflags,auras FROM creature_template_addon WHERE entry = '%u'",target->GetEntry());
+            result = WorldDatabase.PQuery( "SELECT mount,bytes1,bytes2,emote,auras FROM creature_template_addon WHERE entry = '%u'",target->GetEntry());
             if(result)
             {
                 uint32 mount = (*result)[0].GetUInt32();
-                uint32 bytes0 = (*result)[1].GetUInt32();
-                uint32 bytes1 = (*result)[2].GetUInt32();
-                uint32 bytes2 = (*result)[3].GetUInt32();
-                uint32 emote = (*result)[4].GetUInt32();
-                uint32 moveflags = (*result)[5].GetUInt32();
-                const char* auras = (*result)[6].GetCString();
-                WorldDatabase.PExecute("INSERT INTO creature_addon(spawnID,path_id,mount,bytes0,bytes1,bytes2,emote,moveflags,auras) VALUES \
-                                       ('%u','%u','%u','%u','%u','%u','%u','%u','%s')", guidlow, pathid,mount,bytes0,bytes1,bytes2,emote,moveflags,auras);
+                uint32 bytes1 = (*result)[1].GetUInt32();
+                uint32 bytes2 = (*result)[2].GetUInt32();
+                uint32 emote = (*result)[3].GetUInt32();
+                const char* auras = (*result)[4].GetCString();
+                WorldDatabase.PExecute("INSERT INTO creature_addon(guid,path_id,mount,bytes1,bytes2,emote,auras) VALUES \
+                                       ('%u','%u','%u','%u','%u','%u','%s')", guidlow, pathid,mount,bytes1,bytes2,emote,auras);
             } else { //else just create a new entry
-                WorldDatabase.PExecute("INSERT INTO creature_addon(spawnID,path_id) VALUES ('%u','%u')", guidlow, pathid);
+                WorldDatabase.PExecute("INSERT INTO creature_addon(guid,path_id) VALUES ('%u','%u')", guidlow, pathid);
             }
         }
 
-        WorldDatabase.PExecute("UPDATE creature SET MovementType = '%u' WHERE spawnID = '%u'", WAYPOINT_MOTION_TYPE, guidlow);
+        WorldDatabase.PExecute("UPDATE creature SET MovementType = '%u' WHERE guid = '%u'", WAYPOINT_MOTION_TYPE, guidlow);
 
         target->LoadPath(pathid);
         target->SetDefaultMovementType(WAYPOINT_MOTION_TYPE);

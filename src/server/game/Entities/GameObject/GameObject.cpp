@@ -866,11 +866,6 @@ void GameObject::Update(uint32 diff)
             if(sWorld->getConfig(CONFIG_SAVE_RESPAWN_TIME_IMMEDIATELY))
                 SaveRespawnTime();
 
-            //sun: notify the PoolMgr of our despawn, so that it may already consider this gameobject as removed
-            uint32 poolid = GetSpawnId() ? sPoolMgr->IsPartOfAPool<GameObject>(GetSpawnId()) : 0;
-            if (poolid)
-                sPoolMgr->RemoveActiveObject<GameObject>(poolid, GetSpawnId());
-
             if (!m_respawnCompatibilityMode)
             {
                 // Respawn time was just saved if set to save to DB
@@ -1009,9 +1004,9 @@ void GameObject::SaveToDB(uint32 mapid, uint8 spawnMask)
         GetFloatValue(GAMEOBJECT_PARENTROTATION + 3));
     data.spawntimesecs = m_spawnedByDefault ? m_respawnDelayTime : -(int32)m_respawnDelayTime;
     data.animprogress = GetGoAnimProgress();
-    data.go_state = GetGoState();
+    data.goState = GetGoState();
     data.spawnMask = spawnMask;
-    data.ArtKit = GetUInt32Value(GAMEOBJECT_ARTKIT);
+    data.artKit = GetUInt32Value(GAMEOBJECT_ARTKIT);
     if (!data.spawnGroupData)
         data.spawnGroupData = sObjectMgr->GetDefaultSpawnGroup();
 
@@ -1055,8 +1050,8 @@ bool GameObject::LoadFromDB(uint32 spawnId, Map* map, bool addToMap, bool)
     uint32 entry = data->id;
 
     uint32 animprogress = data->animprogress;
-    uint32 go_state = data->go_state;
-    uint32 ArtKit = data->ArtKit;
+    uint32 go_state = data->goState;
+    uint32 ArtKit = data->artKit;
 
     m_spawnId = spawnId;
     m_respawnCompatibilityMode = ((data->spawnGroupData->flags & SPAWNGROUP_FLAG_COMPATIBILITY_MODE) != 0);
@@ -1579,7 +1574,7 @@ void GameObject::SetGoArtKit(uint32 kit)
     SetUInt32Value(GAMEOBJECT_ARTKIT, kit);
     GameObjectData *data = const_cast<GameObjectData*>(sObjectMgr->GetGameObjectData(m_spawnId));
     if(data)
-        data->ArtKit = kit;
+        data->artKit = kit;
 }
 
 void GameObject::SwitchDoorOrButton(bool activate, bool alternative /* = false */, Unit* user /* = nullptr */ )
@@ -2155,7 +2150,7 @@ void GameObject::EventInform(uint32 eventId, WorldObject* invoker /*= nullptr*/)
 uint32 GameObject::GetScriptId() const
 {
     if (GameObjectData const* gameObjectData = GetGameObjectData())
-        if (uint32 scriptId = gameObjectData->ScriptId)
+        if (uint32 scriptId = gameObjectData->scriptId)
             return scriptId;
 
     return GetGOInfo()->ScriptId;

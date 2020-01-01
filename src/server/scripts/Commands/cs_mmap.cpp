@@ -444,7 +444,7 @@ public:
             if (DEBUG_PATH_ID && pathID != DEBUG_PATH_ID)
                 continue;
 
-            CreatureTemplate const* templatInfo = sObjectMgr->GetCreatureTemplate(creData.GetFirstSpawnEntry());
+            CreatureTemplate const* templatInfo = sObjectMgr->GetCreatureTemplate(creData.id);
             if (!templatInfo)
             {
                 ASSERT(false);
@@ -597,7 +597,7 @@ public:
         for (auto itr2 : allCreatures)
         {
             CreatureData const& creData = itr2.second;
-            if (creData.GetFirstSpawnEntry() != npcID) //not actually correct but there are very few creatures using several entries
+            if (creData.id != npcID) //not actually correct but there are very few creatures using several entries
                 continue;
 
             return Optional<uint32>(creData.spawnPoint.GetMapId());

@@ -1,116 +1,101 @@
+/*
+ * Copyright (C) 2008-2019 TrinityCore <https://www.trinitycore.org/>
+ * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #ifndef _FORMATIONS_H
 #define _FORMATIONS_H
 
-class CreatureGroup;
-enum WaypointPathType : uint32;
+#include "Define.h"
+#include "ObjectGuid.h"
+#include <unordered_map>
+#include <map>
 
-enum GroupAI : uint8
+enum GroupAIFlags
 {
-    GROUP_AI_NONE           = 0, //no follow leader, no automatic mutual support
-    GROUP_AI_LEADER_SUPPORT = 1, //follow leader, leader start attacking if a member start attacking
-    GROUP_AI_FULL_SUPPORT   = 2, //follow leader, while group start attacking if any member start attacking
-
-    GROUP_AI_TOTAL
+    FLAG_AGGRO_NONE            = 0,                                                         // No creature group behavior
+    FLAG_MEMBERS_ASSIST_LEADER = 0x00000001,                                                // The member aggroes if the leader aggroes
+    FLAG_LEADER_ASSISTS_MEMBER = 0x00000002,                                                // The leader aggroes if the member aggroes
+    FLAG_MEMBERS_ASSIST_MEMBER = (FLAG_MEMBERS_ASSIST_LEADER | FLAG_LEADER_ASSISTS_MEMBER), // every member will assist if any member is attacked
+    FLAG_IDLE_IN_FORMATION     = 0x00000200,                                                // The member will follow the leader when pathing idly
 };
+
+class Creature;
+class CreatureGroup;
+class Unit;
+struct Position;
 
 struct FormationInfo
 {
-    uint32 groupID = 0;
-    float followDist = 0.0f;
-    float followAngle = 0.0f;
-    GroupAI groupAI = GROUP_AI_FULL_SUPPORT;
-    bool respawn = false;
-    bool linkedLoot = false;
-    uint32 leaderWaypointIDs[2] = { }; //formation does a 180 on these points. // NYI, this is somewhat automated for now
-
-    Position originalHome; //home before being in the formation
+    ObjectGuid::LowType LeaderSpawnId;
+    float FollowDist;
+    float FollowAngle;
+    uint32 GroupAI;
+    uint32 LeaderWaypointIDs[2];
 };
 
 class TC_GAME_API FormationMgr
 {
-    friend class CreatureGroup;
-public:
-    /*internalId is usually internalId, but is lowguid + SUMMON_OFFSET for summons*/
-    typedef std::unordered_map<uint32 /*internalId*/, FormationInfo> CreatureGroupInfoType;
+    private:
+        FormationMgr();
+        ~FormationMgr();
 
-    static FormationMgr* instance();
+        std::unordered_map<uint32 /*spawnID*/, FormationInfo> _creatureGroupMap;
 
-    //return nullptr on failure. Prefer using this first one
-    static CreatureGroup* AddCreatureToGroup(Creature* leader, Creature* creature);
-    //return nullptr on failure
-    static CreatureGroup* AddCreatureToGroup(uint32 groupID, Creature* creature);
-    void RemoveCreatureFromGroup(uint32 groupId, Creature* member) const;
-    void RemoveCreatureFromGroup(CreatureGroup *group, Creature* member) const;
+    public:
+        static FormationMgr* instance();
 
-    FormationInfo* GetFormationInfo(uint32 spawnId);
+        void AddCreatureToGroup(ObjectGuid::LowType leaderSpawnId, Creature* creature);
+        void RemoveCreatureFromGroup(CreatureGroup* group, Creature* creature);
 
-    //empty group then delete it
-    static void BreakFormation(Creature* leader);
+        void LoadCreatureFormations();
+        FormationInfo* GetFormationInfo(ObjectGuid::LowType spawnId);
 
-    void LoadCreatureFormations();
-
-    static uint32 GetInternalGroupId(Creature const* leader);
-
-private:
-    void AddFormationMember(uint32 spawnId, FormationInfo const& group_member);
-
-    FormationMgr();
-    ~FormationMgr();
-
-    CreatureGroupInfoType _creatureGroupMap; //data from database, contains member infos for when a new group is created
+        void AddFormationMember(ObjectGuid::LowType spawnId, float followAng, float followDist, ObjectGuid::LowType leaderSpawnId, uint32 groupAI);
 };
 
 class TC_GAME_API CreatureGroup
 {
-    friend FormationMgr;
     private:
-        static uint32 const RESPAWN_TIMER = 15000;
+        Creature* _leader; //Important do not forget sometimes to work with pointers instead synonims :D:D
+        std::unordered_map<Creature*, FormationInfo*> _members;
 
-        Creature* _leader;
-        typedef std::unordered_map<Creature*, FormationInfo>  CreatureGroupMemberType;
-        CreatureGroupMemberType _members;
-
-        uint32 _groupId; // = leader internal id from _creatureGroupMap
+        ObjectGuid::LowType _leaderSpawnId;
         bool _formed;
         bool _engaging;
-        bool _justAlive; //group was alive at last update
-        uint32 _respawnTimer; //time left before respawning group members with respawn flag (only decreases when out of combat)
-    
+
     public:
         //Group cannot be created empty
-        explicit CreatureGroup(uint32 id);
+        explicit CreatureGroup(ObjectGuid::LowType leaderSpawnId);
         ~CreatureGroup();
-        
+
         Creature* GetLeader() const { return _leader; }
-        uint32 GetGroupId() const { return _groupId; }
+        ObjectGuid::LowType GetLeaderSpawnId() const { return _leaderSpawnId; }
         bool IsEmpty() const { return _members.empty(); }
         bool IsFormed() const { return _formed; }
-        bool IsAlive() const; //true if any member is alive
-        bool IsEngaged() const; //true if any member is engaged
-        bool IsLootLinked(Creature* c);
         bool IsLeader(Creature const* creature) const { return _leader == creature; }
 
         bool HasMember(Creature* member) const { return _members.count(member) > 0; }
-        FormationInfo& AddMember(Creature *member);
-        void RemoveMember(Creature *member);
-        // Reset movement for formation members (not leader)
+        void AddMember(Creature* member);
+        void RemoveMember(Creature* member);
         void FormationReset(bool dismiss);
-        // Restore UNIT_DYNFLAG_LOOTABLE on creatures with linkedLoot flag
-        void SetLootable(bool lootable);
 
         void LeaderMoveTo(Position const& destination, uint32 id = 0, uint32 moveType = 0, bool orientation = false);
-        void MemberEngagingTarget(Creature* member, Unit *target);
+        void MemberEngagingTarget(Creature* member, Unit* target);
         bool CanLeaderStartMoving() const;
-
-        void Respawn();
-        void Update(uint32 diff);
-        void ForEachMember(std::function<void(Creature*)> const& apply);
-        void SetMemberGroupAI(Creature* member, GroupAI ai);
-
-private:
-        //remove every members
-        void EmptyFormation();
 };
 
 #define sFormationMgr FormationMgr::instance()

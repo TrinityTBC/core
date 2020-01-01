@@ -184,16 +184,16 @@ void SmartAIMgr::LoadSmartAIFromDB()
                         continue;
                     }
 
-                    CreatureTemplate const* creatureInfo = sObjectMgr->GetCreatureTemplate(creature->GetFirstSpawnEntry());
+                    CreatureTemplate const* creatureInfo = sObjectMgr->GetCreatureTemplate(creature->id);
                     if (!creatureInfo)
                     {
-                        TC_LOG_ERROR("sql.sql", "SmartAIMgr::LoadSmartAIFromDB: Creature entry (%u) spawnId (%u) does not exist, skipped loading.", creature->GetFirstSpawnEntry(), uint32(std::abs(temp.entryOrGuid)));
+                        TC_LOG_ERROR("sql.sql", "SmartAIMgr::LoadSmartAIFromDB: Creature entry (%u) spawnId (%u) does not exist, skipped loading.", creature->id, uint32(std::abs(temp.entryOrGuid)));
                         continue;
                     }
 
                     if (creatureInfo->AIName != SMARTAI_AI_NAME)
                     {
-                        TC_LOG_ERROR("sql.sql", "SmartAIMgr::LoadSmartAIFromDB: Creature entry (%u) spawnId (%u) is not using " SMARTAI_AI_NAME ", skipped loading.", creature->GetFirstSpawnEntry(), uint32(std::abs(temp.entryOrGuid)));
+                        TC_LOG_ERROR("sql.sql", "SmartAIMgr::LoadSmartAIFromDB: Creature entry (%u) spawnId (%u) is not using " SMARTAI_AI_NAME ", skipped loading.", creature->id, uint32(std::abs(temp.entryOrGuid)));
                         continue;
                     }
                     break;
@@ -1282,7 +1282,7 @@ bool SmartAIMgr::IsTextValid(SmartScriptHolder const& e, uint32 id)
                         return false;
                     }
                     else
-                        entry = data->GetFirstSpawnEntry();
+                        entry = data->id;
                 }
                 else
                     entry = uint32(e.entryOrGuid);

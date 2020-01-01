@@ -11,6 +11,8 @@
 #define BASE_MAXDAMAGE   2.0f
 #define BASE_ATTACK_TIME 2000
 
+#define MAX_EQUIPMENT_ITEMS 3
+
 // byte flag value (UNIT_FIELD_BYTES_1,0) // UNIT_BYTES_1_OFFSET_STAND_STATE
 enum UnitStandStateType : uint8
 {

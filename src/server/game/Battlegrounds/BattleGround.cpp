@@ -22,6 +22,7 @@
 #include "BattleGroundAB.h"
 #include "ReputationMgr.h"
 #include "WorldStatePackets.h"
+#include "Formulas.h"
 
 namespace Trinity
 {
@@ -764,6 +765,12 @@ void Battleground::EndBattleground(uint32 winner)
     }
 }
 
+uint32 Battleground::GetBonusHonorFromKill(uint32 kills) const
+{
+    //variable kills means how many honorable kills you scored (so we need kills * honor_for_one_kill)
+    uint32 maxLevel = std::min<uint32>(GetMaxLevel(), 80U);
+    return Trinity::Honor::hk_honor_at_level(maxLevel, kills);
+}
 
 void Battleground::SendMessageToAll(int32 entry, ChatMsg type, Player const* source)
 {
@@ -1679,6 +1686,11 @@ Creature* Battleground::AddCreature(uint32 entry, uint32 type, float x, float y,
     return pCreature;
 }
 
+Creature* Battleground::AddCreature(uint32 entry, uint32 type, Position const& pos, uint32 respawntime /*= 0*/)
+{
+    return AddCreature(entry, type, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), respawntime);
+}
+
 bool Battleground::DelCreature(uint32 type)
 {
     if(!BgCreatures[type])
@@ -1749,6 +1761,11 @@ bool Battleground::AddSpiritGuide(uint32 type, float x, float y, float z, float 
     //pCreature->CastSpell(pCreature, SPELL_SPIRIT_HEAL_CHANNEL, true);
 
     return true;
+}
+
+bool Battleground::AddSpiritGuide(uint32 type, Position const& pos, uint32 team)
+{
+    return AddSpiritGuide(type, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), team);
 }
 
 void Battleground::SendMessageToAll(char const* text)

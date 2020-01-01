@@ -35,7 +35,12 @@ class TC_GAME_API MapManager
 
         uint32 GetAreaId(uint32 mapid, float x, float y, float z) const;
         uint32 GetZoneId(uint32 mapid, float x, float y, float z) const;
-        void GetZoneAndAreaId(uint32& zoneid, uint32& areaid, uint32 mapid, float x, float y, float z);
+        void GetZoneAndAreaId(uint32& zoneid, uint32& areaid, uint32 mapid, float x, float y, float z) const
+        {
+            Map const* m = const_cast<MapManager*>(this)->CreateBaseMap(mapid);
+            m->GetZoneAndAreaId(zoneid, areaid, x, y, z);
+        }
+        void GetZoneAndAreaId(uint32& zoneid, uint32& areaid, WorldLocation const& loc) const { GetZoneAndAreaId(zoneid, areaid, loc.GetMapId(), loc.GetPositionX(), loc.GetPositionY(), loc.GetPositionZ()); }
 
         void Initialize(void);
         void Update(time_t);

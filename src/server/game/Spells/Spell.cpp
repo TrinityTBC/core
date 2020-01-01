@@ -4771,7 +4771,7 @@ void Spell::UpdateSpellCastDataAmmo(WorldPackets::Spells::SpellAmmo& ammo)
     {
         uint32 nonRangedAmmoDisplayID = 0;
         uint32 nonRangedAmmoInventoryType = 0;
-        for (uint32 slot = WEAPON_SLOT_MAINHAND; slot <= WEAPON_SLOT_RANGED; ++slot)
+        for (uint32 slot = BASE_ATTACK; slot < MAX_ATTACK; ++slot)
         {
 #ifdef LICH_KING
             if (uint32 item_id = m_caster->GetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID + i))
@@ -4819,7 +4819,7 @@ void Spell::UpdateSpellCastDataAmmo(WorldPackets::Spells::SpellAmmo& ammo)
                 Creature* c = m_caster->ToCreature();
                 if (!c)
                     break;
-                switch (c->GetWeaponSubclass(WeaponSlot(slot)))
+                switch (c->GetWeaponSubclass(WeaponAttackType(slot)))
                 {
                 case ITEM_SUBCLASS_WEAPON_BOW:
                 case ITEM_SUBCLASS_WEAPON_CROSSBOW:

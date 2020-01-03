@@ -559,9 +559,9 @@ bool Creature::InitEntry(uint32 Entry, const CreatureData* data)
     return true;
 }
 
-bool Creature::UpdateEntry(uint32 Entry, const CreatureData* data)
+bool Creature::UpdateEntry(uint32 entry, CreatureData const* data /*= nullptr*/, bool updateLevel /* = true */)
 {
-    if(!InitEntry(Entry,data))
+    if(!InitEntry(entry,data))
         return false;
 
     CreatureTemplate const* cInfo = GetCreatureTemplate();
@@ -572,7 +572,6 @@ bool Creature::UpdateEntry(uint32 Entry, const CreatureData* data)
 
     SetByteValue(UNIT_FIELD_BYTES_2, UNIT_BYTES_2_OFFSET_BUFF_LIMIT, UNIT_BYTE2_CREATURE_BUFF_LIMIT);
 
-    SelectLevel();
     SetFaction(cInfo->faction);
 
     uint32 npcflag, unit_flags, dynamicflags;
@@ -596,6 +595,9 @@ bool Creature::UpdateEntry(uint32 Entry, const CreatureData* data)
     SetUInt32Value(UNIT_FIELD_FLAGS, unit_flags);
     SetUInt32Value(UNIT_FIELD_FLAGS_2, cInfo->unit_flags2);
     SetUInt32Value(UNIT_DYNAMIC_FLAGS, dynamicflags);
+
+    if (updateLevel)
+        SelectLevel();
 
     SetMeleeDamageSchool(SpellSchools(cInfo->dmgschool));
     //sun: level + 3 for world bosses. This is verified for armor as bosses listed armor are the lvl 73 values instead of the 70.
@@ -705,6 +707,9 @@ void Creature::Update(uint32 diff)
         case CORPSE:
         {
             Unit::Update(diff);
+
+            if (IsEngaged())
+                Unit::AIUpdateTick(diff);
 
             if (m_corpseRemoveTime <= GetMap()->GetGameTime())
             {
@@ -1093,7 +1098,7 @@ bool Creature::Create(ObjectGuid::LowType guidlow, Map *map, uint32 phaseMask, u
     return true;
 }
 
-Unit* Creature::SelectVictim(bool evade /*= true*/)
+Unit* Creature::SelectVictim()
 {
     Unit* target = nullptr;
 
@@ -1147,19 +1152,15 @@ Unit* Creature::SelectVictim(bool evade /*= true*/)
         {
             if ((*itr)->GetBase()->IsPermanent())
             {
-                if(evade)
-                    AI()->EnterEvadeMode(CreatureAI::EVADE_REASON_OTHER);
+                AI()->EnterEvadeMode(CreatureAI::EVADE_REASON_OTHER);
                 break;
             }
         }
         return nullptr;
     }
 
-    if (evade)
-    {
-        // enter in evade mode in other case
-        AI()->EnterEvadeMode(CreatureAI::EVADE_REASON_NO_HOSTILES);
-    }
+    // enter in evade mode in other case
+    AI()->EnterEvadeMode(CreatureAI::EVADE_REASON_NO_HOSTILES);
 
     return nullptr;
 }
@@ -2650,7 +2651,7 @@ void Creature::CallAssistance()
 
 void Creature::CallForHelp(float radius)
 {
-    if (radius <= 0.0f || !IsEngaged() || IsPet() || IsCharmed())
+    if (radius <= 0.0f || !IsEngaged() || !IsAlive() || IsPet() || IsCharmed())
         return;
 
     Unit* target = GetThreatManager().GetCurrentVictim();
@@ -2658,7 +2659,12 @@ void Creature::CallForHelp(float radius)
         target = GetThreatManager().GetAnyTarget();
     if (!target)
         target = GetCombatManager().GetAnyTarget();
-    ASSERT(target, "Creature %u (%s) is engaged without threat list", GetEntry(), GetName().c_str());
+
+    if (!target)
+    {
+        TC_LOG_ERROR("entities.unit", "Creature %u (%s) trying to call for help without being in combat.", GetEntry(), GetName().c_str());
+        return;
+    }
 
     Trinity::CallOfHelpCreatureInRangeDo u_do(this, target, radius);
     Trinity::CreatureWorker<Trinity::CallOfHelpCreatureInRangeDo> worker(this, u_do);
@@ -3559,9 +3565,16 @@ bool Creature::CanGiveExperience() const
         && !(GetCreatureTemplate()->flags_extra & CREATURE_FLAG_EXTRA_NO_XP_AT_KILL);
 }
 
-void Creature::AtEnterCombat()
+bool Creature::IsEngaged() const
 {
-    Unit::AtEnterCombat();
+    if (CreatureAI const* ai = AI())
+        return ai->IsEngaged();
+    return false;
+}
+
+void Creature::AtEngage(Unit* target)
+{
+    Unit::AtEngage(target);
 
     if (!(GetCreatureTemplate()->type_flags & CREATURE_TYPE_FLAG_MOUNTED_COMBAT_ALLOWED))
         Dismount();
@@ -3574,14 +3587,23 @@ void Creature::AtEnterCombat()
         UpdateSpeed(MOVE_SWIM);
         UpdateSpeed(MOVE_FLIGHT);
     }
+
+    MovementGeneratorType const movetype = GetMotionMaster()->GetCurrentMovementGeneratorType();
+    if (movetype == WAYPOINT_MOTION_TYPE || movetype == POINT_MOTION_TYPE || (IsAIEnabled() && AI()->IsEscorted()))
+        SetHomePosition(GetPosition());
+
+    if (CreatureAI* ai = AI())
+        ai->JustEngagedWith(target);
+    if (CreatureGroup* formation = GetFormation())
+        formation->MemberEngagingTarget(this, target);
 }
 
-void Creature::AtExitCombat()
+void Creature::AtDisengage()
 {
-    Unit::AtExitCombat();
+    Unit::AtDisengage();
 
     ClearUnitState(UNIT_STATE_ATTACK_PLAYER);
-    if (HasFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_TAPPED))
+    if (IsAlive() && HasFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_TAPPED))
         SetUInt32Value(UNIT_DYNAMIC_FLAGS, GetCreatureTemplate()->dynamicflags);
 
     if (IsPet() || IsGuardian()) // update pets' speed for catchup OOC speed

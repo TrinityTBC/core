@@ -899,28 +899,9 @@ public:
     */
     static bool HandleReloadSmartAICommand(ChatHandler* handler, char const* args)
     {
-        bool reloadExistingCreatures = false;
-        char* cReloadExistingCreatures = strtok((char*)args, "");
-        if (cReloadExistingCreatures)
-            reloadExistingCreatures = bool(atoi(cReloadExistingCreatures));
-
-        TC_LOG_INFO("command", "Re-Loading SmartAI Scripts... with reloadExistingCreatures = %u", uint32(reloadExistingCreatures));
+        TC_LOG_INFO("misc", "Re-Loading Smart Scripts...");
         sSmartScriptMgr->LoadSmartAIFromDB();
-        handler->SendGlobalGMSysMessage("SmartAI Scripts reloaded.");
-
-        if (reloadExistingCreatures)
-        {
-            if (Creature* target = handler->GetSelectedCreature())
-            {
-                if (target->GetAIName() == SMARTAI_AI_NAME)
-                    target->AIM_Initialize();
-                handler->PSendSysMessage("Reloaded SmartAI scripts for targeted creature (%s)", target->GetName().c_str());
-            }
-            else if (Player* player = handler->GetSession()->GetPlayer()) {
-                sSmartScriptMgr->ReloadCreaturesScripts(player->GetMap());
-                handler->SendGlobalGMSysMessage("Reloaded SmartAI scripts for all existing creatures in current map. (NYI)");
-            }
-        }
+        handler->SendGlobalGMSysMessage("Smart Scripts reloaded.");
         return true;
     }
 

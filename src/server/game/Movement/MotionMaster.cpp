@@ -900,20 +900,19 @@ void MotionMaster::MoveDistract(uint32 timer, float orientation)
     Add(new DistractMovementGenerator(_owner, orientation, timer));
 }
 
-void MotionMaster::MovePath(uint32 pathId, bool repeatable, bool smoothSpline)
+void MotionMaster::MovePath(uint32 pathId, bool repeatable)
 {
     if (!pathId)
         return;
 
-    TC_LOG_DEBUG("movement.motionmaster", "MotionMaster::MovePath: '%s', starts moving over path Id: %u (repeatable: %s, smooth: %u)", _owner->GetGUID().ToString().c_str(), pathId, repeatable ? "YES" : "NO", uint32(smoothSpline));
-    Add(new WaypointMovementGenerator<Creature>(pathId, repeatable, smoothSpline), MOTION_SLOT_DEFAULT);
+    TC_LOG_DEBUG("movement.motionmaster", "MotionMaster::MovePath: '%s', starts moving over path Id: %u (repeatable: %s)", _owner->GetGUID().ToString().c_str(), pathId, repeatable ? "YES" : "NO");
+    Add(new WaypointMovementGenerator<Creature>(pathId, repeatable), MOTION_SLOT_DEFAULT);
 }
 
-void MotionMaster::MovePath(WaypointPath& path, bool repeatable, bool smoothSpline)
+void MotionMaster::MovePath(WaypointPath& path, bool repeatable)
 {
-    TC_LOG_DEBUG("movement.motionmaster", "MotionMaster::MovePath: '%s', starts moving over path Id: %u (repeatable: %s, smooth: %u)", _owner->GetGUID().ToString().c_str(), path.id, repeatable ? "YES" : "NO", uint32(smoothSpline));
-    //We set waypoint movement as new default movement generator. If non repeating case, the generator will trigger a MoveIdle itself at the end
-    Add(new WaypointMovementGenerator<Creature>(path, repeatable, smoothSpline), MOTION_SLOT_DEFAULT);
+    TC_LOG_DEBUG("movement.motionmaster", "MotionMaster::MovePath: '%s', starts moving over path Id: %u (repeatable: %s)", _owner->GetGUID().ToString().c_str(), path.id, repeatable ? "YES" : "NO");
+    Add(new WaypointMovementGenerator<Creature>(path, repeatable), MOTION_SLOT_DEFAULT);
 }
 
 void MotionMaster::MoveRotate(uint32 id, uint32 time, RotateDirection direction)

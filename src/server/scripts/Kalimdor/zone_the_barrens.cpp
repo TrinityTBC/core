@@ -220,12 +220,12 @@ public:
         void DoFriend()
         {
             me->RemoveAllAuras();
-            me->GetThreatManager().ClearAllThreat();
             me->CombatStop(true);
-
             me->StopMoving();
-            me->GetMotionMaster()->MoveIdle();
 
+            EngagementOver();
+
+            me->GetMotionMaster()->MoveIdle();
             me->SetFaction(FACTION_FRIENDLY_F);
             me->HandleEmoteCommand(EMOTE_ONESHOT_SALUTE);
         }

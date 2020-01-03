@@ -96,7 +96,7 @@ class TC_GAME_API Creature : public Unit, public GridObject<Creature>, public Ma
         bool IsDungeonBoss() const { return (GetCreatureTemplate()->flags_extra & CREATURE_FLAG_EXTRA_DUNGEON_BOSS) != 0; }
         bool IsAffectedByDiminishingReturns() const override { return Unit::IsAffectedByDiminishingReturns() /*|| (GetCreatureTemplate()->flags_extra & CREATURE_FLAG_EXTRA_ALL_DIMINISH) != 0*/; }
 
-        Unit* SelectVictim(bool evade = true);
+        Unit* SelectVictim();
 
         void SetReactState(ReactStates st);
         ReactStates GetReactState() { return m_reactState; }
@@ -171,7 +171,7 @@ class TC_GAME_API Creature : public Unit, public GridObject<Creature>, public Ma
 
         bool HasSpell(uint32 spellID) const override;
 
-        bool UpdateEntry(uint32 entry, const CreatureData* data = nullptr);
+        bool UpdateEntry(uint32 entry, const CreatureData* data = nullptr, bool updateLevel = true);
         /* 
         Updates creatures movement flags according to current position
         Remove flying movement flags if creature is not in air.
@@ -430,8 +430,9 @@ class TC_GAME_API Creature : public Unit, public GridObject<Creature>, public Ma
 
         bool CanGiveExperience() const;
 
-        void AtEnterCombat() override;
-        void AtExitCombat() override;
+        bool IsEngaged() const override;
+        void AtEngage(Unit* target) override;
+        void AtDisengage() override;
 
         std::string GetDebugInfo() const override;
 

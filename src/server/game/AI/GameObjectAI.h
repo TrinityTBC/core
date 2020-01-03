@@ -46,22 +46,22 @@ class TC_GAME_API GameObjectAI
         // Called when the dialog status between a player and the gameobject is requested.
         virtual Optional<QuestGiverStatus> GetDialogStatus(Player* /*player*/) { return boost::none; }
 
-        virtual void Destroyed(Player* player, uint32 eventId) { }
+        virtual void Destroyed(WorldObject* /*attacker*/, uint32 /*eventId*/) { }
         virtual void SetData(uint32 id, uint32 value) { }
         virtual void GetData(uint32 id) const { }
         virtual void EventInform(uint32 /*eventId*/) { }
 
         virtual void OnGameEvent(bool /*start*/, uint16 /*eventId*/) { }
         virtual void OnStateChanged(GOState /*state*/, Unit* /*unit*/) { }
-        virtual void OnLootStateChanged(LootState /*state*/, Unit* /*unit*/) { }
+        virtual void OnLootStateChanged(uint32 /*state*/, Unit* /*unit*/) { }
 
         // Called when hit by a spell
         virtual void SpellHit(Unit* /*caster*/, SpellInfo const* /*spellInfo*/) { }
-        virtual void SpellHit(GameObject* /*caster*/, SpellInfo const* /*spellInfo*/) { }
+        virtual void SpellHitByGameObject(GameObject* /*caster*/, SpellInfo const* /*spellInfo*/) { }
 
         // Called when spell hits a target
         virtual void SpellHitTarget(Unit* /*target*/, SpellInfo const* /*spellInfo*/) { }
-        virtual void SpellHitTarget(GameObject* /*target*/, SpellInfo const* /*spellInfo*/) { }
+        virtual void SpellHitTargetGameObject(GameObject* /*target*/, SpellInfo const* /*spellInfo*/) { }
 
         // Called when the gameobject summon successfully other creature
         virtual void JustSummoned(Creature* /*summon*/) { }

@@ -88,9 +88,10 @@ void EscortAI::ReturnToLastPoint()
 void EscortAI::EnterEvadeMode(EvadeReason /* why */)
 {
     me->RemoveAllAuras();
-    me->GetThreatManager().ClearAllThreat();
     me->CombatStop();
     me->SetLootRecipient(nullptr);
+
+    EngagementOver();
 
     if (HasEscortState(STATE_ESCORT_ESCORTING) || !_despawnAtEnd)
     {

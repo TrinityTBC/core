@@ -26,42 +26,7 @@ public:
     /** Syntax: .smartai errors [entryOrGuid] */
     static bool HandleSmartAIShowErrorsCommand(ChatHandler* handler, char const* args)
     {
-        uint32 entry = 0;
-        uint32 guid = 0;
-        Creature* target = nullptr;
-
-        if (!*args)
-        {
-            //if no arguments given, try getting selected creature
-            target = handler->GetSelectedCreature();
-
-            if (!target)
-            {
-                handler->SendSysMessage("Select a creature or give an entry or a guid (as a negative value).");
-                return true;
-            }
-
-            guid = target->GetGUID().GetCounter();
-            entry = target->GetEntry();
-        }
-        else {
-            //arguments given, check if guid or entry
-            int entryOrGuid = atoi(args);
-            if (entryOrGuid > 0)
-                entry = entryOrGuid;
-            else
-                guid = -entryOrGuid;
-        }
-
-        handler->SendSysMessage("SmartAI errors :");
-        auto errorList = sSmartScriptMgr->GetErrorList(-int32(guid)); //negative guid in argument
-        for (auto itr : errorList)
-            handler->PSendSysMessage("%s", itr.c_str());
-
-        errorList = sSmartScriptMgr->GetErrorList(entry);
-        for (auto itr : errorList)
-            handler->PSendSysMessage("%s", itr.c_str());
-
+        //TODO: ReimplementAfterTCMigration
         return true;
     }
 
@@ -102,11 +67,7 @@ public:
             {
                 if (SmartScript* smartScript = static_cast<SmartAI*>(target->AI())->GetScript())
                 {
-                    uint32 phase = smartScript->GetPhase();
-                    handler->PSendSysMessage("Current phase: %u", phase);
-
-                    uint32 lastProcessedActionId = smartScript->GetLastProcessedActionId();
-                    handler->PSendSysMessage("Last processed action: %u", lastProcessedActionId);
+                    // TODO: ReimplementAfterTCMigration
                 }
             }
             else {

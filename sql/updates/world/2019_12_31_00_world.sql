@@ -52,3 +52,4 @@
 -- Migrate the entire smart_scripts from TC
 
 DROP TABLE IF EXISTS `creature_entry`;
+DROP TABLE IF EXISTS `creature_battleground`;

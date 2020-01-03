@@ -7122,12 +7122,11 @@ void Unit::EngageWithTarget(Unit* enemy)
     if (!enemy)
         return;
 
-    //sun: rewritten this so we can refresh PvP timers
+    if (IsEngagedBy(enemy))
+        return;
+
     if (CanHaveThreatList())
-    {
-        if (!IsEngagedBy(enemy))
-            m_threatManager.AddThreat(enemy, 0.0f, nullptr, true, true);
-    }
+        m_threatManager.AddThreat(enemy, 0.0f, nullptr, true, true);
     else
         SetInCombatWith(enemy);
 }
@@ -7787,7 +7786,6 @@ void Unit::SetDeathState(DeathState s)
     if (s != ALIVE && s!= JUST_RESPAWNED)
     {
         CombatStop();
-        GetThreatManager().ClearAllThreat();
         ClearComboPointHolders();                           // any combo points pointed to unit lost at it death
 
         if(IsNonMeleeSpellCast(false))
@@ -8946,27 +8944,16 @@ void Unit::UpdateCharmAI()
                 newAI = new PetAI(ToCreature());
         }
         ASSERT(newAI);
-        RestoreDisabledAI();
-        if (SmartAI* smart = dynamic_cast<SmartAI*>(GetTopAI()))
-            smart->SetCharmAI(dynamic_cast<CreatureAI*>(newAI)); //both PossessedAI and PetAI are CreatureAI
-        else
-        {
-            SetAI(newAI);
-            newAI->OnCharmed(true);
-        }
+        SetAI(newAI);
+        newAI->OnCharmed(true);
     }
     else
     {
-        if (SmartAI* smart = dynamic_cast<SmartAI*>(i_AI.get()))
-            smart->RemoveCharmAI();
-        else
-        {
-            RestoreDisabledAI();
-            // Hack: this is required because we want to call OnCharmed(true) on the restored AI
-            RefreshAI();
-            if (UnitAI* ai = GetAI())
-                ai->OnCharmed(true);
-        }
+        RestoreDisabledAI();
+        // Hack: this is required because we want to call OnCharmed(true) on the restored AI
+        RefreshAI();
+        if (UnitAI* ai = GetAI())
+            ai->OnCharmed(true);
     }
 }
 
@@ -9945,18 +9932,8 @@ bool Unit::InitTamedPet(Pet* pet, uint8 level, uint32 spell_id)
             (pVictim->ToPlayer())->SendDirectMessage(&data);
         }
         // Call KilledUnit for creatures
-        if (attacker && attacker->GetTypeId() == TYPEID_UNIT && (attacker->ToCreature())->IsAIEnabled()) 
-        {
-            (attacker->ToCreature())->AI()->KilledUnit(pVictim);
-
-            auto attackers = pVictim->GetAttackers();
-            for(auto attacker : attackers)
-            {
-                if(Creature* c = attacker->ToCreature())
-                    if(CreatureAI* ai = c->AI())
-                        ai->VictimDied(pVictim);
-            }
-        }
+        if (attacker && attacker->GetTypeId() == TYPEID_UNIT && attacker->IsAIEnabled())
+            attacker->ToCreature()->AI()->KilledUnit(pVictim);
             
         if (attacker && attacker->GetTypeId() == TYPEID_PLAYER) 
         {
@@ -9998,7 +9975,7 @@ bool Unit::InitTamedPet(Pet* pet, uint8 level, uint32 spell_id)
             if(cVictim->IsWorldBoss())
                 cVictim->ConvertThreatListIntoPlayerListAtDeath();
 
-            cVictim->GetThreatManager().ClearAllThreat();
+            cVictim->CombatStop(true);
 
             // must be after setDeathState which resets dynamic flags
             if (!creature->loot.isLooted())
@@ -11772,43 +11749,12 @@ void Unit::UpdateMovementInfo(MovementInfo movementInfo)
     m_movementInfo = movementInfo;
 }
 
-class SplineHandler
-{
-public:
-    SplineHandler(Unit* unit) : _unit(unit) { }
-
-    bool operator()(Movement::MoveSpline::UpdateResult result)
-    {
-        MovementGeneratorType motionType = _unit->GetMotionMaster()->GetCurrentMovementGeneratorType();
-        if ((result & (Movement::MoveSpline::Result_NextSegment | Movement::MoveSpline::Result_JustArrived | Movement::MoveSpline::Result_Arrived))
-            && _unit->GetTypeId() == TYPEID_UNIT 
-            && (motionType == WAYPOINT_MOTION_TYPE))
-        {
-            if (Creature* creature = _unit->ToCreature())
-            {
-                _unit->GetMotionMaster()->AddFlag(MOTIONMASTER_FLAG_UPDATE);
-                MovementGenerator* baseGenerator = creature->GetMotionMaster()->GetCurrentMovementGenerator();
-                WaypointMovementGenerator<Creature>* moveGenerator = static_cast<WaypointMovementGenerator<Creature>*>(baseGenerator);
-                moveGenerator->OnArrived(creature);
-                _unit->GetMotionMaster()->RemoveFlag(MOTIONMASTER_FLAG_UPDATE);
-            }
-        }
-
-        return true;
-    }
-
-private:
-    Unit* _unit;
-};
-
 void Unit::UpdateSplineMovement(uint32 t_diff)
 {
     if (movespline->Finalized())
         return;
 
-    // this code cant be placed inside WaypointMovementGenerator, because we cant delete active MoveGen while it is updated
-    SplineHandler handler(this);
-    movespline->updateState(t_diff, handler);
+    movespline->updateState(t_diff);
     if (!movespline->Initialized())
     {
         DisableSpline();
@@ -12263,7 +12209,7 @@ void Unit::Talk(uint32 textId, ChatMsg msgType, float textRange, WorldObject con
         return;
     }
 
-    Trinity::BroadcastTextBuilder builder(this, msgType, textId, target);
+    Trinity::BroadcastTextBuilder builder(this, msgType, textId, GetGender(), target);
     Trinity::LocalizedPacketDo<Trinity::BroadcastTextBuilder> localizer(builder);
     Trinity::PlayerDistWorker<Trinity::LocalizedPacketDo<Trinity::BroadcastTextBuilder> > worker(this, textRange, localizer);
     Cell::VisitWorldObjects(this, worker, textRange);

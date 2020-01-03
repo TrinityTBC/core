@@ -1308,44 +1308,7 @@ public:
     */
     static bool HandleNpcPathTypeCommand(ChatHandler* handler, char const* args)
     {
-        Creature* target =  handler->GetSelectedCreature();
-        if(!target)
-        {
-            handler->SendSysMessage(LANG_SELECT_CREATURE);
-            return true;
-        }
-
-        if(target->GetMotionMaster()->GetCurrentMovementGeneratorType() != WAYPOINT_MOTION_TYPE)
-        {
-            handler->SendSysMessage("Creature is not using waypoint movement generator.");
-            return true;
-        }
-
-        MovementGenerator* baseGenerator = target->GetMotionMaster()->GetCurrentMovementGenerator();
-        WaypointMovementGenerator<Creature>* movGenerator = static_cast<WaypointMovementGenerator<Creature>*>(baseGenerator);
-        if(!movGenerator)
-        {
-            handler->SendSysMessage("Could not get movement generator.");
-            return true;
-        }
-
-        if(!*args)
-        { //getter
-            WaypointPathType type = movGenerator->GetPathType();
-            std::string pathTypeStr = GetWaypointPathTypeName(type);
-            handler->PSendSysMessage("Creature waypoint movement type : %s (%u).", pathTypeStr.c_str(), type);
-        } else 
-        { //setter
-            uint32 type = (uint32)atoi(args);
-            bool ok = movGenerator->SetPathType(WaypointPathType(type));
-            if(!ok)
-            {
-                handler->PSendSysMessage("Wrong type given : %u.", type);
-                return false;
-            }
-            std::string pathTypeStr = GetWaypointPathTypeName(WaypointPathType(type));
-            handler->PSendSysMessage("Target creature path type set to %s (%u).", pathTypeStr.c_str(), type);
-        }
+        //TODO: ReimplementAfterTCMigration
         return true;
     }
 
@@ -1359,44 +1322,7 @@ public:
     */
     static bool HandleNpcPathDirectionCommand(ChatHandler* handler, char const* args)
     {
-        Creature* target =  handler->GetSelectedCreature();
-        if(!target)
-        {
-            handler->SendSysMessage(LANG_SELECT_CREATURE);
-            return true;
-        }
-
-        if(target->GetMotionMaster()->GetCurrentMovementGeneratorType() != WAYPOINT_MOTION_TYPE)
-        {
-            handler->SendSysMessage("Creature is not using waypoint movement generator.");
-            return true;
-        }
-
-        MovementGenerator* baseGenerator = target->GetMotionMaster()->GetCurrentMovementGenerator();
-        WaypointMovementGenerator<Creature>* movGenerator = static_cast<WaypointMovementGenerator<Creature>*>(baseGenerator);
-        if (!movGenerator)
-        {
-            handler->SendSysMessage("Could not get movement generator.");
-            return true;
-        }
-
-        if(!*args)
-        { //getter
-            WaypointPathDirection dir = movGenerator->GetPathDirection();
-            std::string pathDirStr = GetWaypointPathDirectionName(WaypointPathDirection(dir));
-            handler->PSendSysMessage("Creature waypoint movement direction : %s (%u).", pathDirStr.c_str(), dir);
-        } else 
-        { //setter
-            uint32 dir = (uint32)atoi(args);
-            bool ok = movGenerator->SetDirection(WaypointPathDirection(dir));
-            if(!ok)
-            {
-                handler->PSendSysMessage("Wrong direction given : %u.", dir);
-                return false;
-            }
-            std::string pathDirStr = GetWaypointPathDirectionName(WaypointPathDirection(dir));
-            handler->PSendSysMessage("Target creature path direction set to %s (%u).", pathDirStr.c_str(), dir);
-        }
+        //TODO: ReimplementAfterTCMigration
         return true;
     }
 

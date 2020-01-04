@@ -85,7 +85,7 @@ struct TC_GAME_API EscortAI : public ScriptedAI
         Player* GetPlayerForEscort();
     private:
 
-        bool AssistPlayerInCombatAgainst(Unit* who) override;
+        bool AssistPlayerInCombatAgainst(Unit* who);
         bool IsPlayerOrGroupInRange();
         void FillPointMovementListForCreature();
 

@@ -36,51 +36,6 @@ void CreatureAI::Talk(uint8 id, WorldObject const* whisperTarget /*= nullptr*/)
     sCreatureTextMgr->SendChat(me, id, whisperTarget);
 }
 
-bool CreatureAI::AssistPlayerInCombatAgainst(Unit* who)
-{
-    if (!who)
-        return false;
-    
-    //not a player
-    if (!who->GetCharmerOrOwnerPlayerOrPlayerItself())
-        return false;
-
-    //only help friendly
-    if(!me->IsFriendlyTo(who))
-        return false;
-
-    if(!me->IsWithinDistInMap(who, sWorld->getConfig(CONFIG_CREATURE_FAMILY_ASSISTANCE_RADIUS)))
-        return false;
-
-    for(auto itr : who->GetAttackers())
-    {
-        //experimental (unknown) flag not present
-      /*  if (!(me->GetCreatureTemplate()->type_flags & CREATURE_TYPE_FLAG_CAN_ASSIST))
-            return false; */
-
-        //contested guards don't assists if victim is not in combat (hacky)
-        if (me->GetScriptName() == "guard_contested") {
-            if (!itr->IsInCombat())
-                continue;
-        }
-
-        //too far away from player, can aggro target ?
-        if (me->CanAggro(itr, true) == CAN_ATTACK_RESULT_OK)
-        {
-            //already fighting someone?
-            if (!me->GetVictim())
-                me->EngageWithTarget(itr);
-            else
-            {
-                me->GetThreatManager().AddThreat(itr, 0.0f);
-            }
-            return true;
-        }
-    }
-
-    return false;
-}
-
 // scripts does not take care about MoveInLineOfSight loops
 // MoveInLineOfSight can be called inside another MoveInLineOfSight and cause stack overflow
 void CreatureAI::MoveInLineOfSight_Safe(Unit* who)

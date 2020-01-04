@@ -622,8 +622,6 @@ struct ItemTemplate
     WorldPacket BuildQueryData(LocaleConstant loc) const;
 };
 
-typedef std::unordered_map<uint32, ItemTemplate> ItemTemplateContainer;
-
 struct ItemLocale
 {
     std::vector<std::string> Name;

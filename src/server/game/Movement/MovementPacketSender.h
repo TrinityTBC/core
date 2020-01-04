@@ -15,12 +15,17 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
- #ifndef MOVEMENT_SENDER_H
+#ifndef MOVEMENT_SENDER_H
 #define MOVEMENT_SENDER_H
- #include "UnitDefines.h"
- class Player;
+#include "UnitDefines.h"
+
+#include "MovementDefines.h"
+
+class Player;
 class Unit;
 struct MovementInfo;
+enum Opcodes : uint16;
+
  //!
 //!   movement flag changes for player controlled units:
 //!   >>> APPLY

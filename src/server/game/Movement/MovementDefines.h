@@ -19,8 +19,13 @@
 #define TRINITY_MOVEMENTDEFINES_H
 
 #include "Common.h"
+#include "ObjectGuid.h"
 #include <memory>
 #include <queue>
+
+class Unit;
+class WorldSession;
+struct MovementInfo;
 
 enum UnitMoveType : uint8
 {

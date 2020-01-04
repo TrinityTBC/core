@@ -1,6 +1,8 @@
+#include "ScriptMgr.h"
 #include "Chat.h"
 #include "Language.h"
 #include "GameEventMgr.h"
+
 class event_commandscript : public CommandScript
 {
 public:

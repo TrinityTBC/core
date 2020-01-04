@@ -1,6 +1,8 @@
 #ifndef SC_SIMPLECOOLDOWN_H
 #define SC_SIMPLECOOLDOWN_H
 
+#include "Define.h"
+
 // Needs to be tested
 
 // General warning : negative cooldown (or another value) are ALLOWED !

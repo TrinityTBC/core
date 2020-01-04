@@ -1,6 +1,10 @@
 #include "SpellMgr.h"
+#include "CellImpl.h"
 #include "ScriptMgr.h"
 #include "SpellScript.h"
+#include "GridNotifiersImpl.h"
+#include "SpellAuras.h"
+#include "SpellAuraEffects.h"
 #include "templates.h"
 
 enum CannibalizeSpells

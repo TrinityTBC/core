@@ -3,6 +3,7 @@
 #define TRINITYCORE_TOTEM_H
 
 #include "Creature.h"
+#include "TemporarySummon.h"
 
 enum TotemType
 {

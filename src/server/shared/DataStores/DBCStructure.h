@@ -1284,9 +1284,6 @@ typedef std::map<uint32,TaxiPathSetForSource> TaxiPathSetBySource;
 typedef std::vector<TaxiPathNodeEntry const*> TaxiPathNodeList;
 typedef std::vector<TaxiPathNodeList> TaxiPathNodesByPath;
 
-#define TaxiMaskSize 14
-typedef std::array<uint32, TaxiMaskSize> TaxiMask;
-
 enum BCLiquidTypeType : uint32
 {
     BCLiquidTypeType_Magma = 0,

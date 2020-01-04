@@ -1,4 +1,4 @@
-
+#include "DBCStores.h"
 #include "OutdoorPvP.h"
 #include "OutdoorPvPMgr.h"
 #include "ObjectAccessor.h"
@@ -6,6 +6,7 @@
 #include "Map.h"
 #include "MapManager.h"
 #include "Group.h"
+#include "Log.h"
 #include "WorldPacket.h"
 #include "Creature.h"
 #include "GridNotifiersImpl.h"

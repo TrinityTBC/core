@@ -1,7 +1,11 @@
+#include "ObjectMgr.h"
+#include "ScriptMgr.h"
 #include "Chat.h"
+#include "Log.h"
 #include "Language.h"
 #include "CharacterCache.h"
 #include "Pet.h"
+#include "Player.h"
 
 class reset_commandscript : public CommandScript
 {

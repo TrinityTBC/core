@@ -17,6 +17,7 @@
 
 #include "TransportMgr.h"
 #include "Transport.h"
+#include "Log.h"
 #include "MoveSpline.h"
 #include "MapManager.h"
 #include "ObjectMgr.h"

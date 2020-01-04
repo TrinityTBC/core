@@ -1,5 +1,7 @@
 #include "M2Stores.h"
 #include "M2Structure.h"
+#include "Containers.h"
+#include "Log.h"
 #include <fstream>
 #include <iostream>
 #include <iomanip>

@@ -17,6 +17,7 @@
 #include "ScriptMgr.h"
 #include "GameObjectAI.h"
 #include "SpellAuraEffects.h"
+#include "Player.h"
 
 void WorldSession::HandleUseItemOpcode(WorldPacket& recvPacket)
 {

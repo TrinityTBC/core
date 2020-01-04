@@ -3,6 +3,7 @@
 #define __WORLDSESSION_H
 
 #include "Common.h"
+#include "LockedQueue.h"
 #include "WorldPacket.h"
 #include "ClientControl.h"
 #include "SharedDefines.h"
@@ -130,17 +131,6 @@ enum PartyResult
     PARTY_RESULT_TARGET_IGNORE_YOU    = 9,
     PARTY_RESULT_PENDING_MATCH        = 12,
     PARTY_RESULT_INVITE_RESTRICTED    = 13
-};
-
-enum CharterTypes
-{
-    CHARTER_TYPE_NONE                             = 0,
-    CHARTER_TYPE_ANY                              = 10,
-
-    GUILD_CHARTER_TYPE                            = 9,
-    ARENA_TEAM_CHARTER_2v2_TYPE                   = 2,
-    ARENA_TEAM_CHARTER_3v3_TYPE                   = 3,
-    ARENA_TEAM_CHARTER_5v5_TYPE                   = 5
 };
 
 //class to deal with packet processing

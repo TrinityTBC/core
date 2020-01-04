@@ -1,5 +1,6 @@
 #include "WhoListStorage.h"
 #include "World.h"
+#include "MapManager.h"
 #include "ObjectAccessor.h"
 #include "Player.h"
 #include "WorldSession.h"

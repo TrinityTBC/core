@@ -19,6 +19,7 @@
 #define _PETITIONMGR_H
 
 #include "Define.h"
+#include "DatabaseEnvFwd.h"
 #include "ObjectGuid.h"
 #include "SharedDefines.h"
 #include <string>

@@ -2,12 +2,14 @@
 #include "WorldPacket.h"
 #include "ObjectMgr.h"
 #include "ArenaTeam.h"
+#include "Log.h"
 #include "Chat.h"
 #include "World.h"
 #include "LogsDatabaseAccessor.h"
 #include "CharacterCache.h"
 #include "BattlegroundMgr.h"
 #include "ArenaTeamMgr.h"
+#include "Player.h"
 
 ArenaTeam::ArenaTeam()
     : TeamId(0), Type(0), TeamName(), CaptainGuid(), BackgroundColor(0), EmblemStyle(0), EmblemColor(0),

@@ -21,6 +21,7 @@
 #include "OutdoorPvP.h"
 #include "SpellAuras.h"
 #include "Pet.h"
+#include "Corpse.h"
 #include "SocialMgr.h"
 #include "CellImpl.h"
 #include "AccountMgr.h"

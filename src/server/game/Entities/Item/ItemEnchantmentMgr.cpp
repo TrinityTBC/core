@@ -1,13 +1,14 @@
 
-#include <stdlib.h>
-#include <functional>
+#include "DBCStores.h"
 #include "ItemEnchantmentMgr.h"
 #include "Database/DatabaseEnv.h"
 #include "Log.h"
 #include "ObjectMgr.h"
+#include "Util.h"
 #include <list>
 #include <vector>
-#include "Util.h"
+#include <stdlib.h>
+#include <functional>
 
 struct EnchStoreItem
 {

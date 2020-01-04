@@ -1,5 +1,7 @@
 #include "Channel.h"
 #include "ChannelMgr.h"
+#include "DBCStores.h"
+#include "Log.h"
 #include "ObjectMgr.h"
 #include "World.h"
 #include "SocialMgr.h"

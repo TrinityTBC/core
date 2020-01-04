@@ -1,7 +1,10 @@
+#include "ScriptMgr.h"
 #include "Chat.h"
 #include "Language.h"
 #include "CharacterCache.h"
 #include "MapManager.h"
+#include "WorldSession.h"
+#include "Player.h"
 
 class tele_commandscript : public CommandScript
 {

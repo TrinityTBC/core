@@ -1,4 +1,5 @@
-
+#include "DBCStores.h"
+#include "Log.h"
 #include "Object.h"
 #include "Player.h"
 #include "Battleground.h"

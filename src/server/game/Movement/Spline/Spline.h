@@ -2,8 +2,10 @@
 #ifndef TRINITYSERVER_SPLINE_H
 #define TRINITYSERVER_SPLINE_H
 
+#include "Errors.h"
 #include "MovementTypedefs.h"
 #include <limits>
+#include <vector>
 
 namespace Movement {
 

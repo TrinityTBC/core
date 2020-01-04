@@ -1,7 +1,9 @@
 #include "SpellMgr.h"
 #include "ScriptMgr.h"
 #include "SpellScript.h"
+#include "Spell.h"
 #include "SpellAuraEffects.h"
+#include "Totem.h"
 
 enum PriestSpells
 {

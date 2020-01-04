@@ -251,6 +251,9 @@ struct TC_GAME_API ScriptedAI : public CreatureAI
     //Spawns a creature relative to m_creature
     Creature* DoSpawnCreature(uint32 id, float x, float y, float z, float angle, uint32 type, uint32 despawntime);
 
+    bool HealthBelowPct(uint32 pct) const;
+    bool HealthAbovePct(uint32 pct) const;
+
     // return true for heroic mode. i.e.
     bool IsHeroic() const { return _isHeroic; }
 

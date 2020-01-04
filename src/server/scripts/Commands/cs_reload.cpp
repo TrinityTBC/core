@@ -1,4 +1,7 @@
+#include "ObjectMgr.h"
+#include "ScriptMgr.h"
 #include "Chat.h"
+#include "Log.h"
 #include "Language.h"
 #include "CreatureTextMgr.h"
 #include "GameEventMgr.h"

@@ -33,7 +33,7 @@ struct CreatureTextEntry
 
 struct CreatureTextLocale
 {
-    StringVector Text;
+    std::vector<std::string> Text;
 };
 
 struct CreatureTextId

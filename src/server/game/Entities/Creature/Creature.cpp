@@ -11,6 +11,7 @@
 #include "QueryPackets.h"
 #include "GossipDef.h"
 #include "Player.h"
+#include "Pet.h"
 #include "Opcodes.h"
 #include "Log.h"
 #include "GroupMgr.h"

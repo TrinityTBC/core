@@ -1,4 +1,4 @@
-
+#include "DBCStores.h"
 #include "Common.h"
 #include "DatabaseEnv.h"
 #include "WorldPacket.h"

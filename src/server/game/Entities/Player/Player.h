@@ -10,6 +10,7 @@
 #include "Groups/Group.h"
 #include "WorldSession.h"
 #include "MapReference.h"
+#include "PetDefines.h"
 #include "Util.h"                                           // for Tokens typedef
 #include "SpellMgr.h"
 #include "PlayerTaxi.h"

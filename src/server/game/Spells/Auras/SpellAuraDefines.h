@@ -4,6 +4,9 @@
 
 #include "Define.h"
 #include "ObjectGuid.h"
+#include "SharedDefines.h"
+#include "SpellDefines.h"
+
 class Item;
 class SpellInfo;
 class Unit;

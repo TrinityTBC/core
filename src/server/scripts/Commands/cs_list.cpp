@@ -1,8 +1,10 @@
+#include "ScriptMgr.h"
 #include "Chat.h"
 #include "Language.h"
 #include "SpellAuraEffects.h"
 #include "GameTime.h"
 #include "MapManager.h"
+#include "Player.h"
 
 class list_commandscript : public CommandScript
 {

@@ -1,8 +1,10 @@
-
 #ifndef TRINITY_RECUPMGR_H
 #define TRINITY_RECUPMGR_H
 
+#include "Define.h"
+
 class ChatHandler;
+class Player;
 
 enum RecupEquipmentType
 {

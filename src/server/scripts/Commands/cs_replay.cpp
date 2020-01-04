@@ -1,5 +1,7 @@
+#include "ScriptMgr.h"
 #include "Chat.h"
 #include "WorldSession.h"
+#include "Player.h"
 #include "ReplayPlayer.h"
 #include "ReplayRecorder.h"
 

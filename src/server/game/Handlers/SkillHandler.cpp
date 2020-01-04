@@ -20,8 +20,10 @@
 
 #include "Common.h"
 #include "Database/DatabaseEnv.h"
+#include "DBCStores.h"
 #include "Opcodes.h"
 #include "Log.h"
+#include "Creature.h"
 #include "Player.h"
 #include "World.h"
 #include "WorldPacket.h"

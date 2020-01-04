@@ -1,6 +1,13 @@
 #ifndef __PLAYERTAXI_H__
 #define __PLAYERTAXI_H__
 
+#include "DBCEnums.h"
+#include <deque>
+#include <iosfwd>
+
+class ByteBuffer;
+struct FactionTemplateEntry;
+
 enum TaxiNodes
 {
     // Alliance

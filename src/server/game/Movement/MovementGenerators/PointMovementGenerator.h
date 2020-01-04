@@ -3,6 +3,7 @@
 #define TRINITY_POINTMOVEMENTGENERATOR_H
 
 #include "MovementGenerator.h"
+#include "Optional.h"
 
 template<class T>
 class PointMovementGenerator : public MovementGeneratorMedium<T, PointMovementGenerator<T>>

@@ -5,6 +5,7 @@
 #include "MapReference.h"
 #include "Chat.h"
 #include "Language.h"
+#include "Log.h"
 #include "ScriptMgr.h"
 #include "AreaBoundary.h"
 #include "CreatureAI.h"

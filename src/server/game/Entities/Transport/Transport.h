@@ -32,7 +32,6 @@ protected:
 
 class TC_GAME_API MotionTransport : public Transport
 {
-    friend GameObject* ObjectMgr::CreateGameObject(uint32);
     friend MotionTransport* TransportMgr::CreateTransport(uint32, uint32, Map*);
     MotionTransport();
 public:

@@ -1,5 +1,9 @@
 #include "PlayerTaxi.h"
+#include "DBCStores.h"
+#include "ObjectMgr.h"
 #include "GameEventMgr.h"
+#include "Player.h"
+#include <sstream>
 
 //== PlayerTaxi ================================================
 PlayerTaxi::PlayerTaxi() : m_flightMasterFactionId(0) 

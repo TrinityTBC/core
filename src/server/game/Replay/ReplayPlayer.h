@@ -1,7 +1,12 @@
 #ifndef REPLAY_PLAYER_H
 #define REPLAY_PLAYER_H
 
+#include "ObjectGuid.h"
 #include "SharedDefines.h"
+
+class Player;
+enum Opcodes : uint16;
+class WorldLocation;
 
 class ReplayPlayer
 {

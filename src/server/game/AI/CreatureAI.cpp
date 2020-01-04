@@ -1,4 +1,5 @@
 #include "CreatureAI.h"
+#include "Log.h"
 #include "Creature.h"
 #include "Player.h"
 #include "Pet.h"

@@ -1,5 +1,8 @@
+#include "ScriptMgr.h"
 #include "Chat.h"
 #include "Language.h"
+#include "WorldSession.h"
+#include "Player.h"
 
 class honor_commandscript : public CommandScript
 {

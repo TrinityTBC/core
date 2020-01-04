@@ -5,6 +5,7 @@
 #include "Log.h"
 #include "ObjectAccessor.h"
 #include "CreatureAIImpl.h"
+#include "Creature.h"
 
 int ReactorAI::Permissible(const Creature* creature)
 {

@@ -3,6 +3,7 @@
 
 #include "World.h"
 #include "DBCStores.h"
+#include "Player.h"
 
 namespace Trinity
 {

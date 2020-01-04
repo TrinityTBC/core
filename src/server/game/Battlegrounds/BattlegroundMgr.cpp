@@ -1,5 +1,5 @@
-
 #include "Common.h"
+#include "DBCStores.h"
 #include "Player.h"
 #include "BattlegroundMgr.h"
 #include "BattlegroundQueue.h"
@@ -12,6 +12,7 @@
 #include "BattlegroundAA.h"
 #include "BattlegroundRL.h"
 #include "SharedDefines.h"
+#include "Log.h"
 #include "MapManager.h"
 #include "Map.h"
 #include "MapInstanced.h"

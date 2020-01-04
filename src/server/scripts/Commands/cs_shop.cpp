@@ -1,4 +1,6 @@
+#include "ScriptMgr.h"
 #include "Chat.h"
+#include "Log.h"
 #include "Language.h"
 #include "CharacterCache.h"
 #include "PlayerDump.h"
@@ -8,6 +10,8 @@
 #include "Mail.h"
 #include "Config.h"
 #include "ReputationMgr.h"
+#include "WorldSession.h"
+#include "Player.h"
 
 class shop_commandscript : public CommandScript
 {

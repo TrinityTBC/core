@@ -6,8 +6,10 @@
 #include "VMapFactory.h"
 #include "MMapFactory.h"
 #include "InstanceSaveMgr.h"
+#include "Log.h"
 #include "World.h"
 #include "DBCStores.h"
+#include "Player.h"
 
 MapInstanced::MapInstanced(uint32 id, time_t expiry) : Map(MAP_TYPE_MAP_INSTANCED, id, expiry, 0, DUNGEON_DIFFICULTY_NORMAL)
 {

@@ -1,7 +1,9 @@
+#include "ScriptMgr.h"
 #include "Chat.h"
 #include "Language.h"
 #include "AccountMgr.h"
 #include "CharacterCache.h"
+#include "WorldSession.h"
 
 #define _CONCAT3_(A, B, C) "CONCAT( " A ", " B ", " C " )"
 

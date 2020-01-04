@@ -3,11 +3,11 @@
 
 #include "SharedDefines.h"
 #include "DBCStructure.h"
+#include "Object.h"
 
 #include <boost/container/flat_set.hpp>
 
 enum AuraType : unsigned int;
-enum SpellCastResult : int;
 class SpellInfo;
 class Spell;
 struct Condition;

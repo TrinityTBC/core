@@ -10,6 +10,7 @@
 #include "World.h"
 #include "CellImpl.h"
 #include "Corpse.h"
+#include "Player.h"
 #include "ObjectMgr.h"
 #include "GridMap.h"
 

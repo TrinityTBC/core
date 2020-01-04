@@ -20,6 +20,7 @@
 #define TRINITYSERVER_MOVESPLINEINIT_ARGS_H
 
 #include "MoveSplineFlag.h"
+#include <vector>
 
 class Unit;
 namespace G3D

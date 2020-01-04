@@ -1,4 +1,5 @@
 #include "DBCStores.h"
+#include "ObjectMgr.h"
 #include "Log.h"
 #include "TransportMgr.h"
 #include "Item.h"
@@ -814,10 +815,11 @@ CharStartOutfitEntry const* GetCharStartOutfitEntry(uint8 race, uint8 class_, ui
 }
 
 #ifndef LICH_KING
+
+static std::map<uint32, PvPDifficultyEntry> BCDifficultyEntries;
 //only for BC, use this instead of the non existing DBC
 std::map<uint32, PvPDifficultyEntry> const& GetBCDifficultyEntries()
 {
-    auto& BCDifficultyEntries = sObjectMgr->BCDifficultyEntries;
     if (!BCDifficultyEntries.empty())
         return BCDifficultyEntries;
 

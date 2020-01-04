@@ -1,4 +1,5 @@
 
+#include "DBCStores.h"
 #include "Language.h"
 #include "DatabaseEnv.h"
 #include "WorldPacket.h"
@@ -8,6 +9,12 @@
 #include "QueryPackets.h"
 #include "CharacterCache.h"
 #include "GameTime.h"
+#include "Log.h"
+#include "ObjectMgr.h"
+#include "MapManager.h"
+#include "ObjectAccessor.h"
+#include "WorldSession.h"
+#include "Player.h"
 
 void WorldSession::SendNameQueryOpcode(ObjectGuid guid)
 {

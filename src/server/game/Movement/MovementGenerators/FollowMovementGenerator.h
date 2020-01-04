@@ -5,6 +5,7 @@
 #include "AbstractFollower.h"
 #include "MovementDefines.h"
 #include "MovementGenerator.h"
+#include "Optional.h"
 #include "Position.h"
 
 #define FOLLOW_RANGE_TOLERANCE 1.0f

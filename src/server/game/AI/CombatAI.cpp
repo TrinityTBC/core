@@ -4,6 +4,7 @@
 #include "SpellInfo.h"
 //#include "Vehicle.h"
 #include "ObjectAccessor.h"
+#include "Creature.h"
 #include "Player.h"
 
 /////////////////

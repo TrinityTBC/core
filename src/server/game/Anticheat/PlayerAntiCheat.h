@@ -2,6 +2,7 @@
 #define PLAYER_ANTICHEAT_H
 
 #include "Opcodes.h"
+#include <list>
 
 class Unit;
 struct MovementInfo;

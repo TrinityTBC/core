@@ -3,6 +3,7 @@
  
 #include "ArenaTeam.h"
 #include "Define.h"
+#include "SharedDefines.h"
 #include <string>
 
 struct CharacterCacheEntry

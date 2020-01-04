@@ -4,6 +4,8 @@
 #include "MapManager.h"
 #include "Log.h"
 #include "ObjectAccessor.h"
+#include "Pet.h"
+#include "Player.h"
 #include "CreatureAI.h"
 #include "PetDefines.h"
 

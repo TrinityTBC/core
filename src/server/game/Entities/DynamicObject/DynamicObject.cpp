@@ -1,5 +1,6 @@
 
 #include "Common.h"
+#include "Log.h"
 #include "GameObject.h"
 #include "UpdateMask.h"
 #include "Opcodes.h"

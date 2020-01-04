@@ -10,6 +10,7 @@ class Player;
 class GameObject;
 class Creature;
 struct GossipMenuItems;
+enum LocaleConstant : uint8;
 
 // class to handle player enter / leave / areatrigger / GO use events
 class TC_GAME_API OutdoorPvPMgr

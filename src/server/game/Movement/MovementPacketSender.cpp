@@ -1,5 +1,6 @@
 
 #include "MovementPacketSender.h"
+#include "Log.h"
 #include "Player.h"
 #include "WorldPacket.h"
 #include "WorldSession.h"

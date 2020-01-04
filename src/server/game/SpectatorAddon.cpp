@@ -20,6 +20,7 @@
 #include "ObjectAccessor.h"
 #include "Player.h"
 #include "Chat.h"
+#include "Log.h"
 
 SpectatorAddonMsg::SpectatorAddonMsg()
     : prefixFlags()

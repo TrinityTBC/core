@@ -6,6 +6,7 @@
 #include "GameObject.h"
 #include "DynamicObject.h"
 #include "Corpse.h"
+#include "Pet.h"
 #include "WorldSession.h"
 #include "WorldPacket.h"
 #include "Item.h"

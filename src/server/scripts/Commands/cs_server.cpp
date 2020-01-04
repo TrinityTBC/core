@@ -1,3 +1,4 @@
+#include "ScriptMgr.h"
 #include "Chat.h"
 #include "Language.h"
 #include "GlobalEvents.h"
@@ -11,6 +12,8 @@
 #include "DatabaseLoader.h"
 #include "Config.h"
 #include "UpdateTime.h"
+#include "WorldSession.h"
+#include "Player.h"
 
 #include <boost/filesystem.hpp>
 #include <openssl/crypto.h>

@@ -5,7 +5,9 @@
 #include "GridDefines.h"
 #include "PathGenerator.h"
 #include "Position.h"
+#include "SharedDefines.h"
 #include "DBCEnums.h"
+#include "ObjectGuid.h"
 #include "ConditionMgr.h"
 
 namespace WorldPackets
@@ -26,9 +28,9 @@ class DynObjAura;
 class Aura;
 class Item;
 class Object;
-enum SpellCastResult : int;
 class SpellScript;
 class SpellEvent;
+enum AuraType : uint32;
 enum LootType : uint8;
 enum SpellCastTargetFlags : uint32;
 class SpellImplicitTargetInfo;

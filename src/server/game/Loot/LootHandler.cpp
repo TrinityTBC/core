@@ -1,8 +1,10 @@
 
 #include "Common.h"
+#include "DBCStores.h"
 #include "WorldPacket.h"
 #include "Log.h"
 #include "Corpse.h"
+#include "Creature.h"
 #include "GameObject.h"
 #include "Player.h"
 #include "ObjectAccessor.h"

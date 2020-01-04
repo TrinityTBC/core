@@ -7,6 +7,7 @@
 #define __WORLD_H
 
 #include "Common.h"
+#include "LockedQueue.h"
 #include "Timer.h"
 #include "SharedDefines.h"
 #include "QueryResult.h"

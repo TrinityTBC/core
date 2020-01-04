@@ -20,7 +20,9 @@
 
 #include "LootMgr.h"
 #include "Log.h"
+#include "DBCStores.h"
 #include "ObjectMgr.h"
+#include "Player.h"
 #include "World.h"
 #include "Util.h"
 #include "SharedDefines.h"

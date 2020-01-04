@@ -1,6 +1,12 @@
 #ifndef DBCENUMS_H
 #define DBCENUMS_H
 
+#include "Define.h"
+#include <array>
+
+#define TaxiMaskSize 14
+typedef std::array<uint32, TaxiMaskSize> TaxiMask;
+
 struct DBCPosition3D
 {
     float X;

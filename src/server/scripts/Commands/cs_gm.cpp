@@ -1,5 +1,9 @@
+#include "ScriptMgr.h"
 #include "Chat.h"
 #include "Language.h"
+#include "Map.h"
+#include "WorldSession.h"
+#include "Player.h"
 
 class gm_commandscript : public CommandScript
 {

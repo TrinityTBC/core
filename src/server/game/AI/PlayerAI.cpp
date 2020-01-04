@@ -1,9 +1,13 @@
-
 #include "PlayerAI.h"
 #include "CommonHelpers.h"
+#include "Creature.h"
+#include "Player.h"
+#include "Spell.h"
 #include "SpellAuras.h"
 #include "SpellAuraEffects.h"
+#include "SpellMgr.h"
 #include "SpellHistory.h"
+#include "ObjectAccessor.h"
 
 enum Spells
 {
@@ -749,6 +753,11 @@ void PlayerAI::CancelAllShapeshifts()
     //quick hack fix for bc :
     me->RemoveAurasByType(SPELL_AURA_MOD_SHAPESHIFT);
 #endif
+}
+
+Unit* PlayerAI::SelectAttackTarget() const
+{
+    return me->GetCharmer() ? me->GetCharmer()->GetVictim() : nullptr;
 }
 
 struct ValidTargetSelectPredicate

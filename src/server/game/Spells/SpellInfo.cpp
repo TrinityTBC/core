@@ -1,9 +1,14 @@
 #include "SpellInfo.h"
+#include "Corpse.h"
+#include "Creature.h"
+#include "Player.h"
 #include "DBCStores.h"
+#include "Log.h"
 #include "SpellAuraDefines.h"
 #include "Spell.h"
 #include "SpellAuraEffects.h"
 #include "SpellMgr.h"
+#include "ObjectAccessor.h"
 
 uint32 GetTargetFlagMask(SpellTargetObjectTypes objType)
 {

@@ -3,6 +3,7 @@
 
 #include "Define.h"
 #include "ObjectGuid.h"
+#include "SharedDefines.h"
 #include <vector>
 
 class Item;

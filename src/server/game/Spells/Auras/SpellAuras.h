@@ -2,6 +2,7 @@
 #define TRINITY_SPELLAURAS_H
 
 #include "SpellAuraDefines.h"
+#include "SpellInfo.h"
 
 struct DamageManaShield
 {
@@ -13,14 +14,20 @@ struct DamageManaShield
 };
 
 class Unit;
+class Player;
 class SpellInfo;
 struct SpellModifier;
 struct ProcTriggerSpell;
+struct SpellProcEntry;
 class AuraScript;
 class ChargeDropEvent;
 class Aura;
 class DynObjAura;
 struct ChannelTargetData;
+class DynamicObject;
+class DamageInfo;
+class DispelInfo;
+class ProcEventInfo;
 
 // update aura target map every 500 ms instead of every update - reduce amount of grid searcher calls
 #define UPDATE_TARGET_MAP_INTERVAL 500
@@ -29,7 +36,7 @@ struct ChannelTargetData;
 class TC_GAME_API AuraApplication
 {
     friend class Unit;
-    friend AuraApplication * Unit::_CreateAuraApplication(Aura* aura, uint8 effMask);
+
 private:
     Unit * const _target;
     Aura* const _base;
@@ -127,7 +134,7 @@ public:
     int32 GetMaxDuration() const { return m_maxDuration; }
     void SetMaxDuration(int32 duration) { m_maxDuration = duration; }
     int32 CalcMaxDuration() const { return CalcMaxDuration(GetCaster()); }
-    int32 CalcMaxDuration(Unit* caster) const { return Aura::CalcMaxDuration(GetSpellInfo(), caster); }
+    int32 CalcMaxDuration(Unit* caster) const;
     static int32 CalcMaxDuration(SpellInfo const* spellInfo, WorldObject* caster);
     int32 GetDuration() const { return m_duration; }
     void SetDuration(int32 duration, bool withMods = false);
@@ -175,13 +182,7 @@ public:
     bool IsDeathPersistent() const;
     bool IsRemoved() const { return m_isRemoved; }
 
-    bool IsRemovedOnShapeLost(Unit* target) const
-    {
-        return GetCasterGUID() == target->GetGUID()
-            && m_spellInfo->Stances
-            && !m_spellInfo->HasAttribute(SPELL_ATTR2_NOT_NEED_SHAPESHIFT)
-            && !m_spellInfo->HasAttribute(SPELL_ATTR0_NOT_SHAPESHIFT);
-    }
+    bool IsRemovedOnShapeLost(Unit* target) const;
 
     bool CanBeSaved() const;
     bool CanBeSentToClient() const;

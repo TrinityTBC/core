@@ -16,6 +16,7 @@
  */
  
 #include "Hyperlinks.h"
+#include "DBCStores.h"
 #ifdef LICH_KING
 #include "AchievementMgr.h"
 #endif

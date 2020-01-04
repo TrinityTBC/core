@@ -1,5 +1,11 @@
+#include "ScriptMgr.h"
 #include "Chat.h"
 #include "Language.h"
+#include "Log.h"
+#include "WorldSession.h"
+#include "Player.h"
+#include "Creature.h"
+#include "TemporarySummon.h"
 #include "WaypointMovementGenerator.h"
 #include "WaypointDefines.h"
 

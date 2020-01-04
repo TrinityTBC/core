@@ -1,4 +1,6 @@
 
+#include "DBCStores.h"
+#include "ScriptMgr.h"
 #include "OutdoorPvPSI.h"
 #include "WorldPacket.h"
 #include "Player.h"

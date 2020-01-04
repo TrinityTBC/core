@@ -1,8 +1,12 @@
+#include "ScriptMgr.h"
 #include "Chat.h"
 #include "Language.h"
 #include "CharacterCache.h"
 #include "Guild.h"
 #include "GuildMgr.h"
+#include "ObjectAccessor.h"
+#include "World.h"
+#include "Player.h"
 
 class guild_commandscript : public CommandScript
 {

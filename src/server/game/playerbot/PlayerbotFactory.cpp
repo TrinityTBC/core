@@ -142,7 +142,7 @@ void PlayerbotFactory::InitPet()
         for (CreatureTemplateContainer::const_iterator i = creatureTemplateContainer.begin(); i != creatureTemplateContainer.end(); ++i)
         {
             CreatureTemplate const& co = i->second;
-            if (!co.IsTameable(false))
+            if (!co.IsTameable())
                 continue;
 
             if (co.minlevel > bot->GetLevel())

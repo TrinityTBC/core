@@ -15,14 +15,7 @@ public:
 
     void PrepareCreature(uint32 poolId, Creature*& c)
     {
-        // PoolMgr currenctly only supports continent, not instances... so spawn on continent
-        c = SpawnDatabaseCreature();
-        c->SetRespawnDelay(RESPAWN_DELAY);
-        TEST_ASSERT(poolId != 0);
-        sPoolMgr->LoadEntry<Creature>(poolId, c->GetSpawnId(), 0.0f); //equal chanced
-
-        TEST_ASSERT(!c->GetRespawnCompatibilityMode());
-        TEST_ASSERT(bool(sPoolMgr->IsPartOfAPool<Creature>(c->GetSpawnId())));
+        // TODO: ReimplementAfterTCMigration
 
         c->KillSelf();
     }

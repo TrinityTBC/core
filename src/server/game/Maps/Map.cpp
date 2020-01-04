@@ -28,7 +28,7 @@
 #include "MapDefines.h"
 #include "PoolMgr.h"
 #include "DynamicTree.h"
-#include "BattleGround.h"
+#include "Battleground.h"
 #include "GridMap.h"
 #include "ObjectGridLoader.h"
 #include "Pet.h"

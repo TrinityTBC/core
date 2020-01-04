@@ -1,5 +1,5 @@
 #include "SpellAuraEffects.h"
-#include "BattleGround.h"
+#include "Battleground.h"
 #include "CellImpl.h"
 #include "Common.h"
 #include "DBCStores.h"

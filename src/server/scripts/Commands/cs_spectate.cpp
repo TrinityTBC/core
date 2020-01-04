@@ -1,6 +1,6 @@
 #include "Chat.h"
 #include "Language.h"
-#include "BattleGround.h"
+#include "Battleground.h"
 
 class spectate_commandscript : public CommandScript
 {

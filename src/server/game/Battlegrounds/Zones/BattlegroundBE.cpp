@@ -1,8 +1,8 @@
 
 #include "Object.h"
 #include "Player.h"
-#include "BattleGround.h"
-#include "BattleGroundBE.h"
+#include "Battleground.h"
+#include "BattlegroundBE.h"
 #include "Creature.h"
 #include "ObjectMgr.h"
 #include "MapManager.h"

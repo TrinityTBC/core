@@ -1,7 +1,7 @@
 
 #include "Player.h"
-#include "BattleGround.h"
-#include "BattleGroundAA.h"
+#include "Battleground.h"
+#include "BattlegroundAA.h"
 
 BattlegroundAA::BattlegroundAA()
 {

@@ -3,8 +3,8 @@
 #define __BATTLEGROUNDMGR_H
 
 #include "SharedDefines.h"
-#include "BattleGround.h"
-#include "BattleGroundQueue.h"
+#include "Battleground.h"
+#include "BattlegroundQueue.h"
 
 
 struct BattlemasterListEntry;

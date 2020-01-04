@@ -6,7 +6,7 @@
 #include "World.h"
 #include "Chat.h"
 #include "Spell.h"
-#include "BattleGroundMgr.h"
+#include "BattlegroundMgr.h"
 #include "SpellInfo.h"
 #include "Containers.h"
 

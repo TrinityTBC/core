@@ -4,7 +4,7 @@
 #include "ArenaTeam.h"
 #include "ArenaTeamMgr.h"
 #include "AuctionHouseMgr.h"
-#include "BattleGroundMgr.h"
+#include "BattlegroundMgr.h"
 #include "CellImpl.h"
 #include "CharacterCache.h"
 #include "Chat.h"

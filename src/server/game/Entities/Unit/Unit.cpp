@@ -22,7 +22,7 @@
 #include "TotemAI.h"
 #include "Totem.h"
 #include "GameTime.h"
-#include "BattleGround.h"
+#include "Battleground.h"
 #include "OutdoorPvP.h"
 #include "InstanceSaveMgr.h"
 #include "GridNotifiersImpl.h"

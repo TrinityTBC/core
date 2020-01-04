@@ -1,6 +1,6 @@
 #include "Monitor.h"
 #include "World.h"
-#include "BattleGroundMgr.h"
+#include "BattlegroundMgr.h"
 #include "Language.h"
 #include "Chat.h"
 

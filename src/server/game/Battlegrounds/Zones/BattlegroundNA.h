@@ -2,7 +2,7 @@
 #ifndef __BATTLEGROUNDNA_H
 #define __BATTLEGROUNDNA_H
 
-#include "BattleGround.h"
+#include "Battleground.h"
 
 enum BattlegroundNAObjectTypes
 {

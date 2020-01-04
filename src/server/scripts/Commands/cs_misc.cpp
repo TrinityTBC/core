@@ -4,7 +4,7 @@
 #include "LogsDatabaseAccessor.h"
 #include "ChaseMovementGenerator.h"
 #include "FollowMovementGenerator.h"
-#include "BattleGroundMgr.h"
+#include "BattlegroundMgr.h"
 #include "ArenaTeamMgr.h"
 #include "Weather.h"
 #include "GridNotifiersImpl.h"

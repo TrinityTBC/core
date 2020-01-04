@@ -1,8 +1,8 @@
 
 #include "Object.h"
 #include "Player.h"
-#include "BattleGround.h"
-#include "BattleGroundWS.h"
+#include "Battleground.h"
+#include "BattlegroundWS.h"
 #include "Creature.h"
 #include "GameObject.h"
 #include "Chat.h"

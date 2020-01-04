@@ -2,7 +2,7 @@
 #include "Language.h"
 #include <fstream>
 #include "UpdateFieldsDebug.h"
-#include "BattleGroundMgr.h"
+#include "BattlegroundMgr.h"
 #include "ChannelMgr.h"
 #include "GossipDef.h"
 #include "Bag.h"

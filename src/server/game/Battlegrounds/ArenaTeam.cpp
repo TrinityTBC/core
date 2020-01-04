@@ -6,7 +6,7 @@
 #include "World.h"
 #include "LogsDatabaseAccessor.h"
 #include "CharacterCache.h"
-#include "BattleGroundMgr.h"
+#include "BattlegroundMgr.h"
 #include "ArenaTeamMgr.h"
 
 ArenaTeam::ArenaTeam()

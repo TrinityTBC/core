@@ -2,7 +2,7 @@
 #ifndef __BATTLEGROUNDEY_H
 #define __BATTLEGROUNDEY_H
 
-#include "BattleGround.h"
+#include "Battleground.h"
 #include "Language.h"
 
 #define EY_MAX_TEAM_SCORE         2000

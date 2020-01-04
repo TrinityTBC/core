@@ -2,7 +2,7 @@
 #ifndef __BATTLEGROUNDAB_H
 #define __BATTLEGROUNDAB_H
 
-#include "BattleGround.h"
+#include "Battleground.h"
 
 enum BG_AB_WorldStates
 {

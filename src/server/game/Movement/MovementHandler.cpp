@@ -9,7 +9,7 @@
 #include "SpellAuras.h"
 #include "MapManager.h"
 #include "Transport.h"
-#include "BattleGround.h"
+#include "Battleground.h"
 #include "FlightPathMovementGenerator.h"
 #include "InstanceSaveMgr.h"
 #include "ObjectMgr.h"

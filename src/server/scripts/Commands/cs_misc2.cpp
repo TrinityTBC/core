@@ -5,7 +5,7 @@
 #include "ChannelMgr.h"
 #include "LogsDatabaseAccessor.h"
 #include "GridMap.h"
-#include "BattleGround.h"
+#include "Battleground.h"
 #include "AccountMgr.h"
 #include "CellImpl.h"
 #include "MovementDefines.h"
@@ -1356,7 +1356,6 @@ public:
         {
             //TODO translate
             ChatHandler(player).PSendSysMessage("You are now unbanned from the World channel.");
-            //ChatHandler(player).PSendSysMessage("Vous êtes maintenant débanni du channel world.");
         }
 
         return true;

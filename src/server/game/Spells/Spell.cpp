@@ -27,7 +27,7 @@
 #include "SharedDefines.h"
 #include "LootMgr.h"
 #include "Management/VMapFactory.h"
-#include "BattleGround.h"
+#include "Battleground.h"
 #include "Util.h"
 #include "TemporarySummon.h"
 #include "ScriptMgr.h"

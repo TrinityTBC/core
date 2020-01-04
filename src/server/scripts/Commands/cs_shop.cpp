@@ -3,7 +3,7 @@
 #include "CharacterCache.h"
 #include "PlayerDump.h"
 #include "AuctionHouseMgr.h"
-#include "BattleGround.h"
+#include "Battleground.h"
 #include "GuildMgr.h"
 #include "Mail.h"
 #include "Config.h"

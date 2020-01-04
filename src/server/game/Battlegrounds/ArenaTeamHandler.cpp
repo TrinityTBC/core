@@ -10,7 +10,7 @@
 #include "SocialMgr.h"
 #include "Language.h"
 #include "CharacterCache.h"
-#include "BattleGroundMgr.h"
+#include "BattlegroundMgr.h"
 #include "ArenaTeamMgr.h"
 
 void WorldSession::HandleInspectArenaTeamsOpcode(WorldPacket & recvData)

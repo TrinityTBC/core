@@ -5,7 +5,7 @@
 #include "Common.h"
 #include "DBCEnums.h"
 #include "SharedDefines.h"
-#include "BattleGround.h"
+#include "Battleground.h"
 #include "EventProcessor.h"
 
 typedef std::list<Battleground*> BGFreeSlotQueueContainer;

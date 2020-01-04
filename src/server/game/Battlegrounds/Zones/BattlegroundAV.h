@@ -2,7 +2,7 @@
 #ifndef __BATTLEGROUNDAV_H
 #define __BATTLEGROUNDAV_H
 
-#include "BattleGround.h"
+#include "Battleground.h"
 
 enum SharedActions
 {

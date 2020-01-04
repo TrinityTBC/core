@@ -18,7 +18,7 @@
 #include "RASession.h"
 #include "AsyncAcceptor.h"
 #include "ScriptMgr.h"
-#include "BattleGroundMgr.h"
+#include "BattlegroundMgr.h"
 #include "TCSoap.h"
 #include "CliRunnable.h"
 #include "WorldSocket.h"

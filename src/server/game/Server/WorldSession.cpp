@@ -19,7 +19,7 @@
 #include "World.h"
 #include "MapManager.h"
 #include "ObjectAccessor.h"
-#include "BattleGroundMgr.h"
+#include "BattlegroundMgr.h"
 #include "OutdoorPvPMgr.h"
 #include "Language.h"                                       // for CMSG_CANCEL_MOUNT_AURA handler
 #include "Chat.h"
@@ -32,7 +32,7 @@
 #include "zlib.h"
 #include "AccountMgr.h"
 #include "PacketLog.h"
-#include "BattleGround.h"
+#include "Battleground.h"
 #include "WardenBase.h"
 #include "PacketUtilities.h"
 #include "ReplayRecorder.h"

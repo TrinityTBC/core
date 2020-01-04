@@ -17,7 +17,7 @@
 #include "MapManager.h"
 #include "ObjectAccessor.h"
 #include "Object.h"
-#include "BattleGround.h"
+#include "Battleground.h"
 #include "OutdoorPvP.h"
 #include "SpellAuras.h"
 #include "Pet.h"

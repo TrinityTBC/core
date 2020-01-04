@@ -1354,6 +1354,16 @@ enum GameObjectDynamicLowFlags
     GO_DYNFLAG_LO_STOPPED           = 0x10                  // Transport is stopped
 };
 
+// client side GO show states
+enum GOState: uint32
+{
+    GO_STATE_ACTIVE             = 0,                        // show in world as used and not reset (closed door open)
+    GO_STATE_READY              = 1,                        // show in world as ready (closed door close)
+    GO_STATE_ACTIVE_ALTERNATIVE = 2,                        // show in world as used in alt way and not reset (closed door open by cannon fire)
+};
+
+#define MAX_GO_STATE              3
+
 enum TextEmotes
 {
     TEXTEMOTE_AGREE                = 1,
@@ -2027,37 +2037,37 @@ enum CreatureEliteType
     CREATURE_UNKNOWN               = 5                      // found in 2.2.3 for 2 mobs
 };
 
-// this does not exist in tbc, so using event ids
+// Use holiday id in WLK. values based at Holidays.dbc
 enum HolidayIds
 {
     HOLIDAY_NONE                     = 0,
 
-    HOLIDAY_FIREWORKS_SPECTACULAR    = 6,
-    HOLIDAY_FEAST_OF_WINTER_VEIL     = 2,
-    HOLIDAY_NOBLEGARDEN              = 9,
-    HOLIDAY_CHILDRENS_WEEK           = 10,
-    HOLIDAY_CALL_TO_ARMS_AV          = 18,
-    HOLIDAY_CALL_TO_ARMS_WS          = 19,
-    HOLIDAY_CALL_TO_ARMS_AB          = 20,
-    HOLIDAY_FISHING_EXTRAVAGANZA     = 15,
-    HOLIDAY_HARVEST_FESTIVAL         = 11,
-    HOLIDAY_HALLOWS_END              = 12,
-    HOLIDAY_LUNAR_FESTIVAL           = 7,
+    HOLIDAY_FIREWORKS_SPECTACULAR    = 62,
+    HOLIDAY_FEAST_OF_WINTER_VEIL     = 141,
+    HOLIDAY_NOBLEGARDEN              = 181,
+    HOLIDAY_CHILDRENS_WEEK           = 201,
+    HOLIDAY_CALL_TO_ARMS_AV          = 283,
+    HOLIDAY_CALL_TO_ARMS_WS          = 284,
+    HOLIDAY_CALL_TO_ARMS_AB          = 285,
+    HOLIDAY_FISHING_EXTRAVAGANZA     = 301,
+    HOLIDAY_HARVEST_FESTIVAL         = 321,
+    HOLIDAY_HALLOWS_END              = 324,
+    HOLIDAY_LUNAR_FESTIVAL           = 327,
     // HOLIDAY_LOVE_IS_IN_THE_AIR    = 335, unused/duplicated
-    HOLIDAY_FIRE_FESTIVAL            = 1,
-    HOLIDAY_CALL_TO_ARMS_EY          = 21,
-    HOLIDAY_BREWFEST                 = 26,
-    HOLIDAY_DARKMOON_FAIRE_ELWYNN    = 4,
-    HOLIDAY_DARKMOON_FAIRE_THUNDER   = 5,
-    HOLIDAY_DARKMOON_FAIRE_SHATTRATH = 3,
-    HOLIDAY_PIRATES_DAY              = 0,
-    HOLIDAY_CALL_TO_ARMS_SA          = 0,
-    HOLIDAY_PILGRIMS_BOUNTY          = 0,
-    HOLIDAY_WOTLK_LAUNCH             = 0,
-    HOLIDAY_DAY_OF_DEAD              = 0,
-    HOLIDAY_CALL_TO_ARMS_IC          = 0,
-    HOLIDAY_LOVE_IS_IN_THE_AIR       = 8,
-    HOLIDAY_KALU_AK_FISHING_DERBY    = 0
+    HOLIDAY_FIRE_FESTIVAL            = 341,
+    HOLIDAY_CALL_TO_ARMS_EY          = 353,
+    HOLIDAY_BREWFEST                 = 372,
+    HOLIDAY_DARKMOON_FAIRE_ELWYNN    = 374,
+    HOLIDAY_DARKMOON_FAIRE_THUNDER   = 375,
+    HOLIDAY_DARKMOON_FAIRE_SHATTRATH = 376,
+    HOLIDAY_PIRATES_DAY              = 398,
+    HOLIDAY_CALL_TO_ARMS_SA          = 400,
+    HOLIDAY_PILGRIMS_BOUNTY          = 404,
+    HOLIDAY_WOTLK_LAUNCH             = 406,
+    HOLIDAY_DAY_OF_DEAD              = 409,
+    HOLIDAY_CALL_TO_ARMS_IC          = 420,
+    HOLIDAY_LOVE_IS_IN_THE_AIR       = 423,
+    HOLIDAY_KALU_AK_FISHING_DERBY    = 424
 };
 
 // values based at QuestInfo.dbc

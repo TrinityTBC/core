@@ -123,7 +123,8 @@ if(NOT WITH_WARNINGS)
       /wd4985
       /wd4267
       /wd4619
-      /wd4512)
+      /wd4512
+      /wd4819)
 
   message(STATUS "MSVC: Disabled generic compiletime warnings")
 endif()

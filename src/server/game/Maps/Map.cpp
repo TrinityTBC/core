@@ -907,10 +907,6 @@ void Map::Update(const uint32& t_diff)
         }
     }
 
-    //must be done before creatures update
-    for (auto itr : CreatureGroupHolder)
-        itr.second->Update(t_diff);
-    
     // non-player active objects, increasing iterator in the loop in case of object removal
     for (m_activeForcedNonPlayersIter = m_activeForcedNonPlayers.begin(); m_activeForcedNonPlayersIter != m_activeForcedNonPlayers.end();)
     {
@@ -2764,56 +2760,6 @@ GameObject* Map::GetGameObjectBySpawnId(ObjectGuid::LowType spawnId) const
     return creatureItr != bounds.second ? creatureItr->second : bounds.first->second;
 }
 
-void Map::AddCreatureToPool(Creature *cre, uint32 poolId)
-{
-    auto itr = m_cpmembers.find(poolId);
-    if (itr == m_cpmembers.end()) {
-        std::set<ObjectGuid> newSet;
-        newSet.insert(cre->GetGUID());
-        m_cpmembers[poolId] = newSet;
-    } else {
-        itr->second.insert(cre->GetGUID());
-    }
-}
-
-void Map::RemoveCreatureFromPool(Creature *cre, uint32 poolId)
-{
-    auto itr = m_cpmembers.find(poolId);
-    if (itr != m_cpmembers.end()) {
-        std::set<ObjectGuid> membersSet = itr->second;
-        auto itr2 = membersSet.find(cre->GetGUID());
-        if(itr2 != membersSet.end())
-        {
-            cre->SetCreaturePoolId(0);
-            membersSet.erase(itr2);
-            return;
-        }
-        TC_LOG_ERROR("maps","Creature %u could not be removed from pool %u", cre->GetSpawnId(), poolId);
-    } else {
-        TC_LOG_ERROR("maps","Pool %u not found for creature %u", poolId, cre->GetSpawnId());
-    }
-}
-
-std::list<Creature*> Map::GetAllCreaturesFromPool(uint32 poolId)
-{
-    std::list<Creature*> creatureList;
-
-    auto itr = m_cpmembers.find(poolId);
-    if (itr != m_cpmembers.end())
-    {
-        for(auto guid : itr->second)
-        {
-            Creature* c = GetCreature(guid);
-            if(c)
-                creatureList.push_back(c);
-            else
-                TC_LOG_ERROR("maps", "GetAllCreaturesFromPool : couldn't get unit with guid %s", guid.ToString().c_str());
-        }
-    }
-
-    return creatureList;
-}
-
 bool Map::AllTransportsEmpty() const
 {
     for (auto _transport : _transports)
@@ -3732,7 +3678,7 @@ void Map::LoadRespawnTimes()
             uint64 respawnTime = fields[1].GetUInt64();
 
             if (CreatureData const* cdata = sObjectMgr->GetCreatureData(loguid))
-                SaveRespawnTime(SPAWN_TYPE_CREATURE, loguid, cdata->ChooseSpawnEntry(), time_t(respawnTime), GetZoneId(cdata->spawnPoint), Trinity::ComputeGridCoord(cdata->spawnPoint.GetPositionX(), cdata->spawnPoint.GetPositionY()).GetId(), false);
+                SaveRespawnTime(SPAWN_TYPE_CREATURE, loguid, cdata->id, time_t(respawnTime), GetZoneId(cdata->spawnPoint), Trinity::ComputeGridCoord(cdata->spawnPoint.GetPositionX(), cdata->spawnPoint.GetPositionY()).GetId(), false);
 
         } while (result->NextRow());
     }

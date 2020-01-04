@@ -295,6 +295,7 @@ class TC_GAME_API Battleground
         uint8 GetArenaType() const            { return m_ArenaType; }
         uint8 GetWinner() const               { return m_Winner; }
         uint32 GetScriptId() const            { return ScriptId; }
+        uint32 GetBonusHonorFromKill(uint32 kills) const;
         uint32 GetBattlemasterEntry() const;
         uint32 GetStartTime() const           { return m_StartTime; }
         uint32 GetEndTime() const             { return m_EndTime; }
@@ -503,9 +504,11 @@ class TC_GAME_API Battleground
         void SpawnBGCreature(uint32 spawnID, BattleGroundCreatureSpawnMode mode);
         void SpawnBGCreature(Creature* c, BattleGroundCreatureSpawnMode mode);
         Creature* AddCreature(uint32 entry, uint32 type, float x, float y, float z, float o, uint32 respawntime = 0);
+        Creature* AddCreature(uint32 entry, uint32 type, Position const& pos, uint32 respawntime = 0);
         bool DelCreature(uint32 type);
         bool DelObject(uint32 type);
         bool AddSpiritGuide(uint32 type, float x, float y, float z, float o, uint32 team);
+        bool AddSpiritGuide(uint32 type, Position const& pos, uint32 team);
         int32 GetObjectType(ObjectGuid const& guid);
 
         void DoorOpen(GameObject* gob);

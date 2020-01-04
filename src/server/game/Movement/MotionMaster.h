@@ -25,7 +25,6 @@ class Unit;
 struct WaypointPath;
 struct SplineChainLink;
 struct SplineChainResumeInfo;
-class SplineHandler;
 namespace Movement
 {
     class MoveSplineInit;
@@ -84,7 +83,6 @@ public:
 
 class TC_GAME_API MotionMaster
 {
-    friend SplineHandler;
     public:
         explicit MotionMaster(Unit* unit);
         ~MotionMaster();
@@ -171,14 +169,12 @@ class TC_GAME_API MotionMaster
         void MoveSeekAssistanceDistract(uint32 timer);
         void MoveTaxiFlight(uint32 path, uint32 pathnode);
         void MoveDistract(uint32 time, float orientation);
-        //see WaypointMovementGenerator for info about smoothSpline
-        void MovePath(uint32 path_id, bool repeatable = true, bool smoothSpline = false);
-        //see WaypointMovementGenerator for info about smoothSpline
-        void MovePath(WaypointPath& path, bool repeatable = true, bool smoothSpline = false);
+        void MovePath(uint32 pathId, bool repeatable = true);
+        void MovePath(WaypointPath& path, bool repeatable = true);
         void MoveRotate(uint32 id, uint32 time, RotateDirection direction);
         /** Look towards the target for given time */
         void MoveStealthAlert(Unit const* target, uint32 time);
-        void MoveFormation(uint32 id, FormationMoveSegment path, Creature* leader);
+        void MoveFormation(uint32 id, Position destination, uint32 moveType, bool forceRun = false, bool forceOrientation = false);
 
         void LaunchMoveSpline(Movement::MoveSplineInit&& init, uint32 id = 0, MovementGeneratorPriority priority = MOTION_PRIORITY_NORMAL, MovementGeneratorType type = EFFECT_MOTION_TYPE);
     private:

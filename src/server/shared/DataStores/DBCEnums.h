@@ -96,15 +96,10 @@ enum Difficulty : uint8
 #endif
 };
 
-#ifdef LICH_KING
-#define MAX_DUNGEON_DIFFICULTY     3
-#define MAX_RAID_DIFFICULTY        4
-#define MAX_DIFFICULTY             4
-#else
 #define MAX_DUNGEON_DIFFICULTY     2
 #define MAX_RAID_DIFFICULTY        1
 #define MAX_DIFFICULTY             2
-#endif //LICH_KING
+#define WLK_MAX_DIFFICULTY         4
 
 enum SpawnMask
 {

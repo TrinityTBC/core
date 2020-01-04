@@ -552,95 +552,14 @@ public:
     /* .gobject linkgameevent #event #guid */
     static bool HandleGobLinkGameEventCommand(ChatHandler* handler, char const* args)
     {
-        GameObjectData const* data = nullptr;
-        char* cEvent = strtok((char*)args, " ");
-        char* cGobGUID = strtok(nullptr, " ");
-        int16 event = 0;
-        ObjectGuid::LowType gobGUID = 0;
-
-        if (!cEvent || !cGobGUID)
-            return false;
-
-        event = atoi(cEvent);
-        gobGUID = atoi(cGobGUID);
-
-        if (!event || !gobGUID)
-        {
-            //PSendSysMessage("Valeurs incorrectes.");
-            handler->PSendSysMessage("Incorrect values.");
-            handler->SetSentErrorMessage(true);
-            return false;
-        }
-
-        data = sObjectMgr->GetGameObjectData(gobGUID);
-        if (!data)
-        {
-            //PSendSysMessage("Gobject (guid : %u) introuvable.",gobGUID);
-            handler->PSendSysMessage("Gobject (guid: %u) not found.", gobGUID);
-            handler->SetSentErrorMessage(true);
-            return false;
-        }
-
-        ObjectGuid fullGUID = ObjectGuid(HighGuid::GameObject, data->id, gobGUID);
-
-        int16 currentEventId = sGameEventMgr->GetGameObjectEvent(fullGUID);
-        if (currentEventId)
-        {
-            //PSendSysMessage("Le gobject est déjà lié à l'event %i.",currentEventId);
-            handler->PSendSysMessage("Gobject already linked to the event %i.", currentEventId);
-            handler->SetSentErrorMessage(true);
-            return false;
-        }
-
-        if (sGameEventMgr->AddGameObjectToEvent(fullGUID, event))
-            //PSendSysMessage("Le gobject (guid : %u) a été lié à l'event %i.",gobGUID,event);
-            handler->PSendSysMessage("Gobject (guid: %u) is now linked to the event %i.", gobGUID, event);
-        else
-            //PSendSysMessage("Erreur : Le gobject (guid : %u) n'a pas pu être lié à l'event %d (event inexistant ?).",gobGUID,event);
-            handler->PSendSysMessage("Error: gobject (guid: %u) could not be linked to the event %d (event nonexistent?).", gobGUID, event);
-
+        // TODO: ReimplementAfterTCMigration
         return true;
     }
 
     /*.gobject unlinkgameevent #guid*/
     static bool HandleGobUnlinkGameEventCommand(ChatHandler* handler, char const* args)
     {
-        GameObjectData const* data = nullptr;
-        char* cGobGUID = strtok((char*)args, " ");
-        ObjectGuid::LowType gobGUID = 0;
-
-        if (!cGobGUID)
-            return false;
-
-        gobGUID = atoi(cGobGUID);
-
-        data = sObjectMgr->GetGameObjectData(gobGUID);
-        if (!data)
-        {
-            //PSendSysMessage("Gobject avec le guid %u introuvable.",gobGUID);
-            handler->PSendSysMessage("Gobject with guid %u not found.", gobGUID);
-            handler->SetSentErrorMessage(true);
-            return false;
-        }
-
-        ObjectGuid fullGUID = ObjectGuid(HighGuid::GameObject, data->id, gobGUID);
-        int16 currentEventId = sGameEventMgr->GetGameObjectEvent(fullGUID);
-        if (!currentEventId)
-        {
-            //PSendSysMessage("Le gobject (guid : %u) n'est lié à aucun event.",gobGUID);
-            handler->PSendSysMessage("Gobject (guid: %u) is not linked to any event.", gobGUID);
-        }
-        else {
-            if (sGameEventMgr->RemoveGameObjectFromEvent(fullGUID))
-                //PSendSysMessage("Le gobject (guid : %u) n'est plus lié à l'event %i.",gobGUID,currentEventId);
-                handler->PSendSysMessage("Gobject (guid: %u) is not linked anymore to the event %i.", gobGUID, currentEventId);
-            else
-                //PSendSysMessage("Erreur lors de la suppression du gobject (guid : %u) de l'event %i.",gobGUID,currentEventId);
-                handler->PSendSysMessage("Error on removing gobject (guid: %u) from the event %i.", gobGUID, currentEventId);
-            handler->SetSentErrorMessage(true);
-            return false;
-        }
-
+        // TODO: ReimplementAfterTCMigration
         return true;
     }
 

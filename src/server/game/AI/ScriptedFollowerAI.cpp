@@ -154,9 +154,10 @@ void ScriptedFollowerAI::JustAppeared()
 void ScriptedFollowerAI::EnterEvadeMode(EvadeReason /* why */)
 {
     me->RemoveAllAuras();
-    me->GetThreatManager().ClearAllThreat();
     me->CombatStop(true);
     me->SetLootRecipient(nullptr);
+
+    EngagementOver();
 
     if (HasFollowState(STATE_FOLLOW_INPROGRESS))
     {

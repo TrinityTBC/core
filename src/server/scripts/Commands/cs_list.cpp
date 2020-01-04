@@ -472,11 +472,11 @@ public:
             CreatureData const& data = pair.second;
             if (data.spawnPoint.GetMapId() != mapId)
                 continue;
-            CreatureTemplate const* cTemp = sObjectMgr->GetCreatureTemplate(data.GetFirstSpawnEntry());
+            CreatureTemplate const* cTemp = sObjectMgr->GetCreatureTemplate(data.id);
             if (!cTemp)
                 continue;
             if (showAll || data.spawnPoint.IsInDist2d(player, 5000.0))
-                handler->PSendSysMessage("Type: %u | SpawnId: %u | Entry: %u (%s) | X: %.3f | Y: %.3f | Z: %.3f", uint32(data.type), data.spawnId, data.GetFirstSpawnEntry(), cTemp->Name.c_str(), data.spawnPoint.GetPositionX(), data.spawnPoint.GetPositionY(), data.spawnPoint.GetPositionZ());
+                handler->PSendSysMessage("Type: %u | SpawnId: %u | Entry: %u (%s) | X: %.3f | Y: %.3f | Z: %.3f", uint32(data.type), data.spawnId, data.id, cTemp->Name.c_str(), data.spawnPoint.GetPositionX(), data.spawnPoint.GetPositionY(), data.spawnPoint.GetPositionZ());
         }
         for (auto const& pair : sObjectMgr->GetAllGameObjectData())
         {

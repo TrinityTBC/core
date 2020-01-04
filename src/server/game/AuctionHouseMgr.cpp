@@ -329,12 +329,12 @@ void AuctionHouseMgr::LoadAuctions()
             continue;
         }
 
-        CreatureTemplate const* auctioneerInfo = sObjectMgr->GetCreatureTemplate(auctioneerData->GetFirstSpawnEntry());
+        CreatureTemplate const* auctioneerInfo = sObjectMgr->GetCreatureTemplate(auctioneerData->id);
         if(!auctioneerInfo)
         {
             AuctionHouseMgr::SendAuctionExpiredMail(aItem, trans);
             aItem->DeleteFromDB(trans);
-            TC_LOG_ERROR("misc", "Auction %u has not a existing auctioneer (GUID : %u Entry: %u)", aItem->Id, aItem->auctioneer, auctioneerData->GetFirstSpawnEntry());
+            TC_LOG_ERROR("misc", "Auction %u has not a existing auctioneer (GUID : %u Entry: %u)", aItem->Id, aItem->auctioneer, auctioneerData->id);
             delete aItem;
             continue;
         }
@@ -345,7 +345,7 @@ void AuctionHouseMgr::LoadAuctions()
             AuctionHouseMgr::SendAuctionExpiredMail(aItem, trans);
             aItem->DeleteFromDB(trans);
             TC_LOG_ERROR("misc","Auction %u has auctioneer (GUID : %u Entry: %u) with wrong faction %u",
-                aItem->Id, aItem->auctioneer, auctioneerData->GetFirstSpawnEntry(), auctioneerInfo->faction);
+                aItem->Id, aItem->auctioneer, auctioneerData->id, auctioneerInfo->faction);
             delete aItem;
             continue;
         }

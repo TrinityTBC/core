@@ -2827,7 +2827,7 @@ void Spell::TargetInfo::DoDamageAndTriggers(Spell* spell)
             if (CreatureAI* hitTargetAI = cHitTarget->AI())
             {
                     if (spell->m_caster->GetTypeId() == TYPEID_GAMEOBJECT)
-                        hitTargetAI->SpellHit(spell->m_caster->ToGameObject(), spell->m_spellInfo);
+                        hitTargetAI->SpellHitByGameObject(spell->m_caster->ToGameObject(), spell->m_spellInfo);
                     else
                         hitTargetAI->SpellHit(spell->m_caster->ToUnit(), spell->m_spellInfo);
             }
@@ -2883,15 +2883,15 @@ void Spell::GOTargetInfo::DoTargetSpellHit(Spell* spell, uint8 effIndex)
     if (go->AI())
     {
         if (spell->m_caster->GetTypeId() == TYPEID_GAMEOBJECT)
-            go->AI()->SpellHit(spell->m_caster->ToGameObject(), spell->m_spellInfo);
+            go->AI()->SpellHitByGameObject(spell->m_caster->ToGameObject(), spell->m_spellInfo);
         else
             go->AI()->SpellHit(spell->m_caster->ToUnit(), spell->m_spellInfo);
     }
 
     if (spell->m_caster->GetTypeId() == TYPEID_UNIT && spell->m_caster->ToCreature()->IsAIEnabled())
-        spell->m_caster->ToCreature()->AI()->SpellHitTarget(go, spell->m_spellInfo);
+        spell->m_caster->ToCreature()->AI()->SpellHitTargetGameObject(go, spell->m_spellInfo);
     else if (spell->m_caster->GetTypeId() == TYPEID_GAMEOBJECT && spell->m_caster->ToGameObject()->AI())
-        spell->m_caster->ToGameObject()->AI()->SpellHitTarget(go, spell->m_spellInfo);
+        spell->m_caster->ToGameObject()->AI()->SpellHitTargetGameObject(go, spell->m_spellInfo);
 
     if (spell->m_caster->GetTypeId() == TYPEID_PLAYER && !spell->IsAutoRepeat() && !spell->m_spellInfo->IsNextMeleeSwingSpell() && !spell->IsChannelActive())
         (spell->m_caster->ToPlayer())->CastedCreatureOrGO(go->GetEntry(), go->GetGUID(), spell->m_spellInfo->Id);
@@ -4771,7 +4771,7 @@ void Spell::UpdateSpellCastDataAmmo(WorldPackets::Spells::SpellAmmo& ammo)
     {
         uint32 nonRangedAmmoDisplayID = 0;
         uint32 nonRangedAmmoInventoryType = 0;
-        for (uint32 slot = WEAPON_SLOT_MAINHAND; slot <= WEAPON_SLOT_RANGED; ++slot)
+        for (uint32 slot = BASE_ATTACK; slot < MAX_ATTACK; ++slot)
         {
 #ifdef LICH_KING
             if (uint32 item_id = m_caster->GetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID + i))
@@ -4819,7 +4819,7 @@ void Spell::UpdateSpellCastDataAmmo(WorldPackets::Spells::SpellAmmo& ammo)
                 Creature* c = m_caster->ToCreature();
                 if (!c)
                     break;
-                switch (c->GetWeaponSubclass(WeaponSlot(slot)))
+                switch (c->GetWeaponSubclass(WeaponAttackType(slot)))
                 {
                 case ITEM_SUBCLASS_WEAPON_BOW:
                 case ITEM_SUBCLASS_WEAPON_CROSSBOW:

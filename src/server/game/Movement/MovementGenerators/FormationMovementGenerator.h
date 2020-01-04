@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2018 TrinityCore <https://www.trinitycore.org/>
+ * Copyright (C) 2008-2019 TrinityCore <https://www.trinitycore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -26,7 +26,7 @@ class Creature;
 class FormationMovementGenerator : public MovementGeneratorMedium<Creature, FormationMovementGenerator>
 {
     public:
-        explicit FormationMovementGenerator(uint32 id, ObjectGuid leaderGUID, FormationMoveSegment moveSegment);
+        explicit FormationMovementGenerator(uint32 id, Position destination, uint32 moveType, bool run, bool orientation);
 
         MovementGeneratorType GetMovementGeneratorType() const override;
 
@@ -36,25 +36,16 @@ class FormationMovementGenerator : public MovementGeneratorMedium<Creature, Form
         void DoDeactivate(Creature*);
         void DoFinalize(Creature*, bool, bool);
 
-        ObjectGuid GetLeaderGuid() const { return _leaderGUID; }
-
         void UnitSpeedChanged() override { AddFlag(MOVEMENTGENERATOR_FLAG_SPEED_UPDATE_PENDING); }
 
     private:
         void MovementInform(Creature*);
 
-        void MoveToStart(Creature*);
-        void MoveToDest(Creature*);
-        Position GetMemberDestination(Creature* member, uint32 followDist, Position leaderDest, uint8 depth = 0) const;
-
-        float GetDistanceFromLine(Position point, Position start, Position end);
-
         uint32 _movementId;
-        FormationMoveSegment _moveSegment;
-        ObjectGuid _leaderGUID;
-        bool _movingToStart;
-
-        Position _previousHome;
+        Position _destination;
+        uint32 _moveType;
+        bool _run;
+        bool _orientation;
 };
 
 #endif // TRINITY_FORMATIONMOVEMENTGENERATOR_H

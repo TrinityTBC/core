@@ -91,7 +91,7 @@ class TC_GAME_API ThreatManager
         bool CanHaveThreatList() const { return _ownerCanHaveThreatList; }
         // returns the current victim - this can be nullptr if owner's threat list is empty, or has only offline targets
         Unit* GetCurrentVictim();
-        Unit* GetCurrentVictim() const;
+        Unit* GetLastVictim() const;
         // returns an arbitrary non-offline victim from owner's threat list if one exists, nullptr otherwise
         Unit* GetAnyTarget() const;
         // selects a (potentially new) victim from the threat list and returns it - this can be nullptr
@@ -112,10 +112,10 @@ class TC_GAME_API ThreatManager
         Trinity::IteratorPair<ThreatListIterator> GetUnsortedThreatList() const { return { _myThreatListEntries.begin(), _myThreatListEntries.end() }; }
         // slightly slower than GetUnsorted, but, well...sorted - only use it if you need the sorted property, of course
         // this iterator pair will invalidate on any modification (even indirect) of the threat list; spell casts and similar can all induce this!
-        // note: current tank is NOT guaranteed to be the first entry in this list - check GetCurrentVictim separately if you want that!
+        // note: current tank is NOT guaranteed to be the first entry in this list - check GetLastVictim separately if you want that!
         Trinity::IteratorPair<threat_list_heap::ordered_iterator> GetSortedThreatList() const { return { _sortedThreatList.ordered_begin(), _sortedThreatList.ordered_end() }; }
         // slowest of the three threat list getters (by far), but lets you modify the threat references - this is also sorted
-        std::vector<ThreatReference*> GetModifiableThreatList() const;
+        std::vector<ThreatReference*> GetModifiableThreatList();
 
         // does any unit have a threat list entry with victim == this.owner?
         bool IsThreateningAnyone(bool includeOffline = false) const;
@@ -193,6 +193,12 @@ class TC_GAME_API ThreatManager
         threat_list_heap _sortedThreatList;
         std::unordered_map<ObjectGuid, ThreatReference*> _myThreatListEntries;
 
+        // AI notifies are delayed to ensure we are in a consistent state before we call out to arbitrary logic
+        // threat references might register themselves here when ::UpdateOffline() is called - MAKE SURE THIS IS PROCESSED JUST BEFORE YOU EXIT THREATMANAGER LOGIC
+        void ProcessAIUpdates();
+        void RegisterForAIUpdate(ThreatReference const* ref) { _needsAIUpdate.push_back(ref); }
+        std::vector<ThreatReference const*> _needsAIUpdate;
+
         // picks a new victim - called from ::Update periodically
         void UpdateVictim();
         ThreatReference const* ReselectVictim();
@@ -265,8 +271,10 @@ class TC_GAME_API ThreatReference
 
         ThreatReference(ThreatManager* mgr, Unit* victim) :
             _owner(reinterpret_cast<Creature*>(mgr->_owner)), _mgr(*mgr), _victim(victim),
-            _online(ShouldBeSuppressed() ? ONLINE_STATE_SUPPRESSED : ONLINE_STATE_ONLINE),
-            _baseAmount(0.0f), _tempModifier(0), _taunted(TAUNT_STATE_NONE) { }
+            _baseAmount(0.0f), _tempModifier(0), _taunted(TAUNT_STATE_NONE)
+        {
+            _online = ONLINE_STATE_OFFLINE;
+        }
 
         void UnregisterAndFree();
 

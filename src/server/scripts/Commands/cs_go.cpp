@@ -494,7 +494,7 @@ public:
         CreatureData const* spawnpoint = nullptr;
         for (auto const& pair : sObjectMgr->GetAllCreatureData())
         {
-            if (!std::any_of(pair.second.ids.begin(), pair.second.ids.end(), [&](auto e) { return e.id == *cId; }))
+            if (pair.second.id != *cId)
                 continue;
 
             if (!spawnpoint)

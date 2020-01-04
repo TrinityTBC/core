@@ -411,8 +411,8 @@ public:
         {
             if(target->GetCreatureAddon()->path_id != 0)
             {
-                WorldDatabase.PExecute("UPDATE creature_addon SET path_id = 0 WHERE spawnID = %u", guidlow);
-                WorldDatabase.PExecute("UPDATE creature SET MovementType = '%u' WHERE spawnID = '%u'", IDLE_MOTION_TYPE, guidlow);
+                WorldDatabase.PExecute("UPDATE creature_addon SET path_id = 0 WHERE guid = %u", guidlow);
+                WorldDatabase.PExecute("UPDATE creature SET MovementType = '%u' WHERE guid = '%u'", IDLE_MOTION_TYPE, guidlow);
                 target->LoadPath(0);
                 target->SetDefaultMovementType(IDLE_MOTION_TYPE);
                 target->GetMotionMaster()->MoveTargetedHome();
@@ -856,114 +856,15 @@ public:
     */
     static bool HandleWpChangePathTypeCommand(ChatHandler* handler, char const* args)
     {
-        ARGS_CHECK
-
-        char* pathIdStr = strtok((char*)args, " ");
-        uint32 pathId = uint32(atoi(pathIdStr));
-        if(!pathId)
-            return false;
-
-        QueryResult result = WorldDatabase.PQuery( "SELECT 0 FROM waypoint_data WHERE id = '%u' LIMIT 1",pathId); 
-        if(!result)
-        {
-            handler->PSendSysMessage("No path of given id (%u) found", pathId);
-            handler->SetSentErrorMessage(true);
-            return false;
-        }
-
-        char* typeStr = strtok(nullptr, " ");
-        if(typeStr) //if the second argument was given
-        { //setter
-            uint32 type = uint32(atoi(typeStr));
-            if(type >= WP_PATH_TYPE_TOTAL)
-            {
-                handler->PSendSysMessage("Wrong type given : %u", type);
-                handler->SetSentErrorMessage(true);
-                return true;
-            }
-        
-            //change in db
-            PreparedStatement* stmt = WorldDatabase.GetPreparedStatement(WORLD_REP_WAYPOINT_PATH_TYPE);
-            stmt->setUInt32(0, pathId);
-            stmt->setUInt16(1, type);
-            WorldDatabase.Execute(stmt);
-
-            //change in memory
-            WaypointPath* path = (WaypointPath*)sWaypointMgr->GetPath(pathId);
-            path->pathType = type;
-
-            std::string pathTypeStr = GetWaypointPathTypeName(WaypointPathType(type));
-            handler->PSendSysMessage("Changed path %u type to %s (%u)", pathId, pathTypeStr.c_str(), type);
-        } else 
-        { //getter
-            // check db value
-            PreparedStatement* stmt = WorldDatabase.GetPreparedStatement(WORLD_SEL_WAYPOINT_PATH_TYPE);
-            stmt->setUInt32(0, pathId);
-            PreparedQueryResult result_ = WorldDatabase.Query(stmt);
-        
-            if(result_)
-            {
-                uint32 type = result_->Fetch()->GetUInt16();
-                std::string pathTypeStr = GetWaypointPathTypeName(WaypointPathType(type));
-                handler->PSendSysMessage("DB : Path id %u has type set to %s (%u)", pathId, pathTypeStr.c_str(), type);
-            } else {
-                handler->PSendSysMessage("No db entry found for path id %u", pathId);
-                handler->SetSentErrorMessage(true);
-                return false;
-            }
-            // check memory value
-            WaypointPath const* path = sWaypointMgr->GetPath(pathId);
-            if(path)
-            {
-                uint8 type = path->pathType;
-                std::string pathTypeStr = GetWaypointPathTypeName(WaypointPathType(type));
-                handler->PSendSysMessage("Memory : Path id %u has type set to %s (%u)", pathId, pathTypeStr.c_str(), type);
-            }
-        }
+        //TODO: ReimplementAfterTCMigration
         return true;
     }
 
     /** .path teleport #path_id [#point_id] **/
     static bool HandleWpTeleportToPathCommand(ChatHandler* handler, char const* args)
     {
-        ARGS_CHECK
-
-        Player* p = handler->GetSession() ? handler->GetSession()->GetPlayer() : nullptr;
-        if (!p)
-            return false;
-
-        char* pathIdStr = strtok((char*)args, " ");
-        if (!pathIdStr)
-            return false;
-
-        uint32 pathId = uint32(atoi(pathIdStr));
-        if (!pathId)
-            return false;
-
-        uint32 pointId = 0;
-        if (char* pointStr = strtok(nullptr, " "))
-            pointId = atoi(pointStr);
-
-        WaypointPath* path = (WaypointPath*)sWaypointMgr->GetPath(pathId);
-        if (!path)
-        {
-            handler->PSendSysMessage("Could not find path %u", pathId);
-            handler->SetSentErrorMessage(true);
-            return false;
-        }
-
-        for (auto itr : path->nodes)
-        {
-            if (itr.id == pointId)
-            {
-                p->TeleportTo(p->GetMapId(), itr.x, itr.y, itr.z, itr.orientation ? itr.orientation : p->GetOrientation());
-                return true;
-            }
-        }
-
-        handler->PSendSysMessage("Could not find point with id %u in path %u", pointId, pathId);
-        handler->SetSentErrorMessage(true);
-        return false;
+        //TODO: ReimplementAfterTCMigration
+        return true;
     }
 
     /* Syntax : .path direction <pathid> [dir] 
@@ -976,70 +877,7 @@ public:
     */
     static bool HandleWpChangePathDirectionCommand(ChatHandler* handler, char const* args)
     {
-        ARGS_CHECK
-
-        char* pathIdStr = strtok((char*)args, " ");
-        uint32 pathId = uint32(atoi(pathIdStr));
-        if(!pathId)
-            return false;
-
-        QueryResult result = WorldDatabase.PQuery( "SELECT 0 FROM waypoint_data WHERE id = '%u' LIMIT 1",pathId); 
-        if(!result)
-        {
-            handler->PSendSysMessage("No path of given id (%u) found", pathId);
-            handler->SetSentErrorMessage(true);
-            return false;
-        }
-
-        char* dirStr = strtok(nullptr, " ");
-        if(dirStr) //if the second argument was given
-        { //setter
-            uint32 dir = uint32(atoi(dirStr));
-            if(dir >= WP_PATH_DIRECTION_TOTAL)
-            {
-                handler->PSendSysMessage("Wrong direction given : %u", dir);
-                handler->SetSentErrorMessage(true);
-                return true;
-            }
-        
-            //change in db
-            PreparedStatement* stmt = WorldDatabase.GetPreparedStatement(WORLD_REP_WAYPOINT_PATH_DIRECTION);
-            stmt->setUInt32(0, pathId);
-            stmt->setUInt16(1, dir);
-            WorldDatabase.Execute(stmt);
-
-            //change in memory
-            WaypointPath* path = (WaypointPath*)sWaypointMgr->GetPath(pathId);
-            path->pathDirection = dir;
-
-            std::string pathDirStr = GetWaypointPathDirectionName(WaypointPathDirection(dir));
-            handler->PSendSysMessage("Changed path %u direction to %s (%u)", pathId, pathDirStr.c_str(), dir);
-        } else 
-        { //getter
-            // check db value
-            PreparedStatement* stmt = WorldDatabase.GetPreparedStatement(WORLD_SEL_WAYPOINT_PATH_DIRECTION);
-            stmt->setUInt32(0, pathId);
-            PreparedQueryResult result_ = WorldDatabase.Query(stmt);
-        
-            if(result_)
-            {
-                uint32 dir = result_->Fetch()->GetUInt16();
-                std::string pathDirStr = GetWaypointPathDirectionName(WaypointPathDirection(dir));
-                handler->PSendSysMessage("DB : Path id %u has direction set to %s (%u)", pathId, pathDirStr.c_str(), dir);
-            } else {
-                handler->PSendSysMessage("No db entry found for path id %u", pathId);
-                handler->SetSentErrorMessage(true);
-                return false;
-            }
-            // check memory value
-            WaypointPath const* path = sWaypointMgr->GetPath(pathId);
-            if(path)
-            {
-                uint8 dir = path->pathDirection;
-                std::string pathDirStr = GetWaypointPathDirectionName(WaypointPathDirection(dir));
-                handler->PSendSysMessage("Current path value (in memory) : Path id %u has direction set to %s (%u)", pathId, pathDirStr.c_str(), dir);
-            }
-        }
+        //TODO: ReimplementAfterTCMigration
         return true;
     }
 
@@ -1137,33 +975,31 @@ public:
         }
 
         guidlow = target->GetSpawnId();
-        QueryResult result = WorldDatabase.PQuery( "SELECT spawnId FROM creature_addon WHERE spawnID = '%u'",guidlow);
+        QueryResult result = WorldDatabase.PQuery( "SELECT spawnId FROM creature_addon WHERE guid = '%u'",guidlow);
 
         if( result )
         {
-            WorldDatabase.PExecute("UPDATE creature_addon SET path_id = '%u' WHERE spawnID = '%u'", pathid, guidlow);
+            WorldDatabase.PExecute("UPDATE creature_addon SET path_id = '%u' WHERE guid = '%u'", pathid, guidlow);
         }
         else
         {
             //if there's any creature_template_addon, let's base ourserlves on it
-            result = WorldDatabase.PQuery( "SELECT mount,bytes0,bytes1,bytes2,emote,moveflags,auras FROM creature_template_addon WHERE entry = '%u'",target->GetEntry());
+            result = WorldDatabase.PQuery( "SELECT mount,bytes1,bytes2,emote,auras FROM creature_template_addon WHERE entry = '%u'",target->GetEntry());
             if(result)
             {
                 uint32 mount = (*result)[0].GetUInt32();
-                uint32 bytes0 = (*result)[1].GetUInt32();
-                uint32 bytes1 = (*result)[2].GetUInt32();
-                uint32 bytes2 = (*result)[3].GetUInt32();
-                uint32 emote = (*result)[4].GetUInt32();
-                uint32 moveflags = (*result)[5].GetUInt32();
-                const char* auras = (*result)[6].GetCString();
-                WorldDatabase.PExecute("INSERT INTO creature_addon(spawnID,path_id,mount,bytes0,bytes1,bytes2,emote,moveflags,auras) VALUES \
-                                       ('%u','%u','%u','%u','%u','%u','%u','%u','%s')", guidlow, pathid,mount,bytes0,bytes1,bytes2,emote,moveflags,auras);
+                uint32 bytes1 = (*result)[1].GetUInt32();
+                uint32 bytes2 = (*result)[2].GetUInt32();
+                uint32 emote = (*result)[3].GetUInt32();
+                const char* auras = (*result)[4].GetCString();
+                WorldDatabase.PExecute("INSERT INTO creature_addon(guid,path_id,mount,bytes1,bytes2,emote,auras) VALUES \
+                                       ('%u','%u','%u','%u','%u','%u','%s')", guidlow, pathid,mount,bytes1,bytes2,emote,auras);
             } else { //else just create a new entry
-                WorldDatabase.PExecute("INSERT INTO creature_addon(spawnID,path_id) VALUES ('%u','%u')", guidlow, pathid);
+                WorldDatabase.PExecute("INSERT INTO creature_addon(guid,path_id) VALUES ('%u','%u')", guidlow, pathid);
             }
         }
 
-        WorldDatabase.PExecute("UPDATE creature SET MovementType = '%u' WHERE spawnID = '%u'", WAYPOINT_MOTION_TYPE, guidlow);
+        WorldDatabase.PExecute("UPDATE creature SET MovementType = '%u' WHERE guid = '%u'", WAYPOINT_MOTION_TYPE, guidlow);
 
         target->LoadPath(pathid);
         target->SetDefaultMovementType(WAYPOINT_MOTION_TYPE);

@@ -24,6 +24,9 @@ class TC_GAME_API PossessedAI : public PassiveAI
         PossessedAI(Creature *c) : PassiveAI(c) {}
 
         void AttackStart(Unit *target) override;
+        void JustEnteredCombat(Unit* who) override { EngagementStart(who); }
+        void JustExitedCombat() override { EngagementOver(); }
+        void JustStartedThreateningMe(Unit*) override { }
         void UpdateAI(uint32) override;
         void EnterEvadeMode(EvadeReason /* why */) override {}
 
@@ -38,8 +41,13 @@ class TC_GAME_API NullCreatureAI : public PassiveAI
     public:
         NullCreatureAI(Creature *c) : PassiveAI(c) {}
 
+        void MoveInLineOfSight(Unit*) override { }
+        void AttackStart(Unit*) override { }
+        void JustStartedThreateningMe(Unit*) override { }
+        void JustEnteredCombat(Unit*) override { }
         void UpdateAI(uint32) override {}
         void EnterEvadeMode(EvadeReason /* why */) override {}
+        void OnCharmed(bool /*isNew*/) override { }
 
         static int32 Permissible(Creature const* creature);
 };

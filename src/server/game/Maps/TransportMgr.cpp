@@ -47,11 +47,11 @@ void TransportMgr::LoadTransportTemplates()
 {
     uint32 oldMSTime = GetMSTime();
     
-    QueryResult result = WorldDatabase.PQuery("SELECT entry FROM gameobject_template t1 WHERE type = 15 AND patch = (SELECT max(patch) FROM gameobject_template t2 WHERE t1.entry = t2.entry && patch <= %u) ORDER BY entry ASC", sWorld->GetWowPatch());
+    QueryResult result = WorldDatabase.Query("SELECT entry FROM gameobject_template WHERE type = 15 ORDER BY entry ASC");
 
     if (!result)
     {
-        TC_LOG_INFO("server.loading", ">> Loaded %u transports", 0 );
+        TC_LOG_INFO("server.loading", ">> Loaded 0 transport templates. DB table `gameobject_template` has no transports!");
         return;
     }
 
@@ -434,9 +434,9 @@ MotionTransport* TransportMgr::CreateTransport(uint32 entry, ObjectGuid::LowType
         trans->GetFloatValue(GAMEOBJECT_PARENTROTATION + 3));
     data.spawntimesecs = 0;
     data.animprogress = trans->GetGoAnimProgress();
-    data.go_state = trans->GetGoState();
+    data.goState = trans->GetGoState();
     data.spawnMask = (1 << trans->GetMap()->GetSpawnMode());
-    data.ArtKit = trans->GetUInt32Value(GAMEOBJECT_ARTKIT);
+    data.artKit = trans->GetUInt32Value(GAMEOBJECT_ARTKIT);
 
     // sunwell: transports are active so passengers can be relocated (grids must be loaded)
     ///trans->SetKeepActive(true);

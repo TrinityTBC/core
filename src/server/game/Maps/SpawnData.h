@@ -1,16 +1,32 @@
+/*
+ * Copyright (C) 2008-2019 TrinityCore <https://www.trinitycore.org/>
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #ifndef TRINITY_SPAWNDATA_H
 #define TRINITY_SPAWNDATA_H
 
 #include "Position.h"
-#include "World.h"
 
+// EnumUtils: DESCRIBE THIS
 enum SpawnObjectType
 {
-    SPAWN_TYPE_CREATURE = 0,
-    SPAWN_TYPE_GAMEOBJECT = 1,
+    SPAWN_TYPE_CREATURE = 0,   // TITLE Creature
+    SPAWN_TYPE_GAMEOBJECT = 1, // TITLE Gameobject
 
-    SPAWN_TYPE_MAX
+    SPAWN_TYPE_MAX             // SKIP
 };
 
 enum SpawnObjectTypeMask
@@ -45,18 +61,14 @@ struct SpawnData
 {
     SpawnObjectType const type;
     uint32 spawnId = 0;
+    uint32 id = 0; // entry in respective _template table
     WorldLocation spawnPoint;
     uint32 phaseMask = 0;
     int32 spawntimesecs = 0;
-    int32 spawntimesecs_max = 0; //if defined, roll between spawntimesecs and spawntimesecs_max
     uint8 spawnMask = 0;
     SpawnGroupTemplateData const* spawnGroupData = nullptr;
     uint32 scriptId = 0;
     bool dbData = true;
-
-    uint32 patch_min = WOW_PATCH_MIN;
-    uint32 patch_max = WOW_PATCH_MAX;
-    inline bool IsPatchEnabled() const { return sWorld->GetWowPatch() >= patch_min && sWorld->GetWowPatch() <= patch_max; }
 
     protected:
     SpawnData(SpawnObjectType t) : type(t) {}
@@ -64,10 +76,10 @@ struct SpawnData
 
 enum LinkedRespawnType
 {
-    LINKED_RESPAWN_CREATURE_TO_CREATURE = 0,
-    LINKED_RESPAWN_CREATURE_TO_GO = 1, // Creature is dependant on GameObject
-    LINKED_RESPAWN_GO_TO_GO = 2,
-    LINKED_RESPAWN_GO_TO_CREATURE = 3, // GameObject is dependant on Creature
+    LINKED_RESPAWN_CREATURE_TO_CREATURE  = 0,
+    LINKED_RESPAWN_CREATURE_TO_GO        = 1, // Creature is dependant on GameObject
+    LINKED_RESPAWN_GO_TO_GO              = 2,
+    LINKED_RESPAWN_GO_TO_CREATURE        = 3, // GameObject is dependant on Creature
 };
 
 #endif

@@ -27,8 +27,8 @@ enum CharacterDatabaseStatements : uint32
         When updating more than one field, consider looking at the calling function
         name for a suiting suffix.
     */
-    CHAR_DEL_QUEST_POOL_SAVE,
-    CHAR_INS_QUEST_POOL_SAVE,
+    CHAR_DEL_POOL_QUEST_SAVE,
+    CHAR_INS_POOL_QUEST_SAVE,
     CHAR_DEL_NONEXISTENT_GUILD_BANK_ITEM,
     /*
     CHAR_DEL_EXPIRED_BANS,
@@ -241,7 +241,7 @@ enum CharacterDatabaseStatements : uint32
 
     CHAR_INS_INSTANCE_SAVE,
     CHAR_UPD_INSTANCE_DATA,
-    /*
+
     CHAR_DEL_GAME_EVENT_SAVE,
     CHAR_INS_GAME_EVENT_SAVE,
 
@@ -249,7 +249,6 @@ enum CharacterDatabaseStatements : uint32
     CHAR_DEL_GAME_EVENT_CONDITION_SAVE,
     CHAR_INS_GAME_EVENT_CONDITION_SAVE,
 
-    */
     CHAR_INS_ARENA_TEAM,
     CHAR_INS_ARENA_TEAM_MEMBER,
     CHAR_DEL_ARENA_TEAM,

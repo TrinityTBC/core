@@ -12,7 +12,7 @@
 #include "Language.h"
 #include "AreaBoundary.h"
 
-CreatureAI::CreatureAI(Creature *c) : UnitAI((Unit*)c), me(c), m_MoveInLineOfSight_locked(false), _boundary(nullptr), _negateBoundary(false)
+CreatureAI::CreatureAI(Creature *c) : UnitAI((Unit*)c), me(c), m_MoveInLineOfSight_locked(false), _boundary(nullptr), _negateBoundary(false), _isEngaged(false)
 {
 
 }
@@ -94,41 +94,11 @@ void CreatureAI::MoveInLineOfSight_Safe(Unit* who)
 
 void CreatureAI::MoveInLineOfSight(Unit* who)
 {
-    //if has just respawned and not a summon, wait a bit before reacting
-    if (me->HasJustAppeared() && !me->IsControlledByPlayer())
+    if (me->IsEngaged())
         return;
 
-    if (me->GetCreatureType() == CREATURE_TYPE_NON_COMBAT_PET) // non-combat pets should just stand there and look good;)
-        return;
-
-    if (!me->HasReactState(REACT_AGGRESSIVE))
-        return;
-
-    CanAttackResult result = me->CanAggro(who, false);
-    if (result != CAN_ATTACK_RESULT_OK)
-        return;
-
-    //attack target if no current victim
-    if (!me->GetVictim())
-    {
-        if (AssistPlayerInCombatAgainst(who))
-            return;
-
-        if (me->HasUnitState(UNIT_STATE_DISTRACTED))
-        {
-            me->ClearUnitState(UNIT_STATE_DISTRACTED);
-            me->GetMotionMaster()->Clear();
-        }
-
-        me->ClearUnitState(UNIT_STATE_EVADE);
-        who->RemoveAurasByType(SPELL_AURA_MOD_STEALTH);
-
+    if (me->HasReactState(REACT_AGGRESSIVE) && me->CanStartAttack(who, false))
         me->EngageWithTarget(who);
-    } else {
-        // else just enter combat with it if in melee range
-        if(me->IsWithinMeleeRange(who))
-            me->EngageWithTarget(who);
-    }
 }
 
 void CreatureAI::_OnOwnerCombatInteraction(Unit* target)
@@ -136,35 +106,44 @@ void CreatureAI::_OnOwnerCombatInteraction(Unit* target)
     if (!target || !me->IsAlive())
         return;
 
-    if (!me->HasReactState(REACT_PASSIVE) && me->CanAggro(target, true) == CAN_ATTACK_RESULT_OK && me->CanCreatureAttack(target, true))
-    {
+    if (!me->HasReactState(REACT_PASSIVE) && me->CanStartAttack(target, true))
         me->EngageWithTarget(target);
-    }
 }
 
-bool CreatureAI::UpdateVictim(bool evade)
+bool CreatureAI::UpdateVictim()
 {
-    if (!me->IsEngaged())
+    if (!IsEngaged())
         return false;
+
+    if (!me->IsAlive())
+    {
+        EngagementOver();
+        return false;
+    }
 
     if (!me->HasReactState(REACT_PASSIVE))
     {
-        if (Unit* victim = me->SelectVictim(evade))
+        if (Unit* victim = me->SelectVictim())
             if (!me->IsFocusing(nullptr, true) && (victim != me->GetVictim() || me->GetMotionMaster()->GetCurrentMovementGeneratorType() != CHASE_MOTION_TYPE)) //sun: also start attack if we're not chasing... we might have triggered another movement in scripts
                 AttackStart(victim);
 
-        return evade && me->GetVictim() != nullptr;
+        return me->GetVictim() != nullptr;
     }
     else if (!me->IsInCombat())
     {
-        if(evade)
-            EnterEvadeMode(EVADE_REASON_NO_HOSTILES);
+        EnterEvadeMode(EVADE_REASON_NO_HOSTILES);
         return false;
     }
     else if(me->GetVictim())
         me->AttackStop();
 
     return true;
+}
+
+void CreatureAI::JustEnteredCombat(Unit* who)
+{
+    if (!IsEngaged() && !me->CanHaveThreatList())
+        EngagementStart(who);
 }
 
 void CreatureAI::EnterEvadeMode(EvadeReason why)
@@ -201,10 +180,43 @@ void CreatureAI::EnterEvadeMode(EvadeReason why)
 #endif
 }
 
+void CreatureAI::EngagementStart(Unit* who)
+{
+    if (_isEngaged)
+    {
+        TC_LOG_ERROR("scripts.ai", "CreatureAI::EngagementStart called even though creature is already engaged. Creature debug info:\n%s", me->GetDebugInfo().c_str());
+        return;
+    }
+    _isEngaged = true;
+
+    me->AtEngage(who);
+}
+
+void CreatureAI::EngagementOver()
+{
+    if (!_isEngaged)
+    {
+        TC_LOG_ERROR("scripts.ai", "CreatureAI::EngagementOver called even though creature is not currently engaged. Creature debug info:\n%s", me->GetDebugInfo().c_str());
+        return;
+    }
+    _isEngaged = false;
+
+    me->AtDisengage();
+}
+
 bool CreatureAI::_EnterEvadeMode(EvadeReason /*why*/)
 {
+    if (!IsEngaged())
+        return false;
+
+    if (!me->IsAlive())
+    {
+        EngagementOver();
+        return false;
+    }
+
     me->RemoveAurasOnEvade();
-    me->GetThreatManager().ClearAllThreat();
+
     me->CombatStop(true);
     me->LoadCreaturesAddon();
     me->SetLootRecipient(nullptr);
@@ -213,9 +225,7 @@ bool CreatureAI::_EnterEvadeMode(EvadeReason /*why*/)
     me->SetCannotReachTarget(false);
     me->DoNotReacquireTarget();
     me->GetSpellHistory()->ResetAllCooldowns();
-
-    if (me->IsInEvadeMode())
-        return false;
+    EngagementOver();
 
     return true;
 }

@@ -45,6 +45,7 @@
 #include "Player.h"
 #include "Pet.h"
 #include "PoolMgr.h"
+#include "QuestPools.h"
 #include "QueryCallback.h"
 #include "ScriptMgr.h"
 #include "ScriptReloadMgr.h"
@@ -1382,6 +1383,14 @@ void World::LoadConfigSettings(bool reload)
     m_configs[CONFIG_CACHE_DATA_QUERIES] = sConfigMgr->GetBoolDefault("CacheDataQueries", true);
 
     m_configs[CONFIG_RESTORE_DELETED_ITEMS] = sConfigMgr->GetBoolDefault("Progression.RestoreDeletedItems", true);
+
+    m_configs[CONFIG_CALCULATE_CREATURE_ZONE_AREA_DATA] = sConfigMgr->GetBoolDefault("Calculate.Creature.Zone.Area.Data", false);
+    m_configs[CONFIG_CALCULATE_GAMEOBJECT_ZONE_AREA_DATA] = sConfigMgr->GetBoolDefault("Calculate.Gameoject.Zone.Area.Data", false);
+    m_configs[CONFIG_ARENA_SEASON_ID] = sConfigMgr->GetIntDefault ("Arena.ArenaSeason.ID", 1);
+    m_configs[CONFIG_ARENA_START_RATING] = sConfigMgr->GetIntDefault ("Arena.ArenaStartRating", 0);
+    m_configs[CONFIG_ARENA_START_PERSONAL_RATING] = sConfigMgr->GetIntDefault ("Arena.ArenaStartPersonalRating", 1000);
+    m_configs[CONFIG_ARENA_START_MATCHMAKER_RATING] = sConfigMgr->GetIntDefault ("Arena.ArenaStartMatchmakerRating", 1500);
+    m_configs[CONFIG_ARENA_SEASON_IN_PROGRESS] = sConfigMgr->GetBoolDefault("Arena.ArenaSeason.InProgress", true);
 }
 
 /// Get Server Patch
@@ -1462,6 +1471,7 @@ void World::SetInitialWorldSettings()
 
     ///- Initialize pool manager
     sPoolMgr->Initialize();
+    sGameEventMgr->Initialize();
 
     ///- Loading strings. Getting no records means core load has to be canceled because no error message can be output.
     TC_LOG_INFO("server.loading", "Loading Trinity strings..." );
@@ -1599,7 +1609,7 @@ void World::SetInitialWorldSettings()
     sObjectMgr->LoadCreatureModelInfo();
 
     TC_LOG_INFO("server.loading", "Loading Creature templates..." );
-    sObjectMgr->LoadCreatureTemplates(false);
+    sObjectMgr->LoadCreatureTemplates();
 
     TC_LOG_INFO("server.loading", "Loading Equipment templates...");
     sObjectMgr->LoadEquipmentTemplates();
@@ -1932,20 +1942,13 @@ void World::SetInitialWorldSettings()
         TC_LOG_INFO("server.loading", "Outdoor PvP is disabled in config");
 
 
-    TC_LOG_INFO("server.loading", "Loading Transports.");
-    if (!getConfig(CONFIG_DEBUG_DISABLE_TRANSPORTS))
-        sTransportMgr->SpawnContinentTransports();
-    else
-        TC_LOG_INFO("server.loading", "Transports are disabled in config");
-
     TC_LOG_INFO("server.loading","Deleting expired bans...");
     LoginDatabase.Execute("DELETE FROM ip_banned WHERE unbandate<=UNIX_TIMESTAMP() AND unbandate<>bandate");
 
     TC_LOG_INFO("server.loading","Calculate next daily quest reset time..." );
     InitDailyQuestResetTime();
 
-    TC_LOG_INFO("server.loading","Starting Game Event system..." );
-    uint32 nextGameEvent = sGameEventMgr->Initialize();
+    uint32 nextGameEvent = sGameEventMgr->StartSystem();
     m_timers[WUPDATE_EVENTS].SetInterval(nextGameEvent);    //depend on next event
 
     // Delete all characters which have been deleted X days before
@@ -1956,6 +1959,15 @@ void World::SetInitialWorldSettings()
 
     TC_LOG_INFO("server.loading", "Initializing Opcodes...");
     opcodeTable.Initialize();
+
+    TC_LOG_INFO("server.loading", "Starting Arena Season...");
+    sGameEventMgr->StartArenaSeason();
+
+    TC_LOG_INFO("server.loading", "Loading Transports.");
+    if (!getConfig(CONFIG_DEBUG_DISABLE_TRANSPORTS))
+        sTransportMgr->SpawnContinentTransports();
+    else
+        TC_LOG_INFO("server.loading", "Transports are disabled in config");
 
     TC_LOG_INFO("server.loading","Loading automatic announces...");
     LoadAutoAnnounce();
@@ -2949,7 +2961,7 @@ void World::ResetDailyQuests()
             m_session.second->GetPlayer()->ResetDailyQuestStatus();
 
     // change available dailies
-    sPoolMgr->ChangeDailyQuests();
+    sQuestPoolMgr->ChangeDailyQuests();
 }
 
 void World::SetPlayerLimit(int32 limit)

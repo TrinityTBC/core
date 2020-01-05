@@ -1,5 +1,9 @@
+#include "ScriptMgr.h"
 #include "Chat.h"
 #include "Language.h"
+#include "Player.h"
+#include <mutex>
+#include <boost/thread/shared_mutex.hpp>
 
 class zone_commandscript : public CommandScript
 {

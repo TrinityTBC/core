@@ -14,6 +14,7 @@
 #include "UpdateMask.h"
 #include "SharedDefines.h"
 #include "SpellDefines.h"
+#include "UpdateFields.h"
 #include "Position.h"
 #include "ObjectDefines.h"
 

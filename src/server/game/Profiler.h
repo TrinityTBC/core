@@ -1,6 +1,8 @@
 #ifndef __PROFILER_H
 #define __PROFILER_H
 
+#include "Common.h"
+
 class TC_GAME_API Profiler
 {
 public:

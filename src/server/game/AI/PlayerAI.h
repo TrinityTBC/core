@@ -62,7 +62,7 @@ class TC_GAME_API PlayerAI : public UnitAI
         /* Helper method - casts the included spell at the included target */
         void DoCastAtTarget(TargetedSpell spell);
 
-        virtual Unit* SelectAttackTarget() const { return me->GetCharmer() ? me->GetCharmer()->GetVictim() : nullptr; }
+        virtual Unit* SelectAttackTarget() const;
         void DoRangedAttackIfReady();
         void DoAutoAttackIfReady();
 

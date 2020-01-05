@@ -13,6 +13,7 @@ class Item;
 class MailItemsInfo;
 class Unit;
 enum SanctionType : uint32;
+enum WorldConfigs;
 
 class TC_GAME_API LogsDatabaseAccessor
 {

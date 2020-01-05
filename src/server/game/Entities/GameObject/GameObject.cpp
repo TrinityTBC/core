@@ -15,6 +15,7 @@
 #include "MapManager.h"
 #include "LootMgr.h"
 #include "GroupMgr.h"
+#include "Log.h"
 #include "GridNotifiers.h"
 #include "GridNotifiersImpl.h"
 #include "CellImpl.h"

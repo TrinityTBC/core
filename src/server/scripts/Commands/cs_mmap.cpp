@@ -1,3 +1,5 @@
+#include "ScriptMgr.h"
+#include "CellImpl.h"
 #include "Chat.h"
 #include "Management/MMapManager.h"
 #include "Management/MMapFactory.h"
@@ -7,8 +9,13 @@
 #include "WaypointManager.h"
 #include "WaypointMovementGenerator.h"
 #include "MapManager.h"
+#include "GridNotifiersImpl.h"
 #include "ScriptSystem.h"
 #include "SmartScriptMgr.h"
+#include "Creature.h"
+#include "TemporarySummon.h"
+#include "Player.h"
+#include "WorldSession.h"
 #include <fstream>
 
 class mmaps_commandscript : public CommandScript

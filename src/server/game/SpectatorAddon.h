@@ -8,6 +8,8 @@
 #define SPECTATOR_ADDON_SPELL_INTERUPTED 99999 // specific addons
 #define SPECTATOR_ADDON_SPELL_CANCELED 99998   // numbers =\
 
+class ObjectGuid;
+
 enum SpectatorPrefix {
     SPECTATOR_PREFIX_PLAYER,
     SPECTATOR_PREFIX_STATUS,

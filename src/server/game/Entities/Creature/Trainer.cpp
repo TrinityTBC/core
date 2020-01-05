@@ -16,6 +16,7 @@
  */
 
 #include "Trainer.h"
+#include "ObjectMgr.h"
 #include "Creature.h"
 #include "NPCPackets.h"
 #include "Player.h"

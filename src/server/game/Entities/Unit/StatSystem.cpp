@@ -1,4 +1,5 @@
 
+#include "Log.h"
 #include "Unit.h"
 #include "Player.h"
 #include "Pet.h"

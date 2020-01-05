@@ -1,8 +1,12 @@
+#include "DBCStores.h"
+#include "ScriptMgr.h"
 #include "Chat.h"
 #include "Language.h"
 #include "GameEventMgr.h"
 #include "AccountMgr.h"
 #include "ReputationMgr.h"
+#include "Player.h"
+#include "WorldSession.h"
 
 class lookup_commandscript : public CommandScript
 {

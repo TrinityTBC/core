@@ -17,6 +17,7 @@
 
 #include "EventMap.h"
 #include "Random.h"
+#include "Errors.h"
 
 void EventMap::Reset()
 {

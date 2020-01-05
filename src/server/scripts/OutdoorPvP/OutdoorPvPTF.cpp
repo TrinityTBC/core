@@ -1,6 +1,7 @@
 
 #include "OutdoorPvPTF.h"
 #include "WorldPacket.h"
+#include "Log.h"
 #include "Player.h"
 #include "ObjectMgr.h"
 #include "Language.h"

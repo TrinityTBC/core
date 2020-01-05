@@ -1,6 +1,8 @@
 
 #include "Common.h"
+#include "Log.h"
 #include "Corpse.h"
+#include "DBCStores.h"
 #include "Player.h"
 #include "CharacterCache.h"
 #include "UpdateMask.h"

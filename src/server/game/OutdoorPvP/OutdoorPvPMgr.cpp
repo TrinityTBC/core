@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "MapManager.h"
 #include "ScriptMgr.h"
+#include "Log.h"
 
 OutdoorPvPMgr::OutdoorPvPMgr() : m_OutdoorPvPDatas()
 {

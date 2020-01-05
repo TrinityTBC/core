@@ -20,11 +20,13 @@
 #include "Language.h"
 #include "GameEventMgr.h"
 #include "Spell.h"
+#include "Bag.h"
 #include "Chat.h"
 #include "AccountMgr.h"
 #include "InstanceSaveMgr.h"
 #include "SpellAuras.h"
 #include "Util.h"
+#include "Mail.h"
 #include "WaypointManager.h"
 #include "InstanceScript.h" //for condition_instance_data
 #include "ItemEnchantmentMgr.h"
@@ -5605,7 +5607,7 @@ void ObjectMgr::LoadGossipTextLocales()
 
         NpcTextLocale& data = mGossipTextLocaleMap[entry];
 
-        for (uint8 i = MAX_LOCALE; i > 0; --i)
+        for (uint8 i = TOTAL_LOCALES - 1; i > 0; --i)
         {
             LocaleConstant locale = (LocaleConstant) i;
             for (uint8 j = 0; j < MAX_GOSSIP_TEXT_OPTIONS; ++j)
@@ -7795,7 +7797,7 @@ bool ObjectMgr::LoadTrinityStrings(DatabaseWorkerPool<WorldDatabaseConnection>& 
         data.Content.resize(1);
         ++count;
 
-        for (int8 i = MAX_LOCALE; i >= 0; --i)
+        for (int8 i = TOTAL_LOCALES - 1; i >= 0; --i)
             AddLocaleString(fields[i + 1].GetString(), LocaleConstant(i), data.Content);
 
     } while (result->NextRow());
@@ -9330,7 +9332,7 @@ void ObjectMgr::LoadFactionChangeReputGeneric()
     
 }
 
-void ObjectMgr::AddLocaleString(std::string const& s, LocaleConstant locale, StringVector& data)
+void ObjectMgr::AddLocaleString(std::string const& s, LocaleConstant locale, std::vector<std::string>& data)
 {
     if (!s.empty())
     {

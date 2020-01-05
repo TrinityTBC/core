@@ -10,6 +10,8 @@
 #include "Player.h"
 #include "GossipDef.h"
 #include "InstanceScript.h"
+#include "Log.h"
+#include "MapManager.h"
 #include "SpellScript.h"
 #include "ScriptReloadMgr.h"
 #include "SmartAI.h"

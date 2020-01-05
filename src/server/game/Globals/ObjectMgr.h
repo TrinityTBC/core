@@ -364,8 +364,8 @@ struct BroadcastText
 
     uint32 Id;
     uint32 Language;
-    StringVector MaleText;
-    StringVector FemaleText;
+    std::vector<std::string> MaleText;
+    std::vector<std::string> FemaleText;
     uint32 EmoteId0;
     uint32 EmoteId1;
     uint32 EmoteId2;
@@ -435,6 +435,7 @@ typedef std::unordered_map<uint32, GameObjectTemplate> GameObjectTemplateContain
 typedef std::unordered_map<uint32,GameObjectData> GameObjectDataContainer;
 typedef std::unordered_map<uint32,CreatureLocale> CreatureLocaleContainer;
 typedef std::unordered_map<uint32,GameObjectLocale> GameObjectLocaleContainer;
+typedef std::unordered_map<uint32, ItemTemplate> ItemTemplateContainer;
 typedef std::unordered_map<uint32,ItemLocale> ItemLocaleContainer;
 typedef std::unordered_map<uint32,QuestLocale> QuestLocaleContainer;
 typedef std::unordered_map<uint32, QuestOfferRewardLocale> QuestOfferRewardLocaleContainer;
@@ -1130,8 +1131,8 @@ class TC_GAME_API ObjectMgr
             return Trinity::Containers::MapGetValuePtr(_trinityStringStore, entry);
         }
 
-        static void AddLocaleString(std::string const& s, LocaleConstant locale, StringVector& data);
-        static inline void GetLocaleString(const StringVector& data, int loc_idx, std::string& value)
+        static void AddLocaleString(std::string const& s, LocaleConstant locale, std::vector<std::string>& data);
+        static inline void GetLocaleString(const std::vector<std::string>& data, int loc_idx, std::string& value)
         {
             if (data.size() > size_t(loc_idx) && !data[loc_idx].empty())
                 value = data[loc_idx];
@@ -1238,11 +1239,6 @@ class TC_GAME_API ObjectMgr
         void RestoreDeletedItems();
 
         bool IsTransportMap(uint32 mapId) const { return _transportMaps.count(mapId); }
-
-#ifndef LICH_KING
-        //storage used instead of the PvPDifficulty.dbc, which does not exists on BC
-        std::map<uint32, PvPDifficultyEntry> BCDifficultyEntries;
-#endif
 
     protected:
 

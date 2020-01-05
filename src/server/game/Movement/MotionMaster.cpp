@@ -3,8 +3,10 @@
 #include "CreatureAISelector.h"
 #include "Creature.h"
 #include "G3DPosition.hpp"
+#include "Log.h"
 #include "MoveSpline.h"
 #include "MoveSplineInit.h"
+#include "Player.h"
 #include "ScriptSystem.h"
 #include <cassert>
 

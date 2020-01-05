@@ -8,6 +8,7 @@
 #include "World.h"
 #include "ObjectMgr.h"
 #include "Player.h"
+#include "Pet.h"
 #include "Group.h"
 #include "GroupMgr.h"
 #include "ObjectAccessor.h"

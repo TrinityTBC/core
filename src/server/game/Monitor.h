@@ -1,6 +1,12 @@
 #ifndef __MONITOR_H
 #define __MONITOR_H
 
+#include "Common.h"
+#include <unordered_map>
+#include <mutex>
+
+class Map;
+
 /*
 Ideas:
 - Allow to trigger profiling at next udpate, by command or automatically every X according to config

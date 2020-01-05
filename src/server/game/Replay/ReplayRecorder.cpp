@@ -1,4 +1,8 @@
 #include "ReplayRecorder.h"
+#include "Position.h"
+#include "Timer.h"
+#include "WorldPacket.h"
+#include <cstdio>
 
 ReplayRecorder::~ReplayRecorder()
 {

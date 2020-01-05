@@ -1,8 +1,10 @@
 #include "Monitor.h"
+#include "MapManager.h"
 #include "World.h"
 #include "BattlegroundMgr.h"
 #include "Language.h"
 #include "Chat.h"
+#include "Player.h"
 
 Monitor::Monitor()
     : _worldTickCount(0),

@@ -1,8 +1,11 @@
 #include "SpellMgr.h"
 #include "ScriptMgr.h"
 #include "SpellScript.h"
+#include "Spell.h"
 #include "SpellAuras.h"
 #include "SpellAuraEffects.h"
+#include "Player.h"
+#include "TemporarySummon.h"
 
 enum WarlockSpells
 {

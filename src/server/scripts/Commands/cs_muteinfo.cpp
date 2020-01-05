@@ -1,7 +1,10 @@
+#include "ScriptMgr.h"
+#include "ObjectMgr.h"
 #include "Chat.h"
 #include "Language.h"
 #include "CharacterCache.h"
 #include "AccountMgr.h"
+
 class muteinfo_commandscript : public CommandScript
 {
 public:

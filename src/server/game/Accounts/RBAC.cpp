@@ -3,6 +3,7 @@
 #include "AccountMgr.h"
 #include "DatabaseEnv.h"
 #include "Log.h"
+#include <sstream>
 
 namespace rbac
 {

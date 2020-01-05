@@ -3,8 +3,10 @@
 #ifndef TRINITYCORE_CHAT_H
 #define TRINITYCORE_CHAT_H
 
-#include "SharedDefines.h"
+#include "Common.h"
+#include "DatabaseEnv.h"
 #include "ChatCommand.h"
+#include "SharedDefines.h"
 
 class ChatHandler;
 class WorldSession;
@@ -14,6 +16,9 @@ class Unit;
 struct GameTele;
 struct GM_Ticket;
 class GameObject;
+class Group;
+class WorldObject;
+class WorldPacket;
 
 class TC_GAME_API ChatHandler
 {

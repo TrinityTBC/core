@@ -1,6 +1,8 @@
 #ifndef __CLIENTCONTROL_H
 #define __CLIENTCONTROL_H
 
+#include "Unit.h"
+
 class ClientControl
 {
 friend class WorldSession;

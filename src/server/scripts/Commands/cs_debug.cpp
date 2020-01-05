@@ -1,11 +1,14 @@
+#include "ScriptMgr.h"
 #include "Chat.h"
 #include "Language.h"
+#include "Log.h"
 #include <fstream>
 #include "UpdateFieldsDebug.h"
 #include "BattlegroundMgr.h"
 #include "ChannelMgr.h"
 #include "GossipDef.h"
 #include "Bag.h"
+#include <csignal>
 
 class debug_commandscript : public CommandScript
 {

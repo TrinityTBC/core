@@ -5,6 +5,7 @@
 #include "UpdateData.h"
 #include <iostream>
 
+#include "Creature.h"
 #include "Corpse.h"
 #include "Object.h"
 #include "DynamicObject.h"

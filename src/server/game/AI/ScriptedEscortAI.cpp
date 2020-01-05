@@ -1,6 +1,11 @@
 #include "ScriptedEscortAI.h"
 #include "MovementGenerator.h"
 #include "ScriptSystem.h"
+#include "Log.h"
+#include "ObjectAccessor.h"
+#include "Creature.h"
+#include "Group.h"
+#include "Player.h"
 
 enum Points
 {

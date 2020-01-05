@@ -7,6 +7,7 @@
 #include "NullCreatureAI.h"
 #include "MovementGenerator.h"
 #include "Pet.h"
+#include "Log.h"
 #include "ScriptMgr.h"
 
 namespace FactorySelector

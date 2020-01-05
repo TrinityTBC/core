@@ -2,6 +2,8 @@
 #ifndef TRINITY_SKILL_EXTRA_ITEMS_H
 #define TRINITY_SKILL_EXTRA_ITEMS_H
 
+#include "Define.h" 
+
 // predef classes used in functions
 class Player;
 

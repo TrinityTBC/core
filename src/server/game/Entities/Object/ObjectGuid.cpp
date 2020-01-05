@@ -1,6 +1,7 @@
 
 #include "ObjectGuid.h"
 #include "World.h"
+#include "Log.h"
 #include <sstream>
 #include <iomanip>
 

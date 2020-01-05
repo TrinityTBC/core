@@ -1,7 +1,10 @@
+#include "ObjectMgr.h"
+#include "ScriptMgr.h"
 #include "Chat.h"
 #include "Language.h"
 #include "CharacterCache.h"
 #include "ReputationMgr.h"
+#include "Player.h"
 
 class quest_commandscript : public CommandScript
 {

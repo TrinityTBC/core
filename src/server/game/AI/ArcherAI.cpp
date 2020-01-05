@@ -1,5 +1,6 @@
 #include "ArcherAI.h"
 #include "Errors.h"
+#include "Log.h"
 #include "Creature.h"
 #include "Player.h"
 #include "SpellMgr.h"

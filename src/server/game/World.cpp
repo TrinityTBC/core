@@ -2016,7 +2016,7 @@ void World::DetectDBCLang()
     std::string availableLocalsStr;
 
     uint8 default_locale = TOTAL_LOCALES;
-    for (int i = MAX_LOCALE; i >= 0; --i)
+    for (int i = TOTAL_LOCALES - 1; i >= 0; --i)
     {
         if ( strlen(race->name[i]) > 0)                     // check by race names
         {

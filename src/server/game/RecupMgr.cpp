@@ -1,6 +1,7 @@
 #include "RecupMgr.h"
 #include "Chat.h"
 #include "Language.h"
+#include "Player.h"
 
 bool RecupMgr::RecupProfession(Player* player, RecupProfessionType profession, uint32 maxSkill /*= 375*/)
 {

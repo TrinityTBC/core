@@ -1,5 +1,10 @@
 #include "ReplayPlayer.h"
 #include "Chat.h"
+#include "Timer.h"
+#include "WorldPacket.h"
+#include "Position.h"
+#include "Opcodes.h"
+#include "Player.h"
 
 ReplayPlayer::~ReplayPlayer()
 {

@@ -1,5 +1,10 @@
+#include "ScriptMgr.h"
+#include "SpellMgr.h"
 #include "Chat.h"
 #include "Language.h"
+#include "WorldSession.h"
+#include "Player.h"
+
 class cast_commandscript : public CommandScript
 {
 public:

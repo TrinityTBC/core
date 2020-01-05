@@ -1,4 +1,5 @@
 #include "Common.h"
+#include "DBCStores.h"
 #include "Player.h"
 #include "GridNotifiers.h"
 #include "Log.h"

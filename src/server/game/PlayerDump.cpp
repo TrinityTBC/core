@@ -19,6 +19,7 @@
  */
 
 #include "Common.h"
+#include "Log.h"
 #include "PlayerDump.h"
 #include "Database/DatabaseEnv.h"
 #include "UpdateFields.h"

@@ -1,5 +1,7 @@
+#include "ScriptMgr.h"
 #include "Chat.h"
 #include "Language.h"
+#include "Group.h"
 
 class group_commandscript : public CommandScript
 {

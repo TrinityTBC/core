@@ -1,5 +1,6 @@
 
 #include "Common.h"
+#include "DBCStores.h"
 #include "WorldPacket.h"
 #include "WorldSession.h"
 #include "World.h"
@@ -8,6 +9,7 @@
 #include "ObjectMgr.h"
 #include "Player.h"
 #include "Item.h"
+#include "Bag.h"
 #include "UpdateData.h"
 #include "ObjectAccessor.h"
 #include "SpellMgr.h"

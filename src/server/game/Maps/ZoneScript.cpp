@@ -2,6 +2,7 @@
 #include "ZoneScript.h"
 #include "Database/DatabaseEnv.h"
 #include "Map.h"
+#include "Creature.h"
 
 ObjectGuid ZoneScript::GetGuidData(ObjectGuid::LowType /*DataId*/) const
 { 

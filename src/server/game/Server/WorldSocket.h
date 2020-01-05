@@ -5,10 +5,14 @@
 #include "AuthCrypt.h"
 #include "Socket.h"
 #include "WorldPacket.h"
+#include "WorldSession.h"
 #include "MPSCQueue.h"
-#include <chrono>
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/buffer.hpp>
+#include <boost/thread/shared_mutex.hpp>
+#include <chrono>
+#include <mutex>
+#include <shared_mutex>
 
 using boost::asio::ip::tcp;
 class EncryptablePacket;

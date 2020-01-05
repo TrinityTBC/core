@@ -2,8 +2,11 @@
 #ifndef TRINITYCORE_GROUP_H
 #define TRINITYCORE_GROUP_H
 
+#include "DBCEnums.h"
+#include "DatabaseEnvFwd.h"
 #include "GroupReference.h"
 #include "GroupRefManager.h"
+#include "Loot.h"
 #include "LootMgr.h"
 #include "SharedDefines.h"
 
@@ -14,6 +17,18 @@
 #define MAXRAIDSIZE 40
 #define MAX_RAID_SUBGROUPS MAXRAIDSIZE/MAXGROUPSIZE
 #define TARGETICONCOUNT 8
+
+class Battleground;
+class Creature;
+class InstanceSave;
+class Map;
+class Player;
+class Unit;
+class WorldObject;
+class WorldPacket;
+class WorldSession;
+
+struct MapEntry;
 
 enum RollVote
 {
@@ -66,8 +81,6 @@ enum GroupType
 #endif
 };
 
-class Battleground;
-
 enum GroupUpdateFlags
 {
     GROUP_UPDATE_FLAG_NONE              = 0x00000000,       // nothing
@@ -108,8 +121,6 @@ enum GroupMemberFlags
 #define GROUP_UPDATE_FLAGS_COUNT          20
                                                                 // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,11,12,13,14,15,16,17,18,19
 static const uint8 GroupUpdateLength[GROUP_UPDATE_FLAGS_COUNT] = { 0, 2, 2, 2, 1, 2, 2, 2, 2, 4, 8, 8, 1, 2, 2, 2, 1, 2, 2, 8};
-
-class InstanceSave;
 
 class TC_GAME_API Roll : public LootValidatorRef
 {

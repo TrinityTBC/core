@@ -4,6 +4,7 @@
 class Item;
 class Player;
 class WorldPacket;
+struct AuctionHouseEntry;
 
 #define MIN_AUCTION_TIME (12*HOUR)
 #define MAX_AUCTIONS 240
@@ -53,8 +54,8 @@ struct AuctionEntry
     time_t deposit_time;
 
     // helpers
-    uint32 GetHouseId() const { return auctionHouseEntry->houseId; }
-    uint32 GetHouseFaction() const { return auctionHouseEntry->faction; }
+    uint32 GetHouseId() const;
+    uint32 GetHouseFaction() const;
     uint32 GetAuctionCut() const;
     uint32 GetAuctionOutBid() const;
     bool BuildAuctionInfo(WorldPacket & data) const;

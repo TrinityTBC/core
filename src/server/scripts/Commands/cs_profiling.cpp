@@ -1,3 +1,4 @@
+#include "ScriptMgr.h"
 #include "Chat.h"
 #include "Profiler.h"
 

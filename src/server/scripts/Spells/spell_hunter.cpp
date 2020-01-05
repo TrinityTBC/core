@@ -1,6 +1,7 @@
 #include "SpellMgr.h"
 #include "ScriptMgr.h"
 #include "SpellScript.h"
+#include "Spell.h"
 #include "Player.h"
 #include "SpellAuraEffects.h"
 

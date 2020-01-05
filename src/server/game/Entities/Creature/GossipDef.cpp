@@ -1,7 +1,8 @@
-
 #include "QuestDef.h"
 #include "GossipDef.h"
+#include "Log.h"
 #include "ObjectMgr.h"
+#include "Player.h"
 #include "Opcodes.h"
 #include "WorldPacket.h"
 #include "WorldSession.h"

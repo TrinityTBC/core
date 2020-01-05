@@ -1,7 +1,11 @@
 #ifndef REPLAY_RECORDER_H
 #define REPLAY_RECORDER_H
 
+#include "ObjectGuid.h"
 #include "SharedDefines.h"
+
+class WorldPacket;
+class WorldLocation;
 
 class ReplayRecorder
 {

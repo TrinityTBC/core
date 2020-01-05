@@ -1,5 +1,9 @@
+#include "ScriptMgr.h"
 #include "Chat.h"
+#include "Log.h"
 #include "Language.h"
+#include "WorldSession.h"
+#include "Player.h"
 #include "AccountMgr.h"
 
 class account_commandscript : public CommandScript

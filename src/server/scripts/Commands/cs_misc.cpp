@@ -14,6 +14,7 @@
 #include "SpellHistory.h"
 #include "MovementDefines.h"
 #include "Mail.h"
+#include "Log.h"
 #include "Config.h"
 #include "Pet.h"
 #include "SmartEnum.h"

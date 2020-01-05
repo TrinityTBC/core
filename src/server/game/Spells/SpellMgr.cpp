@@ -1,14 +1,16 @@
-
+#include "ScriptMgr.h"
 #include "SpellMgr.h"
 #include "ObjectMgr.h"
 #include "SpellAuraDefines.h"
 #include "DBCStores.h"
 #include "World.h"
 #include "Chat.h"
+#include "Log.h"
 #include "Spell.h"
 #include "BattlegroundMgr.h"
 #include "SpellInfo.h"
 #include "Containers.h"
+#include "Player.h"
 
 bool SpellMgr::IsPrimaryProfessionSkill(uint32 skill)
 {

@@ -6,6 +6,8 @@
 #include "ByteBuffer.h"
 #include "Socket.h"
 #include "BigNumber.h"
+#include "Socket.h"
+#include "QueryResult.h"
 #include "QueryCallbackProcessor.h"
 #include <memory>
 #include <boost/asio/ip/tcp.hpp>

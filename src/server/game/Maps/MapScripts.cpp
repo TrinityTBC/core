@@ -8,6 +8,7 @@
 #include "ObjectMgr.h"
 #include "Pet.h"
 #include "Item.h"
+#include "Log.h"
 #include "ScriptedCreature.h"
 #include "ScriptMgr.h"
 #include "SmartAI.h"

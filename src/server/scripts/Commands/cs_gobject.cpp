@@ -1,9 +1,13 @@
+#include "ObjectMgr.h"
+#include "ScriptMgr.h"
 #include "Chat.h"
 #include "Language.h"
 #include "GameEventMgr.h"
 #include "Transport.h"
 #include "PoolMgr.h"
 #include "MapManager.h"
+#include "WorldSession.h"
+#include "Player.h"
 
 // definitions are over in cs_npc.cpp
 bool HandleNpcSpawnGroup(ChatHandler* handler, char const* args);

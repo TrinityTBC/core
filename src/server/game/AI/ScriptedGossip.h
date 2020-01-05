@@ -8,6 +8,9 @@
 #ifndef SC_PLAYER_H
 #define SC_PLAYER_H
 
+#include "GossipDef.h"
+#include "QuestDef.h"
+
 // Gossip Item Text
 #define GOSSIP_TEXT_BROWSE_GOODS        "I'd like to browse your goods."
 #define GOSSIP_TEXT_TRAIN               "Train me!"
@@ -69,6 +72,8 @@ enum eTradeskill
     GOSSIP_SENDER_SEC_MAILBOX           = 9,
     GOSSIP_SENDER_SEC_STABLEMASTER      = 10
 };
+
+class Creature;
 
 void TC_GAME_API ClearGossipMenuFor(Player* player);
 // Using provided text, not from DB

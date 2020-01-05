@@ -1,4 +1,4 @@
-
+#include "Log.h"
 #include "Player.h"
 #include "Battleground.h"
 #include "BattlegroundAV.h"

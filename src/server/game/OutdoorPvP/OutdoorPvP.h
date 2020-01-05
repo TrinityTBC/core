@@ -2,10 +2,11 @@
 #ifndef OUTDOOR_PVP_H_
 #define OUTDOOR_PVP_H_
 
-#include <map>
-#include <set>
+#include "SharedDefines.h"
 #include "ZoneScript.h"
 #include "Position.h"
+#include <map>
+#include <set>
 
 #define OPVP_TRIGGER_CREATURE_ENTRY 12999
 

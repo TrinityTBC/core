@@ -2,7 +2,9 @@
 #include "ScriptMgr.h"
 #include "SpellAuraEffects.h"
 #include "SpellScript.h"
+#include "Spell.h"
 #include "Player.h"
+
 enum ShamanSpells
 {
     SPELL_SHAMAN_BIND_SIGHT                     = 6277,

@@ -1,5 +1,8 @@
+#include "Log.h"
 #include "WorldSession.h"
 #include "Player.h"
+#include "ObjectAccessor.h"
+#include "ObjectMgr.h"
 #include "SocialMgr.h"
 #include "Language.h"
 #include "AccountMgr.h"

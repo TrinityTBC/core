@@ -1,8 +1,11 @@
+#include "ScriptMgr.h"
 #include "Chat.h"
 #include "Map.h"
 #include "InstanceScript.h"
 #include "InstanceSaveMgr.h"
 #include "MapManager.h"
+#include "Player.h"
+#include "WorldSession.h"
 
 class instance_commandscript : public CommandScript
 {

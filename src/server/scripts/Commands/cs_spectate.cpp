@@ -1,6 +1,9 @@
+#include "ScriptMgr.h"
 #include "Chat.h"
 #include "Language.h"
 #include "Battleground.h"
+#include "WorldSession.h"
+#include "Player.h"
 
 class spectate_commandscript : public CommandScript
 {

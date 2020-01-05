@@ -20,6 +20,7 @@
 
 #include "Define.h"
 #include "ObjectGuid.h"
+#include "QueryCallbackProcessor.h"
 #include <unordered_map>
 #include <vector>
 

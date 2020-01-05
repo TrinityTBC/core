@@ -8,6 +8,7 @@ Current bugs :
 
 #include "Common.h"
 #include "Transport.h"
+#include "Log.h"
 #include "MapManager.h"
 #include "ObjectMgr.h"
 #include "ScriptMgr.h"
@@ -17,6 +18,7 @@ Current bugs :
 #include "GameObjectAI.h"
 #include "MapReference.h"
 #include "Player.h"
+#include "DynamicObject.h"
 #include "Cell.h"
 #include "CellImpl.h"
 #include "Totem.h"

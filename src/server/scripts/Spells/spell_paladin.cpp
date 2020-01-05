@@ -1,3 +1,4 @@
+#include "Log.h"
 #include "SpellMgr.h"
 #include "ScriptMgr.h"
 #include "SpellScript.h"

@@ -13,6 +13,7 @@
 #include "LogsDatabaseAccessor.h"
 #include "CharacterCache.h"
 #include "GuildMgr.h"
+#include "Player.h"
 
 void WorldSession::HandleGuildQueryOpcode(WorldPacket& recvPacket)
 {

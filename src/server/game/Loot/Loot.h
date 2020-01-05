@@ -10,6 +10,10 @@
 #include <vector>
 
 struct LootView;
+class LootStore;
+class Player;
+struct Loot;
+struct LootStoreItem;
 
 enum LootMethod
 {

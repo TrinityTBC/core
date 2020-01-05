@@ -515,12 +515,6 @@ constexpr typename std::underlying_type<E>::type AsUnderlyingType(E enumValue)
     return static_cast<typename std::underlying_type<E>::type>(enumValue);
 }
 
-/* Convert floating point chance to premultiplied integer chance (100.00 = 10000). */
-inline uint32 chance_u(float chance)
-{
-    return uint32(::roundf(std::max(0.0f, chance) * 100)); // Nearest 2 decimal places
-}
-
 /* An abstract die for combat rolls with premultiplied integer chances */
 template<class Side, Side Default, uint8 Sides>
 struct Die
@@ -543,7 +537,7 @@ struct Die
     void set(uint8 side, float chancef)
     {
         if (side < Sides)
-            chance[side] = chance_u(chancef);
+            chance[side] = uint32(::roundf(std::max(0.0f, chancef) * 100));
     }
     uint32 chance[Sides] = { };
 };

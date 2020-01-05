@@ -1,5 +1,12 @@
+#include "DBCStores.h"
+#include "ScriptMgr.h"
+#include "SpellMgr.h"
 #include "Chat.h"
 #include "Language.h"
+#include "ObjectAccessor.h"
+#include "WorldSession.h"
+#include "Player.h"
+
 class learn_commandscript : public CommandScript
 {
 public:

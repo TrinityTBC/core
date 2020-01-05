@@ -6,6 +6,7 @@
 #include "Log.h"
 #include "WorldPacket.h"
 #include "UpdateData.h"
+#include "Player.h"
 #include "WorldSession.h"
 
 Bag::Bag( ): Item()

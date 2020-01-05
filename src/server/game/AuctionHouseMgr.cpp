@@ -653,6 +653,9 @@ bool AuctionEntry::BuildAuctionInfo(WorldPacket & data) const
     return true;
 }
 
+uint32 AuctionEntry::GetHouseId() const { return auctionHouseEntry->houseId; }
+uint32 AuctionEntry::GetHouseFaction() const { return auctionHouseEntry->faction; }
+
 uint32 AuctionEntry::GetAuctionCut() const
 {
     uint32 cutPercent;

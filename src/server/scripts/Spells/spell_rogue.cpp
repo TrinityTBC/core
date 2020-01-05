@@ -2,6 +2,8 @@
 #include "ScriptMgr.h"
 #include "SpellScript.h"
 #include "SpellHistory.h"
+#include "SpellAuraEffects.h"
+#include "Player.h"
 
 enum RogueSpells
 {

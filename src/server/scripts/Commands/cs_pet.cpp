@@ -1,6 +1,9 @@
+#include "ScriptMgr.h"
 #include "Chat.h"
 #include "Language.h"
 #include "Pet.h"
+#include "Log.h"
+#include "Player.h"
 
 inline Pet* GetSelectedPlayerPetOrOwn(ChatHandler* handler)
 {

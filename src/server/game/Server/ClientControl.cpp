@@ -1,6 +1,10 @@
 #include "ClientControl.h"
+#include "Log.h"
 #include "MovementPacketSender.h"
 #include "UpdateTime.h"
+#include "WorldSession.h"
+#include "Player.h"
+#include "ObjectAccessor.h"
 
 ClientControl::ClientControl(WorldSession* session) :
     _owner(session),

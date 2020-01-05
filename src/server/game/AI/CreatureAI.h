@@ -105,16 +105,6 @@ class TC_GAME_API CreatureAI : public UnitAI
         // Called when the creature kills a unit
         virtual void KilledUnit(Unit *) {}
 
-        bool HealthBelowPct(uint32 pct) const
-        {
-            return me->HealthBelowPct(pct);
-        }
-
-        bool HealthAbovePct(uint32 pct) const
-        {
-            return me->HealthAbovePct(pct);
-        }
-
         // Called when the creature summon successfully other creature
         virtual void JustSummoned(Creature* ) {}
         virtual void IsSummonedBy(WorldObject* /*summoner*/) { }

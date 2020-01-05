@@ -18,6 +18,8 @@
 
 #include "Common.h"
 #include "DatabaseEnv.h"
+#include "DBCStores.h"
+#include "Log.h"
 #include "CreatureTextMgr.h"
 #include "ObjectMgr.h"
 #include "World.h"
@@ -443,7 +445,7 @@ std::string CreatureTextMgr::GetLocalizedChatString(uint32 entry, uint8 gender, 
     if (groupItr == holderItr->second.end())
         return "";
 
-    if (locale > MAX_LOCALE)
+    if (locale > MAX_LOCALES)
         locale = DEFAULT_LOCALE;
 
     std::string baseText = "";

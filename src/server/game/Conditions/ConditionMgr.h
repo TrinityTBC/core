@@ -5,10 +5,14 @@
 
 #include "Define.h"
 #include "Hash.h"
+#include <array>
 #include <list>
 #include <map>
 #include <string>
 
+class Creature;
+class Player;
+class Unit;
 class WorldObject;
 class LootTemplate;
 struct Condition;

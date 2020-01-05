@@ -16,6 +16,8 @@
 #include "PetitionMgr.h"
 #include "GuildMgr.h"
 #include "ArenaTeamMgr.h"
+#include "Item.h"
+#include "Player.h"
 
 #define CHARTER_DISPLAY_ID 16161
 

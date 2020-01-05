@@ -3,6 +3,7 @@
 #include "CellImpl.h"
 #include "GridNotifiers.h"
 #include "GridNotifiersImpl.h"
+#include "Log.h"
 #include "Item.h"
 #include "Spell.h"
 #include "ObjectMgr.h"
@@ -249,6 +250,16 @@ void ScriptedAI::DoPlaySoundToSet(Unit* unit, uint32 sound)
 Creature* ScriptedAI::DoSpawnCreature(uint32 id, float x, float y, float z, float angle, uint32 type, uint32 despawntime)
 {
     return me->SummonCreature(id,me->GetPositionX() + x,me->GetPositionY() + y,me->GetPositionZ() + z, angle, (TempSummonType)type, despawntime);
+}
+
+bool ScriptedAI::HealthBelowPct(uint32 pct) const
+{
+    return me->HealthBelowPct(pct);
+}
+
+bool ScriptedAI::HealthAbovePct(uint32 pct) const
+{
+    return me->HealthAbovePct(pct);
 }
 
 SpellInfo const* ScriptedAI::SelectSpell(Unit* target, uint32 school, uint32 mechanic, SelectSpellTarget targets, uint32 powerCostMin, uint32 powerCostMax, float rangeMin, float rangeMax, SelectEffect effects)

@@ -1,5 +1,5 @@
-
 #include "Common.h"
+#include "DBCStores.h"
 #include "WorldPacket.h"
 #include "Opcodes.h"
 #include "Log.h"

@@ -24,6 +24,8 @@
 #include "WorldSession.h"
 #include "World.h"
 #include "ObjectAccessor.h"
+#include "Unit.h"
+#include "Player.h"
 #include "CreatureAI.h"
 #include "ObjectDefines.h"
 

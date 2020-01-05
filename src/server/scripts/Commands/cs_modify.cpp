@@ -1,7 +1,13 @@
+#include "DBCStores.h"
+#include "ScriptMgr.h"
 #include "Chat.h"
+#include "Log.h"
 #include "Language.h"
 #include "ReplayPlayer.h"
 #include "ReputationMgr.h"
+#include "Unit.h"
+#include "Player.h"
+#include "WorldSession.h"
 
 class modify_commandscript : public CommandScript
 {

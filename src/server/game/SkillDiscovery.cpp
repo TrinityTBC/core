@@ -20,6 +20,7 @@
 
 #include "Database/DatabaseEnv.h"
 #include "Log.h"
+#include "Player.h"
 #include "ObjectAccessor.h"
 #include "World.h"
 #include "Util.h"

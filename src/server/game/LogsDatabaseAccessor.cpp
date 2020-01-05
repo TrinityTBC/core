@@ -1,3 +1,4 @@
+#include "Log.h"
 #include "LogsDatabaseAccessor.h"
 #include "Player.h"
 #include "WorldSession.h"

@@ -11,6 +11,7 @@
 #include "MapManager.h"
 #include "CreatureAI.h"
 #include "Util.h"
+#include "Player.h"
 #include "Pet.h"
 #include "Language.h"
 #include "PetAI.h"

@@ -1,8 +1,10 @@
+#include "ScriptMgr.h"
 #include "Chat.h"
 #include "Language.h"
 #include "Transport.h"
 #include "MapManager.h"
 #include "TicketMgr.h"
+#include "Player.h"
 
 using namespace Trinity::ChatCommands;
 class go_commandscript : public CommandScript

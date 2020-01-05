@@ -93,7 +93,7 @@ bool Position::HasInArc(float arc, const Position *obj, float border) const
     // move angle to range -pi ... +pi
     angle = Trinity::NormalizeOrientation(angle);
     if (angle > M_PI)
-        angle -= 2.0f*M_PI;
+        angle -= 2.0f*float(M_PI);
 
     float lborder = -1 * (arc / border);                        // in range -pi..0
     float rborder = (arc / border);                             // in range 0..pi

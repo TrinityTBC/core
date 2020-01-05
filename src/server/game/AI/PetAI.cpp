@@ -533,7 +533,7 @@ void PetAI::UpdateAI(uint32 diff)
             SpellCastTargets targets;
             targets.SetUnitTarget( target );
 
-            if( !i_pet.HasInArc(M_PI, target) )
+            if( !i_pet.HasInArc(float(M_PI), target) )
             {
                 i_pet.SetInFront(target);
                 if( target->GetTypeId() == TYPEID_PLAYER )

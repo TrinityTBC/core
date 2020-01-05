@@ -71,7 +71,7 @@ public:
         bool CheckProc(ProcEventInfo& eventInfo)
         {
             // check attack comes not from behind
-            if (!GetCaster()->HasInArc(M_PI, eventInfo.GetActor()) || GetCaster()->HasUnitState(UNIT_STATE_STUNNED))
+            if (!GetCaster()->HasInArc(float(M_PI), eventInfo.GetActor()) || GetCaster()->HasUnitState(UNIT_STATE_STUNNED))
                 return false;
 
             return true;

@@ -5508,14 +5508,14 @@ SpellCastResult Spell::CheckCast(bool strict, uint32* param1 /*= nullptr*/, uint
             }
 
             // Must be behind the target.
-            if ((m_spellInfo->HasAttribute(SPELL_ATTR2_BEHIND_TARGET)) && target->HasInArc(M_PI, m_caster))
+            if ((m_spellInfo->HasAttribute(SPELL_ATTR2_BEHIND_TARGET)) && target->HasInArc(float(M_PI), m_caster))
             {
                 SendInterrupted(2);
                 return SPELL_FAILED_NOT_BEHIND;
             }
 
             //Target must be facing you. (TODO : Create attribute: ...REQ_TARGET_FACING_CASTER)
-            if ((m_spellInfo->Attributes == 0x150010) && !target->HasInArc(M_PI, m_caster))
+            if ((m_spellInfo->Attributes == 0x150010) && !target->HasInArc(float(M_PI), m_caster))
             {
                 SendInterrupted(2);
                 return SPELL_FAILED_NOT_INFRONT;
@@ -5848,7 +5848,7 @@ SpellCastResult Spell::CheckCast(bool strict, uint32* param1 /*= nullptr*/, uint
                 {
                     // spell different for friends and enemies
                     // hart version required facing
-                    if(m_targets.GetUnitTarget() && !m_caster->IsFriendlyTo(m_targets.GetUnitTarget()) && !m_caster->HasInArc( M_PI, m_targets.GetUnitTarget() ))
+                    if(m_targets.GetUnitTarget() && !m_caster->IsFriendlyTo(m_targets.GetUnitTarget()) && !m_caster->HasInArc( float(M_PI), m_targets.GetUnitTarget() ))
                         return SPELL_FAILED_UNIT_NOT_INFRONT;
                 }
                 else if (m_spellInfo->Id == 19938)          // Awaken Peon

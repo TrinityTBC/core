@@ -1745,7 +1745,7 @@ bool WorldObject::CanDetectStealthOf(WorldObject const* obj, bool checkAlert, fl
     if (distance <= 0.0f) //collision
         return true;
 
-    if (!HasInArc(M_PI / 2.0f*3.0f, obj)) // can't see 90° behind
+    if (!HasInArc(float(M_PI) / 2.0f*3.0f, obj)) // can't see 90° behind
         return false;
 
     for (uint32 i = 0; i < TOTAL_STEALTH_TYPES; ++i)
@@ -1790,7 +1790,7 @@ bool WorldObject::CanDetectStealthOf(WorldObject const* obj, bool checkAlert, fl
         */
         if (!HasInArc(M_PI, obj)) //not in front (180°)
             visibleDistance = visibleDistance / 2;
-        else if (!HasInArc(M_PI / 2, obj)) //not in 90° cone in front
+        else if (!HasInArc(float(M_PI) / 2, obj)) //not in 90° cone in front
             visibleDistance = visibleDistance / 1.5;
 
         if (checkAlert)

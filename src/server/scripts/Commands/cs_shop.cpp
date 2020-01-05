@@ -179,7 +179,7 @@ public:
                     player->SaveRecallPosition();
 
                 //player->TeleportTo(tele->mapId, tele->position_x, tele->position_y, tele->position_z, tele->orientation);
-                player->TeleportTo(530, -1838.160034, 5301.790039, -12.428000, 5.951700);
+                player->TeleportTo(530, -1838.160034f, 5301.790039f, -12.428000f, 5.951700f);
             }
             else if (v[0] == "set") {
                 if (v[1] == "new_name") {

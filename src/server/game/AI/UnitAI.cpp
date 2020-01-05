@@ -15,7 +15,7 @@ void UnitAI::AttackStart(Unit *victim)
             //pet attack from behind in melee
             if(me->IsPet() && maxRange == 0.0f && victim->GetVictim() && victim->GetVictim()->GetGUID() != me->GetGUID())
             {
-                me->GetMotionMaster()->MoveChase(victim, CONTACT_DISTANCE, M_PI);
+                me->GetMotionMaster()->MoveChase(victim, CONTACT_DISTANCE, float(M_PI));
                 return;
             }
             

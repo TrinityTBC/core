@@ -4613,7 +4613,7 @@ void Player::KillPlayer()
 
     /* Sunwell/Kalecgos: death in spectral realm */
     if (GetMapId() == 580 && GetPositionZ() < -65.f)
-        TeleportTo(GetMapId(), GetPositionX(), GetPositionY(), 53.079, GetOrientation());
+        TeleportTo(GetMapId(), GetPositionX(), GetPositionY(), 53.079f, GetOrientation());
 
     // don't create corpse at this moment, player might be falling
 
@@ -15698,9 +15698,9 @@ bool Player::LoadFromDB( uint32 guid, SQLQueryHolder *holder )
     // After InitStatsForLevel(), or PLAYER_NEXT_LEVEL_XP is 0 and rest bonus too
     m_rest_bonus = fields[LOAD_DATA_REST_BONUS].GetFloat();
     //speed collect rest bonus in offline, in logout, far from tavern, city (section/in hour)
-    float bubble0 = 0.031;
+    float bubble0 = 0.031f;
     //speed collect rest bonus in offline, in logout, in tavern, city (section/in hour)
-    float bubble1 = 0.125;
+    float bubble1 = 0.125f;
 
     if((int32)fields[LOAD_DATA_LOGOUT_TIME].GetUInt32() > 0)
     {
@@ -21159,7 +21159,7 @@ void Player::DoBoostPack(BoostPackLevel lvl, BoostPackType type)
     uint32 area_id;
     if (Player::TeamForRace(GetRace()) == ALLIANCE)
     {
-        loc = WorldLocation(0, -8866.468750, 671.831238, 97.903374, 2.154216);
+        loc = WorldLocation(0, -8866.468750f, 671.831238f, 97.903374f, 2.154216f);
         area_id = 1519; // Stormwind
 
         m_taxi.SetTaximaskNode(TAXI_STORMWIND);
@@ -21179,7 +21179,7 @@ void Player::DoBoostPack(BoostPackLevel lvl, BoostPackType type)
     }
     else // if (Player::TeamForRace(GetRace()) == HORDE)
     {
-        loc = WorldLocation(1, 1632.54, -4440.77, 15.4584, 1.0637);
+        loc = WorldLocation(1, 1632.54f, -4440.77f, 15.4584f, 1.0637f);
         area_id = 1637; // Orgrimmar
 
         m_taxi.SetTaximaskNode(TAXI_ORGRIMMAR);

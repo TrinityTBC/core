@@ -156,7 +156,7 @@ public:
                 float bonus = 0.8068f;
 #else
                 //+10% from +spd bonus, to confirm
-                float bonus = 0.1;
+                float bonus = 0.1f;
 #endif
 
                 bonus *= caster->SpellBaseHealingBonusDone(GetSpellInfo()->GetSchoolMask());
@@ -220,7 +220,7 @@ public:
                 float bonus = 0.8068f;
 #else
                 //+10% from +spd bonus, to confirm
-                float bonus = 0.1;
+                float bonus = 0.1f;
 #endif
 
                 bonus *= caster->SpellBaseHealingBonusDone(GetSpellInfo()->GetSchoolMask());

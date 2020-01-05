@@ -1260,7 +1260,7 @@ void Spell::SelectImplicitConeTargets(SpellEffIndex effIndex, SpellImplicitTarge
     SpellTargetObjectTypes objectType = targetType.GetObjectType();
     SpellTargetCheckTypes selectionType = targetType.GetCheckType();
     ConditionContainer* condList = m_spellInfo->Effects[effIndex].ImplicitTargetConditions;
-    float coneAngle = M_PI / 2;
+    float coneAngle = float(M_PI) / 2;
     float radius = m_spellInfo->Effects[effIndex].CalcRadius(m_caster) * m_spellValue->RadiusMod;
 
     if (uint32 containerTypeMask = GetSearcherTypeMask(objectType, condList))
@@ -2046,9 +2046,9 @@ void Spell::SearchChainTargets(std::list<WorldObject*>& targets, uint32 chainTar
     {
         float allowedArc = 0.0f;
         if (m_spellInfo->DmgClass == SPELL_DAMAGE_CLASS_MELEE)
-            allowedArc = (M_PI*7.0f) / 18.0f; // 70 degrees
+            allowedArc = (float(M_PI)*7.0f) / 18.0f; // 70 degrees
         else if (m_spellInfo->DmgClass == SPELL_DAMAGE_CLASS_RANGED)
-            allowedArc = M_PI*0.5f; // 90 degrees
+            allowedArc = float(M_PI)*0.5f; // 90 degrees
 
         for (auto itr = tempTargets.begin(); itr != tempTargets.end();)
         {
@@ -7028,7 +7028,7 @@ SpellCastResult Spell::CheckPower()
     // health as power used - need check health amount
     if(m_spellInfo->PowerType == POWER_HEALTH)
     {
-        if(caster->GetHealth() <= m_powerCost)
+        if(int32(caster->GetHealth()) <= m_powerCost)
             return SPELL_FAILED_CASTER_AURASTATE;
         return SPELL_CAST_OK;
     }
@@ -7040,7 +7040,7 @@ SpellCastResult Spell::CheckPower()
     }
     // Check power amount
     Powers powerType = m_spellInfo->PowerType;
-    if(caster->GetPower(powerType) < m_powerCost)
+    if(int32(caster->GetPower(powerType)) < m_powerCost)
         return SPELL_FAILED_NO_POWER;
     
 
@@ -8346,7 +8346,7 @@ namespace Trinity
         }
         else if (_spellInfo->HasAttribute(SPELL_ATTR0_CU_CONE_180))
         {
-            if (!_caster->isInFront(target, M_PI))
+            if (!_caster->isInFront(target, float(M_PI)))
                 return false;
         }
         else

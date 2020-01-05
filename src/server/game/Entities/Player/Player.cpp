@@ -22963,7 +22963,7 @@ void Player::GetBetaZoneCoord(uint32& map, float& x, float& y, float& z, float& 
     if (!set) //default values
     {
         TC_LOG_ERROR("entities.player", "GetBetaZoneCoord(...) : DB values not found, using default values");
-        map = 0; x = -11785; y = -3171; z = -29; o = 3.7;
+        map = 0; x = -11785.f; y = -3171.f; z = -29.f; o = 3.7f;
     }
 }
 
@@ -22988,9 +22988,9 @@ void Player::GetArenaZoneCoord(bool secondary, uint32& map, float& x, float& y, 
     {
         TC_LOG_ERROR("entities.player","GetArenaZoneCoord(...) : DB values not found, using default values");
         if(!secondary) { //hyjal area
-           map = 1;x = 4717.020020;y = -1973.829956;z = 1087.079956;o = 0.068669;
+           map = 1;x = 4717.020020f;y = -1973.829956f;z = 1087.079956f;o = 0.068669f;
         } else { //ZG Area
-           map = 0;x = -12248.573242;y = -1679.274902;z = 130.267273;o = 3.024384;
+           map = 0;x = -12248.573242f;y = -1679.274902f;z = 130.267273f;o = 3.024384f;
         }
     }
 }

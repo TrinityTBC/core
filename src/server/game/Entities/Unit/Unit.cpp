@@ -1493,7 +1493,7 @@ void Unit::DealMeleeDamage(CalcDamageInfo* damageInfo, bool durabilityLoss)
 
     // If this is a creature and it attacks from behind it has a probability to daze it's victim
     if( (damageInfo->HitOutCome == MELEE_HIT_CRIT || damageInfo->HitOutCome == MELEE_HIT_CRUSHING || damageInfo->HitOutCome == MELEE_HIT_NORMAL || damageInfo->HitOutCome == MELEE_HIT_GLANCING) &&
-        GetTypeId() != TYPEID_PLAYER && !(this->ToCreature())->GetCharmerOrOwnerGUID() && !pVictim->HasInArc(M_PI, this)
+        GetTypeId() != TYPEID_PLAYER && !(this->ToCreature())->GetCharmerOrOwnerGUID() && !pVictim->HasInArc(float(M_PI), this)
         && (pVictim->GetTypeId() == TYPEID_PLAYER || !(pVictim->ToCreature())->IsWorldBoss()))
     {
         // -probability is between 0% and 40%
@@ -2655,7 +2655,7 @@ bool Unit::IsSpellBlocked(Unit* victim, SpellInfo const *spellProto, WeaponAttac
     if (victim->IsNonMeleeSpellCast(false) || victim->HasUnitState(UNIT_STATE_CONTROLLED))
         return false;
 
-    if (victim->HasInArc(M_PI,this)
+    if (victim->HasInArc(float(M_PI),this)
 #ifdef LICH_KING
         || victim->HasAuraType(SPELL_AURA_IGNORE_HIT_DIRECTION)
 #endif

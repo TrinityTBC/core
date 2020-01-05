@@ -1788,7 +1788,7 @@ bool WorldObject::CanDetectStealthOf(WorldObject const* obj, bool checkAlert, fl
         - else /2 range if behind (somewhere between 180° and 270°)
         - else can't see if 90° back (already handled at this point)
         */
-        if (!HasInArc(M_PI, obj)) //not in front (180°)
+        if (!HasInArc(float(M_PI), obj)) //not in front (180°)
             visibleDistance = visibleDistance / 2;
         else if (!HasInArc(float(M_PI) / 2, obj)) //not in 90° cone in front
             visibleDistance = visibleDistance / 1.5;

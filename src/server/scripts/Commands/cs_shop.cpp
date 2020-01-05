@@ -690,12 +690,12 @@ public:
         if (factionChange) {
             if (Player::TeamForRace(t_race) == ALLIANCE) 
             {
-                loc = WorldLocation(0, -8866.468750, 671.831238, 97.903374, 2.154216);
+                loc = WorldLocation(0, -8866.468750f, 671.831238f, 97.903374f, 2.154216f);
                 area_id = 1519; // Stormwind
             }
             else 
             {
-                loc = WorldLocation(1, 1632.54, -4440.77, 15.4584, 1.0637);
+                loc = WorldLocation(1, 1632.54f, -4440.77f, 15.4584f, 1.0637f);
                 area_id = 1637; // Orgrimmar
             }
         }

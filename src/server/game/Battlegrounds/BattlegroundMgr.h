@@ -166,7 +166,7 @@ class TC_GAME_API BattlegroundMgr
         std::vector<uint64> m_QueueUpdateScheduler;
         uint32 m_NextRatedArenaUpdate;
         //bool   m_AutoDistributePoints;
-        uint64 m_NextAutoDistributionTime;
+        time_t m_NextAutoDistributionTime;
         uint32 m_AutoDistributionTimeChecker;
         uint32 m_UpdateTimer;
         bool   m_ArenaTesting;

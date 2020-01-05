@@ -342,7 +342,7 @@ public:
 
         // check security
         uint32 account_id = 0;
-        uint32 security = 0;
+        AccountTypes security = SEC_PLAYER;
 
         if (chr)
         {

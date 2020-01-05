@@ -178,7 +178,7 @@ void WardenWin::RequestData()
     WardenData *wd;
     SendDataId.clear();
 
-    for (int i = 0; i < sWorld->getConfig(CONFIG_WARDEN_NUM_CHECKS); ++i)                             // for now include 3 MEM_CHECK's
+    for (uint32 i = 0; i < sWorld->getConfig(CONFIG_WARDEN_NUM_CHECKS); ++i)                             // for now include 3 MEM_CHECK's
     {   
         if (MemCheck.empty())
             break;

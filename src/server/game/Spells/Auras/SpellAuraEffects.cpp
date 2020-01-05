@@ -1333,7 +1333,7 @@ void AuraEffect::HandlePeriodicManaLeechAuraTick(Unit* m_target, Unit* caster, u
     if (m_spellInfo->ManaCostPercentage)
     {
         // max value
-        int32 maxmana = CalculatePct(caster->GetMaxPower(powerType), drainAmount * 2.0f);
+        uint32 maxmana = CalculatePct(caster->GetMaxPower(powerType), drainAmount * 2.0f);
         ApplyPct(drainAmount, m_target->GetMaxPower(powerType));
         if (drainAmount > maxmana)
             drainAmount = maxmana;
@@ -2979,7 +2979,7 @@ void AuraEffect::HandleAuraDummy(AuraApplication const* aurApp, uint8 mode, bool
                         amount = 3;
                     }
 
-                    for (int i = 0; i < amount; i++) {
+                    for (uint32 i = 0; i < amount; i++) {
                         caster->GetRandomPoint(caster, 10.0f, x, y, z);
                         if (Creature* summoned = caster->SummonCreature(entry, x, y, z, 0, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 120000))
                             summoned->AI()->AttackStart(caster);
@@ -3062,7 +3062,7 @@ void AuraEffect::HandleAuraDummy(AuraApplication const* aurApp, uint8 mode, bool
                 const SpellInfo *spell = sSpellMgr->GetSpellInfo(spellId);
                 if (!spell)
                     return;
-                for (int i = 0; i < spell->StackAmount; ++i)
+                for (uint32 i = 0; i < spell->StackAmount; ++i)
                     caster->CastSpell(m_target, spell->Id, GetCasterGUID());
                 return;
             }
@@ -3077,7 +3077,7 @@ void AuraEffect::HandleAuraDummy(AuraApplication const* aurApp, uint8 mode, bool
                 const SpellInfo *spell = sSpellMgr->GetSpellInfo(spellId);
                 if (!spell)
                     return;
-                for (int i = 0; i < spell->StackAmount; ++i)
+                for (uint32 i = 0; i < spell->StackAmount; ++i)
                     caster->CastSpell(m_target, spell->Id, GetCasterGUID());
                 return;
             }
@@ -3882,7 +3882,7 @@ void AuraEffect::HandleModPossess(AuraApplication const* aurApp, uint8 mode, boo
     Unit* m_target = aurApp->GetTarget();
     if (apply)
     {
-        if (m_target->GetLevel() > _amount)
+        if (int32(m_target->GetLevel()) > _amount)
             return;
 
         if (m_target == caster)
@@ -4815,7 +4815,7 @@ void AuraEffect::HandlePeriodicDamage(AuraApplication const* aurApp, uint8 mode,
     {
         if (m_spellInfo->Id == 41171) 
         {
-            if (m_target && m_target->GetHealth() <= _amount)
+            if (m_target && int32(m_target->GetHealth()) <= _amount)
                 m_target->CastSpell(m_target, 41174, true);
         }
         // Curse of Boundless Agony (Sunwell - Kalecgos)

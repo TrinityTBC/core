@@ -222,7 +222,7 @@ void SimpleAI::UpdateAI(uint32 diff)
         if (Spell_Timer[i] < diff)
         {
             //Check if this is a percentage based
-            if (Spell[i].First_Cast < 0 && Spell[i].First_Cast > -100 && me->GetHealth()*100 / me->GetMaxHealth() > -Spell[i].First_Cast)
+            if (Spell[i].First_Cast < 0 && Spell[i].First_Cast > -100 && int32(me->GetHealth()*100 / me->GetMaxHealth()) > -Spell[i].First_Cast)
                 continue;
 
             //Check Current spell

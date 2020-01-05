@@ -2067,7 +2067,7 @@ static const SpellPartialResistDistribution SPELL_PARTIAL_RESIST_DISTRIBUTION = 
                         case 5062:                          // Rank 4
                         case 5061:                          // Rank 5
                         {
-                            if (damageInfo.GetDamage() >= absorbAurEff->GetAmount())
+                            if (int32(damageInfo.GetDamage()) >= absorbAurEff->GetAmount())
                                 reflectDamage = absorbAurEff->GetAmount() * k->GetAmount() / 100;
                             else
                                 reflectDamage = k->GetAmount() * damageInfo.GetDamage() / 100;
@@ -2084,7 +2084,7 @@ static const SpellPartialResistDistribution SPELL_PARTIAL_RESIST_DISTRIBUTION = 
                 // Reflective Shield, NPC
                 else if (absorbAurEff->GetSpellInfo()->Id == 41475)
                 {
-                    if (damageInfo.GetDamage() >= absorbAurEff->GetAmount())
+                    if (int32(damageInfo.GetDamage()) >= absorbAurEff->GetAmount())
                         reflectDamage = absorbAurEff->GetAmount() * 0.5f;
                     else
                         reflectDamage = damageInfo.GetDamage() * 0.5f;
@@ -8401,9 +8401,9 @@ void Unit::SetLevel(uint32 lvl)
 
 void Unit::SetHealth(uint32 val)
 {
-    //sun: little addition to handle > max int32 values
-    if (val > std::numeric_limits<int32>::max())
-        val = std::numeric_limits<int32>::max();
+    //sun: little addition to handle > max uint32 values
+    if (val > std::numeric_limits<uint32>::max())
+        val = std::numeric_limits<uint32>::max();
 
     if(GetDeathState() == JUST_DIED || GetDeathState() == CORPSE)
         val = 0;
@@ -8464,9 +8464,9 @@ uint32 Unit::CountPctFromCurHealth(int32 pct) const
 
 void Unit::SetMaxHealth(uint32 val)
 {
-    //sun: little addition to handle > max int32 values
-    if (val > std::numeric_limits<int32>::max())
-        val = std::numeric_limits<int32>::max();
+    //sun: little addition to handle > max uint32 values
+    if (val > std::numeric_limits<uint32>::max())
+        val = std::numeric_limits<uint32>::max();
 
     uint32 health = GetHealth();
     SetUInt32Value(UNIT_FIELD_MAXHEALTH, val);

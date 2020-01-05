@@ -7744,7 +7744,7 @@ bool ObjectMgr::LoadTrinityStrings(DatabaseWorkerPool<WorldDatabaseConnection>& 
     // cleanup affected map part for reloading case
     for(auto itr = _trinityStringStore.begin(); itr != _trinityStringStore.end();)
     {
-        if(itr->first >= min_value && itr->first <= max_value)
+        if(int32(itr->first) >= min_value && int32(itr->first) <= max_value)
         {
             auto itr2 = itr;
             ++itr;

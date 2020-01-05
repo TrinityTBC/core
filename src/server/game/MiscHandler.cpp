@@ -210,9 +210,9 @@ void WorldSession::HandleWhoOpcode( WorldPacket & recvData )
         levelMax = STRONG_MAX_LEVEL;
 
     uint32 team = _player->GetTeam();
-    uint32 security = GetSecurity();
+    auto security = GetSecurity();
     bool allowTwoSideWhoList = sWorld->getConfig(CONFIG_ALLOW_TWO_SIDE_WHO_LIST);
-    uint32 gmLevelInWhoList  = sWorld->getConfig(CONFIG_GM_LEVEL_IN_WHO_LIST);
+    AccountTypes gmLevelInWhoList  = AccountTypes(sWorld->getConfig(CONFIG_GM_LEVEL_IN_WHO_LIST));
     uint32 displaycount = 0;
 
     WorldPacket data( SMSG_WHO, 500 );                       // guess size
@@ -347,7 +347,7 @@ void WorldSession::HandleLogoutRequestOpcode( WorldPacket & /*recvData*/ )
     bool canLogoutInCombat = GetPlayer()->HasFlag(PLAYER_FLAGS, PLAYER_FLAGS_RESTING);
 
     bool instantLogout = canLogoutInCombat ||
-        GetPlayer()->IsInFlight() || GetSecurity() >= sWorld->getConfig(CONFIG_INSTANT_LOGOUT);
+        GetPlayer()->IsInFlight() || GetSecurity() >= AccountTypes(sWorld->getConfig(CONFIG_INSTANT_LOGOUT));
 
     uint8 reason = 0; //reason but... seems at least on BC, they all show "You can't logout now."
     if (GetPlayer()->IsInCombat() && !canLogoutInCombat)

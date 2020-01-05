@@ -596,7 +596,7 @@ void World::LoadConfigSettings(bool reload)
     m_configs[CONFIG_ANTICHEAT_MOVEMENT_GM] = sConfigMgr->GetBoolDefault("Anticheat.Movement.Gm", false);
     m_configs[CONFIG_ANTICHEAT_MOVEMENT_KILL] = sConfigMgr->GetBoolDefault("Anticheat.Movement.Kill", false);
     m_configs[CONFIG_ANTICHEAT_MOVEMENT_WARN_GM] = sConfigMgr->GetBoolDefault("Anticheat.Movement.Warn", true);
-    m_configs[CONFIG_ANTICHEAT_MOVEMENT_WARN_GM_COOLDOWN] = sConfigMgr->GetBoolDefault("Anticheat.Movement.Warn.Cooldown", 120);
+    m_configs[CONFIG_ANTICHEAT_MOVEMENT_WARN_GM_COOLDOWN] = sConfigMgr->GetIntDefault("Anticheat.Movement.Warn.Cooldown", 120);
     m_configs[CONFIG_PENDING_MOVE_CHANGES_TIMEOUT] = sConfigMgr->GetIntDefault("Anticheat.Movement.PendingMoveChangesTimeoutTime", 5000);
 
     m_wardenBanTime                         = sConfigMgr->GetStringDefault("Warden.BanTime","180d");
@@ -728,7 +728,7 @@ void World::LoadConfigSettings(bool reload)
         TC_LOG_ERROR("server.loading","StartPlayerMoney (%i) must be in range 0..%u. Set to %u.",m_configs[CONFIG_START_PLAYER_MONEY],MAX_MONEY_AMOUNT,0);
         m_configs[CONFIG_START_PLAYER_MONEY] = 0;
     }
-    else if(m_configs[CONFIG_START_PLAYER_MONEY] > MAX_MONEY_AMOUNT)
+    else if(uint32(m_configs[CONFIG_START_PLAYER_MONEY]) > MAX_MONEY_AMOUNT)
     {
         TC_LOG_ERROR("server.loading","StartPlayerMoney (%i) must be in range 0..%u. Set to %u.",
             m_configs[CONFIG_START_PLAYER_MONEY],MAX_MONEY_AMOUNT,MAX_MONEY_AMOUNT);
@@ -2964,7 +2964,7 @@ void World::ResetDailyQuests()
     sQuestPoolMgr->ChangeDailyQuests();
 }
 
-void World::SetPlayerLimit(int32 limit)
+void World::SetPlayerLimit(uint32 limit)
 {
     m_playerLimit = limit;
 }

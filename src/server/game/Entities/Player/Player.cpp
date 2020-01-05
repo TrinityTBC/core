@@ -167,7 +167,7 @@ static uint32 constexpr copseReclaimDelay[MAX_DEATH_COUNT] = { 30, 60, 120 };
 
 //== Player ====================================================
 
-uint32 const MAX_MONEY_AMOUNT = static_cast<uint32>(std::numeric_limits<int32>::max());
+uint32 const MAX_MONEY_AMOUNT = std::numeric_limits<uint32>::max();
 
 Player::Player(WorldSession *session) :
     Unit(true),
@@ -6557,12 +6557,12 @@ void Player::UpdateArenaFields()
 void Player::UpdateHonorFields()
 {
     /// called when rewarding honor and at each save
-    uint64 now = WorldGameTime::GetGameTime();
-    uint64 today = uint64(WorldGameTime::GetGameTime() / DAY) * DAY;
+    time_t now = WorldGameTime::GetGameTime();
+    time_t today = WorldGameTime::GetGameTime() / DAY * DAY;
 
     if(m_lastHonorUpdateTime < today)
     {
-        uint64 yesterday = today - DAY;
+        time_t yesterday = today - DAY;
 
         uint16 kills_today = PAIR32_LOPART(GetUInt32Value(PLAYER_FIELD_KILLS));
 
@@ -10272,7 +10272,7 @@ InventoryResult Player::CanStoreItems(std::vector<Item*> const& items, uint32 co
     }
 
     // check free space for all items
-    for (int k=0;k<count;k++)
+    for (uint32 k=0;k<count;k++)
     {
         Item * pItem = items[k];
 
@@ -23870,7 +23870,7 @@ bool Player::UndermapRecall()
         return false;
     }
 
-    NearTeleportTo(*_lastSafePosition, TELE_TO_NOT_LEAVE_COMBAT | TELE_TO_NOT_UNSUMMON_PET);
+    NearTeleportTo(*_lastSafePosition);
     _lastSafePosition.reset();
     return true;
 }

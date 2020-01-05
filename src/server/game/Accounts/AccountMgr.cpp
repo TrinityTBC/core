@@ -1,5 +1,6 @@
 
 #include "AccountMgr.h"
+#include "Common.h"
 #include "Config.h"
 #include "DatabaseEnv.h"
 #include "Log.h"
@@ -255,23 +256,23 @@ uint32 AccountMgr::GetId(std::string const& username)
     return (result) ? (*result)[0].GetUInt32() : 0;
 }
 
-uint32 AccountMgr::GetSecurity(uint32 accountId)
+AccountTypes AccountMgr::GetSecurity(uint32 accountId)
 {
     PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_GET_ACCOUNT_ACCESS_GMLEVEL);
     stmt->setUInt32(0, accountId);
     PreparedQueryResult result = LoginDatabase.Query(stmt);
 
-    return (result) ? (*result)[0].GetUInt8() : uint32(SEC_PLAYER);
+    return (result) ? AccountTypes((*result)[0].GetUInt8()) : SEC_PLAYER;
 }
 
-uint32 AccountMgr::GetSecurity(uint32 accountId, int32 realmId)
+AccountTypes AccountMgr::GetSecurity(uint32 accountId, int32 realmId)
 {
     PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_GET_GMLEVEL_BY_REALMID);
     stmt->setUInt32(0, accountId);
     stmt->setInt32(1, realmId);
     PreparedQueryResult result = LoginDatabase.Query(stmt);
 
-    return (result) ? (*result)[0].GetUInt8() : uint32(SEC_PLAYER);
+    return (result) ? AccountTypes((*result)[0].GetUInt8()) : SEC_PLAYER;
 }
 
 bool AccountMgr::GetName(uint32 accountId, std::string& name)

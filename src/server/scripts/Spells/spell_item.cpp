@@ -572,7 +572,7 @@ class spell_item_lightning_capacitor_aura : public AuraScript
         if (Aura* aura = caster->GetAura(SPELL_ELECTRICAL_CHARGE))
         {
             //Release if enough charges
-            if (aura->GetStackAmount() >= releaseCount - 1) //if we already got 2 charges, this is the third and we should release
+            if (aura->GetStackAmount() >= int32(releaseCount - 1)) //if we already got 2 charges, this is the third and we should release
             {
                 caster->CastSpell(target, SPELL_LIGHTNING_BOLT, true);
                 caster->RemoveAurasDueToSpell(SPELL_ELECTRICAL_CHARGE);

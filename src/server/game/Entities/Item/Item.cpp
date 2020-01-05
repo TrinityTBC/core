@@ -295,13 +295,13 @@ void Item::SaveToDB(SQLTransaction& trans)
         case ITEM_CHANGED:
         {
 #ifdef TRINITY_DEBUG
-            int32 smallIntMax = 99999;
-            int32 mediumIntMax = 99999999;
+            uint32 smallIntMax = 99999;
+            uint32 mediumIntMax = 99999999;
 
             ASSERT(GetEntry() < mediumIntMax, "too high %u", GetEntry());
             ASSERT(GetCount() < smallIntMax, "too high %u", GetCount());
             for (uint8 i = 0; i < MAX_ITEM_PROTO_SPELLS; ++i)
-                ASSERT(GetInt32Value(ITEM_FIELD_SPELL_CHARGES + i) < smallIntMax/2, "too high %u", GetInt32Value(ITEM_FIELD_SPELL_CHARGES + i));
+                ASSERT(GetInt32Value(ITEM_FIELD_SPELL_CHARGES + i) < int32(smallIntMax/2), "too high %u", GetInt32Value(ITEM_FIELD_SPELL_CHARGES + i));
 
             for (uint8 i = 0; i < MAX_ENCHANTMENT_SLOT; i++)
             {
@@ -310,7 +310,7 @@ void Item::SaveToDB(SQLTransaction& trans)
                 ASSERT(GetEnchantmentCharges(EnchantmentSlot(i)) < smallIntMax, "too high %u", GetEnchantmentCharges(EnchantmentSlot(i)));
             }
             ASSERT(GetItemSuffixFactor() < smallIntMax, "too high %u", GetItemSuffixFactor());
-            ASSERT(std::abs(GetItemRandomPropertyId()) < smallIntMax, "too high %u", GetItemRandomPropertyId());
+            ASSERT(std::abs(GetItemRandomPropertyId()) < int32(smallIntMax), "too high %u", GetItemRandomPropertyId());
             ASSERT(GetUInt32Value(ITEM_FIELD_DURABILITY) < smallIntMax, "too high %u", GetUInt32Value(ITEM_FIELD_DURABILITY));
 #endif
             uint8 index = 0; 

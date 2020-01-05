@@ -176,11 +176,11 @@ Battleground::~Battleground()
     // remove objects and creatures
     // (this is done automatically in mapmanager update, when the instance is reset after the reset time)
     uint32 size = BgCreatures.size();
-    for(int i = 0; i < size; ++i)
+    for(uint32 i = 0; i < size; ++i)
         DelCreature(i);
 
     size = BgObjects.size();
-    for(int i = 0; i < size; ++i)
+    for(uint32 i = 0; i < size; ++i)
         DelObject(i);
 
 

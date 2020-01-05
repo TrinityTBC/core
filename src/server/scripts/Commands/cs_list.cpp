@@ -244,7 +244,7 @@ public:
 
             uint32 resultCount = uint32(result2->GetRowCount());
 
-            if (count > resultCount)
+            if (uint32(count) > resultCount)
                 count -= resultCount;
             else if (count)
                 count = 0;
@@ -317,7 +317,7 @@ public:
 
             uint32 resultCount = uint32(result2->GetRowCount());
 
-            if (count > resultCount)
+            if (uint32(count) > resultCount)
                 count -= resultCount;
             else if (count)
                 count = 0;

@@ -130,7 +130,7 @@ class TC_GAME_API Channel
     PlayerList  players;
     typedef     std::set<uint64> BannedList;
     BannedList  banned;
-    typedef     std::map<uint64, uint64> GMBannedList;      // Banned by .chanban, <AccountGUID, Expiration date>
+    typedef     std::map<uint64, time_t> GMBannedList;      // Banned by .chanban, <AccountGUID, Expiration date>
     GMBannedList gmbanned;
     bool        m_announce;
     bool        m_moderate;
@@ -270,7 +270,7 @@ class TC_GAME_API Channel
         void DeVoice(ObjectGuid guid1, ObjectGuid guid2);
         void JoinNotify(ObjectGuid guid);                                           // invisible notify
         void LeaveNotify(ObjectGuid guid);                                          // invisible notify
-        void AddNewGMBan(uint64 accountid, uint64 expire) { gmbanned[accountid] = expire; }
+        void AddNewGMBan(uint64 accountid, time_t expire) { gmbanned[accountid] = expire; }
         void RemoveGMBan(uint64 accountid);
         void SendToAll(WorldPacket *data, ObjectGuid p = ObjectGuid::Empty);
 };

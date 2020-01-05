@@ -74,7 +74,7 @@ public:
 
             //if target has gm mode enabled or has a listable gm account level
             //and target is visible to player (this check disabled if no session)
-            if ((itr->second->IsGameMaster() || (itr_sec > SEC_PLAYER && itr_sec <= sWorld->getConfig(CONFIG_GM_LEVEL_IN_GM_LIST))) 
+            if ((itr->second->IsGameMaster() || (itr_sec > SEC_PLAYER && itr_sec <= AccountTypes(sWorld->getConfig(CONFIG_GM_LEVEL_IN_GM_LIST)))) 
                 && (!handler->GetSession() || itr->second->IsVisibleGloballyFor(handler->GetSession()->GetPlayer())))
             {
                 if(first)

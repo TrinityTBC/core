@@ -271,7 +271,7 @@ void SocialMgr::BroadcastToFriendListers(Player *player, WorldPacket *packet)
         return;
 
     uint32 team     = player->GetTeam();
-    uint32 security = player->GetSession()->GetSecurity();
+    AccountTypes security = player->GetSession()->GetSecurity();
     ObjectGuid::LowType guid     = player->GetGUID().GetCounter();
     AccountTypes gmLevelInWhoList = AccountTypes(sWorld->getConfig(CONFIG_GM_LEVEL_IN_WHO_LIST));
     bool allowTwoSideWhoList = sWorld->getConfig(CONFIG_ALLOW_TWO_SIDE_WHO_LIST);

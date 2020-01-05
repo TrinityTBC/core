@@ -3205,7 +3205,7 @@ SpellMissInfo WorldObject::MagicSpellHitResult(Unit *pVictim, SpellInfo const *s
 
     // PvP - PvE spell misschances per leveldif > 2
     int32 lchance = pVictim->GetTypeId() == TYPEID_PLAYER ? 7 : 11;
-    int32 myLevel = int32(GetLevelForTarget(pVictim));
+    uint32 myLevel = uint32(GetLevelForTarget(pVictim));
     // some spells using items should take another caster level into account ("Unreliable against targets higher than...")
     if(castItem) 
     {
@@ -3295,7 +3295,7 @@ SpellMissInfo WorldObject::MagicSpellHitResult(Unit *pVictim, SpellInfo const *s
         HitChance = 100;
 
     // Final Result //
-    bool resist = rand > HitChance;
+    bool resist = int32(rand) > HitChance;
     if (resist)
         return SPELL_MISS_RESIST;
 

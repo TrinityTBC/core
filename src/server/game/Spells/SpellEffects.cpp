@@ -413,7 +413,7 @@ void Spell::EffectSchoolDMG(uint32 effect_idx)
                 if (!unitTarget)
                     return;
 
-                if (m_damage > unitTarget->GetHealth()) {
+                if (m_damage > int32(unitTarget->GetHealth())) {
                     if (Creature* archimonde = unitTarget->FindNearestCreature(17968, 100.0f, true))
                         archimonde->AI()->KilledUnit(unitTarget);
                 }
@@ -630,7 +630,7 @@ void Spell::EffectSchoolDMG(uint32 effect_idx)
                             if (doses > combo)
                                 doses = combo;
 
-                            for (int j = 0; j < doses; j++)
+                            for (uint32 j = 0; j < doses; j++)
                                 unitTarget->RemoveSingleAuraFromStack(aura->GetId());
 
                             break;
@@ -2357,7 +2357,7 @@ void Spell::EffectTriggerSpell(uint32 effIndex)
                 if (!spell)
                     return;
 
-                for (int idx = 0; idx < spell->StackAmount; ++idx)
+                for (uint32 idx = 0; idx < spell->StackAmount; ++idx)
                 {
                     CastSpellExtraArgs args;
                     args.TriggerFlags = TRIGGERED_FULL_MASK;
@@ -2374,7 +2374,7 @@ void Spell::EffectTriggerSpell(uint32 effIndex)
                 if (!spell)
                     return;
 
-                for (int idx = 0; idx < spell->StackAmount; ++idx)
+                for (uint32 idx = 0; idx < spell->StackAmount; ++idx)
                 {
                     CastSpellExtraArgs args;
                     args.TriggerFlags = TRIGGERED_FULL_MASK;
@@ -2890,7 +2890,7 @@ void Spell::EffectSendEvent(uint32 effIndex)
             m_caster->CastSpell(m_caster, 39914, TRIGGERED_NONE);
         }
         else                   // Summon Soulgrinder
-            m_caster->SummonCreature(23019, 3535.181641, 5590.692871, 0.183175, 3.915725, TEMPSUMMON_DEAD_DESPAWN, 0);
+            m_caster->SummonCreature(23019, 3535.181641f, 5590.692871f, 0.183175f, 3.915725f, TEMPSUMMON_DEAD_DESPAWN, 0);
     }
     else if (m_spellInfo->Id == 24706 && m_caster->ToPlayer())
         m_caster->ToPlayer()->KilledMonsterCredit(15415, ObjectGuid::Empty);
@@ -2926,7 +2926,7 @@ void Spell::EffectPowerBurn(uint32 i)
     if(damage < 0)
         return;
 
-    int32 curPower = int32(unitTarget->GetPower(powertype));
+    uint32 curPower = unitTarget->GetPower(powertype);
 
     // resilience reduce mana draining effect at spell crit damage reduction (added in 2.4)
     uint32 power = damage;

@@ -139,7 +139,7 @@ class TC_GAME_API Pet : public Guardian
         uint32  m_happinessTimer;
         uint32  m_loyaltyTimer;
         PetType m_petType;
-        int32   m_duration;                                 // time until unsummon (used mostly for summoned guardians and not used for controlled pets)
+        uint32  m_duration;                                 // time until unsummon (used mostly for summoned guardians and not used for controlled pets)
         int32   m_loyaltyPoints;
         int32   m_bonusdamage;
         uint64  m_auraUpdateMask;

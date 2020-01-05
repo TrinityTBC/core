@@ -497,7 +497,7 @@ enum WowPatch
 struct AutoAnnounceMessage
 {
     std::string message;
-    uint64 nextAnnounce;
+    time_t nextAnnounce;
 };
 
 enum HonorKillPvPRank
@@ -634,7 +634,7 @@ class TC_GAME_API World
         AccountTypes GetPlayerSecurityLimit() const { return m_allowedSecurityLevel; }
 
         /// Set the active session server limit (or security level limitation)
-        void SetPlayerLimit(int32 limit);
+        void SetPlayerLimit(uint32 limit);
 
         //player Queue
         typedef std::list<WorldSession*> Queue;
@@ -852,7 +852,7 @@ class TC_GAME_API World
         int32 m_configs[CONFIG_VALUE_COUNT];
         typedef std::map<uint32, uint64> WorldStatesMap;
         WorldStatesMap m_worldstates;
-        int32 m_playerLimit;
+        uint32 m_playerLimit;
         uint8 m_wowPatch;
         AccountTypes m_allowedSecurityLevel;
         LocaleConstant m_defaultDbcLocale;                     // from config for one from loaded DBC locales

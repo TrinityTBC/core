@@ -161,10 +161,14 @@ foreach(SCRIPT_MODULE ${SCRIPT_MODULE_LIST})
       ${SCRIPT_MODULE_PRIVATE_SCRIPTLOADER})
     target_link_libraries(${SCRIPT_MODULE_PROJECT_NAME}
       PRIVATE
-		trinity-core-interface
+        trinity-core-interface
       PUBLIC
-        game
-    )
+        game)
+
+    target_include_directories(${SCRIPT_MODULE_PROJECT_NAME}
+      PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR})
+
     set_target_properties(${SCRIPT_MODULE_PROJECT_NAME}
       PROPERTIES
         FOLDER
@@ -188,7 +192,7 @@ foreach(SCRIPT_MODULE ${SCRIPT_MODULE_LIST})
       endif()
     endif()
   else()
-    message(FATAL_ERROR "Unknown value \"${SCRIPT_MODULE_VARIABLE}\"!")
+    message(FATAL_ERROR "Unknown value \"${${SCRIPT_MODULE_VARIABLE}}\"!")
   endif()
 endforeach()
 
@@ -200,16 +204,13 @@ ConfigureScriptLoader("static" SCRIPT_MODULE_PRIVATE_SCRIPTLOADER OFF ${STATIC_S
 add_library(scripts STATIC 
   ScriptLoader.h
   ${SCRIPT_MODULE_PRIVATE_SCRIPTLOADER}
-  ${PRIVATE_SOURCES}
-)
+  ${PRIVATE_SOURCES})
 
 target_link_libraries(scripts
   PRIVATE
     trinity-core-interface
   PUBLIC
-    game-interface
-    database
-)
+    game-interface)
 
 target_include_directories(scripts
   PUBLIC

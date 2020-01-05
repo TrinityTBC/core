@@ -1,3 +1,19 @@
+/*
+ * This file is part of the TrinityCore Project. See AUTHORS file for Copyright information
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #ifndef TRINITY_COMPILERDEFS_H
 #define TRINITY_COMPILERDEFS_H
@@ -7,7 +23,7 @@
 #define TRINITY_PLATFORM_APPLE   2
 #define TRINITY_PLATFORM_INTEL   3
 
-// must be first (win 64 also define WIN32)
+// must be first (win 64 also define _WIN32)
 #if defined( _WIN64 )
 #  define TRINITY_PLATFORM TRINITY_PLATFORM_WINDOWS
 #elif defined( __WIN32__ ) || defined( WIN32 ) || defined( _WIN32 )
@@ -26,20 +42,16 @@
 #define TRINITY_COMPILER_INTEL     3
 
 #ifdef _MSC_VER
-#  define COMPILER TRINITY_COMPILER_MICROSOFT
+#  define TRINITY_COMPILER TRINITY_COMPILER_MICROSOFT
 #elif defined( __BORLANDC__ )
-#  define COMPILER TRINITY_COMPILER_BORLAND
+#  define TRINITY_COMPILER TRINITY_COMPILER_BORLAND
 #elif defined( __INTEL_COMPILER )
-#  define COMPILER TRINITY_COMPILER_INTEL
+#  define TRINITY_COMPILER TRINITY_COMPILER_INTEL
 #elif defined( __GNUC__ )
-#  define COMPILER TRINITY_COMPILER_GNU
+#  define TRINITY_COMPILER TRINITY_COMPILER_GNU
+#  define GCC_VERSION (__GNUC__ * 10000 + __GNUC_MINOR__ * 100 + __GNUC_PATCHLEVEL__)
 #else
-#  pragma error "FATAL ERROR: Unknown compiler."
+#  error "FATAL ERROR: Unknown compiler."
 #endif
 
-#if COMPILER == TRINITY_COMPILER_MICROSOFT
-#  pragma warning( disable : 4267 )                         // conversion from 'size_t' to 'int', possible loss of data
-#  pragma warning( disable : 4786 )                         // identifier was truncated to '255' characters in the debug information
 #endif
-#endif
-

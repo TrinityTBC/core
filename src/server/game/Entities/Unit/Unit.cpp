@@ -1964,7 +1964,7 @@ static const SpellPartialResistDistribution SPELL_PARTIAL_RESIST_DISTRIBUTION = 
     float damageResisted = damage * (float(portion) / float(NUM_SPELL_PARTIAL_RESISTS));
     //--
 #endif
-    DEBUG_ASSERT_NODEBUGINFO(damageResisted < damage);
+    ASSERT_NODEBUGINFO(damageResisted < damage);
 
 #ifdef LICH_KING
     if (damageResisted > 0.0f) // if any damage was resisted

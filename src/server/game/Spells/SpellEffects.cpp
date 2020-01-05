@@ -4379,7 +4379,7 @@ void Spell::EffectSummonPet(uint32 effIndex)
 
             if (OldSummon->GetMap() != owner->GetMap())
             {
-                DEBUG_ASSERT(false);
+                ASSERT(false);
                 return;
             }
 

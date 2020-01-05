@@ -101,7 +101,7 @@ void WorldSession::HandleMoveWorldportAck()
         {
             // the player must always be able to teleport home
             TC_LOG_ERROR("network","WORLD: failed to teleport player %s (%d) to homebind location %d,%f,%f,%f,%f!", player->GetName().c_str(), player->GetGUID().GetCounter(), player->m_homebindMapId, player->m_homebindX, player->m_homebindY, player->m_homebindZ, player->GetOrientation());
-            DEBUG_ASSERT(false);
+            ASSERT(false);
         }
         return;
     }
@@ -1041,7 +1041,7 @@ void PlayerMovementPendingChange::_HandleMovementFlagChangeToggleAck(WorldSessio
     default:
         TC_LOG_ERROR("movement", "WorldSession::HandleMovementFlagChangeToggleAck: Unknown move type %u for mover %s (GUID %s)",
             movementChangeType, mover->GetName().c_str(), mover->GetGUID().ToString().c_str());
-        DEBUG_ASSERT(false);
+        ASSERT(false);
         return;
     }
 

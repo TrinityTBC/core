@@ -63,7 +63,7 @@ void Monitor::MapUpdateStart(Map const& map)
     MapTicksInfo& mapsTicksInfo = updateInfoListForMap[map.GetInstanceId()];
     mapsTicksInfo.currentTick++;
     auto& mapTick = mapsTicksInfo.ticks[mapsTicksInfo.currentTick];
-    DEBUG_ASSERT(mapTick.endTime == 0);
+    ASSERT(mapTick.endTime == 0);
     mapTick.startTime = GetMSTime();
 }
 

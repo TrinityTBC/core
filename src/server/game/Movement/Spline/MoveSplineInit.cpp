@@ -117,7 +117,7 @@ namespace Movement
                 moveFlagsForSpeed &= ~MOVEMENTFLAG_WALKING;
 
             args.velocity = unit->GetSpeed(SelectSpeedType(moveFlagsForSpeed));
-            //DEBUG_ASSERT(args.velocity);
+            //ASSERT(args.velocity);
         }
 
         // Limit hardcoded in client (see https://github.com/TrinityCore/TrinityCore/issues/22434)

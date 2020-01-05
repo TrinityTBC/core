@@ -576,7 +576,7 @@ bool Map::AddToMap(T* obj, bool checkTransport)
     /// @todo Needs clean up. An object should not be added to map twice.
     if (obj->IsInWorld())
     {
-        //DEBUG_ASSERT(false); //disabled, BattleGround code does not respect this...
+        //ASSERT(false); //disabled, BattleGround code does not respect this...
         ASSERT(obj->IsInGrid());
         obj->UpdateObjectVisibility(true);
         return true;
@@ -631,7 +631,7 @@ bool Map::AddToMap(MotionTransport* obj, bool /* checkTransport */)
 {
     ASSERT(obj);
     if (obj->IsInWorld())
-        DEBUG_ASSERT(false);
+        ASSERT(false);
 
     CellCoord p = Trinity::ComputeCellCoord(obj->GetPositionX(), obj->GetPositionY());
     if (!p.IsCoordValid())
@@ -928,7 +928,7 @@ void Map::Update(const uint32& t_diff)
         if (!obj->IsInWorld())
             continue;
 
-        DEBUG_ASSERT(obj->GetMap() == this);
+        ASSERT(obj->GetMap() == this);
         obj->Update(t_diff);
     }
 
@@ -1030,7 +1030,7 @@ void Map::RemoveFromMap(MotionTransport* obj, bool remove)
         if (itr == _transports.end())
         {
             //did not find transport in list ? Should not happen, logic error somewhere
-            DEBUG_ASSERT(false);
+            ASSERT(false);
             return;
         }
 
@@ -4480,7 +4480,7 @@ void Map::RemoveGameObjectModel(GameObjectModel const& model)
 void Map::InsertGameObjectModel(GameObjectModel const& model) 
 {
     TC_LOG_TRACE("maps", "Map %u - Added model %s", GetId(), model.name.c_str());
-    DEBUG_ASSERT(!_dynamicTree.contains(model));
+    ASSERT(!_dynamicTree.contains(model));
     _dynamicTree.insert(model); 
 }
 

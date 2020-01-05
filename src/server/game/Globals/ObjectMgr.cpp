@@ -3536,7 +3536,7 @@ void ObjectMgr::LoadPlayerInfo()
 
                 auto& pInfo = _playerInfo[current_race][current_class];
                 uint32 spell = fields[2].GetUInt32();
-                DEBUG_ASSERT(spell < std::numeric_limits<uint16>::max());
+                ASSERT(spell < std::numeric_limits<uint16>::max());
                 pInfo->spell.push_back(CreateSpellPair(uint16(fields[2].GetUInt32()), fields[3].GetUInt8()));
 
                 ++count;

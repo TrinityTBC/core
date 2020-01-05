@@ -260,7 +260,7 @@ void ClientControl::SetActiveMover(Unit* activeMover)
             _owner->GetPlayer()->GetName().c_str(), _activeMover->GetGUID().ToString().c_str());
 
         //Unit will get stuck. Shouldn't ever happen in current impl.
-        DEBUG_ASSERT(false);
+        ASSERT(false);
     }
 
     TC_LOG_TRACE("movement", "Received CMSG_SET_ACTIVE_MOVER for player %s with pending mover %s (%s), now sending the spline movement (id %u)",

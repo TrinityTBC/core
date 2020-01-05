@@ -77,7 +77,7 @@ void AuraApplication::_UpdateSlot()
         uint32 const firstSlot = IsPositive() ? 0 : buffLimit; //BC use defined slots for positive/negative auras. Negatives auras occupy the end of the range.
         if (buffLimit != UNIT_BYTE2_CREATURE_BUFF_LIMIT && buffLimit != UNIT_BYTE2_PLAYER_CONTROLLED_BUFF_LIMIT)
         {
-            DEBUG_ASSERT(false, "Wrong debuff limit %u", buffLimit);
+            ASSERT(false, "Wrong debuff limit %u", buffLimit);
             TC_LOG_ERROR("spells", "Aura: %u Effect: %d on unit with entry %u has wrong debuff limit %u", GetBase()->GetId(), GetEffectMask(), GetTarget()->GetEntry(), buffLimit);
             buffLimit = GetTarget()->GetTypeId() == TYPEID_PLAYER ? UNIT_BYTE2_PLAYER_CONTROLLED_BUFF_LIMIT : UNIT_BYTE2_CREATURE_BUFF_LIMIT;
             GetTarget()->SetByteValue(UNIT_FIELD_BYTES_2, UNIT_BYTES_2_OFFSET_BUFF_LIMIT, buffLimit);

@@ -262,7 +262,7 @@ void MovementPacketSender::SendMovementFlagChangeToMover(Unit* unit, MovementFla
 #endif
         default:
             TC_LOG_ERROR("movement", "MovementPacketSender::SendMovementFlagChangeToMover: Unsupported MovementFlag (%d), data not sent to client.", mFlag);
-            DEBUG_ASSERT(false);
+            ASSERT(false);
             return;
     }
 
@@ -301,7 +301,7 @@ void MovementPacketSender::SendMovementFlagChangeToMover(Unit* unit, MovementFla
         case MOVEMENTFLAG2_CAN_TRANSITION_BETWEEN_SWIM_AND_FLY: opcode = apply ? SMSG_MOVE_SET_CAN_TRANSITION_BETWEEN_SWIM_AND_FLY : SMSG_MOVE_UNSET_CAN_TRANSITION_BETWEEN_SWIM_AND_FLY; movementChangeType = SET_CAN_TRANSITION_BETWEEN_SWIM_AND_FLY; break;
         default:
             TC_LOG_ERROR("movement", "MovementPacketSender::SendMovementFlagChangeToMover: Unsupported MovementFlag2 (%d), data not sent to client.", mFlag);
-            DEBUG_ASSERT(false);
+            ASSERT(false);
             return;
     }
 
@@ -338,7 +338,7 @@ void MovementPacketSender::SendMovementFlagChangeToObservers(Unit* unit, Movemen
 #endif
         default:
             TC_LOG_ERROR("movement", "MovementPacketSender::SendMovementFlagChangeToObservers: Unsupported MovementFlag (%d), data not sent to client.", mFlag);
-            DEBUG_ASSERT(false);
+            ASSERT(false);
             return;
     }
 
@@ -393,7 +393,7 @@ void MovementPacketSender::SendMovementFlagChangeToAll(Unit* unit, MovementFlags
         case MOVEMENTFLAG_HOVER:            opcode = apply ? SMSG_SPLINE_MOVE_SET_HOVER         : SMSG_SPLINE_MOVE_UNSET_HOVER; break;
         default:
             TC_LOG_ERROR("movement", "MovementPacketSender::SendMovementFlagChangeToAll: Unsupported MovementFlag (%d), data not sent to client.", mFlag);
-            DEBUG_ASSERT(false);
+            ASSERT(false);
             return;
     }
 

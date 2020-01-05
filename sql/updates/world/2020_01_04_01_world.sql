@@ -14,7 +14,7 @@ REPLACE INTO `broadcast_text` (`ID`, `Language`, `MaleText`, `FemaleText`, `Emot
 UPDATE `gameobject_template` SET `Data0`='295' WHERE (`entry`='176310');
 
 -- The Shattered Halls compared it with cmangos and oregoncore Database
-UPDATE `gameobject_template` SET `Data1`=`1687`, `Data2`='327680' WHERE (`entry`='184912');
+UPDATE `gameobject_template` SET `Data1`='1687', `Data2`='327680' WHERE (`entry`='184912');
 
 -- Objects added with wotlk 
 DELETE FROM gameobject_template WHERE entry = "186799";

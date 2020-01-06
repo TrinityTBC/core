@@ -66,7 +66,7 @@ public:
 
             if (me->IsSummon() && !me->GetThreatManager().GetFixateTarget())
             { // find new target
-                Unit* summoner = me->ToTempSummon()->GetSummoner();
+                Unit* summoner = me->ToTempSummon()->GetSummonerUnit();
 
                 std::vector<Unit*> targets;
                 for (std::pair<ObjectGuid const, PvPCombatReference*> const& pair : summoner->GetCombatManager().GetPvPCombatRefs())

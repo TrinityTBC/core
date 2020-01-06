@@ -27,7 +27,7 @@
 #include "MoveSplineInit.h"
 #include "ObjectAccessor.h"
 #include "ObjectMgr.h"
-#include "NullCreatureAI.h"
+#include "PassiveAI.h"
 #include "Pet.h"
 #include "ScriptedEscortAI.h"
 #include "ScriptedGossip.h"

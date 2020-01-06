@@ -1156,11 +1156,11 @@ void GameObject::SetLootGenerationTime()
     m_lootGenerationTime = GetMap()->GetGameTime();
 }
 
-void GameObject::SetGoState(GOState state, Unit* invoker /* = nullptr */)
+void GameObject::SetGoState(GOState state)
 {
     SetUInt32Value(GAMEOBJECT_STATE, state);
     if(AI())
-        AI()->OnStateChanged(state, invoker);
+        AI()->OnStateChanged(state);
 
     if (m_model && !IsTransport())
     {
@@ -1486,7 +1486,7 @@ void GameObject::UseDoorOrButton(uint32 time_to_restore /* = 0 */, bool alternat
     if(!time_to_restore)
         time_to_restore = GetAutoCloseTime();
 
-    SwitchDoorOrButton(true, alternative, user);
+    SwitchDoorOrButton(true, alternative);
     SetLootState(GO_ACTIVATED, user);
 
     m_cooldownTime = time_to_restore ? (GetMap()->GetGameTimeMS() + time_to_restore * SECOND * IN_MILLISECONDS) : 0;
@@ -1578,7 +1578,7 @@ void GameObject::SetGoArtKit(uint32 kit)
         data->artKit = kit;
 }
 
-void GameObject::SwitchDoorOrButton(bool activate, bool alternative /* = false */, Unit* user /* = nullptr */ )
+void GameObject::SwitchDoorOrButton(bool activate, bool alternative /* = false */)
 {
     if (activate)
         SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_IN_USE);
@@ -1586,9 +1586,9 @@ void GameObject::SwitchDoorOrButton(bool activate, bool alternative /* = false *
         RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_IN_USE);
 
     if (GetGoState() == GO_STATE_READY)                      //if closed -> open
-        SetGoState(alternative ? GO_STATE_ACTIVE_ALTERNATIVE : GO_STATE_ACTIVE, user);
+        SetGoState(alternative ? GO_STATE_ACTIVE_ALTERNATIVE : GO_STATE_ACTIVE);
     else                                                    //if open -> close
-        SetGoState(GO_STATE_READY, user);
+        SetGoState(GO_STATE_READY);
 }
 
 void GameObject::Use(Unit* user)
@@ -2286,7 +2286,7 @@ public:
     virtual G3D::Vector3 GetPosition() const override { return G3D::Vector3(_owner->GetPositionX(), _owner->GetPositionY(), _owner->GetPositionZ()); }
     virtual float GetOrientation() const override { return _owner->GetOrientation(); }
     virtual float GetScale() const override { return _owner->GetObjectScale(); }
-    virtual void DebugVisualizeCorner(G3D::Vector3 const& corner) const override { _owner->SummonCreature(1, corner.x, corner.y, corner.z, 0, TEMPSUMMON_MANUAL_DESPAWN); }
+    virtual void DebugVisualizeCorner(G3D::Vector3 const& corner) const override { const_cast<GameObject*>(_owner)->SummonCreature(1, corner.x, corner.y, corner.z, 0, TEMPSUMMON_MANUAL_DESPAWN); }
 
 private:
     GameObject const* _owner;

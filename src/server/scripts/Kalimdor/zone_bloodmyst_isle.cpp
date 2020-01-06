@@ -33,7 +33,7 @@ EndContentData */
 #include "Group.h"
 #include "MotionMaster.h"
 #include "ObjectAccessor.h"
-#include "NullCreatureAI.h"
+#include "PassiveAI.h"
 #include "Player.h"
 #include "ScriptedEscortAI.h"
 

@@ -30,7 +30,7 @@
 #include "ChatTextBuilder.h"
 #include "PathGenerator.h"
 #include "PetAI.h"
-#include "NullCreatureAI.h"
+#include "PassiveAI.h"
 #include "ScriptMgr.h"
 #include "TemporarySummon.h"
 #include "PlayerAI.h"
@@ -10009,10 +10009,16 @@ bool Unit::InitTamedPet(Pet* pet, uint8 level, uint32 spell_id)
         if (CreatureAI* ai = creature->AI())
             ai->JustDied(attacker);
 
-        if (TempSummon* summon = creature->ToTempSummon())
-            if (Unit* summoner = summon->GetSummoner())
-                if (summoner->ToCreature() && summoner->IsAIEnabled())
+        if (TempSummon * summon = creature->ToTempSummon())
+        {
+            if (WorldObject * summoner = summon->GetSummoner())
+            {
+                if (summoner->ToCreature() && summoner->ToCreature()->IsAIEnabled())
                     summoner->ToCreature()->AI()->SummonedCreatureDies(creature, attacker);
+                else if (summoner->ToGameObject() && summoner->ToGameObject()->AI())
+                    summoner->ToGameObject()->AI()->SummonedCreatureDies(creature, attacker);
+            }
+        }
 
         cVictim->WarnDeathToFriendly();
         

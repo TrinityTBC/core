@@ -18,7 +18,7 @@
 #include "ScriptMgr.h"
 #include "karazhan.h"
 #include "ObjectAccessor.h"
-#include "NullCreatureAI.h"
+#include "PassiveAI.h"
 #include "ScriptedCreature.h"
 #include "SpellInfo.h"
 

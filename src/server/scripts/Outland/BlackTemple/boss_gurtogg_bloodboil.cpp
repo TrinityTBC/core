@@ -19,7 +19,7 @@
 #include "black_temple.h"
 #include "GridNotifiers.h"
 #include "ObjectAccessor.h"
-#include "NullCreatureAI.h"
+#include "PassiveAI.h"
 #include "ScriptedCreature.h"
 #include "SpellScript.h"
 

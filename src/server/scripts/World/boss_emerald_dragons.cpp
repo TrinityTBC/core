@@ -18,7 +18,7 @@
 
 #include "ObjectMgr.h"
 #include "MotionMaster.h"
-#include "NullCreatureAI.h"
+#include "PassiveAI.h"
 #include "ScriptedCreature.h"
 #include "ScriptMgr.h"
 #include "Spell.h"

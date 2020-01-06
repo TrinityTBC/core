@@ -450,7 +450,7 @@ void Spell::EffectSchoolDMG(uint32 effect_idx)
                     return;
                 
                 if(TempSummon* u = _unitCaster->ToTempSummon())
-                    if (Unit* summoner = u->GetSummoner())
+                    if (Unit* summoner = u->GetSummonerUnit())
                         if (unitTarget == summoner)
                             return;
 
@@ -5428,7 +5428,7 @@ void Spell::EffectScriptEffect(uint32 effIndex)
         // Quest 11026 Kill Credit
         case 40828:
         {
-            if (Unit *summoner = ((TempSummon*)m_caster)->GetSummoner()) {
+            if (Unit *summoner = ((TempSummon*)m_caster)->GetSummonerUnit()) {
                 if (summoner->ToPlayer())
                     summoner->ToPlayer()->KilledMonsterCredit(23327, m_caster->GetGUID());
             }
@@ -6911,7 +6911,7 @@ void Spell::EffectTransmitted(uint32 effIndex)
 
     pGameObj->SetOwnerGUID(m_caster->GetGUID() );
     if(TempSummon* summonCaster = _unitCaster->ToTempSummon())
-        if(Unit* owner = summonCaster->GetSummoner())
+        if(Unit* owner = summonCaster->GetSummonerUnit())
             pGameObj->SetOwnerGUID(owner->GetGUID());
 
     //pGameObj->SetUInt32Value(GAMEOBJECT_LEVEL, m_caster->GetLevel() );

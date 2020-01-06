@@ -3867,7 +3867,7 @@ void Map::RemoveOldCorpses()
     }
 }
 
-TempSummon* Map::SummonCreature(uint32 entry, Position const& pos, SummonPropertiesEntry const* properties /*= nullptr*/, uint32 duration /*= 0*/, Unit* summoner /*= nullptr*/, uint32 spellId /*= 0*/)
+TempSummon* Map::SummonCreature(uint32 entry, Position const& pos, SummonPropertiesEntry const* properties /*= nullptr*/, uint32 duration /*= 0*/, WorldObject* summoner /*= nullptr*/, uint32 spellId /*= 0*/)
 {
     uint32 mask = UNIT_MASK_SUMMON;
     if (properties)
@@ -3923,24 +3923,26 @@ TempSummon* Map::SummonCreature(uint32 entry, Position const& pos, SummonPropert
     if (summoner)
         phase = summoner->GetPhaseMask();
 
+    Unit* summonerUnit = summoner ? summoner->ToUnit() : nullptr;
+
     TempSummon* summon = NULL;
     switch (mask)
     {
-    case UNIT_MASK_SUMMON:
-        summon = new TempSummon(properties, summoner, false);
-        break;
-    case UNIT_MASK_GUARDIAN:
-        summon = new Guardian(properties, summoner, false);
-        break;
-    case UNIT_MASK_PUPPET:
-        summon = new Puppet(properties, summoner);
-        break;
-    case UNIT_MASK_TOTEM:
-        summon = new Totem(properties, summoner);
-        break;
-    case UNIT_MASK_MINION:
-        summon = new Minion(properties, summoner, false);
-        break;
+        case UNIT_MASK_SUMMON:
+            summon = new TempSummon(properties, summoner, false);
+            break;
+        case UNIT_MASK_GUARDIAN:
+            summon = new Guardian(properties, summonerUnit, false);
+            break;
+        case UNIT_MASK_PUPPET:
+            summon = new Puppet(properties, summonerUnit);
+            break;
+        case UNIT_MASK_TOTEM:
+            summon = new Totem(properties, summonerUnit);
+            break;
+        case UNIT_MASK_MINION:
+            summon = new Minion(properties, summonerUnit, false);
+            break;
     }
 
     if (!summon->Create(GenerateLowGuid<HighGuid::Unit>(), this, phase, entry, { pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation() }, nullptr, /*vehId,*/ true))
@@ -3960,9 +3962,6 @@ TempSummon* Map::SummonCreature(uint32 entry, Position const& pos, SummonPropert
     // call MoveInLineOfSight for nearby creatures
     Trinity::AIRelocationNotifier notifier(*summon);
     Cell::VisitAllObjects(summon, notifier, GetVisibilityRange());
-
-    //sun: re call initialize, result may change because of previous initialisations
-    summon->GetThreatManager().Initialize();
 
     return summon;
 }

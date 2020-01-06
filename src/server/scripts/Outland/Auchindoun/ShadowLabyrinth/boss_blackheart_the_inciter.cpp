@@ -19,7 +19,7 @@
 #include "InstanceScript.h"
 #include "Map.h"
 #include "ObjectAccessor.h"
-#include "NullCreatureAI.h"
+#include "PassiveAI.h"
 #include "Player.h"
 #include "PlayerAI.h"
 #include "ScriptMgr.h"

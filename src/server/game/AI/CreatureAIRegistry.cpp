@@ -3,7 +3,7 @@
 #include "GameObjectAIFactory.h"
 
 #include "CreatureAIRegistry.h"
-#include "NullCreatureAI.h"
+#include "PassiveAI.h"
 #include "AOEAI.h"
 #include "GuardAI.h"
 #include "PetAI.h"
@@ -21,6 +21,7 @@ namespace AIRegistry
     void Initialize()
     {
         (new CreatureAIFactory<NullCreatureAI>("NullCreatureAI"))->RegisterSelf();
+        (new CreatureAIFactory<TriggerAI>("TriggerAI"))->RegisterSelf();
         (new CreatureAIFactory<AggressorAI>("AggressorAI"))->RegisterSelf();
         (new CreatureAIFactory<ReactorAI>("ReactorAI"))->RegisterSelf();
         (new CreatureAIFactory<PassiveAI>("PassiveAI"))->RegisterSelf();

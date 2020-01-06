@@ -4,7 +4,7 @@
 #include "CreatureAIImpl.h"
 #include "CreatureAISelector.h"
 #include "CreatureAIFactory.h"
-#include "NullCreatureAI.h"
+#include "PassiveAI.h"
 #include "MovementGenerator.h"
 #include "Pet.h"
 #include "Log.h"

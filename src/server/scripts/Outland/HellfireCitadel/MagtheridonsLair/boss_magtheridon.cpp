@@ -20,7 +20,7 @@
 #include "GameObjectAI.h"
 #include "InstanceScript.h"
 #include "magtheridons_lair.h"
-#include "NullCreatureAI.h"
+#include "PassiveAI.h"
 #include "Player.h"
 #include "ScriptedCreature.h"
 #include "SpellAuraEffects.h"

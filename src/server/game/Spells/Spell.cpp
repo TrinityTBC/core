@@ -1616,7 +1616,7 @@ void Spell::SelectImplicitCasterObjectTargets(SpellEffIndex effIndex, SpellImpli
     case TARGET_UNIT_SUMMONER:
         if (Unit* caster = m_caster->ToUnit())
             if (caster->IsSummon())
-                target = caster->ToTempSummon()->GetSummoner();
+                target = caster->ToTempSummon()->GetSummonerUnit();
         break;
 #ifdef LICH_KING
     case TARGET_UNIT_VEHICLE:

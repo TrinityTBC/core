@@ -973,14 +973,26 @@ namespace Trinity
         float i_range;
     };
 
-    class TC_GAME_API AnyPlayerInObjectRangeCheck
+    class AnyPlayerInObjectRangeCheck
     {
-    public:
-        AnyPlayerInObjectRangeCheck(WorldObject const* obj, float range) : i_obj(obj), i_range(range) {}
-        bool operator()(Player* u);
-    private:
-        WorldObject const* i_obj;
-        float i_range;
+        public:
+            AnyPlayerInObjectRangeCheck(WorldObject const* obj, float range, bool reqAlive = true) : _obj(obj), _range(range), _reqAlive(reqAlive) { }
+
+            bool operator()(Player* u) const
+            {
+                if (_reqAlive && !u->IsAlive())
+                    return false;
+
+                if (!_obj->IsWithinDistInMap(u, _range))
+                    return false;
+
+                return true;
+            }
+
+        private:
+            WorldObject const* _obj;
+            float _range;
+            bool _reqAlive;
     };
 
     class TC_GAME_API NearestPlayerInObjectRangeCheck

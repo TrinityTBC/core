@@ -2756,7 +2756,7 @@ void WorldObject::DestroyForNearbyPlayers()
         return;
 
     std::list<Player*> targets;
-    Trinity::AnyPlayerInObjectRangeCheck check(this, GetMap()->GetVisibilityRange());
+    Trinity::AnyPlayerInObjectRangeCheck check(this, GetMap()->GetVisibilityRange(), false);
     Trinity::PlayerListSearcher<Trinity::AnyPlayerInObjectRangeCheck> searcher(this, targets, check);
     Cell::VisitWorldObjects(this, searcher, GetMap()->GetVisibilityRange());
     for (auto& player : targets) {

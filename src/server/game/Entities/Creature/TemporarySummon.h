@@ -6,49 +6,49 @@
 
 class TC_GAME_API TempSummon : public Creature
 {
-	public:
-		explicit TempSummon(SummonPropertiesEntry const* properties, Unit* owner, bool isWorldObject);
-		virtual ~TempSummon() {};
-		void Update(uint32 time) override;
-		virtual void InitStats(uint32 lifetime);
-		virtual void InitSummon();
-		//void Summon(TempSummonType type, uint32 lifetime, Map* map);
-		virtual void UnSummon(uint32 msTime = 0);
-		void RemoveFromWorld() override;
-		void SetTempSummonType(TempSummonType type);
-		void SaveToDB(uint32 mapid, uint8 spawnMask) override { }
+    public:
+        explicit TempSummon(SummonPropertiesEntry const* properties, Unit* owner, bool isWorldObject);
+        virtual ~TempSummon() {};
+        void Update(uint32 time) override;
+        virtual void InitStats(uint32 lifetime);
+        virtual void InitSummon();
+        //void Summon(TempSummonType type, uint32 lifetime, Map* map);
+        virtual void UnSummon(uint32 msTime = 0);
+        void RemoveFromWorld() override;
+        void SetTempSummonType(TempSummonType type);
+        void SaveToDB(uint32 mapid, uint8 spawnMask) override { }
 
-		Unit* GetSummoner() const;
-		Unit* GetSummonerUnit() const { return GetSummoner(); };
-		Creature* GetSummonerCreatureBase() const;
-		ObjectGuid GetSummonerGUID() const { return m_summonerGUID; }
-		TempSummonType GetSummonType() const { return m_type; }
-		uint32 GetTimer() const { return m_timer; }
-		void SetTimer(uint32 duration);
-		bool CanFollowOwner() const { return m_canFollowOwner; }
-		void SetCanFollowOwner(bool can) { m_canFollowOwner = can; }
+        Unit* GetSummoner() const;
+        Unit* GetSummonerUnit() const { return GetSummoner(); };
+        Creature* GetSummonerCreatureBase() const;
+        ObjectGuid GetSummonerGUID() const { return m_summonerGUID; }
+        TempSummonType GetSummonType() const { return m_type; }
+        uint32 GetTimer() const { return m_timer; }
+        void SetTimer(uint32 duration);
+        bool CanFollowOwner() const { return m_canFollowOwner; }
+        void SetCanFollowOwner(bool can) { m_canFollowOwner = can; }
 
-		const SummonPropertiesEntry* const m_Properties;
+        const SummonPropertiesEntry* const m_Properties;
 
-		std::string GetDebugInfo() const override;
-	private:
-		TempSummonType m_type;
-		uint32 m_timer;
-		uint32 m_lifetime;
-		ObjectGuid m_summonerGUID;
-		bool m_canFollowOwner;
+        std::string GetDebugInfo() const override;
+    private:
+        TempSummonType m_type;
+        uint32 m_timer;
+        uint32 m_lifetime;
+        ObjectGuid m_summonerGUID;
+        bool m_canFollowOwner;
 };
 
 class TC_GAME_API Minion : public TempSummon
 {
 public:
-	Minion(SummonPropertiesEntry const* properties, Unit* owner, bool isWorldObject);
-	void InitStats(uint32 duration) override;
-	void RemoveFromWorld() override;
+    Minion(SummonPropertiesEntry const* properties, Unit* owner, bool isWorldObject);
+    void InitStats(uint32 duration) override;
+    void RemoveFromWorld() override;
     void SetDeathState(DeathState s) override;
-	Unit* GetOwner() const { return m_owner; }
-	float GetFollowAngle() const override { return m_followAngle; }
-	void SetFollowAngle(float angle) { m_followAngle = angle; }
+    Unit* GetOwner() const { return m_owner; }
+    float GetFollowAngle() const override { return m_followAngle; }
+    void SetFollowAngle(float angle) { m_followAngle = angle; }
 
 #ifdef LICH_KING
     bool IsPetGhoul() const { return GetEntry() == PET_GHOUL; } // Ghoul may be guardian or pet
@@ -61,58 +61,58 @@ public:
     bool IsSpiritWolf() const { return false; }
 #endif
 
-	bool IsGuardianPet() const;
+    bool IsGuardianPet() const;
 
     std::string GetDebugInfo() const override;
 protected:
-	Unit* const m_owner;
-	float m_followAngle;
+    Unit* const m_owner;
+    float m_followAngle;
 };
 
 class TC_GAME_API Guardian : public Minion
 {
 public:
-	Guardian(SummonPropertiesEntry const* properties, Unit* owner, bool isWorldObject);
-	void InitStats(uint32 duration) override;
-	bool InitStatsForLevel(uint8 level);
-	void InitSummon() override;
+    Guardian(SummonPropertiesEntry const* properties, Unit* owner, bool isWorldObject);
+    void InitStats(uint32 duration) override;
+    bool InitStatsForLevel(uint8 level);
+    void InitSummon() override;
 
-	bool UpdateStats(Stats stat) override;
-	bool UpdateAllStats() override;
-	void UpdateResistances(uint32 school) override;
-	void UpdateArmor() override;
-	void UpdateMaxHealth() override;
-	void UpdateMaxPower(Powers power) override;
-	void UpdateAttackPowerAndDamage(bool ranged = false) override;
-	void UpdateDamagePhysical(WeaponAttackType attType) override;
+    bool UpdateStats(Stats stat) override;
+    bool UpdateAllStats() override;
+    void UpdateResistances(uint32 school) override;
+    void UpdateArmor() override;
+    void UpdateMaxHealth() override;
+    void UpdateMaxPower(Powers power) override;
+    void UpdateAttackPowerAndDamage(bool ranged = false) override;
+    void UpdateDamagePhysical(WeaponAttackType attType) override;
 
-	int32 GetBonusDamage() const { return m_bonusSpellDamage; }
-	float GetBonusStatFromOwner(Stats stat) const { return m_statFromOwner[stat]; }
-	void SetBonusDamage(int32 damage);
+    int32 GetBonusDamage() const { return m_bonusSpellDamage; }
+    float GetBonusStatFromOwner(Stats stat) const { return m_statFromOwner[stat]; }
+    void SetBonusDamage(int32 damage);
     std::string GetDebugInfo() const override;
 protected:
-	int32   m_bonusSpellDamage;
-	float   m_statFromOwner[MAX_STATS];
+    int32   m_bonusSpellDamage;
+    float   m_statFromOwner[MAX_STATS];
 };
 
 class TC_GAME_API Puppet : public Minion
 {
 public:
-	Puppet(SummonPropertiesEntry const* properties, Unit* owner);
-	void InitStats(uint32 duration) override;
-	void InitSummon() override;
-	void Update(uint32 time) override;
-	void RemoveFromWorld() override;
+    Puppet(SummonPropertiesEntry const* properties, Unit* owner);
+    void InitStats(uint32 duration) override;
+    void InitSummon() override;
+    void Update(uint32 time) override;
+    void RemoveFromWorld() override;
 };
 
 class TC_GAME_API ForcedUnsummonDelayEvent : public BasicEvent
 {
 public:
-	ForcedUnsummonDelayEvent(TempSummon& owner) : BasicEvent(), m_owner(owner) { }
-	bool Execute(uint64 e_time, uint32 p_time) override;
+    ForcedUnsummonDelayEvent(TempSummon& owner) : BasicEvent(), m_owner(owner) { }
+    bool Execute(uint64 e_time, uint32 p_time) override;
 
 private:
-	TempSummon& m_owner;
+    TempSummon& m_owner;
 };
 
 #endif

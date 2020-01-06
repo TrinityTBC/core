@@ -81,259 +81,187 @@ void Spell::EffectSummonType(uint32 effIndex)
     // so here's a list of MiscValueB values, which is currently most generic check
     switch (properties->Id)
     {
-#ifdef LICH_KING
-    // no spell on BC with both this id and damage > 1
-    case 1101:
-    case 648:
-    case 2301:
-    case 1061:
-    case 1261:
-    case 629:
-    case 181:
-    case 715:
-    case 1562:
-    case 833:
-    case 1161:
-    case 713:
-    case 66:
-#endif
-    case 64: //various spells
-    case 61: //various spells
-        numSummons = (damage > 0) ? damage : 1;
-        break;
-    default:
-        numSummons = 1;
-        break;
+        case 64: //various spells
+        case 61: //various spells
+            numSummons = (damage > 0) ? damage : 1;
+            break;
+        default:
+            numSummons = 1;
+            break;
     }
 
     switch (properties->Category)
     {
-    case SUMMON_CATEGORY_WILD:
-    case SUMMON_CATEGORY_ALLY:
-#ifdef LICH_KING
-    case SUMMON_CATEGORY_UNK:
-        if (properties->Flags & 512) //no such flags on BC
+        case SUMMON_CATEGORY_WILD:
+        case SUMMON_CATEGORY_ALLY:
         {
-            SummonGuardian(effIndex, entry, properties, numSummons);
-            break;
-        }
-#endif
-        //Only ones used on BC: 0,1,2,4,5
-        switch (properties->Type)
-        {
-        case SUMMON_TYPE_PET:
-        case SUMMON_TYPE_GUARDIAN:
-        case SUMMON_TYPE_GUARDIAN2:
-        case SUMMON_TYPE_MINION:
-            SummonGuardian(effIndex, entry, properties, numSummons);
-            break;
-#ifdef LICH_KING
-            // Summons a vehicle, but doesn't force anyone to enter it (see SUMMON_CATEGORY_VEHICLE)
-        case SUMMON_TYPE_VEHICLE:
-        case SUMMON_TYPE_VEHICLE2:
-            if (!_unitCaster)
-                return;
-
-            summon = m_caster->GetMap()->SummonCreature(entry, *destTarget, properties, duration, _unitCaster, m_spellInfo->Id);
-            break;
-        case SUMMON_TYPE_LIGHTWELL:
-#endif
-        case SUMMON_TYPE_TOTEM:
-        {
-            if (!_unitCaster)
-                return;
-
-            summon = m_caster->GetMap()->SummonCreature(entry, *destTarget, properties, duration, _unitCaster, m_spellInfo->Id);
-            if (!summon || !summon->IsTotem())
-                return;
-
-            // Mana Tide Totem
-            if (m_spellInfo->Id == 16190)
-                damage = _unitCaster->CountPctFromMaxHealth(10);
-
-            if (damage)                                            // if not spell info, DB values used
+            //Only ones used on BC: 0,1,2,4,5
+            switch (properties->Type)
             {
-                summon->SetMaxHealth(damage);
-                summon->SetHealth(damage);
-            }
-            break;
-        }
-        case SUMMON_TYPE_MINIPET:
-        {
-            if (!_unitCaster)
-                return;
-
-            summon = m_caster->GetMap()->SummonCreature(entry, *destTarget, properties, duration, _unitCaster, m_spellInfo->Id);
-            if (!summon || !summon->HasUnitTypeMask(UNIT_MASK_MINION))
-                return;
-
-            summon->SelectLevel();       // some summoned creaters have different from 1 DB data for level/hp
-            summon->SetUInt32Value(UNIT_NPC_FLAGS, summon->GetCreatureTemplate()->npcflag);
-
-            summon->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_IMMUNE_TO_PC | UNIT_FLAG_IMMUNE_TO_NPC);
-
-            summon->AI()->EnterEvadeMode();
-            break;
-        }
-        default:
-        {
-            float radius = m_spellInfo->Effects[effIndex].CalcRadius();
-
-            TempSummonType summonType = (duration == 0) ? TEMPSUMMON_DEAD_DESPAWN : TEMPSUMMON_TIMED_DESPAWN;
-
-            for (uint32 count = 0; count < numSummons; ++count)
-            {
-                Position pos;
-                if (count == 0)
-                    pos = *destTarget;
-                else
-                    // randomize position for multiple summons
-                    pos = caster->GetRandomPoint(*destTarget, radius);
-
-                summon = caster->SummonCreature(entry, pos, summonType, duration);
-                if (!summon)
-                    continue;
-
-                if (properties->Category == SUMMON_CATEGORY_ALLY)
+                case SUMMON_TYPE_PET:
+                case SUMMON_TYPE_GUARDIAN:
+                case SUMMON_TYPE_GUARDIAN2:
+                case SUMMON_TYPE_MINION:
+                    SummonGuardian(effIndex, entry, properties, numSummons);
+                    break;
+                case SUMMON_TYPE_TOTEM:
                 {
-                    summon->SetOwnerGUID(caster->GetGUID());
-                    summon->SetFaction(caster->GetFaction());
-                    summon->SetUInt32Value(UNIT_CREATED_BY_SPELL, m_spellInfo->Id);
+                    if (!_unitCaster)
+                        return;
+
+                    summon = m_caster->GetMap()->SummonCreature(entry, *destTarget, properties, duration, _unitCaster, m_spellInfo->Id);
+                    if (!summon || !summon->IsTotem())
+                        return;
+
+                    // Mana Tide Totem
+                    if (m_spellInfo->Id == 16190)
+                        damage = _unitCaster->CountPctFromMaxHealth(10);
+
+                    if (damage)                                            // if not spell info, DB values used
+                    {
+                        summon->SetMaxHealth(damage);
+                        summon->SetHealth(damage);
+                    }
+                    break;
                 }
-
-                ExecuteLogEffectSummonObject(effIndex, summon);
-
-                //lolhack section
-                if (_unitCaster)
+                case SUMMON_TYPE_MINIPET:
                 {
+                    if (!_unitCaster)
+                        return;
+
+                    summon = m_caster->GetMap()->SummonCreature(entry, *destTarget, properties, duration, _unitCaster, m_spellInfo->Id);
+                    if (!summon || !summon->HasUnitTypeMask(UNIT_MASK_MINION))
+                        return;
+
+                    summon->SelectLevel();       // some summoned creaters have different from 1 DB data for level/hp
+                    summon->SetUInt32Value(UNIT_NPC_FLAGS, summon->GetCreatureTemplate()->npcflag);
+                    summon->SetImmuneToAll(true);
+                    break;
+                }
+                default:
+                {
+                    float radius = m_spellInfo->Effects[effIndex].CalcRadius();
+
+                    TempSummonType summonType = (duration == 0) ? TEMPSUMMON_DEAD_DESPAWN : TEMPSUMMON_TIMED_DESPAWN;
+
+                    for (uint32 count = 0; count < numSummons; ++count)
+                    {
+                        Position pos;
+                        if (count == 0)
+                            pos = *destTarget;
+                        else
+                            // randomize position for multiple summons
+                            pos = caster->GetRandomPoint(*destTarget, radius);
+
+                        summon = caster->SummonCreature(entry, pos, summonType, duration);
+                        if (!summon)
+                            continue;
+
+                        if (properties->Category == SUMMON_CATEGORY_ALLY)
+                        {
+                            summon->SetOwnerGUID(caster->GetGUID());
+                            summon->SetFaction(caster->GetFaction());
+                            summon->SetUInt32Value(UNIT_CREATED_BY_SPELL, m_spellInfo->Id);
+                        }
+
+                        ExecuteLogEffectSummonObject(effIndex, summon);
+
+                        //lolhack section
+                        if (_unitCaster)
+                        {
+                            switch (m_spellInfo->Id)
+                            {
+                            case 45392: //Summon Demonic Vapor
+                                if (summon->AI())
+                                    summon->AI()->AttackStart(_unitCaster);
+                                break;
+                            case 45891: //Sinister Reflection Summon
+                                if (summon->AI())
+                                    summon->AI()->AttackStart(_unitCaster);
+                                break;
+                            case 45836: //Summon Blue Drake
+                                //summon->SetSummoner(m_caster);
+                                if (m_caster->GetTypeId() == TYPEID_PLAYER)
+                                    m_caster->CastSpell((Unit*)nullptr, 45839, true);
+                                m_caster->CastSpell((Unit*)nullptr, 45838, true);
+                                summon->CastSpell((Unit*)nullptr, 45838, true);
+                                break;
+                            }
+                        }
+                        //TC ExecuteLogEffectSummonObject(effIndex, summon);
+                    }
+                    //hacks 2 - handle special cases
                     switch (m_spellInfo->Id)
                     {
-                    case 45392: //Summon Demonic Vapor
-                        if (summon->AI())
-                            summon->AI()->AttackStart(_unitCaster);
-                        break;
-                    case 45891: //Sinister Reflection Summon
-                        if (summon->AI())
-                            summon->AI()->AttackStart(_unitCaster);
-                        break;
-                    case 45836: //Summon Blue Drake
-                        //summon->SetSummoner(m_caster);
-                        if (m_caster->GetTypeId() == TYPEID_PLAYER)
-                            m_caster->CastSpell((Unit*)nullptr, 45839, true);
-                        m_caster->CastSpell((Unit*)nullptr, 45838, true);
-                        summon->CastSpell((Unit*)nullptr, 45838, true);
-                        break;
+                        //quest 9711
+                        case 31333:
+                        {
+                            if (m_caster->GetTypeId() == TYPEID_PLAYER)
+                                (m_caster->ToPlayer())->AreaExploredOrEventHappens(9711);
+                            break;
+                        }
+                        case 26286:
+                        case 26291:
+                        case 26292:
+                        case 26294:
+                        case 26295:
+                        case 26293:
+                            if (m_caster->GetTypeId() == TYPEID_PLAYER)
+                                m_caster->ToPlayer()->KilledMonsterCredit(15893, ObjectGuid::Empty);
+                            break;
+                        case 26333:
+                        case 26334:
+                        case 26336:
+                        case 26337:
+                        case 26338:
+                        case 26335:
+                            if (m_caster->GetTypeId() == TYPEID_PLAYER)
+                                m_caster->ToPlayer()->KilledMonsterCredit(15893, ObjectGuid::Empty);
+                            break;
+                        case 26516:
+                        case 26517:
+                        case 26518:
+                        case 26519:
+                        case 26488:
+                        case 26490:
+                        case 26325:
+                        case 26304:
+                        case 26329:
+                        case 26328:
+                        case 26327:
+                        case 26326:
+                            if (m_caster->GetTypeId() == TYPEID_PLAYER)
+                                m_caster->ToPlayer()->KilledMonsterCredit(15894, ObjectGuid::Empty);
+                            break;
+                        default:
+                            break;
                     }
+
+                    //lolhack section 3
+                    switch (entry)
+                    {
+                        case 23369: // Whirling Blade (no idea what this is for)
+                        {
+                            if (_unitCaster && _unitCaster->GetVictim())
+                                summon->AI()->AttackStart(_unitCaster->GetVictim());
+                        } break;
+                    }
+
+                    return;
                 }
-                //TC ExecuteLogEffectSummonObject(effIndex, summon);
             }
-            //hacks 2 - handle special cases
-            switch (m_spellInfo->Id)
-            {
-                //quest 9711
-                case 31333:
-                {
-                    if (m_caster->GetTypeId() == TYPEID_PLAYER)
-                        (m_caster->ToPlayer())->AreaExploredOrEventHappens(9711);
-                    break;
-                }
-                case 26286:
-                case 26291:
-                case 26292:
-                case 26294:
-                case 26295:
-                case 26293:
-                    if (m_caster->GetTypeId() == TYPEID_PLAYER)
-                        m_caster->ToPlayer()->KilledMonsterCredit(15893, ObjectGuid::Empty);
-                    break;
-                case 26333:
-                case 26334:
-                case 26336:
-                case 26337:
-                case 26338:
-                case 26335:
-                    if (m_caster->GetTypeId() == TYPEID_PLAYER)
-                        m_caster->ToPlayer()->KilledMonsterCredit(15893, ObjectGuid::Empty);
-                    break;
-                case 26516:
-                case 26517:
-                case 26518:
-                case 26519:
-                case 26488:
-                case 26490:
-                case 26325:
-                case 26304:
-                case 26329:
-                case 26328:
-                case 26327:
-                case 26326:
-                    if (m_caster->GetTypeId() == TYPEID_PLAYER)
-                        m_caster->ToPlayer()->KilledMonsterCredit(15894, ObjectGuid::Empty);
-                    break;
-                default:
-                    break;
-            }
-
-            //lolhack section 3
-            switch (entry)
-            {
-                case 23369: // Whirling Blade (no idea what this is for)
-                {
-                    if (_unitCaster && _unitCaster->GetVictim())
-                        summon->AI()->AttackStart(_unitCaster->GetVictim());
-                } break;
-            }
-
-            return;
+            break;
         }
-        }//switch
-        break;
-    case SUMMON_CATEGORY_PET:
-        SummonGuardian(effIndex, entry, properties, numSummons);
-        break;
-    case SUMMON_CATEGORY_PUPPET:
-        if (!_unitCaster)
-            return;
+        case SUMMON_CATEGORY_PET:
+            SummonGuardian(effIndex, entry, properties, numSummons);
+            break;
+        case SUMMON_CATEGORY_PUPPET:
+            if (!_unitCaster)
+                return;
 
-        summon = m_caster->GetMap()->SummonCreature(entry, *destTarget, properties, duration, _unitCaster, m_spellInfo->Id);
-        summon->SetUInt32Value(UNIT_CREATED_BY_SPELL, m_spellInfo->Id);
-        break;
-#ifdef LICH_KING
-    case SUMMON_CATEGORY_VEHICLE:
-        if (!_unitCaster)
-            return;
-
-        // Summoning spells (usually triggered by npc_spellclick) that spawn a vehicle and that cause the clicker
-        // to cast a ride vehicle spell on the summoned unit.
-        summon = m_originalCaster->GetMap()->SummonCreature(entry, *destTarget, properties, duration, m_caster, m_spellInfo->Id);
-        if (!summon || !summon->IsVehicle())
-            return;
-
-        // The spell that this effect will trigger. It has SPELL_AURA_CONTROL_VEHICLE
-        uint32 spellId = VEHICLE_SPELL_RIDE_HARDCODED;
-        int32 basePoints = m_spellInfo->Effects[effIndex].CalcValue();
-        if (basePoints > MAX_VEHICLE_SEATS)
-        {
-            SpellInfo const* spellInfo = sSpellMgr->GetSpellInfo(basePoints);
-            if (spellInfo && spellInfo->HasAura(SPELL_AURA_CONTROL_VEHICLE))
-                spellId = spellInfo->Id;
-        }
-
-        CastSpellExtraArgs args(TRIGGERED_FULL_MASK);
-
-        // if we have small value, it indicates seat position
-        if (basePoints > 0 && basePoints < MAX_VEHICLE_SEATS)
-            args.AddSpellBP0(basePoints);
-
-        _unitCaster->CastSpell(summon, spellId, args);
-
-        uint32 faction = properties->Faction;
-        if (!faction)
-            faction = _unitCaster->GetFaction();
-
-        summon->SetFaction(faction);
-        break;
-#endif
+            summon = m_caster->GetMap()->SummonCreature(entry, *destTarget, properties, duration, _unitCaster, m_spellInfo->Id);
+            summon->SetUInt32Value(UNIT_CREATED_BY_SPELL, m_spellInfo->Id);
+            break;
     }
 
     if (summon)
@@ -369,7 +297,6 @@ void Spell::SummonGuardian(uint32 i, uint32 entry, SummonPropertiesEntry const* 
 
     //TempSummonType summonType = (duration == 0) ? TEMPSUMMON_DEAD_DESPAWN : TEMPSUMMON_TIMED_DESPAWN;
     Map* map = _unitCaster->GetMap();
-
     for (uint32 count = 0; count < numGuardians; ++count)
     {
         Position pos;
@@ -402,32 +329,11 @@ void Spell::SummonGuardian(uint32 i, uint32 entry, SummonPropertiesEntry const* 
 
         switch (summon->GetEntry())
         {
-#ifdef LICH_KING
-            case 27893: //Rune Weapon
-            {
-                if (uint32 weapon = m_caster->GetUInt32Value(PLAYER_VISIBLE_ITEM_16_ENTRYID))
-                {
-                    summon->SetDisplayId(11686); // modelid2
-                    summon->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID, weapon);
-                }
-                else
-                    summon->SetDisplayId(1126); // modelid1
-            }
-#endif
             case 2673: //target dummy (engineering item)
             {
                 summon->AddAura(42176, summon);
                 summon->AddUnitState(UNIT_STATE_ROOT);
             }
-        }
-        
-
-        //sunstrider: removed, this breaks any aura added in AI inits/reset scripting hooks. Instead, trigger move follow here.
-        //summon->AI()->EnterEvadeMode();
-        if (Unit* owner = summon->GetCharmerOrOwner())
-        {
-            summon->GetMotionMaster()->Clear();
-            summon->GetMotionMaster()->MoveFollow(owner, PET_FOLLOW_DIST, summon->GetFollowAngle(), MOTION_SLOT_ACTIVE);
         }
 
         ExecuteLogEffectSummonObject(i, summon);

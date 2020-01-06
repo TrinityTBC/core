@@ -659,10 +659,6 @@ void Creature::Update(uint32 diff)
 {
     if (IsAIEnabled() && m_triggerJustAppeared && m_deathState != DEAD)
     {
-#ifdef LICH_KING
-        if (m_respawnCompatibilityMode && m_vehicleKit)
-            m_vehicleKit->Reset();
-#endif
         m_triggerJustAppeared = false;
         AI()->JustAppeared();
             

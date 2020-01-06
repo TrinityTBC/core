@@ -6,47 +6,38 @@
 
 class TC_GAME_API TempSummon : public Creature
 {
-public:
-    explicit TempSummon(SummonPropertiesEntry const* properties, Unit* owner, bool isWorldObject);
-	~TempSummon() {};
-    void Update(uint32 time) override;
-	virtual void InitStats(uint32 lifetime);
-	virtual void InitSummon();
-    //void Summon(TempSummonType type, uint32 lifetime, Map* map);
-	virtual void UnSummon(uint32 msTime = 0);
-	void RemoveFromWorld() override;
-    void SetTempSummonType(TempSummonType type);
-    void SaveToDB(uint32 mapid, uint8 spawnMask) override { }
+	public:
+		explicit TempSummon(SummonPropertiesEntry const* properties, Unit* owner, bool isWorldObject);
+		virtual ~TempSummon() {};
+		void Update(uint32 time) override;
+		virtual void InitStats(uint32 lifetime);
+		virtual void InitSummon();
+		//void Summon(TempSummonType type, uint32 lifetime, Map* map);
+		virtual void UnSummon(uint32 msTime = 0);
+		void RemoveFromWorld() override;
+		void SetTempSummonType(TempSummonType type);
+		void SaveToDB(uint32 mapid, uint8 spawnMask) override { }
 
-    Unit* GetSummoner() const;
-    Unit* GetSummonerUnit() const { return GetSummoner(); };
-	Creature* GetSummonerCreatureBase() const;
-    ObjectGuid GetSummonerGUID() const { return m_summonerGUID; }
-    TempSummonType GetSummonType() const { return m_type; }
-	uint32 GetTimer() const { return m_timer; }
-    void SetTimer(uint32 duration);
+		Unit* GetSummoner() const;
+		Unit* GetSummonerUnit() const { return GetSummoner(); };
+		Creature* GetSummonerCreatureBase() const;
+		ObjectGuid GetSummonerGUID() const { return m_summonerGUID; }
+		TempSummonType GetSummonType() const { return m_type; }
+		uint32 GetTimer() const { return m_timer; }
+		void SetTimer(uint32 duration);
+		bool CanFollowOwner() const { return m_canFollowOwner; }
+		void SetCanFollowOwner(bool can) { m_canFollowOwner = can; }
 
-	const SummonPropertiesEntry* const m_Properties;
+		const SummonPropertiesEntry* const m_Properties;
 
-    std::string GetDebugInfo() const override;
-private:
-    TempSummonType m_type;
-    uint32 m_timer;
-    uint32 m_lifetime;
-	ObjectGuid m_summonerGUID;
+		std::string GetDebugInfo() const override;
+	private:
+		TempSummonType m_type;
+		uint32 m_timer;
+		uint32 m_lifetime;
+		ObjectGuid m_summonerGUID;
+		bool m_canFollowOwner;
 };
-
-#ifdef LICH_KING
-enum PetEntry : uint32
-{
-    // Death Knight pets
-    PET_GHOUL           = 26125,
-    PET_RISEN_ALLY      = 30230,
-
-    // Shaman pet
-    PET_SPIRIT_WOLF     = 29264
-};
-#endif
 
 class TC_GAME_API Minion : public TempSummon
 {

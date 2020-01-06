@@ -686,11 +686,21 @@ bool NearestCreatureEntryWithLiveStateInObjectRangeCheck::operator()(Creature* u
 
 bool AllCreaturesOfEntryInRange::operator() (Unit* unit) const
 {
-    if ((!m_uiEntry || unit->GetEntry() == m_uiEntry) 
-        && m_pObject->IsWithinDist(unit, m_fRange, false))
-        return true;
+    if (m_uiEntry)
+    {
+        if (unit->GetEntry() != m_uiEntry)
+            return false;
+    }
 
-    return false;
+    if (m_fRange)
+    {
+        if (m_fRange > 0.0f && !m_pObject->IsWithinDist(unit, m_fRange, false))
+            return false;
+        if (m_fRange < 0.0f && m_pObject->IsWithinDist(unit, m_fRange, false))
+            return false;
+    }
+
+    return true;
 }
 
 bool AllCreaturesInRange::operator() (Creature* u)

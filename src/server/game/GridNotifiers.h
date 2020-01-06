@@ -1075,7 +1075,7 @@ namespace Trinity
     class TC_GAME_API AllCreaturesOfEntryInRange
     {
     public:
-        AllCreaturesOfEntryInRange(WorldObject const* object, uint32 entry, float maxRange) : m_pObject(object), m_uiEntry(entry), m_fRange(maxRange) { }
+        AllCreaturesOfEntryInRange(WorldObject const* object, uint32 entry, float maxRange = 0.0f) : m_pObject(object), m_uiEntry(entry), m_fRange(maxRange) { }
 
         bool operator()(Unit* unit) const;
 

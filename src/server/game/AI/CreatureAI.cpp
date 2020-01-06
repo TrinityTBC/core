@@ -13,7 +13,7 @@
 #include "Language.h"
 #include "AreaBoundary.h"
 
-CreatureAI::CreatureAI(Creature *c) : UnitAI((Unit*)c), me(c), m_MoveInLineOfSight_locked(false), _boundary(nullptr), _negateBoundary(false), _isEngaged(false)
+CreatureAI::CreatureAI(Creature *c) : UnitAI((Unit*)c), me(c), _boundary(nullptr), _negateBoundary(false), _isEngaged(false), _moveInLOSLocked(false)
 {
 
 }
@@ -41,11 +41,11 @@ void CreatureAI::Talk(uint8 id, WorldObject const* whisperTarget /*= nullptr*/)
 // MoveInLineOfSight can be called inside another MoveInLineOfSight and cause stack overflow
 void CreatureAI::MoveInLineOfSight_Safe(Unit* who)
 {
-    if (m_MoveInLineOfSight_locked == true)
+    if (_moveInLOSLocked == true)
         return;
-    m_MoveInLineOfSight_locked = true;
+    _moveInLOSLocked = true;
     MoveInLineOfSight(who);
-    m_MoveInLineOfSight_locked = false;
+    _moveInLOSLocked = false;
 }
 
 void CreatureAI::MoveInLineOfSight(Unit* who)
@@ -57,7 +57,7 @@ void CreatureAI::MoveInLineOfSight(Unit* who)
         me->EngageWithTarget(who);
 }
 
-void CreatureAI::_OnOwnerCombatInteraction(Unit* target)
+void CreatureAI::OnOwnerCombatInteraction(Unit* target)
 {
     if (!target || !me->IsAlive())
         return;

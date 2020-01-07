@@ -119,7 +119,7 @@ public:
             else
                 eventFilter << ")";
 
-            result = WorldDatabase.PQuery("SELECT gameobject.guid, id, position_x, position_y, position_z, orientation, map, geg.event "
+            result = WorldDatabase.PQuery("SELECT gameobject.guid, id, position_x, position_y, position_z, orientation, map, geg.eventEntry "
                 "(POW(position_x - %f, 2) + POW(position_y - %f, 2) + POW(position_z - %f, 2)) AS order_ FROM gameobject "
                 "LEFT OUTER JOIN game_event_gameobject geg ON gameobject.guid=geg.guid WHERE map = '%i' %s ORDER BY order_ ASC LIMIT 1",
                 handler->GetSession()->GetPlayer()->GetPositionX(), handler->GetSession()->GetPlayer()->GetPositionY(), handler->GetSession()->GetPlayer()->GetPositionZ(), handler->GetSession()->GetPlayer()->GetMapId(), eventFilter.str().c_str());
@@ -450,7 +450,7 @@ public:
         uint32 count = 0;
 
         Player* pl = handler->GetSession()->GetPlayer();
-        QueryResult result = WorldDatabase.PQuery("SELECT g.guid, id, position_x, position_y, position_z, orientation, map, geg.event, "
+        QueryResult result = WorldDatabase.PQuery("SELECT g.guid, id, position_x, position_y, position_z, orientation, map, geg.eventEntry, "
             "(POW(position_x - '%f', 2) + POW(position_y - '%f', 2) + POW(position_z - '%f', 2)) AS order_ "
             "FROM gameobject g "
             "LEFT JOIN game_event_gameobject geg ON g.guid = geg.guid "

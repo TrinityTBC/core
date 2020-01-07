@@ -1431,7 +1431,7 @@ ChatStrictLinkChecking.Kick = 0
 #                 2 (last save state)
 #
 
-GM.LoginState = 1
+GM.LoginState = 2
 
 #
 #    GM.Visible
@@ -1441,7 +1441,7 @@ GM.LoginState = 1
 #                 2 (last save state)
 #
 
-GM.Visible = 0
+GM.Visible = 2
 
 #
 #    GM.Chat

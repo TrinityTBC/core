@@ -1,5 +1,6 @@
 #include "AuthSession.h"
 #include "Log.h"
+#include "Errors.h"
 #include "AuthCodes.h"
 #include "Database/DatabaseEnv.h"
 #include "QueryCallback.h"

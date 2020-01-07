@@ -866,7 +866,7 @@ namespace MMAP
                 {
                     vertIdx[j] = meshData.solidTris[i * 3 + j];
                     float insideDistance = terrainInsideModelsVerts[vertIdx[j]];
-                    if (vertIdx[j] < mapVertsCount)
+                    if (int32(vertIdx[j]) < mapVertsCount)
                         insideModel[j] = (insideDistance >= 0.1f);
                     //sun: get triangle position from vertex idx
                     tri[j] = G3D::Vector3(meshData.solidVerts[3 * vertIdx[j] + 2], meshData.solidVerts[3 * vertIdx[j]], meshData.solidVerts[3 * vertIdx[j] + 1]);

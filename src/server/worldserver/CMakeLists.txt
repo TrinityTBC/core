@@ -76,7 +76,7 @@ if( WIN32 )
     else()
       add_custom_command(TARGET worldserver
         POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/worldserver.conf.dist ${CMAKE_BINARY_DIR}/bin/${CMAKE_BUILD_TYPE}/
+        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/worldserver.conf.dist ${CMAKE_BINARY_DIR}/bin
       )
     endif()
   endif()

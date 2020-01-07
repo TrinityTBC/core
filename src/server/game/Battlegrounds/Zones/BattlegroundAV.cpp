@@ -3,6 +3,7 @@
 #include "Battleground.h"
 #include "BattlegroundAV.h"
 #include "Creature.h"
+#include "CreatureAI.h"
 #include "Chat.h"
 #include "Object.h"
 #include "ObjectMgr.h"

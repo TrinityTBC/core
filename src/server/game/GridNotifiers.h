@@ -7,6 +7,7 @@
 
 #include "Creature.h"
 #include "Corpse.h"
+#include "CreatureAI.h"
 #include "Object.h"
 #include "DynamicObject.h"
 #include "GameObject.h"

@@ -14,6 +14,7 @@
 #include "MapManager.h"
 #include "ObjectAccessor.h"
 #include "Player.h"
+#include "CreatureAI.h"
 #include "SpellAuras.h"
 #include "SpellAuraEffects.h"
 #include "Language.h"

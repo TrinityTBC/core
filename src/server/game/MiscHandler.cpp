@@ -5,6 +5,7 @@
 #include "Opcodes.h"
 #include "Log.h"
 #include "Player.h"
+#include "CreatureAI.h"
 #include "GossipDef.h"
 #include "World.h"
 #include "ObjectMgr.h"

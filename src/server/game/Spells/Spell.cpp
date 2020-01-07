@@ -3414,9 +3414,9 @@ uint32 Spell::prepare(SpellCastTargets const& targets, AuraEffect const* trigger
         if (!(m_spellInfo->IsNextMeleeSwingSpell() || IsAutoRepeat()))
         {
             if (m_targets.GetObjectTarget() && m_caster != m_targets.GetObjectTarget())
-                m_caster->ToCreature()->FocusTarget(this, m_targets.GetObjectTarget());
+                m_caster->ToCreature()->SetSpellFocus(this, m_targets.GetObjectTarget());
             else if (m_spellInfo->HasAttribute(SPELL_ATTR5_DONT_TURN_DURING_CAST))
-                m_caster->ToCreature()->FocusTarget(this, nullptr);
+                m_caster->ToCreature()->SetSpellFocus(this, nullptr);
         }
     }
 
@@ -3699,7 +3699,7 @@ void Spell::_cast(bool skipCheck /*= false*/)
     }
 
     // if the spell allows the creature to turn while casting, then adjust server-side orientation to face the target now
-    // client-side orientation is handled by the client itself, as the cast target is targeted due to Creature::FocusTarget
+    // client-side orientation is handled by the client itself, as the cast target is targeted due to Creature::SetSpellFocus
     if (m_caster->GetTypeId() == TYPEID_UNIT && !m_caster->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_POSSESSED))
         if (!m_spellInfo->HasAttribute(SPELL_ATTR5_DONT_TURN_DURING_CAST))
             if (WorldObject* objTarget = m_targets.GetObjectTarget())
@@ -3748,7 +3748,7 @@ void Spell::_cast(bool skipCheck /*= false*/)
 
     if (!m_spellInfo->IsChanneled())
         if (Creature* creatureCaster = m_caster->ToCreature())
-            creatureCaster->ReleaseFocus(this);
+            creatureCaster->ReleaseSpellFocus(this);
 
     // Okay, everything is prepared. Now we need to distinguish between immediate and evented delayed spells
     if (m_spellInfo->Id == 2094 || m_spellInfo->Id == 14181)       // Delay Blind for 150ms to fake retail lag
@@ -4296,7 +4296,7 @@ void Spell::finish(bool ok, bool cancelChannel)
         (m_caster->ToCreature())->AI()->OnSpellFinish(caster, m_spellInfo->Id, m_targets.GetUnitTarget(), ok);
 
     if (Creature* creatureCaster = m_caster->ToCreature())
-        creatureCaster->ReleaseFocus(this);
+        creatureCaster->ReleaseSpellFocus(this);
 
     if(!ok)
         return;
@@ -5085,30 +5085,30 @@ ObjectGuid Spell::GetStartChannelTarget() const
 void Spell::SendChannelStart(uint32 duration)
 {
     // GameObjects don't channel
-    Unit* caster = m_caster->ToUnit();
-    if (!caster)
+    Unit* unitCaster = m_caster->ToUnit();
+    if (!unitCaster)
         return;
 
     ObjectGuid channelTarget = GetStartChannelTarget();
 
-    WorldPacket data( MSG_CHANNEL_START, (8+4+4) );
-    data << caster->GetPackGUID();
+    WorldPacket data(MSG_CHANNEL_START, (8+4+4));
+    data << unitCaster->GetPackGUID();
     data << uint32(m_spellInfo->Id);
     data << uint32(duration);
 
-    caster->SendMessageToSet(&data,true);
+    unitCaster->SendMessageToSet(&data, true);
 
     m_timer = duration;
     if (channelTarget)
     {
-        caster->SetChannelObjectGuid(channelTarget);
+        unitCaster->SetChannelObjectGuid(channelTarget);
 
-        if (channelTarget != caster->GetGUID())
-            if (Creature* creatureCaster = caster->ToCreature())
-                if (!creatureCaster->IsFocusing(this))
-                    creatureCaster->FocusTarget(this, ObjectAccessor::GetWorldObject(*creatureCaster, channelTarget));
+        if (Creature* creatureCaster = m_caster->ToCreature())
+            if (!creatureCaster->HasSpellFocus(this))
+                creatureCaster->SetSpellFocus(this, ObjectAccessor::GetWorldObject(*creatureCaster, channelTarget));
     }
-    caster->SetUInt32Value(UNIT_CHANNEL_SPELL, m_spellInfo->Id);
+
+    unitCaster->SetUInt32Value(UNIT_CHANNEL_SPELL, m_spellInfo->Id);
 }
 
 void Spell::SendResurrectRequest(Player* target)

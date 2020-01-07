@@ -80,7 +80,7 @@ bool CreatureAI::UpdateVictim()
     if (!me->HasReactState(REACT_PASSIVE))
     {
         if (Unit* victim = me->SelectVictim())
-            if (!me->IsFocusing(nullptr, true) && (victim != me->GetVictim() || me->GetMotionMaster()->GetCurrentMovementGeneratorType() != CHASE_MOTION_TYPE)) //sun: also start attack if we're not chasing... we might have triggered another movement in scripts
+            if (!me->HasSpellFocus() && (victim != me->GetVictim() || me->GetMotionMaster()->GetCurrentMovementGeneratorType() != CHASE_MOTION_TYPE)) //sun: also start attack if we're not chasing... we might have triggered another movement in scripts
                 AttackStart(victim);
 
         return me->GetVictim() != nullptr;
@@ -90,7 +90,7 @@ bool CreatureAI::UpdateVictim()
         EnterEvadeMode(EVADE_REASON_NO_HOSTILES);
         return false;
     }
-    else if(me->GetVictim())
+    else if (me->GetVictim())
         me->AttackStop();
 
     return true;
@@ -226,7 +226,8 @@ bool CreatureAI::_EnterEvadeMode(EvadeReason /*why*/)
     me->ResetPlayerDamageReq();
     me->SetLastDamagedTime(0);
     me->SetCannotReachTarget(false);
-    me->DoNotReacquireTarget();
+    me->DoNotReacquireSpellFocusTarget();
+    me->SetTarget(ObjectGuid::Empty);
     me->GetSpellHistory()->ResetAllCooldowns();
     EngagementOver();
 

@@ -1532,9 +1532,8 @@ class TC_GAME_API Unit : public WorldObject
         inline Spell* GetCurrentSpell(CurrentSpellTypes spellType) const { return m_currentSpells[spellType]; }
         inline Spell* GetCurrentSpell(uint32 spellType) const { return m_currentSpells[spellType]; }
 
-        // Check if our current channel spell has attribute SPELL_ATTR5_CAN_CHANNEL_WHEN_MOVING
+        virtual bool HasSpellFocus(Spell const* /*focusSpell*/ = nullptr) const { return false; }
         virtual bool IsMovementPreventedByCasting() const;
-        virtual bool IsFocusing(Spell const* /*focusSpell*/ = nullptr, bool /*withDelay*/ = false) { return false; }
 
         Spell* m_currentSpells[CURRENT_MAX_SPELL];
 

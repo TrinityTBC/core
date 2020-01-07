@@ -403,11 +403,10 @@ class TC_GAME_API Creature : public Unit, public GridObject<Creature>, public Ma
 
         // Handling caster facing during spellcast
         void SetTarget(ObjectGuid guid) override;
-        void MustReacquireTarget() { m_shouldReacquireTarget = true; } // flags the Creature for forced (client displayed) target reacquisition in the next ::Update call
-        void DoNotReacquireTarget() { m_shouldReacquireTarget = false; m_suppressedTarget = ObjectGuid::Empty; m_suppressedOrientation = 0.0f; }
-        void FocusTarget(Spell const* focusSpell, WorldObject const* target);
-        bool IsFocusing(Spell const* focusSpell = nullptr, bool withDelay = false) override;
-        void ReleaseFocus(Spell const* focusSpell, bool withDelay = true);
+        void DoNotReacquireSpellFocusTarget();
+        void SetSpellFocus(Spell const* focusSpell, WorldObject const* target);
+        bool HasSpellFocus(Spell const* focusSpell = nullptr) const override;
+        void ReleaseSpellFocus(Spell const* focusSpell = nullptr, bool withDelay = true);
 
         bool IsMovementPreventedByCasting() const override;
 
@@ -514,17 +513,19 @@ class TC_GAME_API Creature : public Unit, public GridObject<Creature>, public Ma
         CreatureTemplate const* m_creatureInfo;                 // in heroic mode can different from ObjectMgr::GetCreatureTemplate(GetEntry())
         CreatureData const* m_creatureData;
 
-        time_t m_lastDamagedTime; // Part of Evade mechanic
-
         uint16 m_LootMode;                                  // Bitmask (default: LOOT_MODE_DEFAULT) that determines what loot will be lootable
 
         /* Spell focus system */
-        Spell const* m_focusSpell;   // Locks the target during spell cast for proper facing
-        uint32 m_focusDelay;
-        bool m_shouldReacquireTarget;
-        ObjectGuid m_suppressedTarget; // Stores the creature's "real" target while casting
-        float m_suppressedOrientation; // Stores the creature's "real" orientation while casting
+        void ReacquireSpellFocusTarget();
+        struct
+        {
+            ::Spell const* Spell = nullptr;
+            uint32 Delay = 0;         // ms until the creature's target should snap back (0 = no snapback scheduled)
+            ObjectGuid Target;        // the creature's "real" target while casting
+            float Orientation = 0.0f; // the creature's "real" orientation while casting
+        } _spellFocusInfo;
 
+        time_t m_lastDamagedTime; // Part of Evade mechanic
         CreatureTextRepeatGroup m_textRepeat;
 };
 

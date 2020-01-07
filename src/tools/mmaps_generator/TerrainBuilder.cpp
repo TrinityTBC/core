@@ -3,7 +3,7 @@
 
 #include "PathCommon.h"
 #include "MapBuilder.h"
-
+#include "Errors.h"
 #include "VMapManager2.h"
 #include "MapTree.h"
 #include "ModelInstance.h"

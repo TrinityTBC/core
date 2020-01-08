@@ -1386,7 +1386,7 @@ void World::LoadConfigSettings(bool reload)
 
     m_configs[CONFIG_CALCULATE_CREATURE_ZONE_AREA_DATA] = sConfigMgr->GetBoolDefault("Calculate.Creature.Zone.Area.Data", false);
     m_configs[CONFIG_CALCULATE_GAMEOBJECT_ZONE_AREA_DATA] = sConfigMgr->GetBoolDefault("Calculate.Gameoject.Zone.Area.Data", false);
-    m_configs[CONFIG_ARENA_SEASON_ID] = sConfigMgr->GetIntDefault ("Arena.ArenaSeason.ID", 1);
+    m_configs[CONFIG_ARENA_SEASON_ID] = sConfigMgr->GetIntDefault ("Arena.ArenaSeason.ID", 3);
     m_configs[CONFIG_ARENA_START_RATING] = sConfigMgr->GetIntDefault ("Arena.ArenaStartRating", 0);
     m_configs[CONFIG_ARENA_START_PERSONAL_RATING] = sConfigMgr->GetIntDefault ("Arena.ArenaStartPersonalRating", 1000);
     m_configs[CONFIG_ARENA_START_MATCHMAKER_RATING] = sConfigMgr->GetIntDefault ("Arena.ArenaStartMatchmakerRating", 1500);

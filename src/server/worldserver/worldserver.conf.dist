@@ -1841,15 +1841,17 @@ Death.Bones.World = 1
 Death.Bones.BattlegroundOrArena = 1
 
 #
-###################################################################################################################
-#
-# Rated arena matches config
-#
-#    MaxRatingDifference: the maximum rating difference between two groups in rated matches
-#        Default: 0 (disable, rating difference is discarded)
-#
+###################################################################################################
 
-Arena.MaxRatingDifference = 0
+###################################################################################################
+# ARENA CONFIG
+#
+#    Arena.MaxRatingDifference
+#        Description: Maximum rating difference between two teams in rated matches.
+#        Default:     150 - (Enabled)
+#                     0   - (Disabled)
+
+Arena.MaxRatingDifference = 150
 
 #
 #    RatingDiscardTimer: after the specified milliseconds has passed,
@@ -1861,29 +1863,63 @@ Arena.MaxRatingDifference = 0
 Arena.RatingDiscardTimer = 60000
 
 #
-#    AutoDistributePoints: set if arena points should be distributed automatically, or by GM command
-#        Default: 0 (disable) (recommended): use gm command or sql query to distribute the points
-#                 1 (enable): arena points are distributed automatically
-#
+#    Arena.RatedUpdateTimer
+#        Description: Time (in milliseconds) between checks for match-ups in rated arena.
+#        Default:     5000 - (5 seconds)
 
-Arena.AutoDistributePoints = 1
+Arena.RatedUpdateTimer = 5000
 
 #
-#    AutoDistributeInterval: how often should the distribution take place
-#                            if automatic distribution is enabled
-#                            in days
-#        Default: 7 (weekly)
+#    Arena.AutoDistributePoints
+#        Description: Automatically distribute arena points.
+#        Default:     0 - (Disabled)
+#                     1 - (Enabled)
+
+Arena.AutoDistributePoints = 0
+
 #
+#    Arena.AutoDistributeInterval
+#        Description: Time (in days) how often arena points should be distributed if automatic
+#                     distribution is enabled.
+#        Default:     7 - (Weekly)
 
 Arena.AutoDistributeInterval = 7
 
 #
-#    Arena.RatedUpdateTimer
-#        Description: Time (in milliseconds) between checks for matchups in rated arena.
-#        Default:     5000 - (5 seconds)
-#
+#    Arena.ArenaSeason.ID
+#        Description: Current arena season id shown in clients.
+#        Default:     3
 
-Arena.RatedUpdateTimer = 5000
+Arena.ArenaSeason.ID = 3
+
+#
+#    Arena.ArenaSeason.InProgress
+#        Description: State of current arena season.
+#        Default:     1 - (Active)
+#                     0 - (Finished)
+
+Arena.ArenaSeason.InProgress = 1
+
+#
+#    Arena.ArenaStartRating
+#        Description: Start rating for new arena teams.
+#        Default:     0
+
+Arena.ArenaStartRating = 0
+
+#
+#    Arena.ArenaStartPersonalRating
+#        Description: Start personal rating when joining a team.
+#        Default:     0
+
+Arena.ArenaStartPersonalRating = 0
+
+#
+#    Arena.ArenaStartMatchmakerRating
+#        Description: Start matchmaker rating for players.
+#        Default:     1500
+
+Arena.ArenaStartMatchmakerRating = 1500
 
 #
 ###################################################################################################################
@@ -3121,6 +3157,26 @@ Respawn.DynamicMinimumGameObject = 10
 #
 
 SaveRespawnTimeImmediately = 1
+
+#
+###################################################################################################
+
+###################################################################################################
+# CUSTOM SERVER OPTIONS
+#
+#     Calculate.Creature.Zone.Area.Data
+#        Description: Calculate at loading creature zoneId / areaId and save in creature table (WARNING: SLOW WORLD SERVER STARTUP)
+#        Default:     0  - (Do not show)
+
+Calculate.Creature.Zone.Area.Data = 0
+
+#
+#     Calculate.Gameoject.Zone.Area.Data
+#        Description: Calculate at loading gameobject zoneId / areaId and save in gameobject table (WARNING: SLOW WORLD SERVER STARTUP)
+#        Default:     0  - (Do not show)
+
+Calculate.Gameoject.Zone.Area.Data = 0
+
 
 #
 ###################################################################################################

@@ -7,7 +7,7 @@ Our goal is amied to provide fully open-sourced and playable trinity-based tbc c
 
 ## Getting Involved
 
-* [Discord](https://discord.gg/yb55yV)
+* [Discord](https://discord.gg/KpZ3xCG)
 * CN QQ群: 536804887
 
 ## Installation

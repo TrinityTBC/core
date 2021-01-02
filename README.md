@@ -5,11 +5,6 @@
 TrinityTBC is a WoW 2.4.3 emulator derived from the [Suntrider-legacy core](https://github.com/SunstriderEmu/sunstrider-legacy).
 Our goal is amied to provide fully open-sourced and playable trinity-based tbc core.
 
-## Getting Involved
-
-* [Discord](https://discord.gg/KpZ3xCG)
-* CN QQ群: 536804887
-
 ## Installation
 
 * [Windows](/doc/install_win.md)
